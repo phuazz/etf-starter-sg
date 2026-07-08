@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "purpose": "Risk-profile preset portfolios for the Build tab, expressed only in asset classes a Singapore retail investor can buy as ETFs. Weights are a starting point for a beginner to adjust, not a recommendation. Risk posture (rising equity / falling cash+bonds across profiles) is anchored on the source SAA work; alternatives (trend, market-neutral) are deliberately excluded as they are not retail-ETF-accessible.",
+    "weights_sum_to": 100,
+    "not_advice": true
+  },
+  "profiles": {
+    "conservative": {
+      "label": "Conservative",
+      "drawdown_band": "5-10%",
+      "blurb": "Capital preservation first. Majority in SGD bonds and cash, a diversified equity minority, gold for tail protection.",
+      "weights": {"dev_equity": 15, "sg_equity": 5, "em_asia_equity": 0, "reits": 5, "dev_bonds": 15, "sgd_bonds": 30, "gold": 10, "cash": 20}
+    },
+    "balanced": {
+      "label": "Balanced",
+      "drawdown_band": "10-15%",
+      "blurb": "A middle path. Roughly half growth assets (equity, REITs), half defensive (bonds, cash, gold). A sensible default for a first long-term portfolio.",
+      "weights": {"dev_equity": 30, "sg_equity": 8, "em_asia_equity": 7, "reits": 8, "dev_bonds": 12, "sgd_bonds": 15, "gold": 7, "cash": 13}
+    },
+    "growth": {
+      "label": "Growth",
+      "drawdown_band": "15-25%",
+      "blurb": "Growth-led, for a long horizon and tolerance for larger swings. Equity-dominant with a bond and gold cushion.",
+      "weights": {"dev_equity": 42, "sg_equity": 8, "em_asia_equity": 12, "reits": 8, "dev_bonds": 7, "sgd_bonds": 8, "gold": 5, "cash": 10}
+    },
+    "aggressive": {
+      "label": "Aggressive",
+      "drawdown_band": "25-35%",
+      "blurb": "Maximum long-run growth, minimal ballast. Expect equity-like drawdowns. Only for a long horizon and a strong stomach.",
+      "weights": {"dev_equity": 52, "sg_equity": 8, "em_asia_equity": 15, "reits": 7, "dev_bonds": 5, "sgd_bonds": 3, "gold": 5, "cash": 5}
+    }
+  },
+  "recommended_instruments": {
+    "_note": "How to implement each building block. 'core' = the domicile-clean route (Irish UCITS, London-listed) recommended for global/US beta to avoid US estate tax and halve dividend withholding. 'sgx' = SGX-listed route. Where the SGX route is US-domiciled it is flagged as estate-tax exposed.",
+    "dev_equity":      {"core": "VWRA or CSPX (Irish UCITS, LSE)", "sgx": "S27 (SPDR S&P 500) — US-domiciled, estate-tax EXPOSED", "prefer": "core"},
+    "sg_equity":       {"core": null, "sgx": "ES3 or G3B (STI ETF, SG-domiciled)", "prefer": "sgx"},
+    "em_asia_equity":  {"core": "EIMI (iShares Core EM IMI, Irish UCITS)", "sgx": "Asia/China/India SGX ETFs (mostly SG/LU-domiciled)", "prefer": "core"},
+    "thematic_equity": {"core": null, "sgx": "HST, SEA-tech, EV, low-carbon SGX ETFs", "prefer": "sgx"},
+    "reits":           {"core": null, "sgx": "CLR or SRT (S-REIT ETFs, SG-domiciled)", "prefer": "sgx"},
+    "dev_bonds":       {"core": "AGGG (iShares Global Aggregate, Irish UCITS)", "sgx": null, "prefer": "core"},
+    "sgd_bonds":       {"core": null, "sgx": "A35 (ABF SG Bond), KV4 (SG Govt Bond), MBH (SGD IG) — SG-domiciled", "prefer": "sgx"},
+    "asia_bonds":      {"core": null, "sgx": "IS Asia Bond / Asia HY SGX ETFs", "prefer": "sgx"},
+    "gold":            {"core": "SGLN (iShares Physical Gold, Irish UCITS)", "sgx": "GSD/O87 (SPDR Gold) — US-domiciled, estate-tax EXPOSED", "prefer": "core"},
+    "cash":            {"core": null, "sgx": "MMS (SGD money market) or SG T-bills / fixed deposit", "prefer": "sgx"}
+  }
+}

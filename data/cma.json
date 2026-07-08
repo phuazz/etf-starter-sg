@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "purpose": "Forward-looking capital market assumptions for the ETF-investable asset classes a Singapore retail investor can access. Synthesised house estimates, informed by published long-run (10-15yr) assumptions from major asset managers (2025-26 vintage). NOT a reproduction of any single provider's proprietary table. NOT a forecast. Educational use only.",
+    "vintage": "2026-H1",
+    "return_basis": "Geometric, per annum. USD-basis except classes marked basis=SGD. SGD-based investors face an additional FX consideration on USD-basis classes (~ +/-1% p.a. unhedged, or the hedging cost) — surfaced in-app, not baked into these numbers.",
+    "risk_free_pct": 2.8,
+    "risk_free_note": "USD cash anchor used for Sharpe across all classes for consistency. SGD cash ~3.0%. Sharpe = (ret - risk_free) / vol.",
+    "confidence": "Round-number estimates. Treat as directional, not precise. Wide bands apply."
+  },
+  "asset_classes": {
+    "dev_equity":      {"label": "Global / Developed Equity", "ret": 6.8, "vol": 16, "basis": "USD", "role": "Core growth engine (world & US developed markets).", "informed_by": "US large cap 5.5-7.0% + non-US developed 7.5-8.5%, cap-weighted blend."},
+    "sg_equity":       {"label": "Singapore Equity", "ret": 6.5, "vol": 15, "basis": "SGD", "role": "Home-market equity; high dividend, SGD-denominated.", "informed_by": "Developed-market equity, SGD basis; STI dividend-heavy composition."},
+    "em_asia_equity":  {"label": "EM & Asia ex-Japan Equity", "ret": 7.4, "vol": 20, "basis": "USD", "role": "Higher-growth diversifier; higher volatility, cheaper valuations.", "informed_by": "Emerging markets 7.0-8.5%."},
+    "thematic_equity": {"label": "Thematic / Sector Equity", "ret": 6.5, "vol": 24, "basis": "USD", "role": "Concentrated sector/theme bets (tech, EV, low-carbon). No return premium assumed over broad equity; much higher idiosyncratic risk. Satellite only.", "informed_by": "Broad equity return with a large volatility uplift for concentration.", "flag": "concentrated"},
+    "dev_bonds":       {"label": "Global / US Aggregate Bonds", "ret": 4.4, "vol": 5.5, "basis": "USD", "role": "Core ballast; flight-to-quality in equity sell-offs.", "informed_by": "US aggregate 3.8-5.0%."},
+    "sgd_bonds":       {"label": "SGD Bonds (SG Govt / IG)", "ret": 3.2, "vol": 4.0, "basis": "SGD", "role": "SGD-denominated ballast; no currency risk for a SG investor.", "informed_by": "Singapore government / SGD investment-grade yields, SGD basis."},
+    "asia_bonds":      {"label": "Asia / EM Bonds", "ret": 5.8, "vol": 9.0, "basis": "USD", "role": "Higher-yield credit; note higher equity correlation than govt bonds.", "informed_by": "EM debt hard-currency 5.5-6.5%; Asia credit."},
+    "reits":           {"label": "REITs (SG / Asia)", "ret": 6.5, "vol": 16, "basis": "SGD", "role": "Listed real-estate income; inflation-sensitive, equity-like in stress.", "informed_by": "Core real estate 7.0-8.0%, listed-REIT volatility uplift."},
+    "gold":            {"label": "Gold", "ret": 5.0, "vol": 16, "basis": "USD", "role": "Tail-risk hedge; near-zero equity correlation; central-bank demand.", "informed_by": "Gold 4.5-5.5%."},
+    "cash":            {"label": "Cash (SGD)", "ret": 3.0, "vol": 0.5, "basis": "SGD", "role": "Liquidity buffer; opportunity cost in bull markets.", "informed_by": "SGD money-market / SORA-linked."}
+  },
+  "_corr_note": "Pairwise correlations, informed by ~20yr exponentially-weighted history from the source SAA work. Symmetric; diagonal = 1; any pair not listed defaults to 0.30 and is reported by the pipeline so nothing is silently assumed. In crisis regimes equity-credit and equity-REIT correlations spike toward 0.85+.",
+  "corr_pairs": [
+    ["dev_equity", "sg_equity", 0.75],
+    ["dev_equity", "em_asia_equity", 0.80],
+    ["dev_equity", "thematic_equity", 0.85],
+    ["dev_equity", "reits", 0.60],
+    ["dev_equity", "dev_bonds", 0.10],
+    ["dev_equity", "sgd_bonds", 0.05],
+    ["dev_equity", "asia_bonds", 0.55],
+    ["dev_equity", "gold", 0.05],
+    ["dev_equity", "cash", 0.00],
+    ["sg_equity", "em_asia_equity", 0.72],
+    ["sg_equity", "thematic_equity", 0.65],
+    ["sg_equity", "reits", 0.65],
+    ["sg_equity", "dev_bonds", 0.10],
+    ["sg_equity", "sgd_bonds", 0.10],
+    ["sg_equity", "asia_bonds", 0.50],
+    ["sg_equity", "gold", 0.05],
+    ["sg_equity", "cash", 0.00],
+    ["em_asia_equity", "thematic_equity", 0.75],
+    ["em_asia_equity", "reits", 0.55],
+    ["em_asia_equity", "dev_bonds", 0.05],
+    ["em_asia_equity", "sgd_bonds", 0.05],
+    ["em_asia_equity", "asia_bonds", 0.60],
+    ["em_asia_equity", "gold", 0.10],
+    ["em_asia_equity", "cash", 0.00],
+    ["thematic_equity", "reits", 0.50],
+    ["thematic_equity", "dev_bonds", 0.05],
+    ["thematic_equity", "sgd_bonds", 0.05],
+    ["thematic_equity", "asia_bonds", 0.50],
+    ["thematic_equity", "gold", 0.05],
+    ["thematic_equity", "cash", 0.00],
+    ["reits", "dev_bonds", 0.20],
+    ["reits", "sgd_bonds", 0.20],
+    ["reits", "asia_bonds", 0.45],
+    ["reits", "gold", 0.10],
+    ["reits", "cash", 0.00],
+    ["dev_bonds", "sgd_bonds", 0.60],
+    ["dev_bonds", "asia_bonds", 0.50],
+    ["dev_bonds", "gold", 0.25],
+    ["dev_bonds", "cash", 0.10],
+    ["sgd_bonds", "asia_bonds", 0.45],
+    ["sgd_bonds", "gold", 0.15],
+    ["sgd_bonds", "cash", 0.15],
+    ["asia_bonds", "gold", 0.15],
+    ["asia_bonds", "cash", 0.05],
+    ["gold", "cash", 0.00]
+  ],
+  "tax": {
+    "us_estate": {
+      "_note": "US estate (inheritance) tax on US-situs assets held by a Singapore-resident non-resident-alien. Situs follows the underlying asset, NOT the broker. Educational; not tax advice.",
+      "exemption_usd": 60000,
+      "top_rate": 0.40,
+      "schedule": [
+        {"us_situs_usd": 100000,  "tax_usd": 10800,  "effective_rate": 0.108},
+        {"us_situs_usd": 250000,  "tax_usd": 57800,  "effective_rate": 0.231},
+        {"us_situs_usd": 500000,  "tax_usd": 142800, "effective_rate": 0.286},
+        {"us_situs_usd": 1000000, "tax_usd": 332800, "effective_rate": 0.333},
+        {"us_situs_usd": 2000000, "tax_usd": 732800, "effective_rate": 0.366}
+      ],
+      "source": "Financial Horse, 'Die holding US Stocks and pay 40% tax?' (3 Jul 2026); cross-checked to IRC 2001(c) graduated schedule. Singapore has no US estate-tax treaty.",
+      "us_situs_domiciles": ["US"],
+      "safe_domiciles": ["SG", "IE", "LU", "FR", "HK"]
+    },
+    "us_div_withholding": {
+      "_note": "Withholding tax suffered on US-source dividends INSIDE the fund, by fund domicile. Irish/Lux UCITS get the 15% treaty rate; US-domiciled funds held by a Singaporean suffer 30%; synthetic (swap-based) funds can reduce this further but are flagged separately. Applied only to the US-dividend portion of a fund's income.",
+      "by_domicile": {"US": 0.30, "SG": 0.30, "HK": 0.30, "IE": 0.15, "LU": 0.15, "FR": 0.15},
+      "assumed_div_yield_by_class": {
+        "dev_equity": 1.8, "sg_equity": 3.8, "em_asia_equity": 2.5, "thematic_equity": 1.0,
+        "dev_bonds": 3.5, "sgd_bonds": 3.0, "asia_bonds": 4.5, "reits": 5.0, "gold": 0.0, "cash": 3.0
+      },
+      "us_content_by_class": {
+        "dev_equity": 0.65, "sg_equity": 0.0, "em_asia_equity": 0.0, "thematic_equity": 0.4,
+        "dev_bonds": 0.5, "sgd_bonds": 0.0, "asia_bonds": 0.0, "reits": 0.0, "gold": 0.0, "cash": 0.0
+      },
+      "_content_note": "us_content = fraction of the fund's income that is US-source (and therefore subject to US dividend withholding). Estimates. drag = assumed_div_yield * us_content * (wht_rate). This models the dominant US-dividend case only; non-US withholding (e.g. China ~10%) is not modelled and is flagged where material."
+    }
+  }
+}

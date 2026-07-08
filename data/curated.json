@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "purpose": "Curated overlay for fields the SGX screener export omits (TER, indicative yield) plus domicile fallback for funds whose ISIN is not embedded in the export, plus asset-class / segment mapping for the funds the tool actively screens. The Irish-UCITS core funds are ADDED here because they are not SGX-listed.",
+    "ter_confidence": "high = well-established published figure; est = estimate pending source-verification against >=2 issuer documents (see _verify_todo).",
+    "yield_note": "Indicative trailing distribution yield, %; est only. Accumulating funds show 0 (income retained).",
+    "_verify_todo": "Source-verify all conf=est TERs and yields against issuer factsheet + fund-info PHS before public deploy. Core UCITS TERs are conf=high."
+  },
+  "ucits_core": [
+    {"ticker": "CSPX", "name": "iShares Core S&P 500 UCITS (Acc)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "dev_equity", "segment": "US Large Cap", "ter": 0.07, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "S&P 500", "is_core": true},
+    {"ticker": "VUAA", "name": "Vanguard S&P 500 UCITS (Acc)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "dev_equity", "segment": "US Large Cap", "ter": 0.07, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "S&P 500", "is_core": true},
+    {"ticker": "VWRA", "name": "Vanguard FTSE All-World UCITS (Acc)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "dev_equity", "segment": "Global All-World", "ter": 0.22, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "FTSE All-World", "is_core": true},
+    {"ticker": "IWDA", "name": "iShares Core MSCI World UCITS (Acc)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "dev_equity", "segment": "Developed World", "ter": 0.20, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "MSCI World", "is_core": true},
+    {"ticker": "EIMI", "name": "iShares Core MSCI EM IMI UCITS (Acc)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "em_asia_equity", "segment": "Emerging Markets", "ter": 0.18, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "MSCI EM IMI", "is_core": true},
+    {"ticker": "AGGU", "name": "iShares Core Global Aggregate Bond UCITS (Acc, USD-hedged)", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "dev_bonds", "segment": "Global Aggregate", "ter": 0.10, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "Bloomberg Global Aggregate", "is_core": true},
+    {"ticker": "SGLN", "name": "iShares Physical Gold ETC", "exchange": "LSE", "ccy": "USD", "domicile": "IE", "asset_class": "gold", "segment": "Gold", "ter": 0.12, "ter_conf": "high", "yield": 0.0, "income": "Accumulating", "benchmark": "LBMA Gold", "is_core": true}
+  ],
+  "sgx_overrides": {
+    "ES3": {"ter": 0.30, "ter_conf": "est", "yield": 3.2, "asset_class": "sg_equity", "segment": "Singapore (STI)"},
+    "G3B": {"ter": 0.30, "ter_conf": "est", "yield": 3.2, "asset_class": "sg_equity", "segment": "Singapore (STI)"},
+    "GAB": {"ter": 0.30, "ter_conf": "est", "yield": 0.0, "asset_class": "sg_equity", "segment": "Singapore (STI)", "domicile_override": "SG"},
+    "CLR": {"ter": 0.60, "ter_conf": "est", "yield": 5.2, "asset_class": "reits", "segment": "Singapore REITs"},
+    "SRT": {"ter": 0.60, "ter_conf": "est", "yield": 5.0, "asset_class": "reits", "segment": "Singapore REITs"},
+    "CFA": {"ter": 0.55, "ter_conf": "est", "yield": 4.8, "asset_class": "reits", "segment": "Asia REITs"},
+    "A35": {"ter": 0.25, "ter_conf": "est", "yield": 3.0, "asset_class": "sgd_bonds", "segment": "SG Govt+Corp Bond"},
+    "MBH": {"ter": 0.28, "ter_conf": "est", "yield": 3.4, "asset_class": "sgd_bonds", "segment": "SGD Investment-Grade"},
+    "KV4": {"ter": 0.20, "ter_conf": "est", "yield": 2.6, "asset_class": "sgd_bonds", "segment": "SG Govt Bond", "domicile_override": "LU"},
+    "MMS": {"ter": 0.16, "ter_conf": "est", "yield": 3.0, "asset_class": "cash", "segment": "SGD Money Market"},
+    "S27": {"ter": 0.0945, "ter_conf": "est", "yield": 1.2, "asset_class": "dev_equity", "segment": "US Large Cap"},
+    "D07": {"ter": 0.16, "ter_conf": "est", "yield": 1.6, "asset_class": "dev_equity", "segment": "US Large Cap"},
+    "GSD": {"ter": 0.40, "ter_conf": "est", "yield": 0.0, "asset_class": "gold", "segment": "Gold"},
+    "O87": {"ter": 0.40, "ter_conf": "est", "yield": 0.0, "asset_class": "gold", "segment": "Gold"},
+    "GLS": {"ter": 0.35, "ter_conf": "est", "yield": 0.0, "asset_class": "gold", "segment": "Gold", "domicile_override": "SG"},
+    "HST": {"ter": 0.45, "ter_conf": "est", "yield": 0.0, "asset_class": "thematic_equity", "segment": "China Tech"},
+    "TID": {"ter": 0.65, "ter_conf": "est", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "China"},
+    "H1N": {"ter": 0.20, "ter_conf": "est", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "Emerging Markets"},
+    "G1N": {"ter": 0.80, "ter_conf": "est", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "India"},
+    "JJJ": {"ter": 0.50, "ter_conf": "est", "yield": 0.0, "asset_class": "dev_equity", "segment": "Japan", "domicile_override": "SG"},
+    "O9P": {"ter": 0.30, "ter_conf": "est", "yield": 6.5, "asset_class": "asia_bonds", "segment": "Asia High Yield"},
+    "QL2": {"ter": 0.25, "ter_conf": "est", "yield": 4.5, "asset_class": "asia_bonds", "segment": "Asia IG Credit"},
+    "N6M": {"ter": 0.25, "ter_conf": "est", "yield": 4.5, "asset_class": "asia_bonds", "segment": "Asia IG Credit"},
+    "ESG": {"ter": 0.45, "ter_conf": "est", "yield": 3.0, "asset_class": "sg_equity", "segment": "SG Low-Carbon"},
+    "SUN": {"ter": 0.55, "ter_conf": "est", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "China A-shares", "domicile_override": "SG"}
+  }
+}
