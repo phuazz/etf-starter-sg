@@ -161,7 +161,7 @@ def load_or_fetch_prices(funds):
     for f in funds:
         sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"] + ".SI")
         url = ("https://query1.finance.yahoo.com/v8/finance/chart/" + sym
-               + "?range=6y&interval=1wk")
+               + "?range=6y&interval=1wk&events=div")
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
             d = json.load(urllib.request.urlopen(req, timeout=15))
@@ -171,11 +171,21 @@ def load_or_fetch_prices(funds):
             closes = [round(c, 3) if c is not None else None for c in cl]
             if sum(1 for c in closes if c is not None) < 20:
                 continue
-            out[f["ticker"]] = {"s": ts[0], "c": closes}
+            entry = {"s": ts[0], "c": closes}
             # timestamp of the last bar that actually has a close, for the as-of date
+            fund_last = 0
             for i in range(len(closes) - 1, -1, -1):
                 if closes[i] is not None:
-                    last_ts = max(last_ts, ts[i]); break
+                    fund_last = ts[i]; last_ts = max(last_ts, ts[i]); break
+            # trailing-12-month distributions (same currency as the closes) -> dv12,
+            # used to derive a trailing yield where the SGX export / curated has none
+            divs = (r.get("events") or {}).get("dividends") or {}
+            if divs and fund_last:
+                cutoff = fund_last - 365 * 86400   # epoch-seconds window, not calendar arithmetic
+                dv12 = sum(v.get("amount", 0) for v in divs.values() if v.get("date", 0) >= cutoff)
+                if dv12 > 0:
+                    entry["dv12"] = round(dv12, 6)
+            out[f["ticker"]] = entry
         except Exception as e:
             print(f"  {sym}: no data ({type(e).__name__})")
         time.sleep(0.15)
@@ -188,6 +198,41 @@ def load_or_fetch_prices(funds):
     n_funds = sum(1 for k in out if k != "asof")
     print(f"  prices.json: {n_funds}/{len(funds)} funds, asof {out.get('asof','?')}, {os.path.getsize(path):,} bytes")
     return out
+
+
+def apply_yahoo_yields(funds, prices):
+    """Fill / refresh trailing dividend yields from Yahoo distribution events.
+
+    yield = trailing-12m distributions (dv12) / last close, both in the fund's
+    trading currency. Policy:
+      - accumulating / non-paying funds have no events -> untouched (stay None);
+      - no curated yield          -> use the computed figure (src 'yahoo_ttm');
+      - curated agrees (<=1.5pp)  -> use the computed figure (fresher; refreshed
+                                     weekly by the prices Action);
+      - curated disagrees (>1.5pp)-> KEEP curated and flag for human review.
+    """
+    filled = replaced = 0
+    for f in funds:
+        p = prices.get(f["ticker"]) or {}
+        dv = p.get("dv12")
+        closes = p.get("c") or []
+        last = next((c for c in reversed(closes) if c is not None), None)
+        if not dv or not last:
+            continue
+        computed = round(100.0 * dv / last, 2)
+        cur = f.get("yield")
+        if cur is None:
+            f["yield"] = computed
+            f["yield_src"] = "yahoo_ttm"
+            filled += 1
+        elif abs(computed - cur) <= 1.5:
+            f["yield"] = computed
+            f["yield_src"] = "yahoo_ttm"
+            replaced += 1
+        else:
+            print(f"  YIELD FLAG {f['ticker']:5} curated {cur}% vs computed {computed}% "
+                  f"(>1.5pp apart) - keeping curated; review at next quarterly pass")
+    print(f"  yields: {filled} filled + {replaced} refreshed from Yahoo trailing-12m distributions")
 
 
 def build_docs(universe, cma, mp, prices):
@@ -393,11 +438,17 @@ def main():
         "funds": funds,
         "warnings": warnings,
     }
+    # ---- prices (weekly closes + trailing-12m distributions) ------------
+    # Loaded before the universe is written so Yahoo-derived trailing yields
+    # can fill the gaps the SGX export leaves empty (curated figures audited
+    # against them; large disagreements keep curated and are flagged).
+    prices = load_or_fetch_prices(funds)
+    apply_yahoo_yields(funds, prices)
+
     with open(os.path.join(DATA, "etf_universe.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)
 
     # ---- build docs/index.html (inline data for GitHub Pages) -----------
-    prices = load_or_fetch_prices(funds)
     build_docs(out, cma, mp, prices)
 
     # ---- verification summary (stdout) ----------------------------------

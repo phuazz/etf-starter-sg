@@ -35,15 +35,15 @@ jobs:
           echo "funds with price history: $n"
           if [ "$n" -lt 50 ]; then
             echo "Too few funds ($n) — likely a transient fetch failure. Reverting, not committing."
-            git checkout -- data/prices.json docs/index.html || true
+            git checkout -- data/prices.json data/etf_universe.json docs/index.html || true
             exit 0
           fi
-          if git diff --quiet -- data/prices.json docs/index.html; then
+          if git diff --quiet -- data/prices.json data/etf_universe.json docs/index.html; then
             echo "No change in prices/docs — nothing to commit."
           else
             git config user.name  "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/prices.json docs/index.html
-            git commit -m "Auto: refresh weekly price history ($(date -u +%Y-%m-%d))"
+            git add data/prices.json data/etf_universe.json docs/index.html
+            git commit -m "Auto: refresh weekly price history + trailing yields ($(date -u +%Y-%m-%d))"
             git push
           fi

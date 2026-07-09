@@ -47,7 +47,7 @@
       "ter": 0.5,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 6.5,
+      "yield": 7.01,
       "val_m": 0.1166,
       "liquidity_tier": "low",
       "tr_1m": 0.44,
@@ -84,7 +84,8 @@
         "return": 63,
         "liquidity": 40,
         "breadth": 62
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "QL2",
@@ -105,7 +106,7 @@
       "ter": 0.2,
       "ter_conf": "high",
       "mgmt_fee": 0.2,
-      "yield": 4.5,
+      "yield": 4.76,
       "val_m": 0.0021,
       "liquidity_tier": "thin",
       "tr_1m": null,
@@ -142,7 +143,8 @@
         "return": 73,
         "liquidity": 15,
         "breadth": 62
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "ZHS",
@@ -163,7 +165,7 @@
       "ter": 0.29,
       "ter_conf": "high",
       "mgmt_fee": 0.15,
-      "yield": 2.5,
+      "yield": 3.04,
       "val_m": 0.0,
       "liquidity_tier": "thin",
       "tr_1m": 2.39,
@@ -205,7 +207,8 @@
         "return": 70,
         "liquidity": 15,
         "breadth": 62
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "CYC",
@@ -226,7 +229,7 @@
       "ter": 0.25,
       "ter_conf": "med",
       "mgmt_fee": 0.25,
-      "yield": 2.0,
+      "yield": 2.97,
       "val_m": 0.0,
       "liquidity_tier": "thin",
       "tr_1m": 2.33,
@@ -268,7 +271,8 @@
         "return": 72,
         "liquidity": 15,
         "breadth": 62
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "KSB",
@@ -342,7 +346,7 @@
       "ter": 0.25,
       "ter_conf": "high",
       "mgmt_fee": 0.1,
-      "yield": 3.0,
+      "yield": 1.62,
       "val_m": 0.0633,
       "liquidity_tier": "thin",
       "tr_1m": 0.08,
@@ -379,7 +383,8 @@
         "return": 0,
         "liquidity": 15,
         "breadth": 60
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "AGGU",
@@ -453,7 +458,7 @@
       "ter": 0.0945,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 1.2,
+      "yield": 1.01,
       "val_m": 0.1255,
       "liquidity_tier": "low",
       "tr_1m": -0.08,
@@ -485,7 +490,8 @@
         "return": 75,
         "liquidity": 40,
         "breadth": 95
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "JJJ",
@@ -564,7 +570,7 @@
       "ter": 0.16,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 1.6,
+      "yield": 1.38,
       "val_m": 0.0053,
       "liquidity_tier": "thin",
       "tr_1m": 2.77,
@@ -596,7 +602,8 @@
         "return": 73,
         "liquidity": 15,
         "breadth": 95
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "CSPX",
@@ -1182,7 +1189,7 @@
       "ter": 0.74,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 2.5,
+      "yield": 3.14,
       "val_m": 0.0242,
       "liquidity_tier": "thin",
       "tr_1m": -1.91,
@@ -1219,7 +1226,8 @@
         "return": 72,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "JK8",
@@ -1514,7 +1522,7 @@
       "ter": 1.12,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 3.0,
+      "yield": 4.23,
       "val_m": 0.0001,
       "liquidity_tier": "thin",
       "tr_1m": 0.76,
@@ -1551,7 +1559,8 @@
         "return": 59,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "G1N",
@@ -2180,7 +2189,7 @@
       "ter": 0.6,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 5.2,
+      "yield": 5.42,
       "val_m": 0.5806,
       "liquidity_tier": "medium",
       "tr_1m": -0.97,
@@ -2212,7 +2221,8 @@
         "return": 60,
         "liquidity": 70,
         "breadth": 65
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "CFA",
@@ -2291,7 +2301,7 @@
       "ter": 0.6,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 5.0,
+      "yield": 5.88,
       "val_m": 0.171,
       "liquidity_tier": "low",
       "tr_1m": -1.53,
@@ -2328,7 +2338,8 @@
         "return": 60,
         "liquidity": 40,
         "breadth": 65
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "GRN",
@@ -2349,7 +2360,7 @@
       "ter": 0.94,
       "ter_conf": "high",
       "mgmt_fee": 0.45,
-      "yield": 4.5,
+      "yield": 4.31,
       "val_m": 0.0025,
       "liquidity_tier": "thin",
       "tr_1m": -3.15,
@@ -2386,7 +2397,8 @@
         "return": 49,
         "liquidity": 15,
         "breadth": 65
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "BYI",
@@ -2407,7 +2419,7 @@
       "ter": 1.7,
       "ter_conf": "med",
       "mgmt_fee": 0.3,
-      "yield": 5.0,
+      "yield": 5.25,
       "val_m": 0.0001,
       "liquidity_tier": "thin",
       "tr_1m": null,
@@ -2444,7 +2456,8 @@
         "return": 23,
         "liquidity": 15,
         "breadth": 65
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "ES3",
@@ -2465,7 +2478,7 @@
       "ter": 0.28,
       "ter_conf": "high",
       "mgmt_fee": 0.3,
-      "yield": 3.2,
+      "yield": 3.16,
       "val_m": 9.8502,
       "liquidity_tier": "high",
       "tr_1m": 1.2,
@@ -2497,7 +2510,8 @@
         "return": 74,
         "liquidity": 100,
         "breadth": 72
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "ESG",
@@ -2576,7 +2590,7 @@
       "ter": 0.24,
       "ter_conf": "high",
       "mgmt_fee": 0.09,
-      "yield": 3.2,
+      "yield": 3.43,
       "val_m": 0.9551,
       "liquidity_tier": "medium",
       "tr_1m": 1.19,
@@ -2613,7 +2627,8 @@
         "return": 75,
         "liquidity": 70,
         "breadth": 72
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "OVQ",
@@ -2750,7 +2765,7 @@
       "ter": 0.28,
       "ter_conf": "med",
       "mgmt_fee": 0.25,
-      "yield": 3.2,
+      "yield": 2.27,
       "val_m": 1.2829,
       "liquidity_tier": "medium",
       "tr_1m": null,
@@ -2787,7 +2802,8 @@
         "return": 0,
         "liquidity": 70,
         "breadth": 80
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "MBH",
@@ -2808,7 +2824,7 @@
       "ter": 0.26,
       "ter_conf": "high",
       "mgmt_fee": 0.15,
-      "yield": 3.4,
+      "yield": 3.14,
       "val_m": 0.4734,
       "liquidity_tier": "low",
       "tr_1m": -0.05,
@@ -2840,7 +2856,8 @@
         "return": 0,
         "liquidity": 40,
         "breadth": 80
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "A35",
@@ -2861,7 +2878,7 @@
       "ter": 0.24,
       "ter_conf": "high",
       "mgmt_fee": 0.15,
-      "yield": 3.0,
+      "yield": 2.36,
       "val_m": 0.4021,
       "liquidity_tier": "low",
       "tr_1m": 0.56,
@@ -2893,7 +2910,8 @@
         "return": 0,
         "liquidity": 40,
         "breadth": 80
-      }
+      },
+      "yield_src": "yahoo_ttm"
     },
     {
       "ticker": "KV4",

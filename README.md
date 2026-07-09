@@ -44,8 +44,12 @@ Two smaller transparency features sit alongside these:
 ## Data sources
 
 - **Universe:** SGX ETF Screener export (`data/sgx_etf_screener.csv`, downloaded 2026-07-09).
-  Note: the SGX export ships **empty TER and Yield columns** — these are supplied by a curated,
+  Note: the SGX export ships **empty TER and Yield columns** — TERs are supplied by a curated,
   source-flagged overlay (`data/curated.json`).
+- **Dividend yields:** trailing 12-month distributions from Yahoo Finance (fetched with the price
+  history, `dv12` in `prices.json`) divided by the latest close — refreshed by the weekly Action.
+  Curated figures are the fallback; where a curated and a computed figure disagree by more than
+  1.5pp the pipeline keeps the curated value and prints a `YIELD FLAG` for the quarterly review.
 - **Domicile:** derived from the ISIN embedded in each fund's document URL (64/91 automatic);
   the remainder curated against issuer factsheets.
 - **Forward returns:** `data/cma.json` — synthesised house estimates informed by published

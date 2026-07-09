@@ -214,6 +214,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .bdg-estate{background:var(--r);color:#fff;border-color:var(--r)}
 .est-note{font-size:10.5px;color:var(--r);margin-top:3px;font-weight:500}
 .tip{cursor:help;border-bottom:1px dotted var(--t4)}
+#tipPop{display:none;position:absolute;z-index:200;background:var(--t1);color:#fff;font-size:12px;line-height:1.55;padding:9px 12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);max-width:300px;white-space:pre-line}
 .scorewrap{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end;cursor:help}
 .scorebar{width:36px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .scorefill{display:block;height:100%;border-radius:3px}
@@ -230,6 +231,18 @@ td.r{text-align:right;font-family:var(--mono)}
 .step-d{font-size:12.5px;color:var(--t2);line-height:1.45}
 .step-go{font-size:12px;font-weight:600;color:var(--b);margin-top:9px}
 .hook-note{font-size:11.5px;color:var(--t3);margin-top:6px}
+/* first-purchase guide */
+.fp{margin-top:16px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg)}
+.fp summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:14px;list-style:none;display:flex;align-items:center;gap:9px}
+.fp summary::before{content:'▸';color:var(--b);transition:transform .15s}
+.fp[open] summary::before{transform:rotate(90deg)}
+.fp summary::-webkit-details-marker{display:none}
+.fp-body{padding:0 18px 16px}
+.fp-steps{margin:0;padding-left:20px}
+.fp-steps li{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:11px}
+.fp-steps li b{color:var(--t1)}
+.fp-flag{font-size:11.5px;color:var(--a);font-weight:600}
+.fp-note{font-size:11.5px;color:var(--t3);border-top:1px solid var(--bd);padding-top:10px;margin-top:4px}
 .tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -374,6 +387,21 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <button class="goal" data-g="start"><b>Just starting small</b><span>Keep it as simple as possible.</span></button>
     </div>
     <div id="planOut"></div>
+    <details class="fp" id="fpGuide">
+      <summary>Ready to act? Your first purchase, step by step</summary>
+      <div class="fp-body">
+        <ol class="fp-steps">
+          <li><b>Pick one broker that can reach both markets.</b> The starter mixes use funds listed in London (the Irish UCITS core) and on SGX. Interactive Brokers, Tiger, moomoo and Saxo all reach both; any of them works. SGX purchases sit in CDP or the broker&rsquo;s custody depending on the broker; London funds are always held in custody. Compare commissions and currency-conversion costs, not sign-up gifts.</li>
+          <li><b>Fund the account in SGD.</b> A FAST transfer from your bank is free and arrives in minutes at most brokers.</li>
+          <li><b>Convert currency <em>before</em> buying the London funds &mdash; this is where beginners silently overpay.</b> The core UCITS funds trade in US dollars. Currency conversion costs anywhere from a few hundredths of a percent at the cheapest brokers (roughly S$2&ndash;5 on S$10,000) to 0.5% or more through bank-card or wire routes (S$50+ on the same amount) &mdash; on the cheap core funds, a bad conversion can cost more than a whole year of fund fees. Convert inside the brokerage at its stated rate, and check the fee schedule first. <span class="fp-flag">Typical ranges as of mid-2026 &mdash; verify your broker&rsquo;s current pricing.</span></li>
+          <li><b>Choose the accumulating share class where offered.</b> CSPX, VWRA, IWDA, EIMI and AGGU reinvest dividends inside the fund automatically &mdash; no idle cash, no further conversion cost, nothing for you to do. (Funds marked &ldquo;Reinvested&rdquo; in the table are these.)</li>
+          <li><b>Place a limit order during market hours.</b> Set your price at or just above the quoted asking price rather than using a market order &mdash; it costs nothing extra and protects you from a bad fill. London trades 8:00am&ndash;4:30pm UK time, which is roughly 3pm&ndash;11:30pm in Singapore during UK summer and 4pm&ndash;12:30am in UK winter. SGX trades 9am&ndash;5pm Singapore time. Note the per-share price: one share of CSPX runs to several hundred US dollars, so on small amounts use a broker with fractional shares, or a lower-priced fund such as VWRA.</li>
+          <li><b>What a S$10,000 first purchase roughly costs, all-in.</b> Commission of a few dollars, currency conversion from S$2 (good route) to S$50+ (bad route), and a bid-ask spread of a few hundredths of a percent on the liquid core funds &mdash; call it <b>0.1%&ndash;0.6% one-off</b> depending mostly on your conversion route. The recurring costs this tool focuses on (fund fees and dividend withholding) matter more over the years, but a poor conversion route repeats on every top-up.</li>
+          <li><b>Then set the routine and stop watching.</b> Add a fixed amount monthly, rebalance roughly once a year back to your target weights, and treat market falls as expected weather rather than a reason to sell. The plan works through repetition, not timing.</li>
+        </ol>
+        <div class="fp-note">General education, not financial advice or a broker recommendation. Costs shown are typical ranges as of mid-2026; broker pricing changes &mdash; always check the current schedule.</div>
+      </div>
+    </details>
     <div class="goalq" style="margin-top:28px">Or explore on your own</div>
     <div class="steps">
       <button class="step" onclick="switchTab('find');var c=document.getElementById('coreRow');if(c)c.scrollIntoView({behavior:'smooth',block:'center'})">
@@ -440,7 +468,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable col-detail" data-k="trail_3y" title="Trailing 3-year annualised PRICE return (geometric, dividends extra). Backward-looking.">3Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_5y" title="Trailing 5-year annualised PRICE return (geometric, dividends extra). Backward-looking.">5Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
-        <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price). Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
+        <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price) — from issuer/curated data where verified, otherwise computed from the last 12 months of distributions (Yahoo Finance), refreshed weekly. Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
       </tr></thead>
       <tbody id="fundBody"></tbody>
@@ -916,7 +944,10 @@ function liqLabel(f){
 function yieldCell(f){
   if(f.asset_class==='gold') return '<span class="dim">—</span>';            // no dividend
   if((f.income||'').toLowerCase().indexOf('acc')===0) return '<span class="dim">Reinvested</span>';
-  if(f.yield!=null && f.yield>0) return fmt(f.yield,1);                      // distributing, known
+  if(f.yield!=null && f.yield>0){                                            // distributing, known
+    if(f.yield_src==='yahoo_ttm') return '<span class="tip" title="Trailing 12-month distributions (Yahoo Finance) ÷ latest price, refreshed with the weekly price data. Indicative — the payout is not guaranteed to repeat.">'+fmt(f.yield,1)+'</span>';
+    return fmt(f.yield,1);
+  }
   return '<span class="dim">—</span>';                                       // distributing but not available
 }
 
@@ -1280,7 +1311,7 @@ function selectGoal(g){
     '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See the Expected returns tab for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
-    '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>.</div>'+
+    '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>. A step-by-step purchase walkthrough is just below <a onclick="var g=document.getElementById(\'fpGuide\');g.open=true;g.scrollIntoView({behavior:\'smooth\',block:\'start\'})" style="color:var(--b);cursor:pointer;font-weight:600">&darr; open the guide</a>.</div>'+
     '<div class="plan-note">An illustration to learn from &mdash; not personalised advice. Fine-tune the exact weights in <a onclick="switchTab(\'build\')" style="color:var(--b);cursor:pointer;font-weight:600">Build a portfolio</a>.</div>'+
     '</div><div id="planDetail"></div>';
 }
@@ -1349,6 +1380,28 @@ async function init(){
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
   document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
   document.getElementById('eAmt').addEventListener('input',()=>{reformatAmt('eAmt');renderEstateCalc();});
+  initTipPop();
+}
+// Tap-to-open tooltips: the educational title="" attributes are hover-only and therefore invisible on
+// touch screens. Tapping any non-interactive element that carries one opens a styled popover instead.
+// Interactive elements (links, buttons, sortable headers, preset/goal cards) keep their tap behaviour.
+function initTipPop(){
+  const pop=document.createElement('div'); pop.id='tipPop'; document.body.appendChild(pop);
+  let cur=null;
+  const hide=()=>{pop.style.display='none';cur=null;};
+  document.addEventListener('click',e=>{
+    const el=e.target.closest('[title]');
+    if(!el || el.closest('a,button,input,select,label,th.sortable,.goal,.step,.pc,.tab')){hide();return;}
+    const txt=(el.getAttribute('title')||'').trim();
+    if(!txt){hide();return;}
+    if(cur===el){hide();return;}                       // second tap closes
+    cur=el; pop.textContent=txt; pop.style.display='block';
+    const r=el.getBoundingClientRect(), pw=Math.min(300,window.innerWidth-24);
+    pop.style.maxWidth=pw+'px';
+    const x=Math.max(12,Math.min(r.left,window.innerWidth-pw-12));
+    pop.style.left=x+'px'; pop.style.top=(r.bottom+8+window.scrollY)+'px';
+  });
+  window.addEventListener('scroll',hide,{passive:true});
 }
 init();
 </script>
