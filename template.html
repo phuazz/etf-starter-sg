@@ -251,7 +251,10 @@ td.r{text-align:right;font-family:var(--mono)}
 .proj-ctls .ctl input{min-width:110px;width:130px}
 .proj-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
 .proj-tile{flex:1;min-width:128px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:8px 10px}
-.proj-tile.mid{border-color:var(--b);background:var(--b-bg)}
+.proj-tile.seltile{cursor:pointer;transition:border-color .12s,background .12s}
+.proj-tile.seltile:hover{border-color:var(--bd-strong)}
+.proj-tile.sel{border-color:var(--b);background:var(--b-bg)}
+.proj-hint{font-size:11px;color:var(--t3);margin:8px 0 2px}
 .pt-l{font-size:10.5px;color:var(--t3);font-weight:600}
 .pt-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
 .pt-s{font-size:10px;color:var(--t4);margin-top:1px}
@@ -1481,15 +1484,26 @@ function updateProj(){
   const contrib=P*Y*12, lo=fvMonthly(P,r-2,Y), mid=fvMonthly(P,r,Y), hi=fvMonthly(P,r+2,Y);
   const rnd=v=>v>=100000?Math.round(v/1000)*1000:Math.round(v/100)*100;
   const f=v=>'S$'+rnd(v).toLocaleString('en-US');
-  const tile=(l,v,s,cls)=>'<div class="proj-tile '+(cls||'')+'"><div class="pt-l">'+l+'</div><div class="pt-v">'+v+'</div><div class="pt-s">'+s+'</div></div>';
+  if(!PROJ.sc) PROJ.sc='mid';
+  const tile=(l,v,s,sc)=>'<div class="proj-tile'+(sc?' seltile':'')+(sc===PROJ.sc?' sel':'')+'"'+(sc?' data-sc="'+sc+'" role="button" tabindex="0" title="Tap to show this scenario on the chart"':'')+'><div class="pt-l">'+l+'</div><div class="pt-v">'+v+'</div><div class="pt-s">'+s+'</div></div>';
   const fall=Math.round(CURPLAN.vol*2);
-  out.innerHTML='<div class="proj-tiles">'+
-    tile('You would put in',f(contrib),Y+' years &times; 12 &times; S$'+P.toLocaleString('en-US'),'')+
-    tile('Weaker','~'+f(lo),'at '+(r-2).toFixed(1)+'%/yr','')+
+  out.innerHTML='<div class="proj-hint">Tap a scenario to draw it on the chart.</div><div class="proj-tiles">'+
+    tile('You would put in',f(contrib),Y+' years &times; 12 &times; S$'+P.toLocaleString('en-US'),null)+
+    tile('Weaker','~'+f(lo),'at '+(r-2).toFixed(1)+'%/yr','lo')+
     tile('Central estimate','~'+f(mid),'at '+r.toFixed(1)+'%/yr','mid')+
-    tile('Stronger','~'+f(hi),'at '+(r+2).toFixed(1)+'%/yr','')+
+    tile('Stronger','~'+f(hi),'at '+(r+2).toFixed(1)+'%/yr','hi')+
     '</div><div id="projSvg"></div>'+
     '<div class="proj-fall">Expect the path to be bumpy, not the smooth curve drawn here: a mix like this can fall roughly <b>'+fall+'%</b> from a peak somewhere along the way (a rough rule of thumb &mdash; about twice its yearly volatility). That is normal and survivable &mdash; it is why the habits above matter more than the forecast.</div>';
+  const tiles=out.querySelector('.proj-tiles');
+  tiles.addEventListener('click',e=>{
+    const t=e.target.closest('[data-sc]'); if(!t) return;
+    PROJ.sc=t.dataset.sc; updateProj();
+  });
+  tiles.addEventListener('keydown',e=>{
+    if(e.key!=='Enter'&&e.key!==' ') return;
+    const t=e.target.closest('[data-sc]'); if(!t) return;
+    e.preventDefault(); PROJ.sc=t.dataset.sc; updateProj();
+  });
   drawProj(document.getElementById('projSvg'),P,Y,r,contrib,hi);
 }
 function drawProj(holder,P,Y,r,contrib,maxV){
@@ -1509,11 +1523,14 @@ function drawProj(holder,P,Y,r,contrib,maxV){
   let xl='';const step=Y<=10?Math.max(1,Math.round(Y/5)):5;
   for(let k=0;k<=Y;k+=step) xl+='<text x="'+X(k).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+k+'y</text>';
   const band='M'+sLo.map((v,k)=>X(k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' L'+sHi.slice().reverse().map((v,k)=>X(Y-k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' Z';
+  const SC={lo:{s:sLo,lab:'Weaker ('+(r-2).toFixed(1)+'%/yr)'},mid:{s:sMid,lab:'Central ('+r.toFixed(1)+'%/yr)'},hi:{s:sHi,lab:'Stronger ('+(r+2).toFixed(1)+'%/yr)'}};
+  const sel=SC[PROJ.sc]||SC.mid;
+  const others=Object.keys(SC).filter(k=>SC[k]!==sel).map(k=>'<path d="'+path(SC[k].s)+'" fill="none" stroke="#b7c8d4" stroke-width="1.1"/>').join('');
   holder.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+gl+xl+
-    '<path d="'+band+'" fill="rgba(12,74,110,0.09)"/>'+
+    '<path d="'+band+'" fill="rgba(12,74,110,0.07)"/>'+others+
     '<path d="'+path(sC)+'" fill="none" stroke="#8a8a82" stroke-width="1.3" stroke-dasharray="5 3"/>'+
-    '<path d="'+path(sMid)+'" fill="none" stroke="#0C4A6E" stroke-width="1.9"/></svg>'+
-    '<div class="chart-legend" style="margin-top:6px"><span style="color:#0C4A6E">&#9644;&nbsp;Central illustration</span><span style="color:#5c7d95">&#9644;&nbsp;Weaker&ndash;stronger band</span><span style="color:#8a8a82">&#9644;&nbsp;What you put in</span></div>';
+    '<path d="'+path(sel.s)+'" fill="none" stroke="#0C4A6E" stroke-width="2"/></svg>'+
+    '<div class="chart-legend" style="margin-top:6px"><span style="color:#0C4A6E">&#9644;&nbsp;'+sel.lab+'</span><span style="color:#9db2c0">&#9644;&nbsp;Other scenarios</span><span style="color:#8a8a82">&#9644;&nbsp;What you put in</span></div>';
 }
 function selectGoal(g){
   const p=GOAL_PLANS[g]; if(!p) return;
@@ -1634,7 +1651,7 @@ function initTipPop(){
   const hide=()=>{pop.style.display='none';cur=null;};
   document.addEventListener('click',e=>{
     const el=e.target.closest('[title]');
-    if(!el || el.closest('a,button,input,select,label,th.sortable,.goal,.step,.pc,.tab')){hide();return;}
+    if(!el || el.closest('a,button,input,select,label,th.sortable,.goal,.step,.pc,.tab,.seltile')){hide();return;}
     const txt=(el.getAttribute('title')||'').trim();
     if(!txt){hide();return;}
     if(cur===el){hide();return;}                       // second tap closes
