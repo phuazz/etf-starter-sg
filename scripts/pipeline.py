@@ -100,6 +100,44 @@ def liquidity_tier(val_m):
     if val_m >= 0.1: return "low"
     return "thin"
 
+def _clamp(x, lo=0.0, hi=100.0):
+    return max(lo, min(hi, x))
+
+# Starter Score weights (must be kept in sync with the tooltip copy in template.html).
+SCORE_WEIGHTS = {"cost": 0.25, "tax": 0.20, "return": 0.25, "liquidity": 0.15, "breadth": 0.15}
+_LIQ_SCORE = {"high": 100, "medium": 70, "low": 40, "thin": 15, "unknown": 55}
+_BREADTH_BASE = {"dev_equity": 95, "sg_equity": 72, "em_asia_equity": 70, "reits": 65,
+                 "dev_bonds": 82, "sgd_bonds": 80, "asia_bonds": 62, "gold": 60,
+                 "cash": 60, "thematic_equity": 30}
+
+def starter_score(rec):
+    """Transparent 0-100 efficiency composite for a long-term-hold starter — NOT a buy
+    recommendation. Returns (score, parts) or (None, None) when TER/return are unknown.
+    Components each 0-100:
+      cost   : lower total annual drag (TER + withholding) is better
+      tax    : estate-tax safety (US-domiciled penalised hard)
+      return : higher net expected return
+      liquidity : how easily traded
+      breadth: broad diversified beta beats single-country / thematic bets
+    """
+    net = rec.get("net_expected_return_pct")
+    drag = rec.get("cost_drag_total_pct")
+    if net is None or drag is None:
+        return None, None
+    cost = _clamp(100 * (1.0 - drag) / (1.0 - 0.15))           # 0.15%->100, 1.0%->0
+    tax = 25 if rec.get("estate_tax_exposed") else (60 if rec["domicile"] == "verify" else 100)
+    ret = _clamp(100 * (net - 2.5) / (8.0 - 2.5))              # 2.5%->0, 8%->100
+    liq = _LIQ_SCORE.get(rec.get("liquidity_tier"), 55)
+    ac = rec["asset_class"]
+    seg = (rec.get("segment") or "").lower()
+    breadth = _BREADTH_BASE.get(ac, 55)
+    if ac == "em_asia_equity":
+        breadth = 78 if "emerging market" in seg else 52       # broad EM vs single-country
+    parts = {"cost": round(cost), "tax": round(tax), "return": round(ret),
+             "liquidity": round(liq), "breadth": round(breadth)}
+    total = sum(parts[k] * SCORE_WEIGHTS[k] for k in SCORE_WEIGHTS)
+    return round(total), parts
+
 # ---- docs build ----------------------------------------------------------
 def build_docs(universe, cma, mp):
     """Inline the three data objects into template.html -> docs/index.html so
@@ -182,6 +220,9 @@ def main():
         else:
             rec["cost_drag_total_pct"] = round(ter + drag, 3)
             rec["net_expected_return_pct"] = round(acinfo["ret"] - ter - drag, 2)
+        score, parts = starter_score(rec)
+        rec["starter_score"] = score
+        rec["score_parts"] = parts
         return rec
 
     # ---- ingest SGX rows, grouped by normalised name --------------------
@@ -256,6 +297,19 @@ def main():
             "n_ucits_core": len(curated["ucits_core"]),
             "not_advice": True,
             "note": "Educational. Forward returns are synthesised house estimates, not forecasts. Domicile drives the tax verdict; where domicile_conf != 'isin'/'curated' treat with a verify flag.",
+            "score_method": {
+                "label": "Starter Score",
+                "range": "0-100",
+                "caveat": "A transparent efficiency composite for a long-term buy-and-hold starter — NOT a buy recommendation. Blank where TER is not yet source-verified.",
+                "weights": SCORE_WEIGHTS,
+                "components": {
+                    "cost": "Lower total annual drag (TER + dividend withholding) scores higher.",
+                    "tax": "US estate-tax safety; US-domiciled funds penalised hard.",
+                    "return": "Higher net expected long-run return scores higher.",
+                    "liquidity": "How easily the fund can be traded.",
+                    "breadth": "Broad diversified beta beats single-country or thematic bets."
+                }
+            },
         },
         "funds": funds,
         "warnings": warnings,
@@ -295,6 +349,14 @@ def main():
                   f"gross={f['gross_expected_return_pct']}% ter={f['ter']} "
                   f"whtdrag={f['est_wht_drag_pct']}% net={f['net_expected_return_pct']}% "
                   f"estate={'YES' if f['estate_tax_exposed'] else 'no'}")
+    print("\nStarter Score (top 8 of scored funds):")
+    scored = sorted([f for f in funds if f.get("starter_score") is not None],
+                    key=lambda f: -f["starter_score"])
+    for f in scored[:8]:
+        p = f["score_parts"]
+        print(f"  {f['starter_score']:3}  {f['ticker']:5} {f['segment'][:18]:18} "
+              f"[cost {p['cost']} tax {p['tax']} ret {p['return']} liq {p['liquidity']} brd {p['breadth']}]")
+    print(f"  ({len(scored)}/{len(funds)} funds scored; rest lack a verified TER)")
     if warnings:
         print("\nWARNINGS:")
         for w in warnings:
