@@ -92,9 +92,9 @@
       },
       "us_content_by_class": {
         "dev_equity": 0.65, "sg_equity": 0.0, "em_asia_equity": 0.0, "thematic_equity": 0.4,
-        "dev_bonds": 0.5, "sgd_bonds": 0.0, "asia_bonds": 0.0, "reits": 0.0, "gold": 0.0, "cash": 0.0
+        "dev_bonds": 0.05, "sgd_bonds": 0.0, "asia_bonds": 0.0, "reits": 0.0, "gold": 0.0, "cash": 0.0
       },
-      "_content_note": "us_content = fraction of the fund's income that is US-source (and therefore subject to US dividend withholding). Estimates. drag = assumed_div_yield * us_content * (wht_rate). This models the dominant US-dividend case only; non-US withholding (e.g. China ~10%) is not modelled and is flagged where material."
+      "_content_note": "us_content = fraction of the fund's income that is US-source and subject to US DIVIDEND withholding. Estimates. drag = assumed_div_yield * us_content * wht_rate. Bond funds are set near-zero: US-source INTEREST paid to a foreign fund is largely exempt under the US portfolio-interest exemption, so a global aggregate suffers little US withholding despite ~40% US content. Models the dominant US-dividend case only; non-US withholding (e.g. China ~10%) is not modelled and is flagged where material."
     }
   }
 }
