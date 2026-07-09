@@ -245,6 +245,14 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.shell{padding:16px 16px 50px}.masthead h1{font-size:28px}}
 .footlet{font-size:12px;color:var(--t3);margin-top:10px;line-height:1.5}
+.ec-grid{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 4px}
+.ec-cell{flex:1;min-width:150px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
+.ec-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700}
+.ec-v{font-family:var(--mono);font-weight:700;font-size:26px;letter-spacing:-0.5px;margin-top:3px}
+.ec-v.ec-bad{color:var(--r)}
+.ec-s{font-size:11.5px;color:var(--t3);margin-top:2px}
+.ec-alt{margin-top:12px;background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:var(--radius);padding:11px 14px;font-size:13px;color:var(--t2);line-height:1.5}
+.ec-alt strong{color:var(--g)}
 .pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 .pc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
 .pc:hover{border-color:var(--bd-strong)}
@@ -496,6 +504,16 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <table class="cmp" id="estRateTbl"></table>
         <p class="footlet">On a US$1m US-stock portfolio the estate tax is about US$332,800 — an effective 33%. Singapore has no US estate-tax treaty, so there is no relief beyond the US$60k.</p>
       </div>
+    </div>
+
+    <div class="card" id="estCalcCard" style="margin-top:20px">
+      <h3>Estimate the tax on your US-situs holdings</h3>
+      <div class="calcgrid">
+        <div class="ctl"><label>Value of US-situs assets at death (US$)</label><input id="eAmt" type="text" inputmode="numeric" value="250,000"></div>
+      </div>
+      <p class="footlet" style="margin-top:0">US-situs = US-domiciled ETFs (SGX's S27, D07, GSD) plus any directly-held US shares. S$ figures assume <strong>S$1 &asymp; US$0.74</strong> — an <em>assumption</em>; the live rate moves.</p>
+      <div id="eCalcOut"></div>
+      <div class="notice" style="margin-top:14px">An <strong>illustration of the published IRC §2001(c) schedule</strong> — not tax advice, and not personalised. Singapore has no US estate-tax treaty. Situs rules, jointly-held assets, insurance and future law changes all vary the outcome; figures are current-law (2026). Consult a qualified cross-border tax adviser before acting.</div>
     </div>
 
     <h2 class="sec" style="margin-top:28px">What is exposed, and what is safe</h2>
@@ -841,18 +859,23 @@ function renderCost(){
   }
   renderCostSim();
 }
-function estateTax(usd){
-  const sch=CMA.tax.us_estate.schedule, ex=CMA.tax.us_estate.exemption_usd;
-  if(usd<=ex) return 0;
-  if(usd<=sch[0].us_situs_usd) return sch[0].tax_usd*(usd-ex)/(sch[0].us_situs_usd-ex);
-  for(let i=0;i<sch.length-1;i++){
-    if(usd<=sch[i+1].us_situs_usd){
-      const a=sch[i],b=sch[i+1];
-      return a.tax_usd+(b.tax_usd-a.tax_usd)*(usd-a.us_situs_usd)/(b.us_situs_usd-a.us_situs_usd);
-    }
+// ---------- US estate tax: ONE shared IRC §2001(c) schedule ----------
+// Graduated brackets [lower US$ bound, marginal rate], current law (2026). The tax applies
+// to the whole taxable estate; a US$13,000 unified credit then shelters the first US$60,000.
+// This single function drives BOTH the Learn-tab rate table and the interactive calculator.
+const ESTATE_BRACKETS=[[0,0.18],[10000,0.20],[20000,0.22],[40000,0.24],[60000,0.26],[80000,0.28],[100000,0.30],[150000,0.32],[250000,0.34],[500000,0.37],[750000,0.39],[1000000,0.40]];
+const ESTATE_CREDIT_USD=13000;   // non-resident-alien unified credit — exactly offsets the tentative tax on the first US$60,000
+// Tentative graduated tax on the full US-situs estate, before the unified credit.
+function tentativeEstateTax(usd){
+  let t=0;
+  for(let i=0;i<ESTATE_BRACKETS.length;i++){
+    const lo=ESTATE_BRACKETS[i][0], hi=(i+1<ESTATE_BRACKETS.length)?ESTATE_BRACKETS[i+1][0]:Infinity;
+    if(usd>lo) t+=(Math.min(usd,hi)-lo)*ESTATE_BRACKETS[i][1]; else break;
   }
-  return usd*CMA.tax.us_estate.top_rate*0.9; // beyond table: ~top-rate zone
+  return t;
 }
+// US estate tax owed by a Singapore-resident non-resident alien on US-situs assets, floored at 0.
+function estateTax(usd){ return Math.max(0, tentativeEstateTax(usd)-ESTATE_CREDIT_USD); }
 function bestCleanForClass(ac){
   const c=FUNDS.filter(f=>f.asset_class===ac && !f.estate_tax_exposed && f.net_expected_return_pct!=null);
   c.sort((a,b)=>a.cost_drag_total_pct-b.cost_drag_total_pct);
@@ -1021,9 +1044,25 @@ function renderEstate(){
 
 function renderLearn(){
   const t=CMA.tax.us_estate;
+  // Tax + effective rate computed from the shared estateTax() schedule — no precomputed values, so
+  // the table and the calculator below can never drift apart.
   document.getElementById('estRateTbl').innerHTML=
     '<tr><th class="r">US-situs at death</th><th class="r">Estate tax</th><th class="r">Effective rate</th></tr>'+
-    t.schedule.map(s=>`<tr><td class="r">US$${s.us_situs_usd.toLocaleString()}</td><td class="r">US$${s.tax_usd.toLocaleString()}</td><td class="r"><strong>${(s.effective_rate*100).toFixed(1)}%</strong></td></tr>`).join('');
+    t.schedule.map(s=>{const u=s.us_situs_usd,tax=estateTax(u),er=u>0?tax/u:0;return `<tr><td class="r">US$${u.toLocaleString()}</td><td class="r">US$${Math.round(tax).toLocaleString()}</td><td class="r"><strong>${(er*100).toFixed(1)}%</strong></td></tr>`;}).join('');
+  renderEstateCalc();
+}
+// Interactive illustration of the schedule above — NOT tax advice, NOT personalised.
+const EST_FX=0.74;   // assumption: S$1 ≈ US$0.74. The live rate moves; flagged inline as an assumption.
+function renderEstateCalc(){
+  const out=document.getElementById('eCalcOut'); if(!out) return;
+  const usd=amtVal('eAmt'), tax=estateTax(usd), er=usd>0?tax/usd:0;
+  const taxSgd=tax/EST_FX;
+  out.innerHTML=
+    '<div class="ec-grid">'+
+      '<div class="ec-cell"><div class="ec-l">Estimated US estate tax</div><div class="ec-v ec-bad">US$'+Math.round(tax).toLocaleString()+'</div><div class="ec-s">&asymp; S$'+Math.round(taxSgd).toLocaleString()+'</div></div>'+
+      '<div class="ec-cell"><div class="ec-l">Effective rate</div><div class="ec-v ec-bad">'+(er*100).toFixed(1)+'%</div><div class="ec-s">of US$'+usd.toLocaleString()+' US-situs</div></div>'+
+    '</div>'+
+    '<div class="ec-alt"><strong>Held instead via Irish-domiciled UCITS</strong> (CSPX, VWRA, IWDA&hellip;): US estate tax = <strong>US$0</strong> (non-US-situs), and dividend withholding is <strong>15%, not 30%</strong>.</div>';
 }
 
 // ---------- Start: goal-based front door (illustrative, not advice) ----------
@@ -1101,6 +1140,7 @@ async function init(){
   ['cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
   document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
+  document.getElementById('eAmt').addEventListener('input',()=>{reformatAmt('eAmt');renderEstateCalc();});
 }
 init();
 </script>
