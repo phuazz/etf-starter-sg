@@ -108,6 +108,10 @@ td.r{text-align:right;font-family:var(--mono)}
 .bdg-estate{background:var(--r);color:#fff;border-color:var(--r)}
 .est-note{font-size:10.5px;color:var(--r);margin-top:3px;font-weight:500}
 .tip{cursor:help;border-bottom:1px dotted var(--t4)}
+.scorewrap{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end;cursor:help}
+.scorebar{width:36px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.scorefill{display:block;height:100%;border-radius:3px}
+.scoreval{font-family:var(--mono);font-weight:700;font-size:13px;width:22px;text-align:right}
 
 /* cost tab */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -218,6 +222,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="sortable" data-k="ticker">Fund <span class="arw"></span></th>
         <th class="sortable" data-k="asset_class">Class <span class="arw"></span></th>
         <th>Domicile / tax</th>
+        <th class="r sortable" data-k="starter_score">Starter Score <span class="arw"></span></th>
         <th class="r sortable" data-k="ter">TER % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct">Net exp. return <span class="arw"></span></th>
         <th class="r sortable" data-k="yield">Yield % <span class="arw"></span></th>
@@ -251,7 +256,8 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
           <div class="ctl"><label>Years held</label><input id="cYrs" type="number" value="20" min="1" max="50"></div>
           <div class="ctl"><label>Fund</label><select id="cFund"></select></div>
         </div>
-        <div class="bars" id="costBars"></div>
+        <div id="costHead" style="font-size:13px;color:var(--t1);margin:2px 0 6px;min-height:20px;line-height:1.45"></div>
+        <div id="costChart" style="height:270px"></div>
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--bd)">
           <div class="kpi-lab">US estate-tax exposure at this amount</div>
           <div class="bignum" id="estNum" style="margin-top:6px">—</div>
@@ -336,7 +342,7 @@ async function loadData(){
   return {universe:u,cma:c,mp:m};
 }
 let DATA, FUNDS, CMA, MP, ACLABEL, CORR;
-let sortKey='net_expected_return_pct', sortDir=-1, routeFilter='';
+let sortKey='starter_score', sortDir=-1, routeFilter='';
 let BW={}, BPRESET='balanced', BBASE={band:[10,15],vol:1}, fwdDone=false, buildDone=false;
 const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_bonds','gold','cash'];
 const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
@@ -349,6 +355,13 @@ function domBadge(f){
   if(f.is_core) h=' <span class="bdg bdg-core">Core</span> '+h;
   if(f.estate_tax_exposed) h+='<div class="est-note">⚠ US estate tax + 30% withholding</div>';
   return h;
+}
+function scoreCell(f){
+  if(f.starter_score==null) return '<span class="bdg bdg-verify" title="Needs a source-verified TER before it can be scored">n/a</span>';
+  const s=f.starter_score, p=f.score_parts||{};
+  const col=s>=80?'var(--g)':(s>=60?'var(--a)':'var(--r)');
+  const tip=`Starter Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Breadth ${p.breadth}`;
+  return `<span class="scorewrap" title="${tip}"><span class="scorebar"><span class="scorefill" style="width:${s}%;background:${col}"></span></span><span class="scoreval" style="color:${col}">${s}</span></span>`;
 }
 function liqLabel(f){
   const t=f.liquidity_tier;
@@ -379,7 +392,7 @@ function renderCore(){
   document.getElementById('coreRow').innerHTML=cards.map(f=>
     '<div class="corecard"><div class="cc-t"><span class="cc-tk">'+f.ticker+'</span><span class="bdg bdg-ie">IE</span></div>'+
     '<div class="cc-nm">'+f.name+'</div>'+
-    '<div class="cc-r">'+fmt(f.net_expected_return_pct,1,'%')+' net exp. return · '+fmt(f.ter,2,'% TER')+'</div></div>').join('');
+    '<div class="cc-r">Score '+(f.starter_score!=null?f.starter_score:'—')+' · '+fmt(f.net_expected_return_pct,1,'%')+' net · '+fmt(f.ter,2,'% TER')+'</div></div>').join('');
 }
 
 function passRoute(f){
@@ -409,13 +422,15 @@ function renderTable(){
     '<td><div class="tk">'+f.ticker+'</div><div class="nm">'+f.name+'</div></td>'+
     '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td>'+domBadge(f)+'</td>'+
+    '<td class="r">'+scoreCell(f)+'</td>'+
     '<td class="r">'+(f.ter!=null?fmt(f.ter,2):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
     '<td class="r">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
     '<td class="r">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    '“Net exp. return” = long-run asset-class estimate − TER − withholding drag; blank where TER is not yet source-verified. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
+    '<strong>Starter Score</strong> (0–100, hover for the breakdown) is a transparent efficiency composite — <em>cost 25% · tax-safety 20% · return 25% · liquidity 15% · breadth 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
+    '“Net exp. return” = long-run asset-class estimate − TER − withholding drag. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
@@ -445,7 +460,7 @@ function renderCost(){
     const d=opts.find(f=>f.ticker==='S27'); if(d) sel.value='S27';
     sel.dataset.filled='1';
   }
-  renderCostBars();
+  renderCostSim();
 }
 function estateTax(usd){
   const sch=CMA.tax.us_estate.schedule, ex=CMA.tax.us_estate.exemption_usd;
@@ -459,24 +474,55 @@ function estateTax(usd){
   }
   return usd*CMA.tax.us_estate.top_rate*0.9; // beyond table: ~top-rate zone
 }
-function renderCostBars(){
+function bestCleanForClass(ac){
+  const c=FUNDS.filter(f=>f.asset_class===ac && !f.estate_tax_exposed && f.net_expected_return_pct!=null);
+  c.sort((a,b)=>a.cost_drag_total_pct-b.cost_drag_total_pct);
+  return c[0]||null;
+}
+function costliestForClass(ac,excl){
+  let c=FUNDS.filter(f=>f.asset_class===ac && f.net_expected_return_pct!=null && f.ticker!==excl);
+  const ex=c.filter(f=>f.estate_tax_exposed);
+  const pool=ex.length?ex:c;
+  pool.sort((a,b)=>a.net_expected_return_pct-b.net_expected_return_pct);
+  return pool[0]||null;
+}
+function renderCostSim(){
   const amt=+document.getElementById('cAmt').value||0;
-  const yrs=+document.getElementById('cYrs').value||1;
+  const yrs=Math.max(1,Math.min(50,+document.getElementById('cYrs').value||1));
   const f=FUNDS.find(x=>x.ticker===document.getElementById('cFund').value);
   if(!f) return;
-  const terC=amt*(f.ter/100), whtC=amt*(f.est_wht_drag_pct/100), tot=terC+whtC;
-  const max=Math.max(tot,1);
-  const bar=(lab,val,col)=>'<div class="barrow"><div class="bl">'+lab+'</div><div class="bt"><div class="bf" style="width:'+(val/max*100)+'%;background:'+col+'"></div></div><div class="bv">S$'+Math.round(val).toLocaleString()+'</div></div>';
-  document.getElementById('costBars').innerHTML=
-    bar('Fee (TER)/yr',terC,'var(--p)')+
-    bar('Withholding/yr',whtC,'var(--a)')+
-    bar('Total/yr',tot,'var(--r2)')+
-    '<div class="barrow"><div class="bl">Over '+yrs+' yrs</div><div class="bt"><div class="bf" style="width:100%;background:var(--t2)"></div></div><div class="bv">S$'+Math.round(tot*yrs).toLocaleString()+'</div></div>';
-  // estate exposure (only if US-situs). Amount treated as USD-equivalent for the schedule.
+  const clean=bestCleanForClass(f.asset_class);
+  const comp=(clean && clean.ticker!==f.ticker)?clean:costliestForClass(f.asset_class,f.ticker);
+  const t=Array.from({length:yrs+1},(_,i)=>i);
+  const wealth=g=>t.map(y=>amt*Math.pow(1+g/100,y));
+  const wF=wealth(f.net_expected_return_pct);
+  const traces=[]; let head;
+  if(comp){
+    const wC=wealth(comp.net_expected_return_pct);
+    const fBetter=f.net_expected_return_pct>=comp.net_expected_return_pct;
+    const upper=fBetter?{fund:f,w:wF}:{fund:comp,w:wC};
+    const lower=fBetter?{fund:comp,w:wC}:{fund:f,w:wF};
+    traces.push({x:t,y:lower.w,mode:'lines',name:lower.fund.ticker,line:{color:'#b0b0a8',width:2,dash:'dot'},hovertemplate:lower.fund.ticker+' · yr %{x}<br>S$%{y:,.0f}<extra></extra>'});
+    traces.push({x:t,y:upper.w,mode:'lines',name:upper.fund.ticker+' ▲',line:{color:'#1a8754',width:2.6},fill:'tonexty',fillcolor:'rgba(26,135,84,0.09)',hovertemplate:upper.fund.ticker+' · yr %{x}<br>S$%{y:,.0f}<extra></extra>'});
+    const gap=Math.abs(wF[yrs]-wC[yrs]);
+    const better=fBetter?f:comp, worse=fBetter?comp:f;
+    const dl={SG:'Singapore',IE:'Irish',LU:'Lux',FR:'French',US:'US'}[worse.domicile]||worse.domicile;
+    head='After <b>'+yrs+' years</b>, the '+dl+'-domiciled <b class="mono">'+worse.ticker+'</b> leaves you about <b style="color:var(--r)">S$'+Math.round(gap).toLocaleString()+'</b> poorer than <b class="mono">'+better.ticker+'</b> — from cost and withholding alone, before any estate tax.';
+  }else{
+    traces.push({x:t,y:wF,mode:'lines',name:f.ticker,line:{color:'#1a8754',width:2.6},hovertemplate:f.ticker+' · yr %{x}<br>S$%{y:,.0f}<extra></extra>'});
+    head='Growth of S$'+Math.round(amt).toLocaleString()+' in '+f.ticker+' at its net expected return.';
+  }
+  document.getElementById('costHead').innerHTML=head;
+  const layout={paper_bgcolor:'transparent',plot_bgcolor:'transparent',
+    font:{family:'DM Sans',size:10,color:'#5c5c56'},margin:{t:10,b:38,l:12,r:60},
+    xaxis:{title:{text:'Years held',font:{size:11}},gridcolor:'#f0f0ea',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'}},
+    yaxis:{gridcolor:'#f0f0ea',zeroline:false,linecolor:'#d5d3ca',side:'right',tickprefix:'S$',tickformat:'.2s',tickfont:{size:9,family:'JetBrains Mono'}},
+    showlegend:true,legend:{x:0,y:1.04,orientation:'h',font:{size:10},bgcolor:'transparent'},
+    hovermode:'x unified',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:10,family:'DM Sans'}}};
+  Plotly.react('costChart',traces,layout,{displayModeBar:false,responsive:true});
   const en=document.getElementById('estNum'), es=document.getElementById('estSub');
   if(f.estate_tax_exposed){
-    const usd=amt*0.74; // rough SGD→USD for the illustration
-    const tax=estateTax(usd);
+    const usd=amt*0.74, tax=estateTax(usd);
     en.innerHTML='<span style="color:var(--r)">S$'+Math.round(tax/0.74).toLocaleString()+'</span>';
     es.textContent='Potential US estate tax if you died holding this US-domiciled fund (~'+(tax/usd*100).toFixed(0)+'% effective). A non-US-domiciled fund = S$0.';
   }else{
@@ -626,7 +672,7 @@ async function init(){
     const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;} renderTable();
   }));
   document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
-  ['cAmt','cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostBars));
+  ['cAmt','cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
   document.getElementById('bAmt').addEventListener('input',renderEstate);
 }
