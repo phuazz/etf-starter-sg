@@ -244,6 +244,39 @@ td.r{text-align:right;font-family:var(--mono)}
 .fp-steps li b{color:var(--t1)}
 .fp-flag{font-size:11.5px;color:var(--a);font-weight:600}
 .fp-note{font-size:11.5px;color:var(--t3);border-top:1px solid var(--bd);padding-top:10px;margin-top:4px}
+/* compounding illustration */
+.proj{margin-top:16px;border-top:1px solid var(--bd);padding-top:14px}
+.proj-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:10px}
+.proj-ctls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.proj-ctls .ctl input{min-width:110px;width:130px}
+.proj-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.proj-tile{flex:1;min-width:128px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:8px 10px}
+.proj-tile.mid{border-color:var(--b);background:var(--b-bg)}
+.pt-l{font-size:10.5px;color:var(--t3);font-weight:600}
+.pt-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
+.pt-s{font-size:10px;color:var(--t4);margin-top:1px}
+.proj-note{font-size:11px;color:var(--t3);margin-top:8px;line-height:1.55}
+.proj-fall{font-size:12px;color:var(--t2);margin-top:10px;line-height:1.5;background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:8px 11px}
+/* compare tray + modal */
+.cmp-btn.on{color:var(--g)}
+#cmpTray{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:150;display:flex;align-items:center;gap:12px;background:var(--t1);color:#fff;border-radius:24px;padding:9px 16px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:12.5px}
+#cmpTray button{font-family:var(--sans);font-size:12.5px;font-weight:700;color:#fff;background:var(--b);border:none;border-radius:16px;padding:5px 14px;cursor:pointer}
+#cmpTray button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.4);font-weight:600}
+#cmpModal{position:fixed;inset:0;z-index:180;background:rgba(20,20,16,0.45);display:flex;align-items:center;justify-content:center;padding:18px}
+.cmp-card{background:var(--bg2);border-radius:var(--radius-lg);max-width:960px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.35)}
+.cmp-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--bd);font-size:15px}
+.cmp-head button{background:none;border:none;font-size:16px;color:var(--t3);cursor:pointer;padding:4px 8px}
+.cmp-scroll{overflow:auto;padding:6px 18px}
+.cmp-foot{padding:10px 18px;border-top:1px solid var(--bd);font-size:11px;color:var(--t3)}
+.cmp-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:12.5px}
+.cmp-tbl th,.cmp-tbl td{padding:7px 10px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}
+.cmp-tbl thead th{position:sticky;top:0;background:var(--bg2)}
+.cmp-tbl tbody th{font-weight:600;color:var(--t3);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
+.cmp-tbl th.r,.cmp-tbl td.r{text-align:right}
+.cmp-tbl td.r{font-family:var(--mono)}
+.cmp-tbl td.best{background:var(--g-bg)}
+.cmp-nm{font-size:10.5px;color:var(--t3);font-weight:400;max-width:150px;font-family:var(--sans)}
+.cmp-tbl .tk-link{cursor:pointer}
 .tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -661,6 +694,19 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
 </div>
 
+<div id="cmpTray" style="display:none">
+  <span id="cmpCount"></span>
+  <button id="cmpOpen">Compare</button>
+  <button id="cmpClear" class="ghost">Clear</button>
+</div>
+<div id="cmpModal" style="display:none">
+  <div class="cmp-card">
+    <div class="cmp-head"><b>Side-by-side comparison</b><button id="cmpClose" aria-label="Close">✕</button></div>
+    <div class="cmp-scroll" id="cmpBody"></div>
+    <div class="cmp-foot">Same figures and caveats as the main table — efficiency for a long-term hold, not a buy call. Estimates, not advice.</div>
+  </div>
+</div>
+
 <script id="data-boot">window.__DATA__=null;</script>
 <script>
 const DOM_LABEL={SG:'Singapore',IE:'Ireland (UCITS)',LU:'Luxembourg',FR:'France',US:'United States',HK:'Hong Kong',verify:'Verify'};
@@ -897,6 +943,51 @@ function altBlock(f){
     (alts.length?'<div class="alt-scroll"><table class="alt-tbl"><thead><tr><th>Fund</th><th>Domicile / tax</th><th class="r">Cost</th><th class="r">Net return</th><th class="r">Volatility</th><th class="r">Score</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="alt-note">Ranked by Efficiency Score within the same asset class. &ldquo;Best value&rdquo; = highest score shown. Tap a ticker to open its full snapshot.</div>':'')+
     '</div>';
 }
+// --- multi-select compare tray ----------------------------------------------
+let CMP=new Set();
+function toggleCmp(tk){
+  if(CMP.has(tk)) CMP.delete(tk);
+  else{
+    if(CMP.size>=4){const c=document.getElementById('cmpCount');c.textContent='Up to 4 funds';setTimeout(updateCmpUI,1400);return;}
+    CMP.add(tk);
+  }
+  updateCmpUI();
+}
+function updateCmpUI(){
+  document.querySelectorAll('.cmp-btn').forEach(b=>{
+    const on=CMP.has(b.dataset.cmp);
+    b.classList.toggle('on',on); b.textContent=on?'✓ Comparing':'+ Compare';
+  });
+  const tray=document.getElementById('cmpTray');
+  if(CMP.size){tray.style.display='flex';document.getElementById('cmpCount').textContent=CMP.size+' selected';}
+  else{tray.style.display='none';closeCmp();}
+}
+function openCmp(){
+  if(!CMP.size) return;
+  const fs=[...CMP].map(tk=>FUNDS.find(f=>f.ticker===tk)).filter(Boolean);
+  const bestScore=Math.max(...fs.map(f=>f.starter_score??-1));
+  const costs=fs.map(f=>f.effective_ter).filter(v=>v!=null), minCost=costs.length?Math.min(...costs):null;
+  const cell=(html,strong)=>'<td class="r'+(strong?' best':'')+'">'+html+'</td>';
+  const row=(label,fn)=>'<tr><th>'+label+'</th>'+fs.map(fn).join('')+'</tr>';
+  const h='<table class="cmp-tbl"><thead><tr><th></th>'+fs.map(f=>'<th class="r"><a class="tk-link" onclick="closeCmp();openFund(\''+f.ticker+'\')">'+f.ticker+'</a><div class="cmp-nm">'+f.name+'</div></th>').join('')+'</tr></thead><tbody>'+
+    row('Asset class',f=>cell(ACLABEL[f.asset_class]||f.asset_class))+
+    row('Domicile / tax',f=>cell(f.estate_tax_exposed?'<span class="alt-trap">⚠</span> '+(DOM_LABEL[f.domicile]||f.domicile):(DOM_LABEL[f.domicile]||f.domicile)))+
+    row('Efficiency Score',f=>cell(f.starter_score!=null?'<b style="color:'+scoreColor(f.starter_score)+'">'+f.starter_score+'</b>':'n/a', f.starter_score===bestScore&&fs.length>1))+
+    row('Annual cost %',f=>cell(f.effective_ter!=null?fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':''):'—', minCost!=null&&f.effective_ter===minCost&&fs.length>1))+
+    row('Mgmt fee %',f=>cell(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—'))+
+    row('Net exp. return %',f=>cell(f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1):'—'))+
+    row('Volatility',f=>cell((volWord(f)||'—')+(f.exp_vol!=null?' <span class="seg-lab">('+f.exp_vol+'%)</span>':'')))+
+    row('Dividend yield %',f=>cell(yieldCell(f)))+
+    row('Liquidity',f=>cell(liqLabel(f)))+
+    row('1Y price return',f=>cell(trailCell(f.trail_1y)))+
+    row('3Y p.a.',f=>cell(trailCell(f.trail_3y)))+
+    row('5Y p.a.',f=>cell(trailCell(f.trail_5y)))+
+    row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r);font-weight:700">Exposed</span>':'<span style="color:var(--g);font-weight:700">Safe</span>'))+
+    '</tbody></table>';
+  document.getElementById('cmpBody').innerHTML=h;
+  document.getElementById('cmpModal').style.display='flex';
+}
+function closeCmp(){const m=document.getElementById('cmpModal');if(m)m.style.display='none';}
 // Deep-link from anywhere (goal plan, alternatives table) into a fund's full snapshot in the Find tab.
 function openFund(tk){
   switchTab('find');
@@ -1038,7 +1129,7 @@ function renderTable(){
   });
   document.getElementById('fundBody').innerHTML=rows.map(f=>
     '<tr data-tk="'+f.ticker+'">'+
-    '<td class="cell-fund"><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div><button class="chart-btn" data-tk="'+f.ticker+'">Price chart ▾</button></td>'+
+    '<td class="cell-fund"><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div><button class="chart-btn" data-tk="'+f.ticker+'">Price chart ▾</button> <button class="chart-btn cmp-btn'+(CMP.has(f.ticker)?' on':'')+'" data-cmp="'+f.ticker+'">'+(CMP.has(f.ticker)?'✓ Comparing':'+ Compare')+'</button></td>'+
     '<td data-label="Class"><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td data-label="Domicile / tax">'+domBadge(f)+'</td>'+
     '<td class="r" data-label="Score">'+scoreCell(f)+'</td>'+
@@ -1310,6 +1401,69 @@ const GOAL_PLANS={
   safe:{name:'A simple defensive starter',blurb:'Mostly bonds and cash to protect capital, with a slice of equity and gold.',mix:[['A35',30,'Singapore bonds'],['AGGU',25,'Global bonds'],['VWRA',20,'Global shares'],['MMS',15,'SGD cash'],['SGLN',10,'Gold']]},
   start:{name:'The simplest possible start',blurb:'Just two funds. You could even begin with only the first and add the second later.',mix:[['VWRA',80,'Global shares (all-world)'],['AGGU',20,'Global bonds']]}
 };
+// --- compounding illustration (goal plans) ---------------------------------
+// Deliberately three LABELLED SCENARIOS (central ±2pp), not percentiles: honest about
+// uncertainty without implying simulation precision. Arithmetic illustration, not advice.
+let PROJ={amt:500,yrs:20}, CURPLAN=null;
+function fvMonthly(P,annualPct,years){
+  const i=Math.pow(1+annualPct/100,1/12)-1, n=years*12;   // geometric monthly rate; pure month-count, no calendar arithmetic
+  if(Math.abs(i)<1e-9) return P*n;
+  return P*((Math.pow(1+i,n)-1)/i);                       // ordinary annuity: contributions at month-end
+}
+function renderProjShell(){
+  const box=document.getElementById('projBox'); if(!box||!CURPLAN) return;
+  box.innerHTML='<div class="proj">'+
+    '<div class="proj-t">What regular investing could build &mdash; an illustration</div>'+
+    '<div class="proj-ctls">'+
+      '<div class="ctl"><label>Monthly amount (S$)</label><input id="pjAmt" inputmode="numeric" value="'+PROJ.amt.toLocaleString('en-US')+'"></div>'+
+      '<div class="ctl"><label>Years</label><input id="pjYrs" type="number" min="1" max="40" value="'+PROJ.yrs+'"></div>'+
+    '</div><div id="projOut"></div>'+
+    '<div class="proj-note">Compounding arithmetic at assumed constant rates, using this mix&rsquo;s blended long-run net estimate (<a onclick="switchTab(\'forward\')" style="color:var(--b);cursor:pointer;font-weight:600">how the estimates are built</a>). Real returns arrive unevenly, and the weaker/stronger scenarios (&plusmn;2 percentage points) are illustrative brackets, not guarantees or probabilities. Figures are before inflation and any platform fees. An illustration to learn from &mdash; not a projection of your outcome, and not personalised advice.</div></div>';
+  document.getElementById('pjAmt').addEventListener('input',e=>{const n=parseInt((e.target.value||'').replace(/[^\d]/g,''),10)||0;PROJ.amt=n;e.target.value=n?n.toLocaleString('en-US'):'';updateProj();});
+  document.getElementById('pjYrs').addEventListener('input',e=>{PROJ.yrs=Math.max(1,Math.min(40,parseInt(e.target.value,10)||1));updateProj();});
+  updateProj();
+}
+function updateProj(){
+  const out=document.getElementById('projOut'); if(!out||!CURPLAN) return;
+  const P=PROJ.amt, Y=PROJ.yrs, r=CURPLAN.ret;
+  if(!P){out.innerHTML='<div class="dim" style="font-size:12.5px;margin:6px 0">Enter a monthly amount to see the illustration.</div>';return;}
+  const contrib=P*Y*12, lo=fvMonthly(P,r-2,Y), mid=fvMonthly(P,r,Y), hi=fvMonthly(P,r+2,Y);
+  const rnd=v=>v>=100000?Math.round(v/1000)*1000:Math.round(v/100)*100;
+  const f=v=>'S$'+rnd(v).toLocaleString('en-US');
+  const tile=(l,v,s,cls)=>'<div class="proj-tile '+(cls||'')+'"><div class="pt-l">'+l+'</div><div class="pt-v">'+v+'</div><div class="pt-s">'+s+'</div></div>';
+  const fall=Math.round(CURPLAN.vol*2);
+  out.innerHTML='<div class="proj-tiles">'+
+    tile('You would put in',f(contrib),Y+' years &times; 12 &times; S$'+P.toLocaleString('en-US'),'')+
+    tile('Weaker','~'+f(lo),'at '+(r-2).toFixed(1)+'%/yr','')+
+    tile('Central estimate','~'+f(mid),'at '+r.toFixed(1)+'%/yr','mid')+
+    tile('Stronger','~'+f(hi),'at '+(r+2).toFixed(1)+'%/yr','')+
+    '</div><div id="projSvg"></div>'+
+    '<div class="proj-fall">Expect the path to be bumpy, not the smooth curve drawn here: a mix like this can fall roughly <b>'+fall+'%</b> from a peak somewhere along the way (a rough rule of thumb &mdash; about twice its yearly volatility). That is normal and survivable &mdash; it is why the habits above matter more than the forecast.</div>';
+  drawProj(document.getElementById('projSvg'),P,Y,r,contrib,hi);
+}
+function drawProj(holder,P,Y,r,contrib,maxV){
+  if(!holder) return;
+  const cw=holder.clientWidth||holder.parentElement.clientWidth||340;
+  const W=Math.max(300,Math.min(760,Math.round(cw))), narrow=W<430, H=narrow?200:230;
+  const pL=narrow?52:60, pR=12, pT=12, pB=22, fs=narrow?10.5:11;
+  const series=rr=>{const o=[];for(let k=0;k<=Y;k++)o.push(fvMonthly(P,rr,k));return o;};
+  const sLo=series(r-2), sMid=series(r), sHi=series(r+2), sC=[];
+  for(let k=0;k<=Y;k++) sC.push(P*12*k);
+  const mx=Math.max(maxV,contrib)||1;
+  const X=k=>pL+(Y>0?k/Y:0)*(W-pL-pR), Yc=v=>pT+(1-v/mx)*(H-pT-pB);
+  const path=a=>a.map((v,k)=>(k?'L':'M')+X(k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' ');
+  const kfmt=v=>v>=1e6?(v/1e6).toFixed(1)+'m':Math.round(v/1000)+'k';
+  const gl=[mx,mx/2].map(v=>'<line x1="'+pL+'" y1="'+Yc(v).toFixed(1)+'" x2="'+(W-pR)+'" y2="'+Yc(v).toFixed(1)+'" stroke="#eeeee8"/>'+
+    '<text x="'+(pL-6)+'" y="'+(Yc(v)+3).toFixed(0)+'" text-anchor="end" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+kfmt(v)+'</text>').join('');
+  let xl='';const step=Y<=10?Math.max(1,Math.round(Y/5)):5;
+  for(let k=0;k<=Y;k+=step) xl+='<text x="'+X(k).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+k+'y</text>';
+  const band='M'+sLo.map((v,k)=>X(k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' L'+sHi.slice().reverse().map((v,k)=>X(Y-k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' Z';
+  holder.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+gl+xl+
+    '<path d="'+band+'" fill="rgba(12,74,110,0.09)"/>'+
+    '<path d="'+path(sC)+'" fill="none" stroke="#8a8a82" stroke-width="1.3" stroke-dasharray="5 3"/>'+
+    '<path d="'+path(sMid)+'" fill="none" stroke="#0C4A6E" stroke-width="1.9"/></svg>'+
+    '<div class="chart-legend" style="margin-top:6px"><span style="color:#0C4A6E">&#9644;&nbsp;Central illustration</span><span style="color:#5c7d95">&#9644;&nbsp;Weaker&ndash;stronger band</span><span style="color:#8a8a82">&#9644;&nbsp;What you put in</span></div>';
+}
 function selectGoal(g){
   const p=GOAL_PLANS[g]; if(!p) return;
   document.querySelectorAll('#goals .goal').forEach(b=>b.classList.toggle('on',b.dataset.g===g));
@@ -1328,8 +1482,13 @@ function selectGoal(g){
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
     '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>. A step-by-step purchase walkthrough is just below <a onclick="var g=document.getElementById(\'fpGuide\');g.open=true;g.scrollIntoView({behavior:\'smooth\',block:\'start\'})" style="color:var(--b);cursor:pointer;font-weight:600">&darr; open the guide</a>.</div>'+
+    '<div id="projBox"></div>'+
     '<div class="plan-note">An illustration to learn from &mdash; not personalised advice. Fine-tune the exact weights in <a onclick="switchTab(\'build\')" style="color:var(--b);cursor:pointer;font-weight:600">Build a portfolio</a>.</div>'+
     '</div><div id="planDetail"></div>';
+  // blended volatility of the mix (fund weights -> asset-class weights -> correlation model)
+  const w={}; p.mix.forEach(m=>{const f=FUNDS.find(x=>x.ticker===m[0]); if(f) w[f.asset_class]=(w[f.asset_class]||0)+m[1];});
+  CURPLAN={ret:ret, vol:calcPortfolio(w).vol||10};
+  renderProjShell();
 }
 function planLook(tk){
   const box=document.getElementById('planDetail'); if(!box) return;
@@ -1392,7 +1551,14 @@ async function init(){
     document.querySelectorAll('#fView button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
     document.getElementById('fundTw').classList.toggle('simple', b.dataset.v==='simple');
   }));
-  document.getElementById('fundBody').addEventListener('click',e=>{const b=e.target.closest('.chart-btn'); if(b) toggleChart(b);});
+  document.getElementById('fundBody').addEventListener('click',e=>{
+    const c=e.target.closest('.cmp-btn'); if(c){toggleCmp(c.dataset.cmp);return;}
+    const b=e.target.closest('.chart-btn'); if(b) toggleChart(b);
+  });
+  document.getElementById('cmpOpen').addEventListener('click',openCmp);
+  document.getElementById('cmpClear').addEventListener('click',()=>{CMP.clear();updateCmpUI();});
+  document.getElementById('cmpClose').addEventListener('click',closeCmp);
+  document.getElementById('cmpModal').addEventListener('click',e=>{if(e.target.id==='cmpModal')closeCmp();});
   document.querySelectorAll('#fundTbl th.sortable').forEach(th=>th.addEventListener('click',()=>{
     const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;}
     if(TRAIL_KEYS.includes(k)) trailBannerDismissed=false;   // re-surface the anti-chasing note when the user re-engages a trailing sort
