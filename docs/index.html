@@ -168,6 +168,14 @@ td.r{text-align:right;font-family:var(--mono)}
   .chart-row td::before{content:none !important}
 }
 .seg-lab{font-size:11px;color:var(--t3)}
+.tr{font-family:var(--mono);font-weight:600} .tr.up{color:var(--g)} .tr.down{color:var(--r)} .tr-na{color:var(--t4)}
+.trail-banner{display:flex;align-items:center;gap:12px;background:var(--a-bg);border:1px solid rgba(180,83,9,0.28);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px}
+.tb-msg{flex:1;font-size:12.5px;color:var(--t2);line-height:1.45}
+.tb-reset{flex-shrink:0;background:var(--t1);color:#fff;border:none;border-radius:var(--radius);padding:7px 12px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer}
+.tb-reset:hover{background:#000}
+.tb-x{flex-shrink:0;background:none;border:none;color:var(--t3);font-size:20px;line-height:1;cursor:pointer;padding:0 4px}
+.tb-x:hover{color:var(--t1)}
+@media(max-width:640px){.trail-banner{flex-wrap:wrap}.tb-msg{flex-basis:100%}}
 
 /* badges */
 .bdg{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:0.2px;padding:2px 7px;border-radius:12px;border:1px solid;white-space:nowrap}
@@ -388,6 +396,11 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         </div>
       </div>
     </div>
+    <div id="trailBanner" class="trail-banner" style="display:none">
+      <div class="tb-msg">You are sorting by past return. Last year's winner is rarely next year's — which is why this tool defaults to forward-looking value and cost.</div>
+      <button type="button" id="trailReset" class="tb-reset">Reset to Efficiency Score</button>
+      <button type="button" id="trailDismiss" class="tb-x" aria-label="Dismiss">×</button>
+    </div>
     <div class="tw simple" id="fundTw"><table id="fundTbl">
       <thead><tr>
         <th class="sortable" data-k="ticker">Fund <span class="arw"></span></th>
@@ -397,6 +410,9 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable col-detail" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
         <th class="r sortable" data-k="effective_ter" title="The fund's all-in yearly cost — the Total Expense Ratio (TER): management fee + trustee + custody, taken from returns daily. Where a fund publishes only a management fee, this is estimated from it and marked 'est'.">Annual cost % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="trail_1y" title="Trailing 1-year PRICE return (dividends extra), from the weekly series. Backward-looking — the tool defaults to forward-looking value, not this.">1Y <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="trail_3y" title="Trailing 3-year annualised PRICE return (geometric, dividends extra). Backward-looking.">3Y p.a. <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="trail_5y" title="Trailing 5-year annualised PRICE return (geometric, dividends extra). Backward-looking.">5Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
         <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price). Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
@@ -589,11 +605,14 @@ async function loadData(){
 }
 let DATA, FUNDS, CMA, MP, ACLABEL, CORR, PRICES={};
 let sortKey='starter_score', sortDir=-1, routeFilter='';
+const TRAIL_KEYS=['trail_1y','trail_3y','trail_5y']; let trailBannerDismissed=false;
 let BW={}, BPRESET='balanced', BBASE={band:[10,15],vol:1}, fwdDone=false, buildDone=false;
 const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_bonds','gold','cash'];
 const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
+// Trailing-return cell: signed %, green up / red down; em-dash where history is too short.
+function trailCell(v){ if(v==null||isNaN(v)) return '<span class="tr-na">—</span>'; const cls=v>=0?'up':'down'; return '<span class="tr '+cls+'">'+(v>=0?'+':'')+(v*100).toFixed(1)+'%</span>'; }
 const CORE_ISIN={CSPX:'IE00B5BMR087',VUAA:'IE00BFMXXD54',VWRA:'IE00BK5BQT80',IWDA:'IE00B4L5Y983',EIMI:'IE00BKM4GZ66',AGGU:'IE00BDBRDM35',SGLN:'IE00B4ND3602'};
 function infoUrl(f){
   if(f.is_core) return 'https://www.justetf.com/en/etf-profile.html?isin='+(CORE_ISIN[f.ticker]||'');
@@ -609,6 +628,23 @@ function perfStats(arr, startTs){
   const ytd=(yi<n-1)?last/arr[yi]-1:null;
   const c3=(n-1-156>=0)?Math.pow(last/arr[n-1-156],1/3)-1:null;
   return [['1M',at(4)],['3M',at(13)],['YTD',ytd],['1Y',at(52)],['3Y p.a.',c3]];
+}
+// Trailing PRICE returns from the weekly series: 1Y simple, 3Y and 5Y annualised (geometric).
+// Null where history is too short. Weeks: 52 = 1yr, 156 = 3yr, 260 = 5yr (no date arithmetic).
+function trailReturns(tk){
+  const ser=PRICES[tk];
+  if(!ser||!ser.c) return {y1:null,y3:null,y5:null};
+  const raw=ser.c.slice();
+  for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
+  let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;
+  const a=raw.slice(i0), n=a.length, last=a[n-1];
+  const back=w=>(n-1-w>=0 && a[n-1-w]>0)?a[n-1-w]:null;
+  const b1=back(52), b3=back(156), b5=back(260);
+  return {
+    y1:b1!=null?last/b1-1:null,
+    y3:b3!=null?Math.pow(last/b3,1/3)-1:null,
+    y5:b5!=null?Math.pow(last/b5,1/5)-1:null
+  };
 }
 // Plain-language risk from expected annual volatility (asset-class level). Volatility-based, NOT a VaR / chance-of-loss.
 function riskBadge(f){
@@ -730,7 +766,7 @@ function toggleChart(btn){
   const row=btn.closest('tr'), nx=row.nextElementSibling;
   if(nx && nx.classList.contains('chart-row')){ nx.remove(); btn.textContent='Price chart ▾'; return; }
   const tr=document.createElement('tr'); tr.className='chart-row';
-  tr.innerHTML='<td colspan="10">'+snapHead(btn.dataset.tk)+'<div class="chart-cap">Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
+  tr.innerHTML='<td colspan="13">'+snapHead(btn.dataset.tk)+'<div class="chart-cap">Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
   row.after(tr); btn.textContent='Hide chart ▴';
   renderPriceChart(tr.querySelector('.tvchart'), btn.dataset.tk);
 }
@@ -841,15 +877,19 @@ function renderTable(){
     '<td class="r col-detail" data-label="Mgmt fee">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
     '<td class="r" data-label="Annual cost">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r" data-label="Net return">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
+    '<td class="r col-detail" data-label="1Y return">'+trailCell(f.trail_1y)+'</td>'+
+    '<td class="r col-detail" data-label="3Y p.a.">'+trailCell(f.trail_3y)+'</td>'+
+    '<td class="r col-detail" data-label="5Y p.a.">'+trailCell(f.trail_5y)+'</td>'+
     '<td class="r col-detail" data-label="Exp. vol">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r" data-label="Div. yield">'+yieldCell(f)+'</td>'+
     '<td class="r col-detail" data-label="Liquidity">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. <strong>1Y / 3Y / 5Y</strong> (Detailed view) are trailing <em>price</em> returns — dividends extra; 3Y and 5Y are annualised. They are backward-looking: past return is not a prediction, which is why the table defaults to the forward-looking Efficiency Score. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
+  const bn=document.getElementById('trailBanner'); if(bn) bn.style.display=(TRAIL_KEYS.includes(sortKey)&&!trailBannerDismissed)?'flex':'none';
 }
 
 function renderCost(){
@@ -1130,6 +1170,8 @@ function switchTab(p){
 async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
+  // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
+  FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;});
   ACLABEL={}; for(const k in CMA.asset_classes) ACLABEL[k]=CMA.asset_classes[k].label;
   // build symmetric correlation matrix (default 0.30 for any unspecified pair)
   CORR={}; const _cs=Object.keys(CMA.asset_classes);
@@ -1153,8 +1195,12 @@ async function init(){
   }));
   document.getElementById('fundBody').addEventListener('click',e=>{const b=e.target.closest('.chart-btn'); if(b) toggleChart(b);});
   document.querySelectorAll('#fundTbl th.sortable').forEach(th=>th.addEventListener('click',()=>{
-    const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;} renderTable();
+    const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;}
+    if(TRAIL_KEYS.includes(k)) trailBannerDismissed=false;   // re-surface the anti-chasing note when the user re-engages a trailing sort
+    renderTable();
   }));
+  document.getElementById('trailReset').addEventListener('click',()=>{sortKey='starter_score';sortDir=-1;trailBannerDismissed=true;renderTable();});
+  document.getElementById('trailDismiss').addEventListener('click',()=>{trailBannerDismissed=true;document.getElementById('trailBanner').style.display='none';});
   document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
   document.getElementById('cAmt').addEventListener('input',()=>{reformatAmt('cAmt');renderCostSim();});
   ['cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
