@@ -225,6 +225,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable" data-k="starter_score">Starter Score <span class="arw"></span></th>
         <th class="r sortable" data-k="ter">TER % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct">Net exp. return <span class="arw"></span></th>
+        <th class="r sortable" data-k="exp_vol">Exp. vol % <span class="arw"></span></th>
         <th class="r sortable" data-k="yield">Yield % <span class="arw"></span></th>
         <th class="r sortable" data-k="val_m">Liquidity <span class="arw"></span></th>
       </tr></thead>
@@ -252,7 +253,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <div class="card">
         <h3>What the drag costs you</h3>
         <div class="calcgrid">
-          <div class="ctl"><label>Amount (S$)</label><input id="cAmt" type="number" value="100000" min="1000" step="1000"></div>
+          <div class="ctl"><label>Amount (S$)</label><input id="cAmt" type="text" inputmode="numeric" value="100,000"></div>
           <div class="ctl"><label>Years held</label><input id="cYrs" type="number" value="20" min="1" max="50"></div>
           <div class="ctl"><label>Fund</label><select id="cFund"></select></div>
         </div>
@@ -311,7 +312,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="grid2" style="margin-top:20px">
       <div class="card">
         <h3>US estate-tax exposure of this portfolio</h3>
-        <div class="calcgrid"><div class="ctl"><label>Portfolio size (S$)</label><input id="bAmt" type="number" value="250000" min="1000" step="10000"></div></div>
+        <div class="calcgrid"><div class="ctl"><label>Portfolio size (S$)</label><input id="bAmt" type="text" inputmode="numeric" value="250,000"></div></div>
         <div id="estBox"></div>
         <p class="footlet">Only US-domiciled holdings are US-situs. Implemented via the recommended Irish-UCITS core, this portfolio's exposure is zero — that is the point of the core-satellite split.</p>
       </div>
@@ -348,6 +349,8 @@ const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_
 const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
+function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
+function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
 function domBadge(f){
   const d=f.domicile, cls='bdg-'+(['SG','IE','LU','FR','US'].includes(d)?d.toLowerCase():'verify');
   let h='<span class="bdg '+cls+'">'+(DOM_LABEL[d]||d)+'</span>';
@@ -360,7 +363,7 @@ function scoreCell(f){
   if(f.starter_score==null) return '<span class="bdg bdg-verify" title="Needs a source-verified TER before it can be scored">n/a</span>';
   const s=f.starter_score, p=f.score_parts||{};
   const col=s>=80?'var(--g)':(s>=60?'var(--a)':'var(--r)');
-  const tip=`Starter Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Breadth ${p.breadth}`;
+  const tip=`Starter Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Diversification ${p.breadth}`;
   return `<span class="scorewrap" title="${tip}"><span class="scorebar"><span class="scorefill" style="width:${s}%;background:${col}"></span></span><span class="scoreval" style="color:${col}">${s}</span></span>`;
 }
 function liqLabel(f){
@@ -425,12 +428,13 @@ function renderTable(){
     '<td class="r">'+scoreCell(f)+'</td>'+
     '<td class="r">'+(f.ter!=null?fmt(f.ter,2):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
+    '<td class="r">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
     '<td class="r">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    '<strong>Starter Score</strong> (0–100, hover for the breakdown) is a transparent efficiency composite — <em>cost 25% · tax-safety 20% · return 25% · liquidity 15% · breadth 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
-    '“Net exp. return” = long-run asset-class estimate − TER − withholding drag. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
+    '<strong>Starter Score</strong> (0–100, hover for the breakdown) is a transparent efficiency composite — <em>cost 25% · tax-safety 20% · return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
+    '“Net exp. return” = long-run asset-class estimate − TER − withholding drag. “Exp. vol” is asset-class-level expected volatility (class-level, not fund-specific). Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
@@ -487,7 +491,7 @@ function costliestForClass(ac,excl){
   return pool[0]||null;
 }
 function renderCostSim(){
-  const amt=+document.getElementById('cAmt').value||0;
+  const amt=amtVal('cAmt');
   const yrs=Math.max(1,Math.min(50,+document.getElementById('cYrs').value||1));
   const f=FUNDS.find(x=>x.ticker===document.getElementById('cFund').value);
   if(!f) return;
@@ -630,7 +634,7 @@ function recompute(){
   renderEstate();
 }
 function renderEstate(){
-  const amt=+document.getElementById('bAmt').value||0;
+  const amt=amtVal('bAmt');
   const m=calcPortfolio(BW);
   const situsSgd=amt*((m.norm.dev_equity||0)+(m.norm.gold||0));
   const tax=estateTax(situsSgd*0.74)/0.74;
@@ -672,9 +676,10 @@ async function init(){
     const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;} renderTable();
   }));
   document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
-  ['cAmt','cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
+  document.getElementById('cAmt').addEventListener('input',()=>{reformatAmt('cAmt');renderCostSim();});
+  ['cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
-  document.getElementById('bAmt').addEventListener('input',renderEstate);
+  document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
 }
 init();
 </script>

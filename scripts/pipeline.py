@@ -212,6 +212,7 @@ def main():
         drag = round(yld_by_class.get(ac, 0) * us_content.get(ac, 0) * wr, 3)
         rec["est_wht_drag_pct"] = drag
         rec["gross_expected_return_pct"] = acinfo["ret"]
+        rec["exp_vol"] = acinfo["vol"]          # asset-class-level expected volatility (% p.a.)
         rec["return_basis"] = acinfo["basis"]
         ter = rec.get("ter")
         if ter is None:
