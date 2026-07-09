@@ -100,6 +100,9 @@ tbody tr:last-child td{border-bottom:none}
 td.r{text-align:right;font-family:var(--mono)}
 .tk{font-family:var(--mono);font-weight:700;font-size:13px}
 .nm{font-size:12px;color:var(--t2);margin-top:2px;max-width:280px}
+.tk-link{color:var(--t1);text-decoration:none}
+.tk-link:hover{color:var(--b);text-decoration:underline}
+.tk-link .ext{color:var(--t4);font-size:10px;font-family:var(--sans)}
 .seg-lab{font-size:11px;color:var(--t3)}
 
 /* badges */
@@ -253,8 +256,6 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
   <!-- FIND -->
   <div class="panel active" id="p-find">
-    <div class="kpi-strip" id="kpis"></div>
-
     <h2 class="sec">Recommended core building blocks</h2>
     <div class="lead">For global and US exposure, the domicile-clean route is an <strong>Irish-domiciled UCITS</strong> fund (listed in London): no US estate-tax exposure and 15% — not 30% — dividend withholding. For Singapore, Asia, income and thematics, SGX-listed funds are efficient. Start here, then explore the full list below.</div>
     <div class="corerow" id="coreRow"></div>
@@ -473,6 +474,12 @@ const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_
 const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
+const CORE_ISIN={CSPX:'IE00B5BMR087',VUAA:'IE00BFMXXD54',VWRA:'IE00BK5BQT80',IWDA:'IE00B4L5Y983',EIMI:'IE00BKM4GZ66',AGGU:'IE00BDBRDM35',SGLN:'IE00B4ND3602'};
+function infoUrl(f){
+  if(f.is_core) return 'https://www.justetf.com/en/etf-profile.html?isin='+(CORE_ISIN[f.ticker]||'');
+  if((f.domicile==='LU'||f.domicile==='FR')&&f.isin) return 'https://www.justetf.com/en/etf-profile.html?isin='+f.isin;
+  return 'https://finance.yahoo.com/quote/'+f.ticker+'.SI';  // SGX-listed
+}
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
 function domBadge(f){
@@ -567,7 +574,7 @@ function renderTable(){
   });
   document.getElementById('fundBody').innerHTML=rows.map(f=>
     '<tr>'+
-    '<td><div class="tk">'+f.ticker+'</div><div class="nm">'+f.name+'</div></td>'+
+    '<td><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div></td>'+
     '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td>'+domBadge(f)+'</td>'+
     '<td class="r">'+scoreCell(f)+'</td>'+
@@ -580,7 +587,7 @@ function renderTable(){
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank only where neither a TER nor a management fee is available. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). A few new funds with no audited TER yet carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). A few new funds with no audited TER yet carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) to open its fund page — justETF for UCITS, Yahoo Finance for SGX-listed funds.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
@@ -818,7 +825,7 @@ async function init(){
   // class filter options
   const classes=[...new Set(FUNDS.map(f=>f.asset_class))].sort((a,b)=>(ACLABEL[a]||'').localeCompare(ACLABEL[b]||''));
   document.getElementById('fClass').innerHTML='<option value="">All classes</option>'+classes.map(c=>'<option value="'+c+'">'+(ACLABEL[c]||c)+'</option>').join('');
-  renderKPIs(); renderCore(); renderTable();
+  renderCore(); renderTable();
   // events
   document.getElementById('fSearch').addEventListener('input',renderTable);
   document.getElementById('fClass').addEventListener('change',renderTable);
