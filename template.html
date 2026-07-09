@@ -407,7 +407,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <button class="tab" data-p="cost">Costs &amp; tax</button>
     <button class="tab" data-p="forward">Expected returns</button>
     <button class="tab" data-p="build">Build a portfolio</button>
-    <button class="tab" data-p="learn">Learn: US estate tax</button>
+    <button class="tab" data-p="learn">Learn</button>
   </div>
 
   <!-- START -->
@@ -686,6 +686,35 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     </div>
 
     <div class="footer">Summarised from Financial Horse, "Die holding US Stocks and pay 40% tax? — What Singapore investors need to know about US inheritance / estate tax" (3 July 2026), cross-checked to the IRC §2001(c) graduated schedule. <strong>Educational only — not financial, tax, or legal advice.</strong> Rules change and individual circumstances differ; verify with a qualified cross-border adviser before acting.</div>
+
+    <h2 class="sec" style="margin-top:34px">Cash, SRS or CPF-OA — which pocket should you invest from?</h2>
+    <div class="lead">Singapore gives you three pockets that can buy investments, and they behave very differently on tax, lock-up and what they are allowed to hold. Most beginners should understand all three before moving money.</div>
+    <div class="tw" style="margin-top:14px"><table>
+      <thead><tr><th style="width:130px"></th><th>Cash (own name)</th><th>SRS</th><th>CPF-OA (CPFIS)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tax benefit</b></td><td>None</td><td>Contributions cut your taxable income, up to <b>S$15,300</b>/yr (S$35,700 for foreigners), inside the S$80,000 total personal-relief cap. Contribute by 31 December for next year&rsquo;s assessment.</td><td>None from investing — but uninvested OA already earns a guaranteed <b>2.5%</b> (first S$20,000 effectively <b>3.5%</b> with extra interest).</td></tr>
+        <tr><td><b>What it can buy</b></td><td>Anything — including the <b>Irish UCITS core</b> (CSPX, VWRA&hellip;) with its estate-tax and withholding advantages.</td><td>SGX-listed ETFs, shares, bonds, unit trusts, fixed deposits and SSBs via an SRS-linked broker. <b>No overseas-listed funds</b> — the Irish UCITS route is unavailable inside SRS.</td><td>Only <b>CPFIS-included, SGX-listed</b> products, above the first S$20,000 of OA. CPFIS ETFs are <b>not</b> subject to the 35% stock limit (that limit covers shares, single REITs and corporate bonds; gold products are capped at 10%). No overseas-listed funds.</td></tr>
+        <tr><td><b>Locked until</b></td><td>Never</td><td>The statutory retirement age <b>prevailing at your first contribution</b> — 64 if you start on/after 1 July 2026 (63 if you first contributed between July 2022 and June 2026; 62 before that).</td><td>CPF rules — sale proceeds return to your CPF account, usable at 55 subject to retirement sums.</td></tr>
+        <tr><td><b>Taking it out early</b></td><td>Anytime, no penalty</td><td><b>5% penalty and 100% of the sum is taxable.</b> At/after your locked retirement age: no penalty and only <b>50% taxable</b>, spread over up to 10 years.</td><td>Not applicable — proceeds stay inside CPF.</td></tr>
+        <tr><td><b>If left idle</b></td><td>Bank interest</td><td><b>~0.05%/yr</b> at the agent banks (DBS, OCBC or UOB — one account per person). SRS money should be invested, not parked.</td><td>2.5% guaranteed floor — which is also the <b>hurdle any CPFIS investment must beat after fees</b>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="scoreinfo" style="margin-top:14px">
+      <b>Worth knowing before you act.</b>
+      &bull; The SRS withdrawal age is <b>locked by your first contribution</b> — even S$1 opens the account at today&rsquo;s age before it rises again (announced intent: 65 by 2030, not yet law).&ensp;
+      &bull; The popular &ldquo;S$40,000/yr of SRS withdrawals is tax-free&rdquo; line is an <em>illustration</em> that assumes no other taxable income in retirement — not a rule.&ensp;
+      &bull; From this tool&rsquo;s universe, the CPFIS-OA list includes <b>ES3, G3B, A35, MBH and CFA</b>; <b>GSD</b> is included but sits inside the 10% gold limit and is US-domiciled (the estate-tax caution above applies wherever it is held). <b>CLR is SRS-eligible but NOT on the CPFIS list</b> — a point many articles get wrong.&ensp;
+      &bull; Neither SRS nor CPFIS can reach the Irish UCITS funds — their withholding and estate-tax advantages apply only to cash investing.&ensp;
+      &bull; CPF Board has announced a new simplified, fee-capped investment scheme for the first half of 2028.
+    </div>
+    <div class="goalq" style="margin-top:20px">A common-sense order many beginners follow</div>
+    <ol class="fp-steps" style="margin-top:4px">
+      <li><b>Emergency fund first</b> — three to six months of expenses in cash or a money-market fund (e.g. MMS), before any investing.</li>
+      <li><b>Invest cash through the starter plans</b> — full flexibility, no lock-up, and access to the estate-tax-clean Irish UCITS core.</li>
+      <li><b>Add SRS if you pay meaningful income tax</b> and can genuinely leave the money until 64ish — the relief is the whole point, and the account must then be invested (SGX funds such as ES3 or MBH), not left at 0.05%.</li>
+      <li><b>Touch CPF-OA last, if at all</b> — above the S$20,000 buffer, only where you expect a diversified holding to beat the guaranteed 2.5&ndash;3.5% after fees. Leaving OA untouched is itself a respectable bond-like allocation.</li>
+    </ol>
+    <div class="footer">A common ordering, <strong>not personalised advice</strong> — your tax bracket, horizon and employer situation change the answer. Figures verified July 2026 against the MOF SRS page, CPF Board rate/limit pages and the official CPFIS product lists, and the MOM retirement-age page; schemes change — check the official pages before acting.</div>
   </div>
 
   <div class="footer" id="globalFoot">
@@ -892,12 +921,21 @@ function drawPrice(ph,uid,weeks){
   const leg=ph.querySelector('.ph-legend');
   if(leg) leg.innerHTML='<span style="color:#0C4A6E">&#9644;&nbsp;Price</span>'+(show40?'<span style="color:#b45309">&#9644;&nbsp;40-week avg</span>':'')+(show10?'<span style="color:#1a8754">&#9644;&nbsp;10-week avg</span>':'');
 }
+// CPF-OA line, fund-specific where the SGX flag agrees with the official CPFIS List A (verified Jul 2026).
+function cpfLine(f){
+  if(f.cpf==='Yes'){
+    const gold=f.asset_class==='gold'?' within the <strong>10% gold limit</strong>':' and, as a CPFIS ETF, <strong>not</strong> subject to the 35% stock limit';
+    return '<strong>CPF-OA</strong>: on the CPFIS-included list &mdash; investable above the first S$20,000 of OA'+gold+'. See <a onclick="switchTab(\'learn\')" style="color:var(--b);cursor:pointer;font-weight:600">Learn</a> for whether investing CPF makes sense at all.';
+  }
+  if(f.cpf==='No') return '<strong>CPF-OA</strong>: not on the CPFIS list &mdash; cash or SRS only.';
+  return '<strong>CPF-OA</strong>: only funds on the CPFIS-included list qualify &mdash; <span class="buy-verify">verify current eligibility</span> before assuming.';
+}
 // Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
 function buyBlock(f){
   if(!f) return '';
   const body=f.is_core
     ? 'Listed in <strong>London (LSE)</strong>. Buy through any broker with LSE access &mdash; Interactive Brokers, Tiger, moomoo or Saxo &mdash; cheapest commission first; several offer fractional shares. Generally <strong>cash only</strong> (not CPF); SRS only via specific platforms. No SGX / CDP account needed.'
-    : 'Listed on <strong>SGX</strong>. Buy with cash through any Singapore broker (moomoo, Tiger, Interactive Brokers, POEMS, DBS Vickers); held in <strong>CDP</strong> or a custodian depending on the broker. <strong>SRS</strong>: via an SRS-linked broker. <strong>CPF-OA</strong>: only funds on the CPFIS-included list qualify &mdash; <span class="buy-verify">verify current eligibility</span> before assuming.';
+    : 'Listed on <strong>SGX</strong>. Buy with cash through any Singapore broker (moomoo, Tiger, Interactive Brokers, POEMS, DBS Vickers); held in <strong>CDP</strong> or a custodian depending on the broker. <strong>SRS</strong>: via an SRS-linked broker. '+cpfLine(f);
   return '<div class="buy">'+
     '<div class="buy-t">Where &amp; how to buy</div>'+
     '<div class="buy-pos">We show every route; a broker shows only its own.</div>'+
