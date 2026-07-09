@@ -75,12 +75,15 @@ a{color:var(--b);text-decoration:none}
 .seg button.on{background:var(--t1);color:#fff;font-weight:600}
 
 /* cards row (recommended core) */
-.corerow{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:22px}
-.corecard{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:14px 16px;box-shadow:var(--shadow-sm)}
-.corecard .cc-t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.corecard .cc-tk{font-family:var(--mono);font-weight:700;font-size:15px}
-.corecard .cc-nm{font-size:12px;color:var(--t2);margin-top:3px;line-height:1.35}
-.corecard .cc-r{font-family:var(--mono);font-size:13px;margin-top:8px;color:var(--g);font-weight:600}
+.corerow{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:12px;margin-bottom:22px}
+.corecard{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:15px 16px;box-shadow:var(--shadow-sm)}
+.cc-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cc-tk{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:0.3px}
+.cc-role{font-weight:600;font-size:12.5px;color:var(--t1);margin-top:9px}
+.cc-name{font-size:11.5px;color:var(--t3);margin-top:2px;line-height:1.35}
+.cc-stats{display:flex;gap:18px;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd)}
+.cc-sv{font-family:var(--mono);font-weight:700;font-size:15px}
+.cc-sl{font-size:9.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3);font-weight:600;margin-top:1px}
 
 /* table */
 .tw{overflow-x:auto;border:1px solid var(--bd);border-radius:var(--radius-lg)}
@@ -442,7 +445,7 @@ function domBadge(f){
 function scoreCell(f){
   if(f.starter_score==null) return '<span class="bdg bdg-verify" title="Needs a source-verified TER before it can be scored">n/a</span>';
   const s=f.starter_score, p=f.score_parts||{};
-  const col=s>=80?'var(--g)':(s>=60?'var(--a)':'var(--r)');
+  const col=scoreColor(s);
   const tip=`Efficiency Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Risk-adj. return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Diversification ${p.breadth}`;
   return `<span class="scorewrap" title="${tip}"><span class="scorebar"><span class="scorefill" style="width:${s}%;background:${col}"></span></span><span class="scoreval" style="color:${col}">${s}</span></span>`;
 }
@@ -468,14 +471,25 @@ function renderKPIs(){
     '<div class="kpi"><div class="kpi-lab">'+x[0]+'</div><div class="kpi-val '+x[3]+'">'+x[1]+'</div><div class="kpi-sub">'+x[2]+'</div></div>').join('');
 }
 
+function scoreColor(s){return s==null?'var(--t3)':(s>=70?'var(--g)':(s>=50?'var(--b)':'var(--a)'));}
 function renderCore(){
-  const order=['dev_equity','em_asia_equity','dev_bonds','gold'];
-  const cards=FUNDS.filter(f=>f.is_core&&['CSPX','VWRA','EIMI','AGGU','SGLN'].includes(f.ticker));
-  cards.sort((a,b)=>order.indexOf(a.asset_class)-order.indexOf(b.asset_class));
-  document.getElementById('coreRow').innerHTML=cards.map(f=>
-    '<div class="corecard"><div class="cc-t"><span class="cc-tk">'+f.ticker+'</span><span class="bdg bdg-ie">IE</span></div>'+
-    '<div class="cc-nm">'+f.name+'</div>'+
-    '<div class="cc-r">Score '+(f.starter_score!=null?f.starter_score:'—')+' · '+fmt(f.net_expected_return_pct,1,'%')+' net · '+fmt(f.ter,2,'% TER')+'</div></div>').join('');
+  const wanted=['CSPX','VWRA','ES3','EIMI','AGGU','SGLN'];
+  const roleMap={CSPX:'US large-cap core',VWRA:'Global all-world core',ES3:'Singapore core (STI)',EIMI:'Emerging-markets core',AGGU:'Global bonds core',SGLN:'Gold'};
+  const cards=wanted.map(tk=>FUNDS.find(f=>f.ticker===tk)).filter(Boolean);
+  document.getElementById('coreRow').innerHTML=cards.map(f=>{
+    const s=f.starter_score, col=scoreColor(s);
+    const dl={IE:'IE',SG:'SG',LU:'LU',FR:'FR',US:'US'}[f.domicile]||f.domicile;
+    const dcls='bdg-'+(['ie','sg','lu','fr','us'].includes((f.domicile||'').toLowerCase())?f.domicile.toLowerCase():'verify');
+    return '<div class="corecard">'+
+      '<div class="cc-head"><span class="cc-tk">'+f.ticker+'</span><span class="bdg '+dcls+'">'+dl+'</span></div>'+
+      '<div class="cc-role">'+(roleMap[f.ticker]||f.segment)+'</div>'+
+      '<div class="cc-name">'+f.name+'</div>'+
+      '<div class="cc-stats">'+
+        '<div><div class="cc-sv" style="color:'+col+'">'+(s!=null?s:'—')+'</div><div class="cc-sl">Score</div></div>'+
+        '<div><div class="cc-sv">'+fmt(f.net_expected_return_pct,1,'%')+'</div><div class="cc-sl">Net p.a.</div></div>'+
+        '<div><div class="cc-sv">'+fmt(f.ter,2,'%')+'</div><div class="cc-sl">Cost</div></div>'+
+      '</div></div>';
+  }).join('');
 }
 
 function passRoute(f){
