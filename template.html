@@ -129,13 +129,13 @@ td.r{text-align:right;font-family:var(--mono)}
 .perf-l{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
 .perf-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px;color:var(--t1)}
 .perf-v.up{color:var(--g)} .perf-v.down{color:var(--r)}
-/* snapshot header: risk badge + what-to-expect */
+/* snapshot header: volatility badge + what-to-expect */
 .snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:2px 0 12px;flex-wrap:wrap}
-.risk{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
-.risk-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
-.risk-r2{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
-.risk-r3{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
-.risk-r4{background:var(--r-bg);color:var(--r);border-color:var(--r-bg2)}
+.vol{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
+.vol-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
+.vol-r2{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
+.vol-r3{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
+.vol-r4{background:var(--r-bg);color:var(--r);border-color:var(--r-bg2)}
 .snap-expect{font-size:12.5px;color:var(--t2);line-height:1.5;flex:1;min-width:220px}
 /* resilience: worst drawdown / best & worst 12m + down-year bars */
 .resil{max-width:920px;margin-top:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
@@ -490,9 +490,9 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="lead">Good choices rest on <strong>expected long-run return</strong>, not the trailing twelve months. Recent winners often carry the lowest forward return — a reason to diversify and rebalance, not to chase. Figures are synthesised house estimates (2025-26 vintage); treat them as directional, not precise.</div>
     <div class="grid2">
       <div class="card">
-        <h3>Risk vs expected return — the asset-class map</h3>
+        <h3>Volatility vs expected return — the asset-class map</h3>
         <div id="rrScatter" style="height:380px"></div>
-        <p class="footlet">Higher return demands higher risk: cash sits bottom-left, equities top-right. The value of diversifying is combining blocks whose returns do not move together (see the correlation logic behind the Build tab).</p>
+        <p class="footlet">Higher expected return has come with higher volatility (bigger year-to-year swings): cash sits bottom-left, equities top-right. Volatility is not the same as risk — a volatile asset held for the long run is not necessarily where you are most likely to lose money permanently. The value of diversifying is combining blocks whose returns do not move together (see the correlation logic behind the Build tab).</p>
       </div>
       <div class="card">
         <h3>Forward estimate vs trailing 1-year</h3>
@@ -673,12 +673,13 @@ function trailReturns(tk){
     y5:b5!=null?Math.pow(last/b5,1/5)-1:null
   };
 }
-// Plain-language risk from expected annual volatility (asset-class level). Volatility-based, NOT a VaR / chance-of-loss.
-function riskWord(f){ const v=f.exp_vol; if(v==null) return null; return v<7?'Low':v<13?'Moderate':v<19?'High':'Very high'; }
-function riskBadge(f){
-  const w=riskWord(f); if(w==null) return '';
+// Plain-language VOLATILITY band from expected annual volatility (asset-class level).
+// Deliberately labelled "volatility", not "risk": it measures how much the price swings, NOT the chance of a permanent loss.
+function volWord(f){ const v=f.exp_vol; if(v==null) return null; return v<7?'Low':v<13?'Moderate':v<19?'High':'Very high'; }
+function volBadge(f){
+  const w=volWord(f); if(w==null) return '';
   const cls={Low:'r1',Moderate:'r2',High:'r3','Very high':'r4'}[w];
-  return '<span class="risk risk-'+cls+'" title="Plain-language risk from this asset class’s expected annual volatility (≈'+f.exp_vol.toFixed(0)+'%). It describes how bumpy the ride is — not a probability of loss.">'+w+' risk</span>';
+  return '<span class="vol vol-'+cls+'" title="How much this asset class’s price swings year to year — its expected annual volatility (≈'+f.exp_vol.toFixed(0)+'%). Volatility is not the same as risk: it measures the size of the ups and downs, not the chance of losing money permanently.">'+w+' volatility</span>';
 }
 // Honest, warm "what to expect" per broad asset class (independent view — no sales spin).
 const ACEXPECT={
@@ -696,7 +697,7 @@ const ACEXPECT={
 function expectLine(f){ const t=ACEXPECT[f.asset_class]; return t?'<div class="snap-expect">'+t+'</div>':''; }
 function snapHead(tk){
   const f=FUNDS.find(x=>x.ticker===tk); if(!f) return '';
-  const rb=riskBadge(f), ex=expectLine(f);
+  const rb=volBadge(f), ex=expectLine(f);
   return (rb||ex)?'<div class="snap-head">'+rb+ex+'</div>':'';
 }
 // Resilience from the weekly price series: worst peak-to-trough drop + best/worst rolling 12-month return.
@@ -825,7 +826,7 @@ function altRow(f,isSelf,bestTk){
   const dom=(DOM_LABEL[f.domicile]||f.domicile)+(f.estate_tax_exposed?' <span class="alt-trap" title="US-domiciled: US estate tax + 30% withholding">⚠</span>':'');
   const cost=f.effective_ter!=null?fmt(f.effective_ter,2)+'%':'—';
   const net=f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1)+'%':'—';
-  const rw=riskWord(f)||'—';
+  const rw=volWord(f)||'—';
   const name=isSelf?'<strong>'+f.ticker+'</strong><span class="alt-self">this fund</span>'
                    :'<a class="tk-link" onclick="openFund(\''+f.ticker+'\')">'+f.ticker+'</a>';
   const best=f.ticker===bestTk?'<span class="alt-best">best value</span>':'';
@@ -849,7 +850,7 @@ function altBlock(f){
   let bestTk=null,bestS=-1; all.forEach(x=>{ if(x.starter_score!=null && x.starter_score>bestS){bestS=x.starter_score;bestTk=x.ticker;} });
   const rows=all.map(x=>altRow(x,x.ticker===f.ticker,bestTk)).join('');
   return '<div class="altc"><div class="alt-t">Compare with the closest alternatives &mdash; same '+(ACLABEL[f.asset_class]||'asset class')+'</div>'+callout+
-    (alts.length?'<div class="alt-scroll"><table class="alt-tbl"><thead><tr><th>Fund</th><th>Domicile / tax</th><th class="r">Cost</th><th class="r">Net return</th><th class="r">Risk</th><th class="r">Score</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="alt-note">Ranked by Efficiency Score within the same asset class. &ldquo;Best value&rdquo; = highest score shown. Tap a ticker to open its full snapshot.</div>':'')+
+    (alts.length?'<div class="alt-scroll"><table class="alt-tbl"><thead><tr><th>Fund</th><th>Domicile / tax</th><th class="r">Cost</th><th class="r">Net return</th><th class="r">Volatility</th><th class="r">Score</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="alt-note">Ranked by Efficiency Score within the same asset class. &ldquo;Best value&rdquo; = highest score shown. Tap a ticker to open its full snapshot.</div>':'')+
     '</div>';
 }
 // Deep-link from anywhere (goal plan, alternatives table) into a fund's full snapshot in the Find tab.
@@ -866,9 +867,20 @@ function openFund(tk){
   if(!(nx&&nx.classList.contains('chart-row'))){ const b=row.querySelector('.chart-btn'); if(b) toggleChart(b); }
   row.scrollIntoView({behavior:'smooth',block:'center'});
 }
-const SNAP_CAP='Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.';
+// "As of" for the price charts. Prefer the exact date stored by the pipeline at fetch time; the reconstruction
+// fallback is clamped to today so a drifting estimate can never claim a future date.
+function priceAsOf(){
+  if(PRICES.asof){ const d=new Date(PRICES.asof+'T00:00:00'); if(!isNaN(d)) return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+  let mx=0;
+  for(const k in PRICES){ const s=PRICES[k]; if(s&&s.c&&s.c.length){ const t=s.s+(s.c.length-1)*604800; if(t>mx)mx=t; } }
+  if(!mx) return null;
+  const now=Date.now()/1000; if(mx>now) mx=now;
+  return new Date(mx*1000).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
 function renderSnapshot(box, tk){
-  box.innerHTML=snapHead(tk)+'<div class="chart-cap">'+SNAP_CAP+'</div><div class="tvchart"></div>';
+  const asof=priceAsOf();
+  const cap='Trailing price-return stats, and the weekly price with 10- and 40-week moving averages. Weekly closes from Yahoo Finance'+(asof?', latest bar the week of <b>'+asof+'</b>':'')+' &mdash; price return, so dividends are on top. For a long-term investor this is context, not a timing signal.';
+  box.innerHTML=snapHead(tk)+'<div class="chart-cap">'+cap+'</div><div class="tvchart"></div>';
   renderPriceChart(box.querySelector('.tvchart'), tk);
 }
 function toggleChart(btn){
@@ -1248,7 +1260,7 @@ function selectGoal(g){
   const rows=p.mix.map(m=>{
     const f=FUNDS.find(x=>x.ticker===m[0]);
     if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);}
-    const chip=f?'<span class="pm-chip">'+(f.effective_ter!=null?fmt(f.effective_ter,2)+'%/yr':'—')+' &middot; '+(riskWord(f)||'—')+' risk</span>':'';
+    const chip=f?'<span class="pm-chip">'+(f.effective_ter!=null?fmt(f.effective_ter,2)+'%/yr':'—')+' &middot; '+(volWord(f)||'—')+' vol.</span>':'';
     return '<div class="pm-row"><div class="pm-w">'+m[1]+'%</div><div class="pm-bar"><div style="width:'+m[1]+'%"></div></div>'+
       '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+chip+'</div></div>';
   }).join('');

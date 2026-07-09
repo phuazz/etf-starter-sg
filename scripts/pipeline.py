@@ -17,7 +17,7 @@ No date arithmetic is performed; BUILD_DATE is stamped as a constant (session da
 ISO yyyy-mm-dd) to keep the build deterministic. If you re-download the SGX export,
 update SOURCE_DOWNLOADED below.
 """
-import csv, json, re, sys, os, urllib.request, time
+import csv, json, re, sys, os, urllib.request, time, datetime
 from collections import defaultdict
 
 BUILD_DATE = "2026-07-09"          # session date; not computed
@@ -157,6 +157,7 @@ def load_or_fetch_prices(funds):
             return json.load(f)
     print("fetching weekly price history from Yahoo (slow; --prices) ...")
     out = {}
+    last_ts = 0   # newest real bar timestamp seen (for an accurate, non-reconstructed "as of")
     for f in funds:
         sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"] + ".SI")
         url = ("https://query1.finance.yahoo.com/v8/finance/chart/" + sym
@@ -171,12 +172,21 @@ def load_or_fetch_prices(funds):
             if sum(1 for c in closes if c is not None) < 20:
                 continue
             out[f["ticker"]] = {"s": ts[0], "c": closes}
+            # timestamp of the last bar that actually has a close, for the as-of date
+            for i in range(len(closes) - 1, -1, -1):
+                if closes[i] is not None:
+                    last_ts = max(last_ts, ts[i]); break
         except Exception as e:
             print(f"  {sym}: no data ({type(e).__name__})")
         time.sleep(0.15)
+    if last_ts:
+        # date of the most recent weekly close across the universe (UTC), stored explicitly so the
+        # page never has to reconstruct dates from an assumed 604800s spacing (which drifts).
+        out["asof"] = datetime.datetime.utcfromtimestamp(last_ts).date().isoformat()
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(out, fh, separators=(",", ":"))
-    print(f"  prices.json: {len(out)}/{len(funds)} funds, {os.path.getsize(path):,} bytes")
+    n_funds = sum(1 for k in out if k != "asof")
+    print(f"  prices.json: {n_funds}/{len(funds)} funds, asof {out.get('asof','?')}, {os.path.getsize(path):,} bytes")
     return out
 
 
