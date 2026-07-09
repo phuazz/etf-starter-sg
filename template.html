@@ -113,7 +113,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .chart-cap{font-size:11.5px;color:var(--t3);margin:6px 0 9px}
 .tvchart{width:100%}
 .dim{color:var(--t3);font-size:11.5px}
-.scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6}
+.scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6;max-width:1040px}
 .scoreinfo b{color:var(--t1)}
 .chart-loading{padding:34px;text-align:center;color:var(--t3);font-size:13px}
 .chart-legend{font-size:11px;color:var(--t2);margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
@@ -233,7 +233,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .step-go{font-size:12px;font-weight:600;color:var(--b);margin-top:9px}
 .hook-note{font-size:11.5px;color:var(--t3);margin-top:6px}
 /* first-purchase guide */
-.fp{margin-top:16px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg)}
+.fp{margin-top:16px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);max-width:1040px}
 .fp summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:14px;list-style:none;display:flex;align-items:center;gap:9px}
 .fp summary::before{content:'▸';color:var(--b);transition:transform .15s}
 .fp[open] summary::before{transform:rotate(90deg)}
@@ -300,6 +300,19 @@ td.r{text-align:right;font-family:var(--mono)}
 .plan-how{font-size:13px;color:var(--t2);line-height:1.55;margin-bottom:10px}
 .plan-how strong{color:var(--t1)}
 .plan-note{font-size:11.5px;color:var(--t3)}
+/* Wide screens: plan card goes two-column — mix/stats/how left, compounding illustration right.
+   Prose stays at readable line lengths; the width is used by CONTENT, not stretched text. */
+@media(min-width:1100px){
+  .plan.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:36px;grid-template-areas:"pname pname" "pblurb pblurb" "pmix proj" "pstats proj" "phow proj" "pnote pnote";align-items:start}
+  .plan-name{grid-area:pname}
+  .plan-blurb{grid-area:pblurb}
+  .plan-mix{grid-area:pmix}
+  .plan-stats{grid-area:pstats}
+  .plan-how{grid-area:phow}
+  #projBox{grid-area:proj;border-left:1px solid var(--bd);padding-left:34px;height:100%}
+  #projBox .proj{border-top:none;padding-top:0;margin-top:0}
+  .plan-note{grid-area:pnote;border-top:1px solid var(--bd);padding-top:12px;margin-top:16px}
+}
 @media(max-width:800px){.goals{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.steps{grid-template-columns:1fr}}
 
@@ -328,7 +341,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .lose{color:var(--r);font-weight:600}
 .calcgrid{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
 .bignum{font-family:var(--mono);font-size:30px;font-weight:700;letter-spacing:-1px}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);line-height:1.6}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);line-height:1.6;max-width:1040px}
 .stub{padding:50px 20px;text-align:center;color:var(--t3);font-size:14px;border:1px dashed var(--bd2);border-radius:var(--radius-lg);background:var(--bg2)}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.shell{padding:16px 16px 50px}.masthead h1{font-size:28px}}
