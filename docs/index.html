@@ -124,6 +124,24 @@ td.r{text-align:right;font-family:var(--mono)}
 .perf-l{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
 .perf-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px;color:var(--t1)}
 .perf-v.up{color:var(--g)} .perf-v.down{color:var(--r)}
+/* snapshot header: risk badge + what-to-expect */
+.snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:2px 0 12px;flex-wrap:wrap}
+.risk{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
+.risk-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
+.risk-r2{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
+.risk-r3{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
+.risk-r4{background:var(--r-bg);color:var(--r);border-color:var(--r-bg2)}
+.snap-expect{font-size:12.5px;color:var(--t2);line-height:1.5;flex:1;min-width:220px}
+/* resilience: worst drawdown / best & worst 12m + down-year bars */
+.resil{max-width:920px;margin-top:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
+.resil-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:9px}
+.resil-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.resil-i{flex:1;min-width:120px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:8px 10px}
+.resil-l{font-size:10.5px;color:var(--t3);font-weight:600}
+.resil-v{font-family:var(--mono);font-weight:700;font-size:16px;margin-top:2px}
+.resil-v.down{color:var(--r)} .resil-v.up{color:var(--g)}
+.resil-sub{font-size:10px;color:var(--t4);margin-top:1px}
+.resil svg{margin-top:2px}
 @media(max-width:640px){
   #fundTw{max-height:none;overflow:visible;border:none;border-radius:0}
   #fundTbl thead{display:none}
@@ -567,6 +585,78 @@ function perfStats(arr, startTs){
   const c3=(n-1-156>=0)?Math.pow(last/arr[n-1-156],1/3)-1:null;
   return [['1M',at(4)],['3M',at(13)],['YTD',ytd],['1Y',at(52)],['3Y p.a.',c3]];
 }
+// Plain-language risk from expected annual volatility (asset-class level). Volatility-based, NOT a VaR / chance-of-loss.
+function riskBadge(f){
+  const v=f.exp_vol; if(v==null) return '';
+  let lab,cls;
+  if(v<7){lab='Low';cls='r1';}
+  else if(v<13){lab='Moderate';cls='r2';}
+  else if(v<19){lab='High';cls='r3';}
+  else{lab='Very high';cls='r4';}
+  return '<span class="risk risk-'+cls+'" title="Plain-language risk from this asset class’s expected annual volatility (≈'+v.toFixed(0)+'%). It describes how bumpy the ride is — not a probability of loss.">'+lab+' risk</span>';
+}
+// Honest, warm "what to expect" per broad asset class (independent view — no sales spin).
+const ACEXPECT={
+  dev_equity:'Your long-run growth engine. Expect real ups and downs — falls of 30%+ have happened and will again — but patient, continuous investing has been rewarded over time.',
+  sg_equity:'Home-market equity: familiar names and decent dividends, but concentrated in banks and property. Best as a satellite, not the whole portfolio.',
+  em_asia_equity:'Higher growth potential from Asia and emerging markets, with bigger swings and added currency and political risk. A spice, not the main dish.',
+  thematic_equity:'A concentrated bet on a single theme. It can soar and crash — size it small and expect a wild ride.',
+  dev_bonds:'Ballast, not a growth engine. Cushions equity falls and pays steady income; returns are modest by design.',
+  sgd_bonds:'The calmest sleeve — SGD-based, low volatility, low return. Chosen for stability and income, not growth.',
+  asia_bonds:'Higher-yielding bonds that carry more credit and currency risk than developed-market bonds.',
+  reits:'Property income in a listed wrapper — attractive yield, but it behaves more like equity than a bond when markets fall.',
+  gold:'No income and no earnings — it simply sits there. Its job is to zig when shares zag: a diversifier, not a return driver.',
+  cash:'Capital stability and liquidity. Returns barely beat inflation — a place to wait, not to grow.'
+};
+function expectLine(f){ const t=ACEXPECT[f.asset_class]; return t?'<div class="snap-expect">'+t+'</div>':''; }
+function snapHead(tk){
+  const f=FUNDS.find(x=>x.ticker===tk); if(!f) return '';
+  const rb=riskBadge(f), ex=expectLine(f);
+  return (rb||ex)?'<div class="snap-head">'+rb+ex+'</div>':'';
+}
+// Resilience from the weekly price series: worst peak-to-trough drop + best/worst rolling 12-month return.
+function resilience(arr){
+  const n=arr.length; let peak=arr[0], mdd=0;
+  for(let i=0;i<n;i++){ if(arr[i]>peak)peak=arr[i]; const dd=arr[i]/peak-1; if(dd<mdd)mdd=dd; }
+  let best=null,worst=null;
+  for(let i=52;i<n;i++){ const r=arr[i]/arr[i-52]-1; if(best==null||r>best)best=r; if(worst==null||r<worst)worst=r; }
+  return {mdd,best,worst};
+}
+// Calendar-year price returns from the weekly series (first→last close within each year). Current year = YTD; first year often partial.
+function calYearReturns(tk){
+  const ser=PRICES[tk]; if(!ser||!ser.c) return [];
+  const c=ser.c, s=ser.s, by={};
+  for(let i=0;i<c.length;i++){ if(c[i]==null)continue; const y=new Date((s+i*604800)*1000).getFullYear(); (by[y]=by[y]||[]).push(c[i]); }
+  const yrs=Object.keys(by).map(Number).sort((a,b)=>a-b), cy=yrs[yrs.length-1], out=[];
+  for(const y of yrs){ const a=by[y]; if(a.length<2)continue; out.push({y,r:a[a.length-1]/a[0]-1,ytd:y===cy,weeks:a.length}); }
+  return out;
+}
+function resilBlock(arr,tk){
+  const rz=resilience(arr);
+  const stat=(l,v,sub)=>{ const cls=v==null?'':(v>=0?'up':'down'); return '<div class="resil-i"><div class="resil-l">'+l+'</div><div class="resil-v '+cls+'">'+(v==null?'—':(v>=0?'+':'')+(v*100).toFixed(0)+'%')+'</div><div class="resil-sub">'+sub+'</div></div>'; };
+  const stats='<div class="resil-row">'+stat('Worst drop',rz.mdd,'peak → trough, ~6yr')+stat('Best 12 months',rz.best,'rolling')+stat('Worst 12 months',rz.worst,'rolling')+'</div>';
+  const cy=calYearReturns(tk).filter(x=>x.weeks>=40||x.ytd);   // full years + current YTD; drop partial first year
+  const bars=calBarsSVG(cy);
+  return '<div class="resil"><div class="resil-t">How it has behaved (calendar-year price return)</div>'+stats+bars+(cy.some(x=>x.ytd)?'<div class="resil-sub" style="margin-top:6px">* current year is year-to-date. Price return only — dividends are on top.</div>':'')+'</div>';
+}
+// Diverging calendar-year bars around a zero baseline — down years point down (SVG, responsive).
+function calBarsSVG(cy){
+  if(!cy.length) return '';
+  const n=cy.length, W=Math.max(340,n*48), H=132, pT=20, pB=22, plotH=H-pT-pB;
+  const rs=cy.map(x=>x.r);
+  const up=Math.max(0.01,...rs), dn=Math.max(0.01,...rs.map(v=>-v)), span=up+dn;
+  const zeroY=pT+up/span*plotH, bw=Math.min(34,(W-20)/n*0.62);
+  let s='<line x1="8" y1="'+zeroY.toFixed(1)+'" x2="'+(W-8)+'" y2="'+zeroY.toFixed(1)+'" stroke="#d8d8d0"/>';
+  cy.forEach((x,i)=>{
+    const cx=10+(i+0.5)/n*(W-20), pos=x.r>=0, mag=Math.abs(x.r)/span*plotH;
+    const y=pos?zeroY-mag:zeroY, h=Math.max(2,mag), col=pos?'#1a8754':'#c0392b';
+    const lbl=(pos?'+':'')+(x.r*100).toFixed(0)+'%';
+    s+='<rect x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2" fill="'+col+'"/>'+
+       '<text x="'+cx.toFixed(1)+'" y="'+(pos?y-4:y+h+11).toFixed(1)+'" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="600" fill="'+col+'">'+lbl+'</text>'+
+       '<text x="'+cx.toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#8a8a82">'+("'"+String(x.y).slice(2)+(x.ytd?'*':''))+'</text>';
+  });
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block;max-width:'+W+'px">'+s+'</svg>';
+}
 // Fast self-rendered SVG price chart from precomputed weekly closes (no external widget).
 function renderPriceChart(box, tk){
   const ser=PRICES[tk];
@@ -595,13 +685,14 @@ function renderPriceChart(box, tk){
     '<path d="'+line(sma(40))+'" fill="none" stroke="#b45309" stroke-width="1.5"/>'+
     '<path d="'+line(sma(10))+'" fill="none" stroke="#1a8754" stroke-width="1.2" stroke-dasharray="4 2"/></svg>';
   box.innerHTML=perf+svg+
-    '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week average</span><span style="color:#1a8754">&#9644;&nbsp;10-week average</span></div>';
+    '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week average</span><span style="color:#1a8754">&#9644;&nbsp;10-week average</span></div>'+
+    resilBlock(arr,tk);
 }
 function toggleChart(btn){
   const row=btn.closest('tr'), nx=row.nextElementSibling;
   if(nx && nx.classList.contains('chart-row')){ nx.remove(); btn.textContent='Price chart ▾'; return; }
   const tr=document.createElement('tr'); tr.className='chart-row';
-  tr.innerHTML='<td colspan="10"><div class="chart-cap">Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
+  tr.innerHTML='<td colspan="10">'+snapHead(btn.dataset.tk)+'<div class="chart-cap">Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
   row.after(tr); btn.textContent='Hide chart ▴';
   renderPriceChart(tr.querySelector('.tvchart'), btn.dataset.tk);
 }
