@@ -110,23 +110,25 @@ _BREADTH_BASE = {"dev_equity": 95, "sg_equity": 72, "em_asia_equity": 70, "reits
                  "dev_bonds": 82, "sgd_bonds": 80, "asia_bonds": 62, "gold": 60,
                  "cash": 60, "thematic_equity": 30}
 
-def starter_score(rec):
+def starter_score(rec, rf=2.8):
     """Transparent 0-100 efficiency composite for a long-term-hold starter — NOT a buy
-    recommendation. Returns (score, parts) or (None, None) when TER/return are unknown.
+    recommendation. Returns (score, parts) or (None, None) when TER/return/vol are unknown.
     Components each 0-100:
       cost   : lower total annual drag (TER + withholding) is better
       tax    : estate-tax safety (US-domiciled penalised hard)
-      return : higher net expected return
+      return : RISK-ADJUSTED return (Sharpe = (net return - risk-free) / expected volatility)
       liquidity : how easily traded
       breadth: broad diversified beta beats single-country / thematic bets
     """
     net = rec.get("net_expected_return_pct")
     drag = rec.get("cost_drag_total_pct")
-    if net is None or drag is None:
+    vol = rec.get("exp_vol")
+    if net is None or drag is None or not vol:
         return None, None
     cost = _clamp(100 * (1.0 - drag) / (1.0 - 0.15))           # 0.15%->100, 1.0%->0
     tax = 25 if rec.get("estate_tax_exposed") else (60 if rec["domicile"] == "verify" else 100)
-    ret = _clamp(100 * (net - 2.5) / (8.0 - 2.5))              # 2.5%->0, 8%->100
+    sharpe = (net - rf) / max(vol, 4.0)                       # vol floor stops tiny-vol cash spiking
+    ret = _clamp(100 * (sharpe - 0.05) / (0.30 - 0.05))       # Sharpe 0.05->0, 0.30->100
     liq = _LIQ_SCORE.get(rec.get("liquidity_tier"), 55)
     ac = rec["asset_class"]
     seg = (rec.get("segment") or "").lower()
@@ -221,7 +223,7 @@ def main():
         else:
             rec["cost_drag_total_pct"] = round(ter + drag, 3)
             rec["net_expected_return_pct"] = round(acinfo["ret"] - ter - drag, 2)
-        score, parts = starter_score(rec)
+        score, parts = starter_score(rec, cma["_meta"]["risk_free_pct"])
         rec["starter_score"] = score
         rec["score_parts"] = parts
         return rec
@@ -299,16 +301,16 @@ def main():
             "not_advice": True,
             "note": "Educational. Forward returns are synthesised house estimates, not forecasts. Domicile drives the tax verdict; where domicile_conf != 'isin'/'curated' treat with a verify flag.",
             "score_method": {
-                "label": "Starter Score",
+                "label": "Efficiency Score",
                 "range": "0-100",
                 "caveat": "A transparent efficiency composite for a long-term buy-and-hold starter — NOT a buy recommendation. Blank where TER is not yet source-verified.",
                 "weights": SCORE_WEIGHTS,
                 "components": {
                     "cost": "Lower total annual drag (TER + dividend withholding) scores higher.",
                     "tax": "US estate-tax safety; US-domiciled funds penalised hard.",
-                    "return": "Higher net expected long-run return scores higher.",
+                    "return": "Risk-adjusted: Sharpe = (net expected return - risk-free) / expected volatility.",
                     "liquidity": "How easily the fund can be traded.",
-                    "breadth": "Broad diversified beta beats single-country or thematic bets."
+                    "breadth": "Diversification: broad beta beats single-country or thematic bets."
                 }
             },
         },

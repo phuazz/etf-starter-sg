@@ -220,14 +220,14 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="tw"><table id="fundTbl">
       <thead><tr>
         <th class="sortable" data-k="ticker">Fund <span class="arw"></span></th>
-        <th class="sortable" data-k="asset_class">Class <span class="arw"></span></th>
-        <th>Domicile / tax</th>
-        <th class="r sortable" data-k="starter_score">Starter Score <span class="arw"></span></th>
-        <th class="r sortable" data-k="ter">TER % <span class="arw"></span></th>
-        <th class="r sortable" data-k="net_expected_return_pct">Net exp. return <span class="arw"></span></th>
-        <th class="r sortable" data-k="exp_vol">Exp. vol % <span class="arw"></span></th>
-        <th class="r sortable" data-k="yield">Yield % <span class="arw"></span></th>
-        <th class="r sortable" data-k="val_m">Liquidity <span class="arw"></span></th>
+        <th class="sortable" data-k="asset_class" title="Broad asset class used for the forward-return and correlation model.">Class <span class="arw"></span></th>
+        <th title="Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.">Domicile / tax</th>
+        <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
+        <th class="r sortable" data-k="ter" title="Total expense ratio — the fund's annual fee, deducted from returns daily.">TER % <span class="arw"></span></th>
+        <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
+        <th class="r sortable" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
+        <th class="r sortable" data-k="yield" title="Indicative trailing distribution yield. Accumulating funds show 0 (income is reinvested inside the fund).">Yield % <span class="arw"></span></th>
+        <th class="r sortable" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
       </tr></thead>
       <tbody id="fundBody"></tbody>
     </table></div>
@@ -363,7 +363,7 @@ function scoreCell(f){
   if(f.starter_score==null) return '<span class="bdg bdg-verify" title="Needs a source-verified TER before it can be scored">n/a</span>';
   const s=f.starter_score, p=f.score_parts||{};
   const col=s>=80?'var(--g)':(s>=60?'var(--a)':'var(--r)');
-  const tip=`Starter Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Diversification ${p.breadth}`;
+  const tip=`Efficiency Score ${s}/100 — efficiency for a long-term hold, not a buy call.\nCost ${p.cost}  ·  Tax-safety ${p.tax}  ·  Risk-adj. return ${p.return}  ·  Liquidity ${p.liquidity}  ·  Diversification ${p.breadth}`;
   return `<span class="scorewrap" title="${tip}"><span class="scorebar"><span class="scorefill" style="width:${s}%;background:${col}"></span></span><span class="scoreval" style="color:${col}">${s}</span></span>`;
 }
 function liqLabel(f){
@@ -433,7 +433,7 @@ function renderTable(){
     '<td class="r">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    '<strong>Starter Score</strong> (0–100, hover for the breakdown) is a transparent efficiency composite — <em>cost 25% · tax-safety 20% · return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
+    '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
     '“Net exp. return” = long-run asset-class estimate − TER − withholding drag. “Exp. vol” is asset-class-level expected volatility (class-level, not fund-specific). Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
