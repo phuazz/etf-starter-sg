@@ -17,7 +17,7 @@ No date arithmetic is performed; BUILD_DATE is stamped as a constant (session da
 ISO yyyy-mm-dd) to keep the build deterministic. If you re-download the SGX export,
 update SOURCE_DOWNLOADED below.
 """
-import csv, json, re, sys, os
+import csv, json, re, sys, os, urllib.request, time
 from collections import defaultdict
 
 BUILD_DATE = "2026-07-09"          # session date; not computed
@@ -146,8 +146,42 @@ def starter_score(rec, rf=2.8):
     return round(total), parts
 
 # ---- docs build ----------------------------------------------------------
-def build_docs(universe, cma, mp):
-    """Inline the three data objects into template.html -> docs/index.html so
+def load_or_fetch_prices(funds):
+    """Weekly ~6yr close history per fund from Yahoo, for the on-page price chart.
+    Fetched only when --prices is passed or data/prices.json is missing (network + slow);
+    otherwise the existing file is reused so normal builds stay fast and offline.
+    Public market data, stored compactly (weekly closes) for an educational chart."""
+    path = os.path.join(DATA, "prices.json")
+    if "--prices" not in sys.argv and os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    print("fetching weekly price history from Yahoo (slow; --prices) ...")
+    out = {}
+    for f in funds:
+        sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"] + ".SI")
+        url = ("https://query1.finance.yahoo.com/v8/finance/chart/" + sym
+               + "?range=6y&interval=1wk")
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            d = json.load(urllib.request.urlopen(req, timeout=15))
+            r = d["chart"]["result"][0]
+            ts = r["timestamp"]
+            cl = r["indicators"]["quote"][0]["close"]
+            closes = [round(c, 3) if c is not None else None for c in cl]
+            if sum(1 for c in closes if c is not None) < 20:
+                continue
+            out[f["ticker"]] = {"s": ts[0], "c": closes}
+        except Exception as e:
+            print(f"  {sym}: no data ({type(e).__name__})")
+        time.sleep(0.15)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(out, fh, separators=(",", ":"))
+    print(f"  prices.json: {len(out)}/{len(funds)} funds, {os.path.getsize(path):,} bytes")
+    return out
+
+
+def build_docs(universe, cma, mp, prices):
+    """Inline the data objects into template.html -> docs/index.html so
     the GitHub Pages build is self-contained (no runtime fetch needed)."""
     tpl_path = os.path.join(ROOT, "template.html")
     if not os.path.exists(tpl_path):
@@ -155,7 +189,7 @@ def build_docs(universe, cma, mp):
         return
     with open(tpl_path, encoding="utf-8") as f:
         html = f.read()
-    blob = json.dumps({"universe": universe, "cma": cma, "mp": mp}, ensure_ascii=False)
+    blob = json.dumps({"universe": universe, "cma": cma, "mp": mp, "prices": prices}, ensure_ascii=False)
     needle = "window.__DATA__=null;"
     if needle not in html:
         print("  WARNING: data-boot sentinel not found in template.html; docs not built")
@@ -353,7 +387,8 @@ def main():
         json.dump(out, f, indent=2, ensure_ascii=False)
 
     # ---- build docs/index.html (inline data for GitHub Pages) -----------
-    build_docs(out, cma, mp)
+    prices = load_or_fetch_prices(funds)
+    build_docs(out, cma, mp, prices)
 
     # ---- verification summary (stdout) ----------------------------------
     from collections import Counter

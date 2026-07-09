@@ -115,6 +115,8 @@ td.r{text-align:right;font-family:var(--mono)}
 .scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6}
 .scoreinfo b{color:var(--t1)}
 .chart-loading{padding:34px;text-align:center;color:var(--t3);font-size:13px}
+.chart-legend{font-size:11px;color:var(--t2);margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
+.tvchart{border:1px solid var(--bd);border-radius:var(--radius);padding:8px 6px 4px;background:var(--bg2)}
 @media(max-width:640px){
   #fundTw{max-height:none;overflow:visible;border:none;border-radius:0}
   #fundTbl thead{display:none}
@@ -353,7 +355,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th title="Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.">Domicile / tax</th>
         <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
-        <th class="r sortable" data-k="effective_ter" title="Total expense ratio — the fund's all-in annual cost (management fee + trustee + custody). Where a fund publishes only a management fee, TER is estimated from it (+~0.10% overhead) and marked 'est'.">TER % <span class="arw"></span></th>
+        <th class="r sortable" data-k="effective_ter" title="The fund's all-in yearly cost — the Total Expense Ratio (TER): management fee + trustee + custody, taken from returns daily. Where a fund publishes only a management fee, this is estimated from it and marked 'est'.">Annual cost % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
         <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price). Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
@@ -527,14 +529,15 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 const DOM_LABEL={SG:'Singapore',IE:'Ireland (UCITS)',LU:'Luxembourg',FR:'France',US:'United States',HK:'Hong Kong',verify:'Verify'};
 async function loadData(){
   if(window.__DATA__) return window.__DATA__;
-  const [u,c,m]=await Promise.all([
+  const [u,c,m,p]=await Promise.all([
     fetch('data/etf_universe.json').then(r=>r.json()),
     fetch('data/cma.json').then(r=>r.json()),
-    fetch('data/model_portfolios.json').then(r=>r.json())
+    fetch('data/model_portfolios.json').then(r=>r.json()),
+    fetch('data/prices.json').then(r=>r.json()).catch(()=>({}))
   ]);
-  return {universe:u,cma:c,mp:m};
+  return {universe:u,cma:c,mp:m,prices:p};
 }
-let DATA, FUNDS, CMA, MP, ACLABEL, CORR;
+let DATA, FUNDS, CMA, MP, ACLABEL, CORR, PRICES={};
 let sortKey='starter_score', sortDir=-1, routeFilter='';
 let BW={}, BPRESET='balanced', BBASE={band:[10,15],vol:1}, fwdDone=false, buildDone=false;
 const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_bonds','gold','cash'];
@@ -547,28 +550,38 @@ function infoUrl(f){
   if((f.domicile==='LU'||f.domicile==='FR')&&f.isin) return 'https://www.justetf.com/en/etf-profile.html?isin='+f.isin;
   return 'https://finance.yahoo.com/quote/'+f.ticker+'.SI';  // SGX-listed
 }
-function tvSymbol(f){ return (f.is_core?'LSE:':'SGX:')+f.ticker; }  // London UCITS vs SGX-listed
-function loadChart(f, box){
-  box.innerHTML='<div class="chart-loading">Loading chart… (TradingView; may take a few seconds)</div>';
-  const p=new URLSearchParams({symbol:tvSymbol(f),interval:'W',theme:'light',style:'3',
-    timezone:'Asia/Singapore',withdateranges:'1',hidesidetoolbar:'1',hidetoptoolbar:'1',
-    symboledit:'0',saveimage:'0',locale:'en',studies:'["MASimple@tv-basicstudies"]'});
-  const ifr=document.createElement('iframe');
-  ifr.src='https://s.tradingview.com/widgetembed/?'+p.toString();
-  ifr.setAttribute('style','width:100%;height:360px;border:1px solid var(--bd);border-radius:8px;display:none');
-  ifr.setAttribute('scrolling','no'); ifr.setAttribute('allowtransparency','true');
-  const reveal=function(){const l=box.querySelector('.chart-loading');if(l)l.remove();ifr.style.display='block';};
-  ifr.onload=reveal; setTimeout(reveal,4000);   // fallback if onload does not fire
-  box.appendChild(ifr);
+// Fast self-rendered SVG price chart from precomputed weekly closes (no external widget).
+function renderPriceChart(box, tk){
+  const ser=PRICES[tk];
+  if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>';return;}
+  const raw=ser.c.slice();
+  for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
+  let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;
+  const arr=raw.slice(i0), n=arr.length;
+  if(n<20){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>';return;}
+  const min=Math.min(...arr),max=Math.max(...arr),span=(max-min)||1;
+  const W=820,H=300,pL=48,pR=12,pT=14,pB=24;
+  const X=i=>pL+(i/(n-1))*(W-pL-pR);
+  const Y=v=>pT+(1-(v-min)/span)*(H-pT-pB);
+  const line=a=>{let d='',st=false;for(let i=0;i<a.length;i++){if(a[i]==null)continue;d+=(st?'L':'M')+X(i).toFixed(1)+' '+Y(a[i]).toFixed(1)+' ';st=true;}return d;};
+  const sma=w=>{const o=[];let s=0;for(let i=0;i<n;i++){s+=arr[i];if(i>=w)s-=arr[i-w];o.push(i>=w-1?s/w:null);}return o;};
+  const yl=[max,(max+min)/2,min].map(v=>'<text x="'+(pL-6)+'" y="'+(Y(v)+3).toFixed(0)+'" text-anchor="end" font-family="monospace" font-size="9" fill="#8a8a82">'+(+v.toPrecision(3))+'</text>').join('');
+  const grid=[max,(max+min)/2,min].map(v=>'<line x1="'+pL+'" y1="'+Y(v).toFixed(1)+'" x2="'+(W-pR)+'" y2="'+Y(v).toFixed(1)+'" stroke="#eeeee8"/>').join('');
+  const startTs=ser.s+i0*604800; let xl='';   // 604800s = 1 week; year label only, no date arithmetic
+  for(let k=0;k<=5;k++){const i=Math.round(k/5*(n-1));const yr=new Date((startTs+i*604800)*1000).getFullYear();xl+='<text x="'+X(i).toFixed(0)+'" y="'+(H-7)+'" text-anchor="middle" font-family="monospace" font-size="9" fill="#8a8a82">'+yr+'</text>';}
+  box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+grid+yl+xl+
+    '<path d="'+line(arr)+'" fill="none" stroke="#0C4A6E" stroke-width="1.6"/>'+
+    '<path d="'+line(sma(40))+'" fill="none" stroke="#b45309" stroke-width="1.3"/>'+
+    '<path d="'+line(sma(10))+'" fill="none" stroke="#1a8754" stroke-width="1.1" stroke-dasharray="4 2"/></svg>'+
+    '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week average (long-term trend)</span><span style="color:#1a8754">&#9644;&nbsp;10-week average</span></div>';
 }
 function toggleChart(btn){
   const row=btn.closest('tr'), nx=row.nextElementSibling;
   if(nx && nx.classList.contains('chart-row')){ nx.remove(); btn.textContent='Price chart ▾'; return; }
-  const f=FUNDS.find(x=>x.ticker===btn.dataset.tk); if(!f) return;
   const tr=document.createElement('tr'); tr.className='chart-row';
-  tr.innerHTML='<td colspan="10"><div class="chart-cap">Weekly price with a moving-average trend line (via TradingView). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
+  tr.innerHTML='<td colspan="10"><div class="chart-cap">Weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
   row.after(tr); btn.textContent='Hide chart ▴';
-  loadChart(f, tr.querySelector('.tvchart'));
+  renderPriceChart(tr.querySelector('.tvchart'), btn.dataset.tk);
 }
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
@@ -675,7 +688,7 @@ function renderTable(){
     '<td data-label="Domicile / tax">'+domBadge(f)+'</td>'+
     '<td class="r" data-label="Score">'+scoreCell(f)+'</td>'+
     '<td class="r col-detail" data-label="Mgmt fee">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
-    '<td class="r" data-label="TER">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
+    '<td class="r" data-label="Annual cost">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r" data-label="Net return">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
     '<td class="r col-detail" data-label="Exp. vol">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r" data-label="Div. yield">'+yieldCell(f)+'</td>'+
@@ -683,7 +696,7 @@ function renderTable(){
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice); a few new funds with no audited TER carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
@@ -944,7 +957,7 @@ function switchTab(p){
 
 async function init(){
   DATA=await loadData();
-  FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp;
+  FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
   ACLABEL={}; for(const k in CMA.asset_classes) ACLABEL[k]=CMA.asset_classes[k].label;
   // build symmetric correlation matrix (default 0.30 for any unspecified pair)
   CORR={}; const _cs=Object.keys(CMA.asset_classes);
