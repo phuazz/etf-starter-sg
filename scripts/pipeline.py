@@ -221,24 +221,19 @@ def main():
         rec["gross_expected_return_pct"] = acinfo["ret"]
         rec["exp_vol"] = acinfo["vol"]          # asset-class-level expected volatility (% p.a.)
         rec["return_basis"] = acinfo["basis"]
-        # effective TER: published where available, else estimated from the management fee
-        # (+ a typical ~0.10% trustee/custody overhead), so a fund with only a mgmt fee still scores.
+        # TER used for cost + score. This is the curated value, which for a few new feeder funds
+        # with no audited TER is itself a peer-informed estimate (ter_conf == "est"). The old
+        # "mgmt fee + 0.10%" shortcut was dropped: feeder TERs run far above the fee (e.g. CXS
+        # 0.50% fee -> 2.88% TER), so a small uplift badly understated their true cost.
         ter = rec.get("ter")
-        mgmt = rec.get("mgmt_fee")
-        if ter is not None:
-            eff, basis = ter, "published"
-        elif mgmt is not None:
-            eff, basis = round(mgmt + 0.10, 3), "est_from_mgmt"
-        else:
-            eff, basis = None, None
-        rec["effective_ter"] = eff
-        rec["ter_basis"] = basis
-        if eff is None:
+        rec["effective_ter"] = ter
+        rec["ter_basis"] = None if ter is None else ("est" if rec.get("ter_conf") == "est" else "published")
+        if ter is None:
             rec["net_expected_return_pct"] = None
             rec["cost_drag_total_pct"] = None
         else:
-            rec["cost_drag_total_pct"] = round(eff + drag, 3)
-            rec["net_expected_return_pct"] = round(acinfo["ret"] - eff - drag, 2)
+            rec["cost_drag_total_pct"] = round(ter + drag, 3)
+            rec["net_expected_return_pct"] = round(acinfo["ret"] - ter - drag, 2)
         score, parts = starter_score(rec, cma["_meta"]["risk_free_pct"])
         rec["starter_score"] = score
         rec["score_parts"] = parts
@@ -305,6 +300,26 @@ def main():
             "is_core": True, "share_classes": [{"ticker": c["ticker"], "ccy": c["ccy"], "val_m": None}],
         }
         funds.append(enrich(rec))
+
+    # second-pass merge: two primaries sharing a derived ISIN are the same fund that the
+    # name-normaliser split (e.g. CFA "Asia REIT" vs COI "A_REIT", ISIN SG1DE9000003). Keep the
+    # more liquid one as primary and absorb the other's share classes.
+    by_isin, deduped = {}, []
+    for f in funds:
+        iso = f.get("isin")
+        if iso and iso in by_isin:
+            prim = by_isin[iso]
+            if (f.get("val_m") or 0) > (prim.get("val_m") or 0):
+                f["share_classes"] = f["share_classes"] + prim["share_classes"]
+                deduped[deduped.index(prim)] = f
+                by_isin[iso] = f
+            else:
+                prim["share_classes"] = prim["share_classes"] + f["share_classes"]
+        else:
+            deduped.append(f)
+            if iso:
+                by_isin[iso] = f
+    funds = deduped
 
     funds.sort(key=lambda r: (r["asset_class"], -(r["val_m"] or 0)))
 

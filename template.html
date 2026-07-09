@@ -523,7 +523,7 @@ function renderTable(){
     '<td>'+domBadge(f)+'</td>'+
     '<td class="r">'+scoreCell(f)+'</td>'+
     '<td class="r">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
-    '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est_from_mgmt'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
+    '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
     '<td class="r">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
@@ -531,7 +531,7 @@ function renderTable(){
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank only where neither a TER nor a management fee is available. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). Where only a management fee is published, TER is estimated from it (+~0.10% overhead) and marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). A few new funds with no audited TER yet carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
