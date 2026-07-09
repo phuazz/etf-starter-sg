@@ -105,6 +105,12 @@ td.r{text-align:right;font-family:var(--mono)}
 .tk-link{color:var(--t1);text-decoration:none}
 .tk-link:hover{color:var(--b);text-decoration:underline}
 .tk-link .ext{color:var(--t4);font-size:10px;font-family:var(--sans)}
+.chart-btn{margin-top:7px;background:none;border:none;padding:0;font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--b);cursor:pointer}
+.chart-btn:hover{text-decoration:underline}
+.chart-row td{padding:2px 12px 16px;background:var(--bg)}
+.chart-row:hover td{background:var(--bg)}
+.chart-cap{font-size:11.5px;color:var(--t3);margin:6px 0 9px}
+.tvchart{width:100%}
 .seg-lab{font-size:11px;color:var(--t3)}
 
 /* badges */
@@ -516,6 +522,26 @@ function infoUrl(f){
   if((f.domicile==='LU'||f.domicile==='FR')&&f.isin) return 'https://www.justetf.com/en/etf-profile.html?isin='+f.isin;
   return 'https://finance.yahoo.com/quote/'+f.ticker+'.SI';  // SGX-listed
 }
+function tvSymbol(f){ return (f.is_core?'LSE:':'SGX:')+f.ticker; }  // London UCITS vs SGX-listed
+function loadChart(f, box){
+  const p=new URLSearchParams({symbol:tvSymbol(f),interval:'W',theme:'light',style:'3',
+    timezone:'Asia/Singapore',withdateranges:'1',hidesidetoolbar:'1',hidetoptoolbar:'1',
+    symboledit:'0',saveimage:'0',locale:'en',studies:'["MASimple@tv-basicstudies"]'});
+  const ifr=document.createElement('iframe');
+  ifr.src='https://s.tradingview.com/widgetembed/?'+p.toString();
+  ifr.setAttribute('style','width:100%;height:360px;border:1px solid var(--bd);border-radius:8px');
+  ifr.setAttribute('scrolling','no'); ifr.setAttribute('allowtransparency','true'); ifr.loading='lazy';
+  box.appendChild(ifr);
+}
+function toggleChart(btn){
+  const row=btn.closest('tr'), nx=row.nextElementSibling;
+  if(nx && nx.classList.contains('chart-row')){ nx.remove(); btn.textContent='Price chart ▾'; return; }
+  const f=FUNDS.find(x=>x.ticker===btn.dataset.tk); if(!f) return;
+  const tr=document.createElement('tr'); tr.className='chart-row';
+  tr.innerHTML='<td colspan="10"><div class="chart-cap">Weekly price with a moving-average trend line (via TradingView). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
+  row.after(tr); btn.textContent='Hide chart ▴';
+  loadChart(f, tr.querySelector('.tvchart'));
+}
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
 function domBadge(f){
@@ -609,8 +635,8 @@ function renderTable(){
     return (av-bv)*sortDir;
   });
   document.getElementById('fundBody').innerHTML=rows.map(f=>
-    '<tr>'+
-    '<td><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div></td>'+
+    '<tr data-tk="'+f.ticker+'">'+
+    '<td><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div><button class="chart-btn" data-tk="'+f.ticker+'">Price chart ▾</button></td>'+
     '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td>'+domBadge(f)+'</td>'+
     '<td class="r">'+scoreCell(f)+'</td>'+
@@ -906,6 +932,7 @@ async function init(){
     document.querySelectorAll('#fView button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
     document.getElementById('fundTw').classList.toggle('simple', b.dataset.v==='simple');
   }));
+  document.getElementById('fundBody').addEventListener('click',e=>{const b=e.target.closest('.chart-btn'); if(b) toggleChart(b);});
   document.querySelectorAll('#fundTbl th.sortable').forEach(th=>th.addEventListener('click',()=>{
     const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;} renderTable();
   }));
