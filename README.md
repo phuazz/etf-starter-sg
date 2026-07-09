@@ -73,7 +73,9 @@ etf-starter-sg/
 ```
 
 Build: `python scripts/pipeline.py` (fast; reuses the cached `prices.json`).
-Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr weekly closes per fund from Yahoo (slow, network) and rewrites `prices.json`. The on-page price chart is self-rendered SVG (price line + 10/40-week moving averages) from this data, so it loads instantly; it is only as fresh as the last `--prices` run. Local preview: `npx serve .` (source) or `npx serve docs` (built).
+Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr weekly closes per fund from Yahoo (slow, network) and rewrites `prices.json`. The fetch records an exact `asof` (real last-bar date) into `prices.json`; the page shows it as "week of &lt;date&gt;" so freshness is never guessed. The on-page price chart is self-rendered SVG (price line + 10/40-week moving averages, the latter hidden on windows under ~2 years) from this data, so it loads instantly. Local preview: `npx serve .` (source) or `npx serve docs` (built).
+
+Automated refresh: `.github/workflows/refresh-prices.yml` re-runs `--prices` on weekdays (22:10 UTC, after the SGX/LSE/US closes), rebuilds `docs/index.html`, and commits the result — so the charts and the `asof` date stay current without manual runs. Yahoo's current-week weekly bar already carries the latest daily close, so the series stays uniform-weekly (no distortion to the 1M/3M/YTD/1Y/3Y stats) while the last point stays a day fresh. Switch to a weekly cadence by changing the cron to `0 2 * * 6`. The job aborts (does not commit) if fewer than 50 funds return data, so a transient fetch failure cannot wipe the charts.
 
 ## Known simplifications (the three ways this could mislead — read before trusting a number)
 

@@ -1,0 +1,49 @@
+name: Refresh price history
+
+# Keeps the chart data — and the "as of" date shown on the page — current by re-fetching
+# weekly closes from Yahoo and rebuilding docs/index.html. Yahoo's *current-week* weekly bar
+# already carries the latest daily close, so the series stays uniform-weekly (no distortion to
+# the 1M / 3M / YTD / 1Y / 3Y stats or the chart spacing) while the last point stays fresh.
+
+on:
+  schedule:
+    # Weekdays 22:10 UTC — after the SGX, LSE and US closes, so each trading day's close is
+    # captured and the page is never more than ~1 day stale. For a lighter weekly-only cadence,
+    # replace this line with:  - cron: '0 2 * * 6'   # Saturday 02:00 UTC (10:00 SGT)
+    - cron: '10 22 * * 1-5'
+  workflow_dispatch: {}   # allow a manual run from the Actions tab
+
+permissions:
+  contents: write         # lets the default token commit the refreshed data back
+
+concurrency:
+  group: refresh-prices
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh weekly prices, rebuild docs, and commit if changed
+        run: |
+          python scripts/pipeline.py --prices
+          n=$(python -c "import json;d=json.load(open('data/prices.json'));print(sum(1 for k in d if k!='asof'))")
+          echo "funds with price history: $n"
+          if [ "$n" -lt 50 ]; then
+            echo "Too few funds ($n) — likely a transient fetch failure. Reverting, not committing."
+            git checkout -- data/prices.json docs/index.html || true
+            exit 0
+          fi
+          if git diff --quiet -- data/prices.json docs/index.html; then
+            echo "No change in prices/docs — nothing to commit."
+          else
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/prices.json docs/index.html
+            git commit -m "Auto: refresh weekly price history ($(date -u +%Y-%m-%d))"
+            git push
+          fi
