@@ -100,6 +100,29 @@ def liquidity_tier(val_m):
     if val_m >= 0.1: return "low"
     return "thin"
 
+# ---- docs build ----------------------------------------------------------
+def build_docs(universe, cma, mp):
+    """Inline the three data objects into template.html -> docs/index.html so
+    the GitHub Pages build is self-contained (no runtime fetch needed)."""
+    tpl_path = os.path.join(ROOT, "template.html")
+    if not os.path.exists(tpl_path):
+        print("  (no template.html yet — skipping docs build)")
+        return
+    with open(tpl_path, encoding="utf-8") as f:
+        html = f.read()
+    blob = json.dumps({"universe": universe, "cma": cma, "mp": mp}, ensure_ascii=False)
+    needle = "window.__DATA__=null;"
+    if needle not in html:
+        print("  WARNING: data-boot sentinel not found in template.html; docs not built")
+        return
+    html = html.replace(needle, "window.__DATA__=" + blob + ";")
+    docs = os.path.join(ROOT, "docs")
+    os.makedirs(docs, exist_ok=True)
+    with open(os.path.join(docs, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"  docs/index.html built ({len(html):,} bytes, data inlined)")
+
+
 # ---- main ----------------------------------------------------------------
 def main():
     cma = load_json("cma.json")
@@ -239,6 +262,9 @@ def main():
     }
     with open(os.path.join(DATA, "etf_universe.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)
+
+    # ---- build docs/index.html (inline data for GitHub Pages) -----------
+    build_docs(out, cma, mp)
 
     # ---- verification summary (stdout) ----------------------------------
     from collections import Counter
