@@ -40,6 +40,7 @@ a{color:var(--b);text-decoration:none}
 .pill{font-size:11px;font-weight:600;letter-spacing:0.3px;padding:5px 10px;border-radius:20px;border:1px solid}
 .pill-advice{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
 .pill-date{background:var(--bg3);color:var(--t3);border-color:var(--bd)}
+.pill-stale{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.35);cursor:help}
 
 /* notice */
 .notice{margin-top:16px;background:var(--a-bg);border:1px solid rgba(180,83,9,0.22);border-radius:var(--radius);padding:11px 14px;font-size:12.5px;color:var(--t2)}
@@ -363,6 +364,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="pills">
       <span class="pill pill-advice">Educational · Not financial advice</span>
       <span class="pill pill-date" id="builtPill">—</span>
+      <span class="pill pill-date" id="pricePill" style="display:none"></span>
     </div>
   </div>
 
@@ -400,6 +402,19 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
           <li><b>Then set the routine and stop watching.</b> Add a fixed amount monthly, rebalance roughly once a year back to your target weights, and treat market falls as expected weather rather than a reason to sell. The plan works through repetition, not timing.</li>
         </ol>
         <div class="fp-note">General education, not financial advice or a broker recommendation. Costs shown are typical ranges as of mid-2026; broker pricing changes &mdash; always check the current schedule.</div>
+      </div>
+    </details>
+    <details class="fp" id="omGuide">
+      <summary>After you buy: the four habits that do the real work</summary>
+      <div class="fp-body">
+        <p style="font-size:13px;color:var(--t2);line-height:1.6;margin:0 0 12px">Picking the funds is the easy part. Nearly all of a long-term investor&rsquo;s result comes from behaviour over the years that follow &mdash; and the winning behaviour is famously boring.</p>
+        <ol class="fp-steps">
+          <li><b>Add money on a schedule, not on a hunch.</b> Set a fixed amount every month and buy regardless of the headlines. This spreads your entry price over time and removes the impossible job of timing the market. Automate it if your broker allows.</li>
+          <li><b>Rebalance about once a year.</b> Winners grow to dominate the mix and quietly raise your risk. Once a year, sell a little of what has run and top up what has lagged to return to your target weights &mdash; or simply steer new contributions toward the underweight funds, which avoids selling and its costs. A calendar reminder is enough; there is no need to watch markets.</li>
+          <li><b>Expect the falls &mdash; they are the price of the returns, not a malfunction.</b> A globally diversified portfolio can drop 30% or more in a bad year; it has happened repeatedly and will again. The investors who do well are the ones who keep buying through it. Selling in a fall converts a paper dip into a permanent loss. If a plausible fall would make you sell, you are holding too much equity &mdash; dial back to a calmer mix in the <a onclick="switchTab('build')" style="color:var(--b);cursor:pointer;font-weight:600">Build tab</a> <em>now</em>, while calm.</li>
+          <li><b>Leave it alone, and ignore the noise.</b> Checking daily and reacting to news is where returns go to die. Review once or twice a year against your plan &mdash; not against the latest hot fund. Costs, taxes and time in the market are the levers you control; next quarter&rsquo;s price is not.</li>
+        </ol>
+        <div class="fp-note">The behavioural half of buy-and-hold investing. General education, not financial advice.</div>
       </div>
     </details>
     <div class="goalq" style="margin-top:28px">Or explore on your own</div>
@@ -538,6 +553,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   <div class="panel" id="p-build">
     <h2 class="sec">Build a portfolio</h2>
     <div class="lead">Pick a risk profile, then nudge the mix. Everything recomputes live: expected return, volatility, income, and — crucially — the portfolio's US estate-tax exposure, which depends on <em>how</em> you implement it. A starting point for discussion, not advice.</div>
+    <div class="scoreinfo">Every figure here is <b>model output, not a promise</b>. The blended return uses the long-run asset-class estimates <a onclick="switchTab('forward')" style="color:var(--b);cursor:pointer;font-weight:600">explained on the Expected returns tab</a>; the portfolio volatility and the &ldquo;typical worst fall&rdquo; also depend on assumed <b>correlations</b> between asset classes — how much they tend to move together — which are themselves estimates from history and can rise sharply in a crisis, when diversification helps least. Treat the outputs as directional.</div>
     <div class="pcards" id="pcards"></div>
     <div class="grid2">
       <div class="card">
@@ -1351,6 +1367,16 @@ async function init(){
   _cs.forEach(a=>{CORR[a]={}; _cs.forEach(b=>CORR[a][b]=(a===b)?1:0.30);});
   CMA.corr_pairs.forEach(([a,b,r])=>{if(CORR[a]&&CORR[a][b]!==undefined){CORR[a][b]=r;CORR[b][a]=r;}});
   document.getElementById('builtPill').textContent='Data · '+DATA.universe._meta.built;
+  // Fail-visible price-freshness guard: if the weekly refresh Action ever dies silently,
+  // the pill turns amber once the price data is more than 14 days old.
+  if(PRICES.asof){
+    const d=new Date(PRICES.asof+'T00:00:00'), days=Math.floor((Date.now()-d.getTime())/86400000);
+    const pill=document.getElementById('pricePill'), asof=priceAsOf();
+    if(days>14){ pill.className='pill pill-stale'; pill.textContent='⚠ Prices '+days+'d old';
+      pill.title='The weekly price refresh has not run since '+asof+' ('+days+' days). Charts, trailing returns and computed yields may be stale — the automated refresh may need attention.'; pill.style.display=''; }
+    else if(days>=0){ pill.className='pill pill-date'; pill.textContent='Prices · '+asof;
+      pill.title='Latest weekly close in the chart data.'; pill.style.display=''; }
+  }
   // class filter options
   const classes=[...new Set(FUNDS.map(f=>f.asset_class))].sort((a,b)=>(ACLABEL[a]||'').localeCompare(ACLABEL[b]||''));
   document.getElementById('fClass').innerHTML='<option value="">All classes</option>'+classes.map(c=>'<option value="'+c+'">'+(ACLABEL[c]||c)+'</option>').join('');
