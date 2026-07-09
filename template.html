@@ -167,6 +167,24 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .impl .im-i{color:var(--t2);font-size:12px;margin-top:2px}
 .estline{padding:10px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
 .estline .el-v{font-family:var(--mono);font-weight:700}
+.lst{list-style:none;font-size:13px}
+.lst li{padding:6px 0 6px 18px;position:relative;border-bottom:1px solid var(--bd);color:var(--t2)}
+.lst li:before{content:'•';position:absolute;left:2px;color:var(--t4)}
+.lst li:last-child{border-bottom:none}
+.fixes{display:flex;flex-direction:column;gap:10px}
+.fix{display:flex;gap:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow-sm)}
+.fix-n{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--t1);color:#fff;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center;font-size:14px}
+.fix-t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fix-b{font-size:13px;color:var(--t2);line-height:1.55}
+.flow{display:flex;flex-direction:column;max-width:640px;margin:0 auto}
+.flow-node{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--radius-lg);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.flow-q{font-weight:600;font-size:13.5px;text-align:center;margin-bottom:10px}
+.flow-outs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.flow-out{font-size:12px;padding:8px 10px;border-radius:var(--radius);border:1px solid;line-height:1.4}
+.flow-out.ok{background:var(--g-bg);border-color:var(--g-bg2);color:var(--g)}
+.flow-out.warn{background:var(--a-bg);border-color:rgba(180,83,9,0.25);color:var(--a);text-align:center;font-weight:600}
+.flow-out.danger{background:var(--r-bg);border-color:var(--r-bg2);color:var(--r)}
+.flow-arrow{text-align:center;color:var(--t4);font-size:16px;padding:6px 0}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}.pcards{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}</style>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
@@ -322,7 +340,69 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       </div>
     </div>
   </div>
-  <div class="panel" id="p-learn"><div class="stub">Learn — the US estate-tax explainer (flowchart, effective-rate table, ranked fixes) from the source article. Coming in Session 4.</div></div>
+  <!-- LEARN -->
+  <div class="panel" id="p-learn">
+    <h2 class="sec">The 40% trap: US estate tax for Singapore investors</h2>
+    <div class="lead">Singapore abolished estate duty in 2008, so most of us assume inheritance is tax-free. On the Singapore side, it is. The trap is on the <strong>US</strong> side — and it lands on the assets many of us hold most: US stocks and US-domiciled ETFs. A plain-language summary of the issue and the fixes. <strong>Educational only — not tax or legal advice.</strong></div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>The exemption gap</h3>
+        <p style="font-size:14px;color:var(--t2);margin-bottom:16px">A US citizen can die with <strong>US$15 million</strong> in assets before US estate tax bites. A Singaporean gets <strong>US$60,000</strong> — an exemption <strong>250× smaller</strong>. Above it, the tax is graduated from 18% up to 40%.</p>
+        <div style="margin:10px 0"><div style="font-size:12px;font-weight:600;margin-bottom:4px">US citizen exemption</div><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;background:var(--bg4);border-radius:3px;height:18px"><div style="height:100%;width:100%;background:var(--b);border-radius:3px"></div></div><div class="mono" style="font-size:11px;width:70px;text-align:right">US$15m</div></div></div>
+        <div style="margin:10px 0"><div style="font-size:12px;font-weight:600;margin-bottom:4px">Singaporean exemption</div><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;background:var(--bg4);border-radius:3px;height:18px"><div style="height:100%;width:0.4%;background:var(--r);border-radius:3px;min-width:2px"></div></div><div class="mono" style="font-size:11px;width:70px;text-align:right">US$60k</div></div></div>
+      </div>
+      <div class="card">
+        <h3>How the tax scales (no treaty)</h3>
+        <table class="cmp" id="estRateTbl"></table>
+        <p class="footlet">On a US$1m US-stock portfolio the estate tax is about US$332,800 — an effective 33%. Singapore has no US estate-tax treaty, so there is no relief beyond the US$60k.</p>
+      </div>
+    </div>
+
+    <h2 class="sec" style="margin-top:28px">What is exposed, and what is safe</h2>
+    <div class="grid2">
+      <div class="card"><h3 style="color:var(--r)">US-situs — exposed</h3><ul class="lst">
+        <li>US-listed stocks (Apple, Nvidia, Tesla…)</li>
+        <li>US-domiciled ETFs (VOO, SPY, QQQ — and SGX's S27, D07, GSD)</li>
+        <li>Cash sitting in a US brokerage account</li>
+        <li>US retirement accounts (IRA / 401k)</li>
+        <li>US real estate</li>
+      </ul></div>
+      <div class="card"><h3 style="color:var(--g)">Not US-situs — safe</h3><ul class="lst">
+        <li>Irish / other non-US-domiciled ETFs (e.g. CSPX)</li>
+        <li>Non-US and SGX-listed shares</li>
+        <li>Cash in a US <em>bank</em> deposit account</li>
+        <li>Most directly-held US Treasuries</li>
+        <li>Non-US real estate</li>
+      </ul></div>
+    </div>
+
+    <div class="notice" style="margin-top:20px"><strong>Your broker does not protect you.</strong> US estate tax follows the underlying asset — situs is set by where the company is incorporated, not where your brokerage (IBKR, Tiger, moomoo, Saxo) or even your SRS account sits. And it is enforced: on death the US custodian freezes the account and requires an IRS transfer certificate (Form 5173) before releasing anything — a process that routinely takes 6–18 months.</div>
+
+    <h2 class="sec" style="margin-top:28px">The fixes, ranked by how practical they are</h2>
+    <div class="fixes">
+      <div class="fix"><div class="fix-n">1</div><div><div class="fix-t">Use Irish-domiciled UCITS ETFs <span class="bdg bdg-core">the clean fix</span></div><div class="fix-b">For index exposure this solves it outright. VOO → <strong>CSPX</strong> (iShares Core S&amp;P 500 UCITS, Ireland, London-listed): zero US estate-tax exposure at any size, <em>and</em> 15% dividend withholding instead of 30% (US–Ireland treaty). Slightly higher fee, slightly less liquidity — worth it for most. This is the whole basis of the tool's core-satellite split.</div></div></div>
+      <div class="fix"><div class="fix-n">2</div><div><div class="fix-t">Gift the shares while you are alive</div><div class="fix-b">A Singaporean's gift of US shares falls outside US gift tax entirely (intangible property). The catch: it is irrevocable, and the exposure transfers to your children rather than disappearing. A genuine tool for older investors sitting on large, appreciated positions.</div></div></div>
+      <div class="fix"><div class="fix-n">3</div><div><div class="fix-t">Stay under US$60,000</div><div class="fix-b">Below the exemption there is no tax and no filing. Fine when you are starting out — but treat it as a phase, not a plan.</div></div></div>
+      <div class="fix"><div class="fix-n">4</div><div><div class="fix-t">Life insurance — to fund the bill, not dodge it</div><div class="fix-b">Death-benefit payouts are generally outside the US estate. This does not remove the liability; it gives your estate the cash to pay it without a forced sale of your holdings.</div></div></div>
+      <div class="fix"><div class="fix-n">5</div><div><div class="fix-t">Foreign company or trust <span class="bdg bdg-verify">&gt;US$5m · get advice</span></div><div class="fix-b">Holding US assets through a foreign company or trust can move them out of your US estate. Costly and complex — not a DIY job. If you are at that size, see a cross-border tax and legal adviser.</div></div></div>
+    </div>
+    <div class="notice" style="margin-top:16px;background:var(--r-bg);border-color:var(--r-bg2)"><strong style="color:var(--r)">Does not work:</strong> joint accounts (for non-spouse holders the IRS presumes the whole account belongs to the first to die) and the spousal exemption (it only applies when the surviving spouse is a US citizen).</div>
+
+    <h2 class="sec" style="margin-top:28px">In one picture</h2>
+    <div class="flow">
+      <div class="flow-node"><div class="flow-q">Do you hold US-domiciled assets? (US stocks, or VOO / SPY / QQQ / SGX's S27, D07, GSD)</div>
+        <div class="flow-outs"><span class="flow-out ok">No → no US estate-tax exposure ✓</span><span class="flow-out warn">Yes ↓</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node"><div class="flow-q">Is your total US-situs value above US$60,000?</div>
+        <div class="flow-outs"><span class="flow-out ok">No → fine for now; revisit as it grows</span><span class="flow-out warn">Yes ↓</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node"><div class="flow-q">Index-fund exposure, or single stocks?</div>
+        <div class="flow-outs"><span class="flow-out ok">Index → switch to Irish UCITS (e.g. CSPX); exposure → zero ✓</span><span class="flow-out danger">Single stocks → gift, insure, or accept the risk</span></div></div>
+    </div>
+
+    <div class="footer">Summarised from Financial Horse, "Die holding US Stocks and pay 40% tax? — What Singapore investors need to know about US inheritance / estate tax" (3 July 2026), cross-checked to the IRC §2001(c) graduated schedule. <strong>Educational only — not financial, tax, or legal advice.</strong> Rules change and individual circumstances differ; verify with a qualified cross-border adviser before acting.</div>
+  </div>
 
   <div class="footer" id="globalFoot">
     <strong>Sources &amp; caveats.</strong> Universe: SGX ETF Screener export. Domicile derived from fund ISIN. Forward returns: synthesised house estimates informed by published long-run capital market assumptions (2025-26 vintage); not a forecast, not any single provider's proprietary table. Estate-tax schedule: Financial Horse, "Die holding US Stocks and pay 40% tax?" (3 Jul 2026), cross-checked to IRC §2001(c). <strong>Educational only — not financial, tax, or legal advice.</strong>
@@ -644,12 +724,20 @@ function renderEstate(){
     `<div class="estline" style="border-bottom:none"><span>&nbsp;&nbsp;&rarr; potential US estate tax on that</span><span class="el-v" style="color:var(--r)">~S$${Math.round(tax).toLocaleString()}</span></div>`;
 }
 
+function renderLearn(){
+  const t=CMA.tax.us_estate;
+  document.getElementById('estRateTbl').innerHTML=
+    '<tr><th class="r">US-situs at death</th><th class="r">Estate tax</th><th class="r">Effective rate</th></tr>'+
+    t.schedule.map(s=>`<tr><td class="r">US$${s.us_situs_usd.toLocaleString()}</td><td class="r">US$${s.tax_usd.toLocaleString()}</td><td class="r"><strong>${(s.effective_rate*100).toFixed(1)}%</strong></td></tr>`).join('');
+}
+
 function switchTab(p){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===p));
   document.querySelectorAll('.panel').forEach(pl=>pl.classList.toggle('active',pl.id==='p-'+p));
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
+  if(p==='learn') renderLearn();
 }
 
 async function init(){
