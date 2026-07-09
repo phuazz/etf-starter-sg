@@ -111,6 +111,9 @@ td.r{text-align:right;font-family:var(--mono)}
 .chart-row:hover td{background:var(--bg)}
 .chart-cap{font-size:11.5px;color:var(--t3);margin:6px 0 9px}
 .tvchart{width:100%}
+.dim{color:var(--t3);font-size:11.5px}
+.scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6}
+.scoreinfo b{color:var(--t1)}
 .seg-lab{font-size:11px;color:var(--t3)}
 
 /* badges */
@@ -303,6 +306,9 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="corerow" id="coreRow"></div>
 
     <h2 class="sec">All funds</h2>
+    <div class="scoreinfo">
+      The <b>Efficiency Score</b> (0&ndash;100) blends the five things a good long-term holding should get right &mdash; <b>cost 25%</b> &middot; <b>tax-safety 20%</b> &middot; <b>risk-adjusted return 25%</b> &middot; <b>liquidity 15%</b> &middot; <b>diversification 15%</b>. A higher score means a more efficient core holding. Hover any score to see its breakdown. It is a transparent guide, <em>not a buy recommendation</em>.
+    </div>
     <div class="controls">
       <div class="ctl"><label>Search</label><input id="fSearch" type="text" placeholder="ticker, name, index…"></div>
       <div class="ctl"><label>Asset class</label><select id="fClass"><option value="">All classes</option></select></div>
@@ -331,7 +337,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable" data-k="effective_ter" title="Total expense ratio — the fund's all-in annual cost (management fee + trustee + custody). Where a fund publishes only a management fee, TER is estimated from it (+~0.10% overhead) and marked 'est'.">TER % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
-        <th class="r sortable col-detail" data-k="yield" title="Indicative trailing distribution yield. Accumulating funds show 0 (income is reinvested inside the fund).">Yield % <span class="arw"></span></th>
+        <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price). Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
       </tr></thead>
       <tbody id="fundBody"></tbody>
@@ -564,6 +570,12 @@ function liqLabel(f){
   const m={high:'High',medium:'Medium',low:'Low',thin:'Thin',unknown:'—'};
   return (m[t]||'—')+(f.val_m!=null?' <span class="seg-lab">('+f.val_m.toFixed(1)+'m)</span>':'');
 }
+function yieldCell(f){
+  if(f.asset_class==='gold') return '<span class="dim">—</span>';            // no dividend
+  if((f.income||'').toLowerCase().indexOf('acc')===0) return '<span class="dim">Reinvested</span>';
+  if(f.yield!=null && f.yield>0) return fmt(f.yield,1);                      // distributing, known
+  return '<span class="dim">—</span>';                                       // distributing but not available
+}
 
 function renderKPIs(){
   const safe=FUNDS.filter(f=>!f.estate_tax_exposed).length;
@@ -644,12 +656,12 @@ function renderTable(){
     '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
     '<td class="r col-detail">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
-    '<td class="r col-detail">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
+    '<td class="r">'+yieldCell(f)+'</td>'+
     '<td class="r col-detail">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank only where neither a TER nor a management fee is available. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). A few new funds with no audited TER yet carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) to open its fund page — justETF for UCITS, Yahoo Finance for SGX-listed funds.';
+    'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available. '+
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice); a few new funds with no audited TER carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }
