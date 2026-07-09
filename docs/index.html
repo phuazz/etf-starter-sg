@@ -142,6 +142,13 @@ td.r{text-align:right;font-family:var(--mono)}
 .resil-v.down{color:var(--r)} .resil-v.up{color:var(--g)}
 .resil-sub{font-size:10px;color:var(--t4);margin-top:1px}
 .resil svg{margin-top:2px}
+.buy{max-width:920px;margin-top:12px;background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius);padding:12px 14px}
+.buy-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--b);font-weight:700}
+.buy-pos{font-size:12px;font-style:italic;color:var(--t2);margin-top:3px}
+.buy-body{font-size:13px;color:var(--t2);line-height:1.55;margin-top:8px}
+.buy-body strong{color:var(--t1)}
+.buy-verify{font-weight:600;color:var(--a)}
+.buy-note{font-size:11px;color:var(--t3);margin-top:8px;line-height:1.45}
 @media(max-width:640px){
   #fundTw{max-height:none;overflow:visible;border:none;border-radius:0}
   #fundTbl thead{display:none}
@@ -704,7 +711,20 @@ function renderPriceChart(box, tk){
     '<path d="'+line(sma(10))+'" fill="none" stroke="#1a8754" stroke-width="1.2" stroke-dasharray="4 2"/></svg>';
   box.innerHTML=perf+svg+
     '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week average</span><span style="color:#1a8754">&#9644;&nbsp;10-week average</span></div>'+
-    resilBlock(arr,tk);
+    resilBlock(arr,tk)+buyBlock(FUNDS.find(x=>x.ticker===tk));
+}
+// Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
+function buyBlock(f){
+  if(!f) return '';
+  const body=f.is_core
+    ? 'Listed in <strong>London (LSE)</strong>. Buy through any broker with LSE access &mdash; Interactive Brokers, Tiger, moomoo or Saxo &mdash; cheapest commission first; several offer fractional shares. Generally <strong>cash only</strong> (not CPF); SRS only via specific platforms. No SGX / CDP account needed.'
+    : 'Listed on <strong>SGX</strong>. Buy with cash through any Singapore broker (moomoo, Tiger, Interactive Brokers, POEMS, DBS Vickers); held in <strong>CDP</strong> or a custodian depending on the broker. <strong>SRS</strong>: via an SRS-linked broker. <strong>CPF-OA</strong>: only funds on the CPFIS-included list qualify &mdash; <span class="buy-verify">verify current eligibility</span> before assuming.';
+  return '<div class="buy">'+
+    '<div class="buy-t">Where &amp; how to buy</div>'+
+    '<div class="buy-pos">We show every route; a broker shows only its own.</div>'+
+    '<p class="buy-body">'+body+'</p>'+
+    '<div class="buy-note">General information, not advice or a broker endorsement. No affiliate links; commissions and platform features vary and change over time.</div>'+
+    '</div>';
 }
 function toggleChart(btn){
   const row=btn.closest('tr'), nx=row.nextElementSibling;
