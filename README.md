@@ -48,14 +48,16 @@ etf-starter-sg/
 │   ├── curated.json         # TER / yield / domicile overlay + UCITS core (source-flagged)
 │   ├── cma.json             # asset-class forward returns, vols, correlations, tax model
 │   ├── model_portfolios.json# risk-profile presets (buyable building blocks)
-│   └── etf_universe.json    # BUILT — enriched, de-duplicated universe (pipeline output)
+│   ├── etf_universe.json    # BUILT — enriched, de-duplicated universe (pipeline output)
+│   └── prices.json          # BUILT — compact weekly close history per fund (for the on-page chart)
 ├── scripts/
-│   └── pipeline.py          # CSV + curated + cma → etf_universe.json → docs/index.html
-├── docs/index.html          # BUILT — GitHub Pages output
+│   └── pipeline.py          # CSV + curated + cma → etf_universe.json (+ prices) → docs/index.html
+├── docs/index.html          # BUILT — GitHub Pages output (all data, incl. prices, inlined)
 └── README.md
 ```
 
-Build: `python scripts/pipeline.py`. Local preview: `npx serve .` (source) or `npx serve docs` (built).
+Build: `python scripts/pipeline.py` (fast; reuses the cached `prices.json`).
+Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr weekly closes per fund from Yahoo (slow, network) and rewrites `prices.json`. The on-page price chart is self-rendered SVG (price line + 10/40-week moving averages) from this data, so it loads instantly; it is only as fresh as the last `--prices` run. Local preview: `npx serve .` (source) or `npx serve docs` (built).
 
 ## Status
 
