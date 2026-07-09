@@ -115,6 +115,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .scorebar{width:36px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .scorefill{display:block;height:100%;border-radius:3px}
 .scoreval{font-family:var(--mono);font-weight:700;font-size:13px;width:22px;text-align:right}
+.est-tag{font-size:9px;font-weight:600;color:var(--a);text-transform:uppercase;letter-spacing:0.3px;vertical-align:middle}
 
 /* cost tab */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -244,7 +245,8 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="sortable" data-k="asset_class" title="Broad asset class used for the forward-return and correlation model.">Class <span class="arw"></span></th>
         <th title="Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.">Domicile / tax</th>
         <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
-        <th class="r sortable" data-k="ter" title="Total expense ratio — the fund's annual fee, deducted from returns daily.">TER % <span class="arw"></span></th>
+        <th class="r sortable" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
+        <th class="r sortable" data-k="effective_ter" title="Total expense ratio — the fund's all-in annual cost (management fee + trustee + custody). Where a fund publishes only a management fee, TER is estimated from it (+~0.10% overhead) and marked 'est'.">TER % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
         <th class="r sortable" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
         <th class="r sortable" data-k="yield" title="Indicative trailing distribution yield. Accumulating funds show 0 (income is reinvested inside the fund).">Yield % <span class="arw"></span></th>
@@ -459,7 +461,7 @@ function renderKPIs(){
   const safe=FUNDS.filter(f=>!f.estate_tax_exposed).length;
   const core=FUNDS.filter(f=>f.is_core).length;
   const exposed=FUNDS.filter(f=>f.estate_tax_exposed);
-  const coreTers=FUNDS.filter(f=>f.is_core&&f.ter!=null).map(f=>f.ter);
+  const coreTers=FUNDS.filter(f=>f.is_core&&f.effective_ter!=null).map(f=>f.effective_ter);
   const cheap=coreTers.length?Math.min(...coreTers):null;
   const k=[
     ['Funds covered',FUNDS.length,'after merging currency share classes',''],
@@ -487,7 +489,7 @@ function renderCore(){
       '<div class="cc-stats">'+
         '<div><div class="cc-sv" style="color:'+col+'">'+(s!=null?s:'—')+'</div><div class="cc-sl">Score</div></div>'+
         '<div><div class="cc-sv">'+fmt(f.net_expected_return_pct,1,'%')+'</div><div class="cc-sl">Net p.a.</div></div>'+
-        '<div><div class="cc-sv">'+fmt(f.ter,2,'%')+'</div><div class="cc-sl">Cost</div></div>'+
+        '<div><div class="cc-sv">'+fmt(f.effective_ter,2,'%')+'</div><div class="cc-sl">Cost</div></div>'+
       '</div></div>';
   }).join('');
 }
@@ -520,15 +522,16 @@ function renderTable(){
     '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td>'+domBadge(f)+'</td>'+
     '<td class="r">'+scoreCell(f)+'</td>'+
-    '<td class="r">'+(f.ter!=null?fmt(f.ter,2):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
+    '<td class="r">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
+    '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est_from_mgmt'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
     '<td class="r">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
     '<td class="r">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank where a TER is not yet source-verified. '+
-    '“Net exp. return” = long-run asset-class estimate − TER − withholding drag. “Exp. vol” is asset-class-level expected volatility (class-level, not fund-specific). Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
+    '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank only where neither a TER nor a management fee is available. '+
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>TER</strong> is the all-in cost and is what the score uses (the fee is a component of it, so it is not counted twice). Where only a management fee is published, TER is estimated from it (+~0.10% overhead) and marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE).';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
 }

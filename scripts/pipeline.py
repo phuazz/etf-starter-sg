@@ -134,7 +134,12 @@ def starter_score(rec, rf=2.8):
     seg = (rec.get("segment") or "").lower()
     breadth = _BREADTH_BASE.get(ac, 55)
     if ac == "em_asia_equity":
-        breadth = 78 if "emerging market" in seg else 52       # broad EM vs single-country
+        if "emerging market" in seg:
+            breadth = 78                                       # broad EM
+        elif "asia ex" in seg or "asia pacific" in seg:
+            breadth = 65                                       # broad regional
+        else:
+            breadth = 52                                       # single-country
     parts = {"cost": round(cost), "tax": round(tax), "return": round(ret),
              "liquidity": round(liq), "breadth": round(breadth)}
     total = sum(parts[k] * SCORE_WEIGHTS[k] for k in SCORE_WEIGHTS)
@@ -216,13 +221,24 @@ def main():
         rec["gross_expected_return_pct"] = acinfo["ret"]
         rec["exp_vol"] = acinfo["vol"]          # asset-class-level expected volatility (% p.a.)
         rec["return_basis"] = acinfo["basis"]
+        # effective TER: published where available, else estimated from the management fee
+        # (+ a typical ~0.10% trustee/custody overhead), so a fund with only a mgmt fee still scores.
         ter = rec.get("ter")
-        if ter is None:
+        mgmt = rec.get("mgmt_fee")
+        if ter is not None:
+            eff, basis = ter, "published"
+        elif mgmt is not None:
+            eff, basis = round(mgmt + 0.10, 3), "est_from_mgmt"
+        else:
+            eff, basis = None, None
+        rec["effective_ter"] = eff
+        rec["ter_basis"] = basis
+        if eff is None:
             rec["net_expected_return_pct"] = None
             rec["cost_drag_total_pct"] = None
         else:
-            rec["cost_drag_total_pct"] = round(ter + drag, 3)
-            rec["net_expected_return_pct"] = round(acinfo["ret"] - ter - drag, 2)
+            rec["cost_drag_total_pct"] = round(eff + drag, 3)
+            rec["net_expected_return_pct"] = round(acinfo["ret"] - eff - drag, 2)
         score, parts = starter_score(rec, cma["_meta"]["risk_free_pct"])
         rec["starter_score"] = score
         rec["score_parts"] = parts
@@ -263,6 +279,7 @@ def main():
             "cpf": p["CPF Eligibility"],
             "ter": ov.get("ter"),
             "ter_conf": ov.get("ter_conf"),
+            "mgmt_fee": ov.get("mgmt_fee"),
             "yield": ov.get("yield"),
             "val_m": round(num(p["Val ($M)"]), 4) if num(p["Val ($M)"]) is not None else None,
             "liquidity_tier": liquidity_tier(num(p["Val ($M)"])),
@@ -282,7 +299,7 @@ def main():
             "isin": None, "domicile": c["domicile"], "domicile_conf": "curated",
             "asset_class": c["asset_class"], "segment": c["segment"], "benchmark": c.get("benchmark"),
             "geo": c["segment"], "fund_manager": c["name"].split(" ")[0], "income": c["income"],
-            "mgmt_style": "PASSIVE", "cpf": "No", "ter": c["ter"], "ter_conf": c["ter_conf"],
+            "mgmt_style": "PASSIVE", "cpf": "No", "ter": c["ter"], "ter_conf": c["ter_conf"], "mgmt_fee": None,
             "yield": c["yield"], "val_m": None, "liquidity_tier": "high",
             "tr_1m": None, "tr_3m": None, "tr_1y": None, "ann_3y": None,
             "is_core": True, "share_classes": [{"ticker": c["ticker"], "ccy": c["ccy"], "val_m": None}],
