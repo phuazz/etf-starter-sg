@@ -142,6 +142,28 @@ td.r{text-align:right;font-family:var(--mono)}
 .resil-v.down{color:var(--r)} .resil-v.up{color:var(--g)}
 .resil-sub{font-size:10px;color:var(--t4);margin-top:1px}
 .resil svg{margin-top:2px}
+/* closest-alternatives compare (Lazada-style "similar items") */
+.altc{max-width:920px;margin-top:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
+.alt-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:9px}
+.alt-callout{font-size:12.5px;background:var(--g-bg);border:1px solid var(--g-bg2);color:var(--t1);border-radius:var(--radius);padding:8px 11px;margin-bottom:10px;line-height:1.5}
+.alt-scroll{overflow-x:auto}
+.alt-tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:470px}
+.alt-tbl th{text-align:left;color:var(--t3);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.3px;padding:5px 8px;border-bottom:1px solid var(--bd)}
+.alt-tbl th.r,.alt-tbl td.r{text-align:right}
+.alt-tbl td{padding:6px 8px;border-bottom:1px solid var(--bd);font-family:var(--mono)}
+.alt-tbl td:first-child,.alt-tbl td:nth-child(2){font-family:var(--sans)}
+.alt-tbl tr:last-child td{border-bottom:none}
+.alt-selfrow{background:var(--bg3)}
+.alt-self{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.3px;margin-left:6px}
+.alt-best{font-size:9px;font-weight:700;color:var(--g);background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:8px;padding:0 5px;margin-left:6px;text-transform:uppercase;letter-spacing:0.3px}
+.alt-trap{color:var(--r);cursor:help}
+.alt-tbl .tk-link{cursor:pointer}
+.alt-note{font-size:10.5px;color:var(--t4);margin-top:8px;line-height:1.5}
+/* goal-plan per-fund chip + quick-look */
+.pm-chip{font-family:var(--mono);font-size:10.5px;color:var(--t3);background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:1px 7px;margin-left:8px;white-space:nowrap}
+.pm-look{cursor:pointer}
+.pm-view{font-size:10.5px;color:var(--b);font-weight:600}
+#planDetail:not(:empty){margin-top:14px;border-top:1px solid var(--bd);padding-top:14px}
 .buy{max-width:920px;margin-top:12px;background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius);padding:12px 14px}
 .buy-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--b);font-weight:700}
 .buy-pos{font-size:12px;font-style:italic;color:var(--t2);margin-top:3px}
@@ -647,14 +669,11 @@ function trailReturns(tk){
   };
 }
 // Plain-language risk from expected annual volatility (asset-class level). Volatility-based, NOT a VaR / chance-of-loss.
+function riskWord(f){ const v=f.exp_vol; if(v==null) return null; return v<7?'Low':v<13?'Moderate':v<19?'High':'Very high'; }
 function riskBadge(f){
-  const v=f.exp_vol; if(v==null) return '';
-  let lab,cls;
-  if(v<7){lab='Low';cls='r1';}
-  else if(v<13){lab='Moderate';cls='r2';}
-  else if(v<19){lab='High';cls='r3';}
-  else{lab='Very high';cls='r4';}
-  return '<span class="risk risk-'+cls+'" title="Plain-language risk from this asset class’s expected annual volatility (≈'+v.toFixed(0)+'%). It describes how bumpy the ride is — not a probability of loss.">'+lab+' risk</span>';
+  const w=riskWord(f); if(w==null) return '';
+  const cls={Low:'r1',Moderate:'r2',High:'r3','Very high':'r4'}[w];
+  return '<span class="risk risk-'+cls+'" title="Plain-language risk from this asset class’s expected annual volatility (≈'+f.exp_vol.toFixed(0)+'%). It describes how bumpy the ride is — not a probability of loss.">'+w+' risk</span>';
 }
 // Honest, warm "what to expect" per broad asset class (independent view — no sales spin).
 const ACEXPECT={
@@ -720,13 +739,14 @@ function calBarsSVG(cy){
 }
 // Fast self-rendered SVG price chart from precomputed weekly closes (no external widget).
 function renderPriceChart(box, tk){
+  const f=FUNDS.find(x=>x.ticker===tk);
   const ser=PRICES[tk];
-  if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>';return;}
+  if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+buyBlock(f)+altBlock(f);return;}
   const raw=ser.c.slice();
   for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
   let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;
   const arr=raw.slice(i0), n=arr.length;
-  if(n<20){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>';return;}
+  if(n<20){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+buyBlock(f)+altBlock(f);return;}
   const startTs=ser.s+i0*604800;   // 604800s = 1 week; year label only, no date arithmetic
   const perf='<div class="perf">'+perfStats(arr,startTs).map(s=>{
     const v=s[1], cls=v==null?'':(v>=0?'up':'down');
@@ -747,7 +767,7 @@ function renderPriceChart(box, tk){
     '<path d="'+line(sma(10))+'" fill="none" stroke="#1a8754" stroke-width="1.2" stroke-dasharray="4 2"/></svg>';
   box.innerHTML=perf+svg+
     '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week average</span><span style="color:#1a8754">&#9644;&nbsp;10-week average</span></div>'+
-    resilBlock(arr,tk)+buyBlock(FUNDS.find(x=>x.ticker===tk));
+    resilBlock(arr,tk)+buyBlock(f)+altBlock(f);
 }
 // Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
 function buyBlock(f){
@@ -762,13 +782,70 @@ function buyBlock(f){
     '<div class="buy-note">General information, not advice or a broker endorsement. No affiliate links; commissions and platform features vary and change over time.</div>'+
     '</div>';
 }
+// "Compare with the closest alternatives" — same asset class, ranked by Efficiency Score (Lazada-style "similar items").
+function closestAlternatives(f){
+  const peers=FUNDS.filter(x=>x.asset_class===f.asset_class && x.ticker!==f.ticker && x.starter_score!=null);
+  peers.sort((a,b)=>b.starter_score-a.starter_score);
+  return peers.slice(0,3);
+}
+function altRow(f,isSelf,bestTk){
+  const s=f.starter_score, col=scoreColor(s);
+  const dom=(DOM_LABEL[f.domicile]||f.domicile)+(f.estate_tax_exposed?' <span class="alt-trap" title="US-domiciled: US estate tax + 30% withholding">⚠</span>':'');
+  const cost=f.effective_ter!=null?fmt(f.effective_ter,2)+'%':'—';
+  const net=f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1)+'%':'—';
+  const rw=riskWord(f)||'—';
+  const name=isSelf?'<strong>'+f.ticker+'</strong><span class="alt-self">this fund</span>'
+                   :'<a class="tk-link" onclick="openFund(\''+f.ticker+'\')">'+f.ticker+'</a>';
+  const best=f.ticker===bestTk?'<span class="alt-best">best value</span>':'';
+  return '<tr'+(isSelf?' class="alt-selfrow"':'')+'><td>'+name+best+'</td><td>'+dom+'</td><td class="r">'+cost+'</td><td class="r">'+net+'</td><td class="r">'+rw+'</td>'+
+    '<td class="r"><span style="color:'+col+';font-weight:700">'+(s!=null?s:'—')+'</span></td></tr>';
+}
+function altBlock(f){
+  if(!f) return '';
+  const alts=closestAlternatives(f);
+  let callout='';
+  if(f.estate_tax_exposed){
+    const clean=bestCleanForClass(f.asset_class);
+    if(clean && clean.ticker!==f.ticker) callout='<div class="alt-callout"><strong>Same exposure, without the US estate-tax trap:</strong> <a class="tk-link" onclick="openFund(\''+clean.ticker+'\')">'+clean.ticker+'</a> ('+(DOM_LABEL[clean.domicile]||clean.domicile)+'-domiciled — no US estate tax, and 15% not 30% dividend withholding).</div>';
+  }
+  if(!alts.length && !callout){
+    return f.starter_score!=null
+      ? '<div class="altc"><div class="alt-t">Alternatives</div><div class="alt-note" style="margin-top:0">This is the only '+(ACLABEL[f.asset_class]||'fund of its kind')+' ETF in our universe — there is nothing to compare it against here. It is the core building block for this exposure.</div></div>'
+      : '';
+  }
+  const all=[f].concat(alts);
+  let bestTk=null,bestS=-1; all.forEach(x=>{ if(x.starter_score!=null && x.starter_score>bestS){bestS=x.starter_score;bestTk=x.ticker;} });
+  const rows=all.map(x=>altRow(x,x.ticker===f.ticker,bestTk)).join('');
+  return '<div class="altc"><div class="alt-t">Compare with the closest alternatives &mdash; same '+(ACLABEL[f.asset_class]||'asset class')+'</div>'+callout+
+    (alts.length?'<div class="alt-scroll"><table class="alt-tbl"><thead><tr><th>Fund</th><th>Domicile / tax</th><th class="r">Cost</th><th class="r">Net return</th><th class="r">Risk</th><th class="r">Score</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="alt-note">Ranked by Efficiency Score within the same asset class. &ldquo;Best value&rdquo; = highest score shown. Tap a ticker to open its full snapshot.</div>':'')+
+    '</div>';
+}
+// Deep-link from anywhere (goal plan, alternatives table) into a fund's full snapshot in the Find tab.
+function openFund(tk){
+  switchTab('find');
+  routeFilter=''; sortKey='starter_score'; sortDir=-1;
+  const cs=document.getElementById('fClass'); if(cs) cs.value='';
+  const ss=document.getElementById('fSearch'); if(ss) ss.value='';
+  document.querySelectorAll('#fRoute button').forEach(r=>r.classList.toggle('on',r.dataset.v===''));
+  renderTable();   // synchronous — rows exist immediately after
+  const row=[...document.querySelectorAll('#fundBody tr[data-tk]')].find(r=>r.dataset.tk===tk);
+  if(!row) return;
+  const nx=row.nextElementSibling;
+  if(!(nx&&nx.classList.contains('chart-row'))){ const b=row.querySelector('.chart-btn'); if(b) toggleChart(b); }
+  row.scrollIntoView({behavior:'smooth',block:'center'});
+}
+const SNAP_CAP='Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.';
+function renderSnapshot(box, tk){
+  box.innerHTML=snapHead(tk)+'<div class="chart-cap">'+SNAP_CAP+'</div><div class="tvchart"></div>';
+  renderPriceChart(box.querySelector('.tvchart'), tk);
+}
 function toggleChart(btn){
   const row=btn.closest('tr'), nx=row.nextElementSibling;
   if(nx && nx.classList.contains('chart-row')){ nx.remove(); btn.textContent='Price chart ▾'; return; }
   const tr=document.createElement('tr'); tr.className='chart-row';
-  tr.innerHTML='<td colspan="13">'+snapHead(btn.dataset.tk)+'<div class="chart-cap">Trailing price-return stats, and the weekly price with 10- and 40-week moving averages (data via Yahoo Finance, as of the last refresh; price return, so dividends are extra). For a long-term investor this is context &mdash; not a timing signal.</div><div class="tvchart"></div></td>';
+  const td=document.createElement('td'); td.colSpan=13; tr.appendChild(td);
   row.after(tr); btn.textContent='Hide chart ▴';
-  renderPriceChart(tr.querySelector('.tvchart'), btn.dataset.tk);
+  renderSnapshot(td, btn.dataset.tk);
 }
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
@@ -1139,8 +1216,9 @@ function selectGoal(g){
   const rows=p.mix.map(m=>{
     const f=FUNDS.find(x=>x.ticker===m[0]);
     if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);}
-    const url=f?infoUrl(f):'#';
-    return '<div class="pm-row"><div class="pm-w">'+m[1]+'%</div><div class="pm-bar"><div style="width:'+m[1]+'%"></div></div><div class="pm-f"><a class="tk-link" href="'+url+'" target="_blank" rel="noopener">'+m[0]+' <span class="ext">↗</span></a> &mdash; '+m[2]+'</div></div>';
+    const chip=f?'<span class="pm-chip">'+(f.effective_ter!=null?fmt(f.effective_ter,2)+'%/yr':'—')+' &middot; '+(riskWord(f)||'—')+' risk</span>':'';
+    return '<div class="pm-row"><div class="pm-w">'+m[1]+'%</div><div class="pm-bar"><div style="width:'+m[1]+'%"></div></div>'+
+      '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+chip+'</div></div>';
   }).join('');
   const incomeStat=g==='income'?'<div><div class="ps-l">Income yield</div><div class="ps-v" style="color:var(--g)">~'+yld.toFixed(1)+'%</div></div>':'';
   document.getElementById('planOut').innerHTML=
@@ -1151,7 +1229,14 @@ function selectGoal(g){
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
     '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>.</div>'+
     '<div class="plan-note">An illustration to learn from &mdash; not personalised advice. Fine-tune the exact weights in <a onclick="switchTab(\'build\')" style="color:var(--b);cursor:pointer;font-weight:600">Build a portfolio</a>.</div>'+
-    '</div>';
+    '</div><div id="planDetail"></div>';
+}
+function planLook(tk){
+  const box=document.getElementById('planDetail'); if(!box) return;
+  if(box.dataset.tk===tk){ box.innerHTML=''; box.dataset.tk=''; return; }
+  box.dataset.tk=tk; box.innerHTML='<div class="pm-detail"></div>';
+  renderSnapshot(box.querySelector('.pm-detail'), tk);
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function initStart(){
   document.querySelectorAll('#goals .goal').forEach(b=>b.addEventListener('click',()=>selectGoal(b.dataset.g)));
