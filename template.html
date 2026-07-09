@@ -765,24 +765,27 @@ function renderPriceChart(box, tk){
   const opts=[['1Y',52],['3Y',156],['5Y',260],['Max',null]];
   const shown=opts.filter(o=>o[1]==null||n>o[1]);
   const ctrls=shown.length>1?'<div class="ph-ctrls">'+shown.map(o=>'<button class="ph-btn'+(o[1]==null?' on':'')+'" onclick="setHorizon(this,'+uid+','+(o[1]==null?'null':o[1])+')">'+o[0]+'</button>').join('')+'</div>':'';
-  box.innerHTML=perf+'<div class="ph">'+ctrls+'<div class="ph-svg"></div>'+
-    '<div class="chart-legend"><span style="color:#0C4A6E">&#9644;&nbsp;Price</span><span style="color:#b45309">&#9644;&nbsp;40-week avg</span><span style="color:#1a8754">&#9644;&nbsp;10-week avg</span></div></div>'+
+  box.innerHTML=perf+'<div class="ph">'+ctrls+'<div class="ph-svg"></div><div class="chart-legend ph-legend"></div></div>'+
     resilBlock(arr,tk)+buyBlock(f)+altBlock(f);
-  drawPrice(box.querySelector('.ph-svg'), uid, null);
+  drawPrice(box.querySelector('.ph'), uid, null);
 }
 function setHorizon(btn,uid,weeks){
   const ph=btn.closest('.ph'); if(!ph) return;
   ph.querySelectorAll('.ph-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
-  drawPrice(ph.querySelector('.ph-svg'), uid, weeks);
+  drawPrice(ph, uid, weeks);
 }
-function drawPrice(holder,uid,weeks){
-  const c=CHARTS[uid]; if(!c||!holder) return;
+function drawPrice(ph,uid,weeks){
+  const c=CHARTS[uid]; if(!c||!ph) return;
+  const holder=ph.querySelector('.ph-svg'); if(!holder) return;
   const total=c.arr.length, start=(weeks&&weeks<total)?total-weeks:0;
   const arr=c.arr.slice(start), s10=c.s10.slice(start), s40=c.s40.slice(start), startTs=c.startTs+start*604800, n=arr.length;
-  const cw=holder.clientWidth||(holder.parentElement&&holder.parentElement.clientWidth)||340;
+  const show10=n>=15, show40=n>=120;   // a 40-week (~9-month) average is meaningless on a short window (e.g. 1Y) — hide it
+  const cw=holder.clientWidth||ph.clientWidth||340;
   const W=Math.max(300,Math.min(940,Math.round(cw))), narrow=W<430;
   const H=narrow?258:318, pL=narrow?36:46, pR=12, pT=14, pB=narrow?22:26, fs=narrow?11:11.5;
-  const min=Math.min(...arr),max=Math.max(...arr),span=(max-min)||1;
+  // y-range spans the price AND any drawn moving average, so a lagging average can never fall off-chart
+  const pool=arr.slice(); if(show10)s10.forEach(v=>{if(v!=null)pool.push(v);}); if(show40)s40.forEach(v=>{if(v!=null)pool.push(v);});
+  const min=Math.min(...pool),max=Math.max(...pool),span=(max-min)||1;
   const X=i=>pL+(n>1?i/(n-1):0)*(W-pL-pR);
   const Y=v=>pT+(1-(v-min)/span)*(H-pT-pB);
   const line=a=>{let d='',st=false;for(let i=0;i<a.length;i++){if(a[i]==null){continue;}d+=(st?'L':'M')+X(i).toFixed(1)+' '+Y(a[i]).toFixed(1)+' ';st=true;}return d;};
@@ -793,8 +796,10 @@ function drawPrice(holder,uid,weeks){
   for(let k=0;k<=ticks;k++){const i=Math.round(k/ticks*(n-1)),yy=new Date((startTs+i*604800)*1000).getFullYear();if(yy===prev)continue;prev=yy;const anch=k===0?'start':(k===ticks?'end':'middle'),xx=k===0?pL:(k===ticks?W-pR:X(i));xl+='<text x="'+xx.toFixed(0)+'" y="'+(H-7)+'" text-anchor="'+anch+'" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+yy+'</text>';}
   holder.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+grid+yl+xl+
     '<path d="'+line(arr)+'" fill="none" stroke="#0C4A6E" stroke-width="1.8"/>'+
-    '<path d="'+line(s40)+'" fill="none" stroke="#b45309" stroke-width="1.4"/>'+
-    '<path d="'+line(s10)+'" fill="none" stroke="#1a8754" stroke-width="1.2" stroke-dasharray="4 2"/></svg>';
+    (show40?'<path d="'+line(s40)+'" fill="none" stroke="#b45309" stroke-width="1.4"/>':'')+
+    (show10?'<path d="'+line(s10)+'" fill="none" stroke="#1a8754" stroke-width="1.2" stroke-dasharray="4 2"/>':'')+'</svg>';
+  const leg=ph.querySelector('.ph-legend');
+  if(leg) leg.innerHTML='<span style="color:#0C4A6E">&#9644;&nbsp;Price</span>'+(show40?'<span style="color:#b45309">&#9644;&nbsp;40-week avg</span>':'')+(show10?'<span style="color:#1a8754">&#9644;&nbsp;10-week avg</span>':'');
 }
 // Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
 function buyBlock(f){
