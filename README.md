@@ -14,6 +14,11 @@ Helps a first-time investor answer four questions about exchange-traded funds ac
    history, so choices are made on forward math rather than last year's winner.
 4. **Build** — assemble a diversified portfolio from risk-profile presets, see the blended
    expected return / volatility / income, and a portfolio-level US-estate-tax read-out.
+5. **Learn** — two plain-language explainers: the US estate-tax trap (with an interactive
+   calculator), and "Cash, SRS or CPF-OA" (facts verified Jul 2026 against MOF/CPF/MOM pages).
+   Plus, on the Start tab: goal-based illustrative starter plans with a compounding illustration,
+   a first-purchase walkthrough, and the post-purchase habits guide. Funds can be compared
+   side-by-side (up to 4) via the compare tray on the Find tab.
 5. **Learn** — a plain-language US-estate-tax explainer with an **interactive calculator**:
    enter a US-situs value and see the estimated tax (USD and approx S$), the effective rate,
    and the Irish-UCITS US$0 contrast. It is an *illustration of the published IRC §2001(c)
@@ -98,4 +103,4 @@ the trailing-return columns with the anti-performance-chasing banner. No new cur
 were introduced — the buy note uses the general SRS/CPF rule with a verify flag, and the trailing
 returns are computed client-side from the already-inlined `prices.json`.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-10._
