@@ -114,6 +114,25 @@ td.r{text-align:right;font-family:var(--mono)}
 .dim{color:var(--t3);font-size:11.5px}
 .scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6}
 .scoreinfo b{color:var(--t1)}
+.chart-loading{padding:34px;text-align:center;color:var(--t3);font-size:13px}
+@media(max-width:640px){
+  #fundTw{max-height:none;overflow:visible;border:none;border-radius:0}
+  #fundTbl thead{display:none}
+  #fundTbl,#fundTbl tbody,#fundTbl tr,#fundTbl td{display:block}
+  #fundTbl tr{border:1px solid var(--bd);border-radius:var(--radius-lg);margin-bottom:12px;padding:12px 14px;background:var(--bg2)}
+  #fundTbl tr:hover td{background:var(--bg2)}
+  #fundTbl td{padding:6px 0;border:none !important;text-align:left !important}
+  #fundTbl td[data-label]::before{content:attr(data-label);font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
+  #fundTbl td.r{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+  #fundTbl td.r[data-label]::before{flex-shrink:0}
+  #fundTbl td:not(.r)[data-label]::before{display:block;margin-bottom:3px}
+  #fundTbl td.cell-fund{border-bottom:1px solid var(--bd);padding-bottom:9px;margin-bottom:4px}
+  #fundTbl .nm{max-width:none}
+  .scorewrap{gap:10px}
+  .chart-row{border:none !important;background:transparent !important;margin:-6px 0 12px !important;padding:0 !important}
+  .chart-row td{display:block !important;padding:0 !important;border:none !important}
+  .chart-row td::before{content:none !important}
+}
 .seg-lab{font-size:11px;color:var(--t3)}
 
 /* badges */
@@ -143,7 +162,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .step-d{font-size:12.5px;color:var(--t2);line-height:1.45}
 .step-go{font-size:12px;font-weight:600;color:var(--b);margin-top:9px}
 .hook-note{font-size:11.5px;color:var(--t3);margin-top:6px}
-.tw.simple th.col-detail,.tw.simple td.col-detail{display:none}
+.tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .goal{text-align:left;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;font-family:var(--sans);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,box-shadow .15s}
@@ -530,13 +549,16 @@ function infoUrl(f){
 }
 function tvSymbol(f){ return (f.is_core?'LSE:':'SGX:')+f.ticker; }  // London UCITS vs SGX-listed
 function loadChart(f, box){
+  box.innerHTML='<div class="chart-loading">Loading chart… (TradingView; may take a few seconds)</div>';
   const p=new URLSearchParams({symbol:tvSymbol(f),interval:'W',theme:'light',style:'3',
     timezone:'Asia/Singapore',withdateranges:'1',hidesidetoolbar:'1',hidetoptoolbar:'1',
     symboledit:'0',saveimage:'0',locale:'en',studies:'["MASimple@tv-basicstudies"]'});
   const ifr=document.createElement('iframe');
   ifr.src='https://s.tradingview.com/widgetembed/?'+p.toString();
-  ifr.setAttribute('style','width:100%;height:360px;border:1px solid var(--bd);border-radius:8px');
-  ifr.setAttribute('scrolling','no'); ifr.setAttribute('allowtransparency','true'); ifr.loading='lazy';
+  ifr.setAttribute('style','width:100%;height:360px;border:1px solid var(--bd);border-radius:8px;display:none');
+  ifr.setAttribute('scrolling','no'); ifr.setAttribute('allowtransparency','true');
+  const reveal=function(){const l=box.querySelector('.chart-loading');if(l)l.remove();ifr.style.display='block';};
+  ifr.onload=reveal; setTimeout(reveal,4000);   // fallback if onload does not fire
   box.appendChild(ifr);
 }
 function toggleChart(btn){
@@ -648,16 +670,16 @@ function renderTable(){
   });
   document.getElementById('fundBody').innerHTML=rows.map(f=>
     '<tr data-tk="'+f.ticker+'">'+
-    '<td><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div><button class="chart-btn" data-tk="'+f.ticker+'">Price chart ▾</button></td>'+
-    '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
-    '<td>'+domBadge(f)+'</td>'+
-    '<td class="r">'+scoreCell(f)+'</td>'+
-    '<td class="r col-detail">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
-    '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
-    '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
-    '<td class="r col-detail">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
-    '<td class="r">'+yieldCell(f)+'</td>'+
-    '<td class="r col-detail">'+liqLabel(f)+'</td>'+
+    '<td class="cell-fund"><div class="tk"><a class="tk-link" href="'+infoUrl(f)+'" target="_blank" rel="noopener" title="Open '+f.ticker+' fund page">'+f.ticker+' <span class="ext">↗</span></a></div><div class="nm">'+f.name+'</div><button class="chart-btn" data-tk="'+f.ticker+'">Price chart ▾</button></td>'+
+    '<td data-label="Class"><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
+    '<td data-label="Domicile / tax">'+domBadge(f)+'</td>'+
+    '<td class="r" data-label="Score">'+scoreCell(f)+'</td>'+
+    '<td class="r col-detail" data-label="Mgmt fee">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
+    '<td class="r" data-label="TER">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
+    '<td class="r" data-label="Net return">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
+    '<td class="r col-detail" data-label="Exp. vol">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
+    '<td class="r" data-label="Div. yield">'+yieldCell(f)+'</td>'+
+    '<td class="r col-detail" data-label="Liquidity">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available. '+
