@@ -80,7 +80,9 @@ a{color:var(--b);text-decoration:none}
 .cc-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .cc-tk{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:0.3px}
 .cc-role{font-weight:600;font-size:12.5px;color:var(--t1);margin-top:9px}
-.cc-name{font-size:11.5px;color:var(--t3);margin-top:2px;line-height:1.35}
+.cc-what{font-size:12px;color:var(--t2);margin-top:5px;line-height:1.45;min-height:34px}
+.cc-link{display:block;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd);font-size:11.5px;font-weight:600;color:var(--b);text-decoration:none;line-height:1.35}
+.cc-link:hover{text-decoration:underline}
 .cc-stats{display:flex;gap:18px;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd)}
 .cc-sv{font-family:var(--mono);font-weight:700;font-size:15px}
 .cc-sl{font-size:9.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3);font-weight:600;margin-top:1px}
@@ -475,22 +477,32 @@ function renderKPIs(){
 
 function scoreColor(s){return s==null?'var(--t3)':(s>=70?'var(--g)':(s>=50?'var(--b)':'var(--a)'));}
 function renderCore(){
-  const wanted=['CSPX','VWRA','ES3','EIMI','AGGU','SGLN'];
-  const roleMap={CSPX:'US large-cap core',VWRA:'Global all-world core',ES3:'Singapore core (STI)',EIMI:'Emerging-markets core',AGGU:'Global bonds core',SGLN:'Gold'};
-  const cards=wanted.map(tk=>FUNDS.find(f=>f.ticker===tk)).filter(Boolean);
-  document.getElementById('coreRow').innerHTML=cards.map(f=>{
+  const CORE=[
+    {tk:'CSPX', role:'US large-cap core',    what:'The 500 biggest US companies, in one fund.',              url:'https://www.justetf.com/en/etf-profile.html?isin=IE00B5BMR087'},
+    {tk:'VWRA', role:'Global all-world core', what:'Thousands of companies worldwide — developed and emerging.', url:'https://www.justetf.com/en/etf-profile.html?isin=IE00BK5BQT80'},
+    {tk:'ES3',  role:'Singapore core (STI)',  what:'Singapore’s 30 largest listed companies.',                 url:'https://www.ssga.com/sg/en/institutional/etfs/state-street-spdr-straits-times-index-etf-es3'},
+    {tk:'EIMI', role:'Emerging-markets core', what:'Emerging-market shares — China, India, Taiwan and more.',   url:'https://www.justetf.com/en/etf-profile.html?isin=IE00BKM4GZ66'},
+    {tk:'AGGU', role:'Global bonds core',     what:'A broad basket of global bonds — the portfolio’s ballast.', url:'https://www.justetf.com/en/etf-profile.html?isin=IE00BDBRDM35'},
+    {tk:'SGLN', role:'Gold',                  what:'Physical gold — a diversifier and inflation hedge.',        url:'https://www.justetf.com/en/etf-profile.html?isin=IE00B4ND3602'}
+  ];
+  const domInfo={IE:['Ireland','Ireland-domiciled: no US estate-tax exposure, and 15% (not 30%) US dividend withholding.'],
+                 SG:['Singapore','Singapore-domiciled: no US estate-tax exposure.']};
+  document.getElementById('coreRow').innerHTML=CORE.map(c=>{
+    const f=FUNDS.find(x=>x.ticker===c.tk); if(!f) return '';
     const s=f.starter_score, col=scoreColor(s);
-    const dl={IE:'IE',SG:'SG',LU:'LU',FR:'FR',US:'US'}[f.domicile]||f.domicile;
-    const dcls='bdg-'+(['ie','sg','lu','fr','us'].includes((f.domicile||'').toLowerCase())?f.domicile.toLowerCase():'verify');
+    const di=domInfo[f.domicile]||[f.domicile,''];
+    const dcls='bdg-'+(f.domicile==='IE'?'ie':(f.domicile==='SG'?'sg':'verify'));
     return '<div class="corecard">'+
-      '<div class="cc-head"><span class="cc-tk">'+f.ticker+'</span><span class="bdg '+dcls+'">'+dl+'</span></div>'+
-      '<div class="cc-role">'+(roleMap[f.ticker]||f.segment)+'</div>'+
-      '<div class="cc-name">'+f.name+'</div>'+
+      '<div class="cc-head"><span class="cc-tk">'+f.ticker+'</span><span class="bdg '+dcls+'" title="'+di[1]+'">'+di[0]+'</span></div>'+
+      '<div class="cc-role">'+c.role+'</div>'+
+      '<div class="cc-what">'+c.what+'</div>'+
       '<div class="cc-stats">'+
         '<div><div class="cc-sv" style="color:'+col+'">'+(s!=null?s:'—')+'</div><div class="cc-sl">Score</div></div>'+
-        '<div><div class="cc-sv">'+fmt(f.net_expected_return_pct,1,'%')+'</div><div class="cc-sl">Net p.a.</div></div>'+
-        '<div><div class="cc-sv">'+fmt(f.effective_ter,2,'%')+'</div><div class="cc-sl">Cost</div></div>'+
-      '</div></div>';
+        '<div><div class="cc-sv">'+fmt(f.net_expected_return_pct,1,'%')+'</div><div class="cc-sl">Est. return</div></div>'+
+        '<div><div class="cc-sv">'+fmt(f.effective_ter,2,'%')+'</div><div class="cc-sl">Annual cost</div></div>'+
+      '</div>'+
+      '<a class="cc-link" href="'+c.url+'" target="_blank" rel="noopener">'+f.name+' <span aria-hidden="true">↗</span></a>'+
+      '</div>';
   }).join('');
 }
 
