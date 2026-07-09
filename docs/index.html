@@ -46,11 +46,11 @@ a{color:var(--b);text-decoration:none}
 .notice strong{color:var(--a)}
 
 /* tabs */
-.tabs{display:flex;gap:4px;margin:22px 0 20px;border-bottom:1px solid var(--bd);overflow-x:auto}
+.tabs{display:flex;gap:4px;margin:22px 0 20px;border-bottom:1px solid var(--bd);overflow-x:auto;overflow-y:hidden}
 .tab{position:relative;background:none;border:none;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--t3);padding:12px 16px;min-height:44px;cursor:pointer;white-space:nowrap}
 .tab:hover{color:var(--t1)}
 .tab.active{color:var(--t1);font-weight:600}
-.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--t1)}
+.tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--t1)}
 .panel{display:none}
 .panel.active{display:block;animation:fade .2s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -213,11 +213,11 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   </div>
 
   <div class="tabs" id="tabs">
-    <button class="tab active" data-p="find">Find</button>
-    <button class="tab" data-p="cost">Cost &amp; Efficiency</button>
-    <button class="tab" data-p="forward">Forward Return</button>
-    <button class="tab" data-p="build">Build</button>
-    <button class="tab" data-p="learn">Learn</button>
+    <button class="tab active" data-p="find">Find funds</button>
+    <button class="tab" data-p="cost">Costs &amp; tax</button>
+    <button class="tab" data-p="forward">Expected returns</button>
+    <button class="tab" data-p="build">Build a portfolio</button>
+    <button class="tab" data-p="learn">Learn: US estate tax</button>
   </div>
 
   <!-- FIND -->
