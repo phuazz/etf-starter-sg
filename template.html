@@ -1183,10 +1183,10 @@ function renderPCards(){
   const el=document.getElementById('pcards');
   el.innerHTML=Object.keys(MP.profiles).map(k=>{
     const p=MP.profiles[k], m=calcPortfolio(p.weights);
-    return `<div class="pc ${k===BPRESET?'on':''}" data-k="${k}"><div class="pc-n">${p.label}</div><div class="pc-dd">Drawdown band ${p.drawdown_band}</div>
+    return `<div class="pc ${k===BPRESET?'on':''}" data-k="${k}"><div class="pc-n">${p.label}</div><div class="pc-dd" title="Rough guide to how far this mix could fall from a peak in a bad stretch — larger falls happen occasionally.">Typical worst fall ${p.drawdown_band}</div>
       <div class="pc-row"><span>Exp. return</span><b>${m.ret.toFixed(1)}%</b></div>
       <div class="pc-row"><span>Volatility</span><b>${m.vol.toFixed(1)}%</b></div>
-      <div class="pc-row"><span>Sharpe</span><b>${m.sharpe.toFixed(2)}</b></div></div>`;
+      <div class="pc-row"><span class="tip" title="Sharpe ratio: expected return above cash, per unit of volatility. Higher = more return for the bumpiness taken.">Sharpe</span><b>${m.sharpe.toFixed(2)}</b></div></div>`;
   }).join('');
   el.querySelectorAll('.pc').forEach(c=>c.addEventListener('click',()=>selectProfile(c.dataset.k)));
 }
@@ -1201,9 +1201,11 @@ function recompute(){
   const m=calcPortfolio(BW);
   const ddL=BBASE.band[0]*m.vol/BBASE.vol, ddH=BBASE.band[1]*m.vol/BBASE.vol;
   document.getElementById('bmetrics').innerHTML=[
-    ['Exp. return',m.ret.toFixed(1)+'%'],['Volatility',m.vol.toFixed(1)+'%'],
-    ['Sharpe',m.sharpe.toFixed(2)],['Est. drawdown','-'+ddL.toFixed(0)+'/'+ddH.toFixed(0)+'%']
-  ].map(x=>`<div class="metric"><div class="m-l">${x[0]}</div><div class="m-v">${x[1]}</div></div>`).join('');
+    ['Exp. return',m.ret.toFixed(1)+'%','Long-run (10-15yr) average estimate — not a promise for any single year.'],
+    ['Volatility',m.vol.toFixed(1)+'%','How much the yearly return swings around the average. Not the same as risk.'],
+    ['Sharpe',m.sharpe.toFixed(2),'Sharpe ratio: expected return above cash, per unit of volatility. Higher = more return for the bumpiness taken.'],
+    ['Typical worst fall','-'+ddL.toFixed(0)+' to -'+ddH.toFixed(0)+'%','Rough guide to how far this mix could fall from a peak in a bad stretch, scaled from the preset bands. Larger falls happen occasionally.']
+  ].map(x=>`<div class="metric" title="${x[2]}"><div class="m-l">${x[0]}</div><div class="m-v">${x[1]}</div></div>`).join('');
   const raw=BKEYS.reduce((s,k)=>s+BW[k],0);
   document.getElementById('wsum').innerHTML='Sliders sum to <b class="mono">'+raw+'%</b> · blended income yield ~'+m.yld.toFixed(1)+'%'+(raw!==100?' <span style="color:var(--a)">(metrics use normalised weights)</span>':'');
   const ck=BKEYS.filter(k=>m.norm[k]>0.001).sort((a,b)=>m.norm[b]*CMA.asset_classes[b].ret-m.norm[a]*CMA.asset_classes[a].ret);
