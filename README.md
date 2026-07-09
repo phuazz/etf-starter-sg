@@ -14,6 +14,22 @@ Helps a first-time investor answer four questions about exchange-traded funds ac
    history, so choices are made on forward math rather than last year's winner.
 4. **Build** — assemble a diversified portfolio from risk-profile presets, see the blended
    expected return / volatility / income, and a portfolio-level US-estate-tax read-out.
+5. **Learn** — a plain-language US-estate-tax explainer with an **interactive calculator**:
+   enter a US-situs value and see the estimated tax (USD and approx S$), the effective rate,
+   and the Irish-UCITS US$0 contrast. It is an *illustration of the published IRC §2001(c)
+   schedule*, not tax advice — the graduated brackets plus the US$13,000 unified credit are
+   implemented once and shared by both the rate table and the calculator, so they cannot drift.
+
+Two smaller transparency features sit alongside these:
+
+- **Where & how to buy** — the expandable per-fund panel carries a venue-derived access note
+  (London/LSE routing for the Irish-UCITS core; SGX routing, CDP/SRS/CPF for SGX funds). It
+  states the general SRS/CPF rule and flags "verify current eligibility" rather than asserting
+  per-fund eligibility. General information, no affiliate links, no broker endorsement.
+- **Trailing-return columns** — the Find table (Detailed view) shows 1Y / 3Y p.a. / 5Y p.a.
+  *price* returns, coloured by sign. The default sort stays on the forward-looking Efficiency
+  Score; sorting by any trailing column raises a dismissible "last year's winner is rarely next
+  year's" banner with a one-click reset. Transparency matched to StashAway, incentive inverted.
 
 ## The central idea: core-satellite, domicile-aware
 
@@ -59,11 +75,6 @@ etf-starter-sg/
 Build: `python scripts/pipeline.py` (fast; reuses the cached `prices.json`).
 Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr weekly closes per fund from Yahoo (slow, network) and rewrites `prices.json`. The on-page price chart is self-rendered SVG (price line + 10/40-week moving averages) from this data, so it loads instantly; it is only as fresh as the last `--prices` run. Local preview: `npx serve .` (source) or `npx serve docs` (built).
 
-## Status
-
-- **Session 1 (in progress):** data layer — pipeline, domicile derivation, CMA + model portfolios.
-- Sessions 2-4: Find/Cost tabs → Forward-return/Build tabs → Learn explainer + deploy + ledger.
-
 ## Known simplifications (the three ways this could mislead — read before trusting a number)
 
 1. **Domicile** drives the tax verdict; ISIN-derived where possible, curated otherwise, ISIN shown
@@ -72,5 +83,13 @@ Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr 
    history; SGD-based investors face an additional FX consideration (~±1% p.a. unhedged) noted in-app.
 3. **Netting** (return − TER − withholding drag) uses assumed underlying dividend yields; the
    withholding model is simplified to the dominant US-dividend case and flagged where it is not.
+
+## Status
+
+Feature-complete and **deployed** at https://phuazz.github.io/etf-starter-sg/. Latest additions
+(2026-07-09): the interactive estate-tax calculator, the per-fund "Where & how to buy" note, and
+the trailing-return columns with the anti-performance-chasing banner. No new curated data fields
+were introduced — the buy note uses the general SRS/CPF rule with a verify flag, and the trailing
+returns are computed client-side from the already-inlined `prices.json`.
 
 _Last updated: 2026-07-09._
