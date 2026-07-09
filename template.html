@@ -435,7 +435,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
         <th class="r sortable" data-k="effective_ter" title="The fund's all-in yearly cost — the Total Expense Ratio (TER): management fee + trustee + custody, taken from returns daily. Where a fund publishes only a management fee, this is estimated from it and marked 'est'.">Annual cost % <span class="arw"></span></th>
-        <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
+        <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate, 10-15yr) minus TER minus dividend-withholding drag. An estimate, not a forecast — the Expected returns tab explains how the estimates are built.">Net exp. return <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_1y" title="Trailing 1-year PRICE return (dividends extra), from the weekly series. Backward-looking — the tool defaults to forward-looking value, not this.">1Y <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_3y" title="Trailing 3-year annualised PRICE return (geometric, dividends extra). Backward-looking.">3Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_5y" title="Trailing 5-year annualised PRICE return (geometric, dividends extra). Backward-looking.">5Y p.a. <span class="arw"></span></th>
@@ -486,7 +486,8 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   <!-- FORWARD RETURN -->
   <div class="panel" id="p-forward">
     <h2 class="sec">Forward-looking return, not last year's</h2>
-    <div class="lead">Good choices rest on <strong>expected long-run return</strong>, not the trailing twelve months. Recent winners often carry the lowest forward return — a reason to diversify and rebalance, not to chase. Figures are synthesised house estimates (2025-26 vintage); treat them as directional, not precise.</div>
+    <div class="lead">Good choices rest on <strong>expected long-run return</strong>, not the trailing twelve months. Recent winners often carry the lowest forward return — a reason to diversify and rebalance, not to chase.</div>
+    <div class="scoreinfo" id="cmaMethod"></div>
     <div class="grid2">
       <div class="card">
         <h3>Volatility vs expected return — the asset-class map</h3>
@@ -496,14 +497,14 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <div class="card">
         <h3>Forward estimate vs trailing 1-year</h3>
         <div id="fwdBars" style="margin-top:4px"></div>
-        <p class="footlet">Blue = long-run estimate; grey = median trailing 1-year across funds in that class. Where the grey towers over the blue, recent returns have borrowed from the future.</p>
+        <p class="footlet">Blue = long-run estimate; grey = median trailing 1-year across the funds in that class (&asymp; total return: price + distributions). Where the grey towers over the blue, recent returns have borrowed from the future.</p>
       </div>
     </div>
     <div class="tw" style="margin-top:20px"><table id="fwdTbl">
-      <thead><tr><th>Asset class</th><th class="r">Forward est. %</th><th class="r">Exp. vol %</th><th class="r">Trailing 1Y (median) %</th><th class="r">Trailing 3Y ann. (median) %</th></tr></thead>
+      <thead><tr><th>Asset class</th><th class="r" title="Our synthesised long-run (10-15yr) estimate, % per year — hover each figure for its building blocks; the box above explains the method.">Long-run est. % /yr</th><th class="r" title="Expected annual volatility — how much the yearly return swings around the average. Not the same as risk.">Exp. vol %</th><th class="r" title="Median across the funds we cover in this class: trailing 1-year price return from the weekly chart series, plus the trailing distribution yield for funds that pay out — an approximate total return.">Trailing 1Y % (median)</th><th class="r" title="Same basis as the 1Y column, annualised over three years.">Trailing 3Y %/yr (median)</th></tr></thead>
       <tbody id="fwdBody"></tbody>
     </table></div>
-    <div class="footer">Trailing figures are the median across the funds mapped to each class (SGX export). Forward estimates are asset-class level. A large gap either way is information, not a signal.</div>
+    <div class="footer">Trailing figures are medians across the funds this tool covers in each class, from the same weekly price series as the charts, plus distribution yield for funds that pay out (&asymp; total return; approximate). Long-run estimates are asset-class level. A large gap either way is information, not a signal &mdash; strong recent returns often <em>borrow from</em> the long-run figure rather than add to it.</div>
   </div>
   <!-- BUILD -->
   <div class="panel" id="p-build">
@@ -1125,6 +1126,13 @@ function medByClass(field){
 function renderForward(){
   if(fwdDone) return; fwdDone=true;
   const cs=Object.keys(CMA.asset_classes);
+  // Methodology, in plain language — the numbers must not look like assertions from nowhere.
+  document.getElementById('cmaMethod').innerHTML=
+    '<b>Where these numbers come from.</b> They are our own long-run (<b>'+(CMA._meta.horizon||'10-15 year')+'</b>) estimates, built per asset class from its return building blocks: '+
+    'for <b>bonds and cash</b>, roughly the starting yield; for <b>shares</b>, dividend income plus long-run earnings growth; for <b>gold</b>, a modest premium over cash. '+
+    'Each figure is then cross-checked against the published 10&ndash;15-year assumptions of several major global managers ('+(CMA._meta.vintage||'2025-26')+' vintage) &mdash; which embed today’s yields and valuations &mdash; and rounded to a directional number. Hover any figure in the table below for the building blocks behind it.<br><br>'+
+    'They are <b>averages over a decade or more, not a forecast for this year</b> &mdash; single-year outcomes will routinely land far above or below. Cash, for example, is a full-cycle average (~2%), not the ~3% highs of 2024&ndash;25. '+
+    'Classes marked <b>USD</b> are estimated in US dollars: an SGD-based investor also faces the SGD/USD exchange rate on top (roughly &plusmn;1%/yr unhedged). Estimates for learning, not advice.';
   const trace={x:cs.map(k=>CMA.asset_classes[k].vol),y:cs.map(k=>CMA.asset_classes[k].ret),
     text:cs.map(k=>CMA.asset_classes[k].label),mode:'markers+text',type:'scatter',
     textposition:'top center',textfont:{size:9,color:'#5c5c56'},
@@ -1136,7 +1144,7 @@ function renderForward(){
     yaxis:{title:{text:'Expected return (% p.a.)',font:{size:11}},gridcolor:'#e5e7eb',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'},rangemode:'tozero'},
     showlegend:false,hovermode:'closest',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:10,family:'DM Sans'}}};
   Plotly.newPlot('rrScatter',[trace],layout,{displayModeBar:false,responsive:true});
-  const med=medByClass('tr_1y'), med3=medByClass('ann_3y');
+  const med=medByClass('tr1_tot'), med3=medByClass('tr3_tot');
   const order=cs.slice().sort((a,b)=>CMA.asset_classes[b].ret-CMA.asset_classes[a].ret);
   let mx=1; cs.forEach(k=>mx=Math.max(mx,CMA.asset_classes[k].ret,med[k]||0));
   const bar=(w,col)=>`<div style="flex:1;background:var(--bg4);border-radius:3px;height:15px"><div style="height:100%;width:${w}%;background:${col};border-radius:3px"></div></div>`;
@@ -1148,7 +1156,8 @@ function renderForward(){
   }).join('');
   document.getElementById('fwdBody').innerHTML=order.map(k=>{
     const a=CMA.asset_classes[k];
-    return `<tr><td>${a.label}</td><td class="r"><strong>${a.ret.toFixed(1)}</strong></td><td class="r">${a.vol}</td><td class="r">${med[k]!=null?med[k].toFixed(1):'—'}</td><td class="r">${med3[k]!=null?med3[k].toFixed(1):'—'}</td></tr>`;
+    const tip=((a.informed_by?'Built from: '+a.informed_by:'')+(a.role?'\nRole: '+a.role:'')).replace(/"/g,'&quot;');
+    return `<tr><td>${a.label} <span class="seg-lab" title="${a.basis==='SGD'?'Estimated in SGD — no currency consideration for a Singapore investor':'Estimated in US dollars — an SGD investor also faces the SGD/USD exchange rate (~±1%/yr unhedged)'}">${a.basis||''}</span></td><td class="r"><strong class="tip" title="${tip}">${a.ret.toFixed(1)}</strong></td><td class="r">${a.vol}</td><td class="r">${med[k]!=null?med[k].toFixed(1):'—'}</td><td class="r">${med3[k]!=null?med3[k].toFixed(1):'—'}</td></tr>`;
   }).join('');
 }
 
@@ -1266,7 +1275,7 @@ function selectGoal(g){
   document.getElementById('planOut').innerHTML=
     '<div class="plan card"><div class="plan-name">'+p.name+'</div><div class="plan-blurb">'+p.blurb+'</div>'+
     '<div class="plan-mix">'+rows+'</div>'+
-    '<div class="plan-stats"><div><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
+    '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See the Expected returns tab for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
     '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>.</div>'+
@@ -1298,7 +1307,11 @@ async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
   // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
-  FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;});
+  FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;
+    // ≈ total return for the Expected-returns tab: price return + trailing yield for distributing funds
+    // (accumulating funds reinvest income inside the fund, so their price return already IS total return)
+    const acc=(f.income||'').toLowerCase().indexOf('acc')===0, y=(!acc&&f.yield>0)?f.yield:0;
+    f.tr1_tot=f.trail_1y!=null?f.trail_1y+y:null; f.tr3_tot=f.trail_3y!=null?f.trail_3y+y:null;});
   ACLABEL={}; for(const k in CMA.asset_classes) ACLABEL[k]=CMA.asset_classes[k].label;
   // build symmetric correlation matrix (default 0.30 for any unspecified pair)
   CORR={}; const _cs=Object.keys(CMA.asset_classes);
