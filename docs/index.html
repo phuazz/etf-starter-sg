@@ -118,6 +118,19 @@ td.r{text-align:right;font-family:var(--mono)}
 .scorefill{display:block;height:100%;border-radius:3px}
 .scoreval{font-family:var(--mono);font-weight:700;font-size:13px;width:22px;text-align:right}
 .est-tag{font-size:9px;font-weight:600;color:var(--a);text-transform:uppercase;letter-spacing:0.3px;vertical-align:middle}
+.hook{margin-top:16px}
+.hook-lead{font-size:14.5px;color:var(--t2);max-width:740px;line-height:1.55}
+.hook-lead strong{color:var(--t1)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 8px}
+.step{text-align:left;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:15px 16px;cursor:pointer;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s;font-family:var(--sans)}
+.step:hover{border-color:var(--bd-strong);box-shadow:var(--shadow)}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--t1);color:#fff;font-weight:700;font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.step-t{font-weight:700;font-size:14px;margin-bottom:3px}
+.step-d{font-size:12.5px;color:var(--t2);line-height:1.45}
+.step-go{font-size:12px;font-weight:600;color:var(--b);margin-top:9px}
+.hook-note{font-size:11.5px;color:var(--t3);margin-top:6px}
+.tw.simple th.col-detail,.tw.simple td.col-detail{display:none}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
 
 /* cost tab */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -208,8 +221,26 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     </div>
   </div>
 
-  <div class="notice">
-    <strong>Read me first.</strong> This is an educational tool, not financial or tax advice. Forward returns are synthesised long-run estimates (not forecasts). The single biggest hidden choice is <em>domicile</em>: US-domiciled funds expose a Singaporean's estate to up to 40% US estate tax and 30% dividend withholding — the tool flags this throughout. Verify any figure before acting.
+  <div class="hook">
+    <p class="hook-lead"><strong>New to investing?</strong> You do not need to be an expert to start well. This is a plain-English guide to building a low-cost, tax-smart ETF portfolio from Singapore — in three steps.</p>
+    <div class="steps">
+      <button class="step" onclick="switchTab('find');var c=document.getElementById('coreRow');if(c)c.scrollIntoView({behavior:'smooth',block:'center'})">
+        <span class="step-n">1</span><span class="step-t">Start with the core</span>
+        <span class="step-d">Six low-cost building blocks that cover the world, Singapore, bonds and gold.</span>
+        <span class="step-go">See the core &rarr;</span>
+      </button>
+      <button class="step" onclick="switchTab('build')">
+        <span class="step-n">2</span><span class="step-t">Build a simple mix</span>
+        <span class="step-d">Combine them by how much risk you are comfortable with, and see the result live.</span>
+        <span class="step-go">Build a portfolio &rarr;</span>
+      </button>
+      <button class="step" onclick="switchTab('learn')">
+        <span class="step-n">3</span><span class="step-t">Dodge the 40% tax trap</span>
+        <span class="step-d">Why a fund&rsquo;s home country matters more than your broker for US shares.</span>
+        <span class="step-go">Learn the trap &rarr;</span>
+      </button>
+    </div>
+    <p class="hook-note">Educational only &mdash; not financial or tax advice. Forward returns are estimates, not forecasts; verify any figure before acting.</p>
   </div>
 
   <div class="tabs" id="tabs">
@@ -240,19 +271,25 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
           <button data-v="sgx">SGX-listed</button>
         </div>
       </div>
+      <div class="ctl"><label>View</label>
+        <div class="seg" id="fView">
+          <button data-v="simple" class="on">Simple</button>
+          <button data-v="detail">Detailed</button>
+        </div>
+      </div>
     </div>
-    <div class="tw"><table id="fundTbl">
+    <div class="tw simple" id="fundTw"><table id="fundTbl">
       <thead><tr>
         <th class="sortable" data-k="ticker">Fund <span class="arw"></span></th>
         <th class="sortable" data-k="asset_class" title="Broad asset class used for the forward-return and correlation model.">Class <span class="arw"></span></th>
         <th title="Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.">Domicile / tax</th>
         <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
-        <th class="r sortable" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
         <th class="r sortable" data-k="effective_ter" title="Total expense ratio — the fund's all-in annual cost (management fee + trustee + custody). Where a fund publishes only a management fee, TER is estimated from it (+~0.10% overhead) and marked 'est'.">TER % <span class="arw"></span></th>
         <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate) minus TER minus dividend-withholding drag. An estimate, not a forecast.">Net exp. return <span class="arw"></span></th>
-        <th class="r sortable" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
-        <th class="r sortable" data-k="yield" title="Indicative trailing distribution yield. Accumulating funds show 0 (income is reinvested inside the fund).">Yield % <span class="arw"></span></th>
-        <th class="r sortable" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="yield" title="Indicative trailing distribution yield. Accumulating funds show 0 (income is reinvested inside the fund).">Yield % <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
       </tr></thead>
       <tbody id="fundBody"></tbody>
     </table></div>
@@ -534,12 +571,12 @@ function renderTable(){
     '<td><div>'+(ACLABEL[f.asset_class]||f.asset_class)+'</div><div class="seg-lab">'+(f.segment||'')+'</div></td>'+
     '<td>'+domBadge(f)+'</td>'+
     '<td class="r">'+scoreCell(f)+'</td>'+
-    '<td class="r">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
+    '<td class="r col-detail">'+(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—')+'</td>'+
     '<td class="r">'+(f.effective_ter!=null?(fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':'')):'<span class="bdg bdg-verify">n/a</span>')+'</td>'+
     '<td class="r">'+(f.net_expected_return_pct!=null?'<strong>'+fmt(f.net_expected_return_pct,1,'%')+'</strong>':'—')+'</td>'+
-    '<td class="r">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
-    '<td class="r">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
-    '<td class="r">'+liqLabel(f)+'</td>'+
+    '<td class="r col-detail">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
+    '<td class="r col-detail">'+(f.yield!=null?fmt(f.yield,1):'—')+'</td>'+
+    '<td class="r col-detail">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
   document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     '<strong>Efficiency Score</strong> (0–100, hover for the breakdown) is a transparent composite — <em>cost 25% · tax-safety 20% · risk-adjusted return 25% · liquidity 15% · diversification 15%</em> — for a long-term buy-and-hold starter. It is <strong>not a buy recommendation</strong>, and is blank only where neither a TER nor a management fee is available. '+
@@ -788,6 +825,10 @@ async function init(){
   document.querySelectorAll('#fRoute button').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('#fRoute button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
     routeFilter=b.dataset.v; renderTable();
+  }));
+  document.querySelectorAll('#fView button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#fView button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    document.getElementById('fundTw').classList.toggle('simple', b.dataset.v==='simple');
   }));
   document.querySelectorAll('#fundTbl th.sortable').forEach(th=>th.addEventListener('click',()=>{
     const k=th.dataset.k; if(sortKey===k) sortDir*=-1; else{sortKey=k; sortDir=(k==='ticker'||k==='asset_class')?1:-1;} renderTable();
