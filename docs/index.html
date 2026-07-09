@@ -138,7 +138,33 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .stub{padding:50px 20px;text-align:center;color:var(--t3);font-size:14px;border:1px dashed var(--bd2);border-radius:var(--radius-lg);background:var(--bg2)}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.shell{padding:16px 16px 50px}.masthead h1{font-size:28px}}
-</style>
+.footlet{font-size:12px;color:var(--t3);margin-top:10px;line-height:1.5}
+.pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.pc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.pc:hover{border-color:var(--bd-strong)}
+.pc.on{border-color:var(--t1);box-shadow:var(--shadow)}
+.pc .pc-n{font-weight:700;font-size:15px;margin-bottom:2px}
+.pc .pc-dd{font-size:11px;color:var(--t3);margin-bottom:8px}
+.pc .pc-row{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);margin:3px 0}
+.pc .pc-row b{font-family:var(--mono);color:var(--t1)}
+.sliders{display:flex;flex-direction:column;gap:7px}
+.sl{display:grid;grid-template-columns:148px 1fr 42px;align-items:center;gap:10px}
+.sl label{font-size:12.5px;font-weight:500}
+.sl input[type=range]{width:100%;accent-color:var(--b)}
+.sl .slv{font-family:var(--mono);font-size:12px;text-align:right;color:var(--t2)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin-bottom:18px}
+.metric{background:var(--bg2);padding:12px 14px}
+.metric .m-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;font-weight:600;color:var(--t3)}
+.metric .m-v{font-size:20px;font-weight:700;font-family:var(--mono);letter-spacing:-0.5px;margin-top:3px}
+.impl{list-style:none;font-size:12.5px}
+.impl li{padding:8px 0;border-bottom:1px solid var(--bd)}
+.impl li:last-child{border-bottom:none}
+.impl .im-c{font-weight:600}
+.impl .im-i{color:var(--t2);font-size:12px;margin-top:2px}
+.estline{padding:10px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.estline .el-v{font-family:var(--mono);font-weight:700}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}.pcards{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}</style>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="shell">
@@ -236,8 +262,59 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="footer">Cumulative cost is illustrative: annual cost drag × years, applied to the starting amount (it ignores compounding of the drag and market growth — the real gap is somewhat larger). Estate-tax figures are approximate, interpolated from the graduated schedule; see the Learn tab.</div>
   </div>
 
-  <div class="panel" id="p-forward"><div class="stub">Forward Return — expected long-run return per fund and asset class, shown against history. Coming in Session 3.</div></div>
-  <div class="panel" id="p-build"><div class="stub">Build — risk-profile presets and a light portfolio builder with a portfolio-level estate-tax read-out. Coming in Session 3.</div></div>
+  <!-- FORWARD RETURN -->
+  <div class="panel" id="p-forward">
+    <h2 class="sec">Forward-looking return, not last year's</h2>
+    <div class="lead">Good choices rest on <strong>expected long-run return</strong>, not the trailing twelve months. Recent winners often carry the lowest forward return — a reason to diversify and rebalance, not to chase. Figures are synthesised house estimates (2025-26 vintage); treat them as directional, not precise.</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Risk vs expected return — the asset-class map</h3>
+        <div id="rrScatter" style="height:380px"></div>
+        <p class="footlet">Higher return demands higher risk: cash sits bottom-left, equities top-right. The value of diversifying is combining blocks whose returns do not move together (see the correlation logic behind the Build tab).</p>
+      </div>
+      <div class="card">
+        <h3>Forward estimate vs trailing 1-year</h3>
+        <div id="fwdBars" style="margin-top:4px"></div>
+        <p class="footlet">Blue = long-run estimate; grey = median trailing 1-year across funds in that class. Where the grey towers over the blue, recent returns have borrowed from the future.</p>
+      </div>
+    </div>
+    <div class="tw" style="margin-top:20px"><table id="fwdTbl">
+      <thead><tr><th>Asset class</th><th class="r">Forward est. %</th><th class="r">Exp. vol %</th><th class="r">Trailing 1Y (median) %</th><th class="r">Trailing 3Y ann. (median) %</th></tr></thead>
+      <tbody id="fwdBody"></tbody>
+    </table></div>
+    <div class="footer">Trailing figures are the median across the funds mapped to each class (SGX export). Forward estimates are asset-class level. A large gap either way is information, not a signal.</div>
+  </div>
+  <!-- BUILD -->
+  <div class="panel" id="p-build">
+    <h2 class="sec">Build a portfolio</h2>
+    <div class="lead">Pick a risk profile, then nudge the mix. Everything recomputes live: expected return, volatility, income, and — crucially — the portfolio's US estate-tax exposure, which depends on <em>how</em> you implement it. A starting point for discussion, not advice.</div>
+    <div class="pcards" id="pcards"></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Adjust the mix <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3)">— normalised to 100%</span></h3>
+        <div class="sliders" id="sliders"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:var(--t3)"><span id="wsum"></span><button class="tab" style="padding:6px 12px;min-height:0;border:1px solid var(--bd2);border-radius:var(--radius)" id="resetBtn">Reset to preset</button></div>
+      </div>
+      <div class="card">
+        <h3>This portfolio</h3>
+        <div class="metrics" id="bmetrics"></div>
+        <div class="kpi-lab" style="color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;font-size:10.5px;font-weight:600">Return contribution by block</div>
+        <div id="contribBars" style="margin-top:10px"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:20px">
+      <div class="card">
+        <h3>US estate-tax exposure of this portfolio</h3>
+        <div class="calcgrid"><div class="ctl"><label>Portfolio size (S$)</label><input id="bAmt" type="number" value="250000" min="1000" step="10000"></div></div>
+        <div id="estBox"></div>
+        <p class="footlet">Only US-domiciled holdings are US-situs. Implemented via the recommended Irish-UCITS core, this portfolio's exposure is zero — that is the point of the core-satellite split.</p>
+      </div>
+      <div class="card">
+        <h3>How to implement</h3>
+        <ul class="impl" id="implList"></ul>
+      </div>
+    </div>
+  </div>
   <div class="panel" id="p-learn"><div class="stub">Learn — the US estate-tax explainer (flowchart, effective-rate table, ranked fixes) from the source article. Coming in Session 4.</div></div>
 
   <div class="footer" id="globalFoot">
@@ -258,8 +335,11 @@ async function loadData(){
   ]);
   return {universe:u,cma:c,mp:m};
 }
-let DATA, FUNDS, CMA, MP, ACLABEL;
+let DATA, FUNDS, CMA, MP, ACLABEL, CORR;
 let sortKey='net_expected_return_pct', sortDir=-1, routeFilter='';
+let BW={}, BPRESET='balanced', BBASE={band:[10,15],vol:1}, fwdDone=false, buildDone=false;
+const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_bonds','gold','cash'];
+const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
 function domBadge(f){
@@ -405,16 +485,131 @@ function renderCostBars(){
   }
 }
 
+// ---------- Forward Return ----------
+function medByClass(field){
+  const m={};
+  for(const k in CMA.asset_classes){
+    const v=FUNDS.filter(f=>f.asset_class===k&&f[field]!=null).map(f=>f[field]).sort((a,b)=>a-b);
+    m[k]=v.length?v[Math.floor((v.length-1)/2)]:null;
+  }
+  return m;
+}
+function renderForward(){
+  if(fwdDone) return; fwdDone=true;
+  const cs=Object.keys(CMA.asset_classes);
+  const trace={x:cs.map(k=>CMA.asset_classes[k].vol),y:cs.map(k=>CMA.asset_classes[k].ret),
+    text:cs.map(k=>CMA.asset_classes[k].label),mode:'markers+text',type:'scatter',
+    textposition:'top center',textfont:{size:9,color:'#5c5c56'},
+    marker:{size:13,color:cs.map(k=>ACOL[k]||'#888'),line:{color:'#fff',width:1.5}},
+    hovertemplate:'%{text}<br>Return %{y:.1f}%  ·  Vol %{x:.0f}%<extra></extra>'};
+  const layout={paper_bgcolor:'transparent',plot_bgcolor:'transparent',
+    font:{family:'DM Sans',size:10,color:'#5c5c56'},margin:{t:12,b:46,l:46,r:14},
+    xaxis:{title:{text:'Expected volatility (% p.a.)',font:{size:11}},gridcolor:'#e5e7eb',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'},rangemode:'tozero'},
+    yaxis:{title:{text:'Expected return (% p.a.)',font:{size:11}},gridcolor:'#e5e7eb',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'},rangemode:'tozero'},
+    showlegend:false,hovermode:'closest',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:10,family:'DM Sans'}}};
+  Plotly.newPlot('rrScatter',[trace],layout,{displayModeBar:false,responsive:true});
+  const med=medByClass('tr_1y'), med3=medByClass('ann_3y');
+  const order=cs.slice().sort((a,b)=>CMA.asset_classes[b].ret-CMA.asset_classes[a].ret);
+  let mx=1; cs.forEach(k=>mx=Math.max(mx,CMA.asset_classes[k].ret,med[k]||0));
+  const bar=(w,col)=>`<div style="flex:1;background:var(--bg4);border-radius:3px;height:15px"><div style="height:100%;width:${w}%;background:${col};border-radius:3px"></div></div>`;
+  document.getElementById('fwdBars').innerHTML=order.map(k=>{
+    const fwd=CMA.asset_classes[k].ret, tr=med[k];
+    return `<div style="margin:10px 0"><div style="font-size:12px;font-weight:600;margin-bottom:3px">${CMA.asset_classes[k].label}</div>
+      <div style="display:flex;align-items:center;gap:8px">${bar(fwd/mx*100,'var(--b)')}<div class="mono" style="font-size:11px;width:42px;text-align:right">${fwd.toFixed(1)}</div></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:3px">${bar(tr!=null?tr/mx*100:0,'var(--t3)')}<div class="mono" style="font-size:11px;width:42px;text-align:right">${tr!=null?tr.toFixed(0):'—'}</div></div></div>`;
+  }).join('');
+  document.getElementById('fwdBody').innerHTML=order.map(k=>{
+    const a=CMA.asset_classes[k];
+    return `<tr><td>${a.label}</td><td class="r"><strong>${a.ret.toFixed(1)}</strong></td><td class="r">${a.vol}</td><td class="r">${med[k]!=null?med[k].toFixed(1):'—'}</td><td class="r">${med3[k]!=null?med3[k].toFixed(1):'—'}</td></tr>`;
+  }).join('');
+}
+
+// ---------- Build ----------
+function parseBand(s){const m=(s||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[10,15];}
+function calcPortfolio(w){
+  let tot=0; BKEYS.forEach(k=>tot+=(w[k]||0));
+  const norm={}; BKEYS.forEach(k=>norm[k]=tot>0?(w[k]||0)/tot:0);
+  let ret=0,yld=0; const yb=CMA.tax.us_div_withholding.assumed_div_yield_by_class;
+  BKEYS.forEach(k=>{ret+=norm[k]*CMA.asset_classes[k].ret; yld+=norm[k]*(yb[k]||0);});
+  let v2=0; BKEYS.forEach(a=>BKEYS.forEach(b=>{v2+=norm[a]*norm[b]*CMA.asset_classes[a].vol*CMA.asset_classes[b].vol*CORR[a][b];}));
+  const vol=Math.sqrt(Math.max(v2,0));
+  return {ret,vol,sharpe:vol>0?(ret-CMA._meta.risk_free_pct)/vol:0,yld,norm};
+}
+function buildUI(){
+  if(buildDone) return; buildDone=true;
+  document.getElementById('sliders').innerHTML=BKEYS.map(k=>
+    `<div class="sl"><label>${ACLABEL[k]}</label><input type="range" min="0" max="70" step="1" id="sl-${k}"><div class="slv" id="slv-${k}"></div></div>`).join('');
+  BKEYS.forEach(k=>document.getElementById('sl-'+k).addEventListener('input',recompute));
+  selectProfile('balanced');
+}
+function renderPCards(){
+  const el=document.getElementById('pcards');
+  el.innerHTML=Object.keys(MP.profiles).map(k=>{
+    const p=MP.profiles[k], m=calcPortfolio(p.weights);
+    return `<div class="pc ${k===BPRESET?'on':''}" data-k="${k}"><div class="pc-n">${p.label}</div><div class="pc-dd">Drawdown band ${p.drawdown_band}</div>
+      <div class="pc-row"><span>Exp. return</span><b>${m.ret.toFixed(1)}%</b></div>
+      <div class="pc-row"><span>Volatility</span><b>${m.vol.toFixed(1)}%</b></div>
+      <div class="pc-row"><span>Sharpe</span><b>${m.sharpe.toFixed(2)}</b></div></div>`;
+  }).join('');
+  el.querySelectorAll('.pc').forEach(c=>c.addEventListener('click',()=>selectProfile(c.dataset.k)));
+}
+function selectProfile(k){
+  BPRESET=k; BW={...MP.profiles[k].weights}; BKEYS.forEach(x=>{if(BW[x]==null)BW[x]=0;});
+  BBASE={band:parseBand(MP.profiles[k].drawdown_band),vol:calcPortfolio(BW).vol||1};
+  BKEYS.forEach(x=>{document.getElementById('sl-'+x).value=BW[x];});
+  renderPCards(); recompute();
+}
+function recompute(){
+  BKEYS.forEach(k=>{BW[k]=+document.getElementById('sl-'+k).value; document.getElementById('slv-'+k).textContent=BW[k]+'%';});
+  const m=calcPortfolio(BW);
+  const ddL=BBASE.band[0]*m.vol/BBASE.vol, ddH=BBASE.band[1]*m.vol/BBASE.vol;
+  document.getElementById('bmetrics').innerHTML=[
+    ['Exp. return',m.ret.toFixed(1)+'%'],['Volatility',m.vol.toFixed(1)+'%'],
+    ['Sharpe',m.sharpe.toFixed(2)],['Est. drawdown','-'+ddL.toFixed(0)+'/'+ddH.toFixed(0)+'%']
+  ].map(x=>`<div class="metric"><div class="m-l">${x[0]}</div><div class="m-v">${x[1]}</div></div>`).join('');
+  const raw=BKEYS.reduce((s,k)=>s+BW[k],0);
+  document.getElementById('wsum').innerHTML='Sliders sum to <b class="mono">'+raw+'%</b> · blended income yield ~'+m.yld.toFixed(1)+'%'+(raw!==100?' <span style="color:var(--a)">(metrics use normalised weights)</span>':'');
+  const ck=BKEYS.filter(k=>m.norm[k]>0.001).sort((a,b)=>m.norm[b]*CMA.asset_classes[b].ret-m.norm[a]*CMA.asset_classes[a].ret);
+  const mxc=Math.max(...ck.map(k=>m.norm[k]*CMA.asset_classes[k].ret),0.01);
+  document.getElementById('contribBars').innerHTML=ck.map(k=>{
+    const c=m.norm[k]*CMA.asset_classes[k].ret;
+    return `<div style="display:flex;align-items:center;gap:8px;margin:5px 0"><div style="width:132px;font-size:12px">${ACLABEL[k]} <span class="mono" style="color:var(--t3);font-size:11px">${(m.norm[k]*100).toFixed(0)}%</span></div><div style="flex:1;background:var(--bg4);border-radius:3px;height:16px"><div style="height:100%;width:${c/mxc*100}%;background:${ACOL[k]};border-radius:3px"></div></div><div class="mono" style="font-size:11px;width:42px;text-align:right">${c.toFixed(2)}%</div></div>`;
+  }).join('')+`<div style="display:flex;justify-content:space-between;border-top:2px solid var(--t1);margin-top:6px;padding-top:8px"><span style="font-size:13px;font-weight:700">Portfolio total</span><span class="mono" style="color:var(--g);font-size:15px;font-weight:700">${m.ret.toFixed(1)}%</span></div>`;
+  const ri=MP.recommended_instruments;
+  document.getElementById('implList').innerHTML=ck.map(k=>{
+    const r=ri[k]||{}, route=r.prefer||'sgx', inst=r[route]||r.sgx||r.core||'—';
+    const tag=route==='core'?'<span class="bdg bdg-core">Irish UCITS</span>':'<span class="bdg bdg-sg">SGX</span>';
+    return `<li><div class="im-c">${ACLABEL[k]} · ${(m.norm[k]*100).toFixed(0)}% ${tag}</div><div class="im-i">${inst}</div></li>`;
+  }).join('');
+  renderEstate();
+}
+function renderEstate(){
+  const amt=+document.getElementById('bAmt').value||0;
+  const m=calcPortfolio(BW);
+  const situsSgd=amt*((m.norm.dev_equity||0)+(m.norm.gold||0));
+  const tax=estateTax(situsSgd*0.74)/0.74;
+  document.getElementById('estBox').innerHTML=
+    `<div class="estline"><span><span class="bdg bdg-core">Recommended</span> Irish-UCITS core + SGX satellites</span><span class="el-v" style="color:var(--g)">S$0 exposed</span></div>`+
+    `<div class="estline"><span><span class="bdg bdg-us">Alt.</span> if you use SGX-listed S27 + GSD instead</span><span class="el-v" style="color:var(--r)">S$${Math.round(situsSgd).toLocaleString()} US-situs</span></div>`+
+    `<div class="estline" style="border-bottom:none"><span>&nbsp;&nbsp;&rarr; potential US estate tax on that</span><span class="el-v" style="color:var(--r)">~S$${Math.round(tax).toLocaleString()}</span></div>`;
+}
+
 function switchTab(p){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===p));
   document.querySelectorAll('.panel').forEach(pl=>pl.classList.toggle('active',pl.id==='p-'+p));
   if(p==='cost') renderCost();
+  if(p==='forward') renderForward();
+  if(p==='build') buildUI();
 }
 
 async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp;
   ACLABEL={}; for(const k in CMA.asset_classes) ACLABEL[k]=CMA.asset_classes[k].label;
+  // build symmetric correlation matrix (default 0.30 for any unspecified pair)
+  CORR={}; const _cs=Object.keys(CMA.asset_classes);
+  _cs.forEach(a=>{CORR[a]={}; _cs.forEach(b=>CORR[a][b]=(a===b)?1:0.30);});
+  CMA.corr_pairs.forEach(([a,b,r])=>{if(CORR[a]&&CORR[a][b]!==undefined){CORR[a][b]=r;CORR[b][a]=r;}});
   document.getElementById('builtPill').textContent='Data · '+DATA.universe._meta.built;
   // class filter options
   const classes=[...new Set(FUNDS.map(f=>f.asset_class))].sort((a,b)=>(ACLABEL[a]||'').localeCompare(ACLABEL[b]||''));
@@ -432,6 +627,8 @@ async function init(){
   }));
   document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
   ['cAmt','cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostBars));
+  document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
+  document.getElementById('bAmt').addEventListener('input',renderEstate);
 }
 init();
 </script>
