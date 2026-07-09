@@ -116,7 +116,7 @@ def starter_score(rec, rf=2.8):
     Components each 0-100:
       cost   : lower total annual drag (TER + withholding) is better
       tax    : estate-tax safety (US-domiciled penalised hard)
-      return : RISK-ADJUSTED return (Sharpe = (net return - risk-free) / expected volatility)
+      return : RISK-ADJUSTED return (net expected return minus a volatility penalty, 0.10 x vol)
       liquidity : how easily traded
       breadth: broad diversified beta beats single-country / thematic bets
     """
@@ -127,8 +127,8 @@ def starter_score(rec, rf=2.8):
         return None, None
     cost = _clamp(100 * (1.0 - drag) / (1.0 - 0.15))           # 0.15%->100, 1.0%->0
     tax = 25 if rec.get("estate_tax_exposed") else (60 if rec["domicile"] == "verify" else 100)
-    sharpe = (net - rf) / max(vol, 4.0)                       # vol floor stops tiny-vol cash spiking
-    ret = _clamp(100 * (sharpe - 0.05) / (0.30 - 0.05))       # Sharpe 0.05->0, 0.30->100
+    util = net - 0.10 * vol                                   # risk penalty: -0.10 return-pts per 1% vol
+    ret = _clamp(100 * (util - 2.5) / (5.5 - 2.5))            # penalised return 2.5%->0, 5.5%->100
     liq = _LIQ_SCORE.get(rec.get("liquidity_tier"), 55)
     ac = rec["asset_class"]
     seg = (rec.get("segment") or "").lower()
@@ -308,7 +308,7 @@ def main():
                 "components": {
                     "cost": "Lower total annual drag (TER + dividend withholding) scores higher.",
                     "tax": "US estate-tax safety; US-domiciled funds penalised hard.",
-                    "return": "Risk-adjusted: Sharpe = (net expected return - risk-free) / expected volatility.",
+                    "return": "Risk-adjusted: net expected return minus a penalty for volatility (return - 0.10 x vol).",
                     "liquidity": "How easily the fund can be traded.",
                     "breadth": "Diversification: broad beta beats single-country or thematic bets."
                 }
