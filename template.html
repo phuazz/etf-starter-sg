@@ -165,7 +165,6 @@ td.r{text-align:right;font-family:var(--mono)}
 .alt-tbl .tk-link{cursor:pointer}
 .alt-note{font-size:10.5px;color:var(--t4);margin-top:8px;line-height:1.5}
 /* goal-plan per-fund chip + quick-look */
-.pm-chip{font-family:var(--mono);font-size:10.5px;color:var(--t3);background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:1px 7px;margin-left:8px;white-space:nowrap}
 .pm-look{cursor:pointer}
 .pm-view{font-size:10.5px;color:var(--b);font-weight:600}
 #planDetail:not(:empty){margin-top:14px;border-top:1px solid var(--bd);padding-top:14px}
@@ -1260,9 +1259,8 @@ function selectGoal(g){
   const rows=p.mix.map(m=>{
     const f=FUNDS.find(x=>x.ticker===m[0]);
     if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);}
-    const chip=f?'<span class="pm-chip">'+(f.effective_ter!=null?fmt(f.effective_ter,2)+'%/yr':'—')+' &middot; '+(volWord(f)||'—')+' vol.</span>':'';
     return '<div class="pm-row"><div class="pm-w">'+m[1]+'%</div><div class="pm-bar"><div style="width:'+m[1]+'%"></div></div>'+
-      '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+chip+'</div></div>';
+      '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+'</div></div>';
   }).join('');
   const incomeStat=g==='income'?'<div><div class="ps-l">Income yield</div><div class="ps-v" style="color:var(--g)">~'+yld.toFixed(1)+'%</div></div>':'';
   document.getElementById('planOut').innerHTML=
