@@ -270,7 +270,12 @@ td.r{text-align:right;font-family:var(--mono)}
 .proj-fall{font-size:12px;color:var(--t2);margin-top:10px;line-height:1.5;background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:8px 11px}
 /* compare tray + modal */
 .cmp-btn.on{color:var(--g)}
-#cmpTray{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:150;display:flex;align-items:center;gap:12px;background:var(--t1);color:#fff;border-radius:24px;padding:9px 16px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:12.5px}
+#cmpTray{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:150;display:flex;align-items:center;gap:12px;background:var(--t1);color:#fff;border-radius:24px;padding:9px 16px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:12.5px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,720px)}
+#cmpSugg{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+#cmpSugg:empty{display:none}
+.ct-lab{font-size:11px;color:rgba(255,255,255,0.65)}
+#cmpTray .cmp-chip{background:rgba(255,255,255,0.13);color:#fff;border-color:rgba(255,255,255,0.35)}
+#cmpTray .cmp-chip:hover{border-color:#fff}
 #cmpTray button{font-family:var(--sans);font-size:12.5px;font-weight:700;color:#fff;background:var(--b);border:none;border-radius:16px;padding:5px 14px;cursor:pointer}
 #cmpTray button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.4);font-weight:600}
 #cmpModal{position:fixed;inset:0;z-index:180;background:rgba(20,20,16,0.45);display:flex;align-items:center;justify-content:center;padding:18px}
@@ -759,6 +764,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
 <div id="cmpTray" style="display:none">
   <span id="cmpCount"></span>
+  <span id="cmpSugg"></span>
   <button id="cmpOpen">Compare</button>
   <button id="cmpClear" class="ghost">Clear</button>
 </div>
@@ -1028,13 +1034,27 @@ function toggleCmp(tk){
   }
   updateCmpUI();
 }
+// Same-class alternatives to the current selection, deduped, best score first — feeds the tray AND the modal.
+function cmpSuggestions(limit){
+  const seen=new Map();
+  [...CMP].forEach(tk=>{const f=FUNDS.find(x=>x.ticker===tk); if(f) closestAlternatives(f).forEach(a=>{ if(!CMP.has(a.ticker)&&!seen.has(a.ticker)) seen.set(a.ticker,a); });});
+  return [...seen.values()].sort((a,b)=>(b.starter_score??-1)-(a.starter_score??-1)).slice(0,limit);
+}
+function suggChips(list){
+  return list.map(a=>'<button class="cmp-chip" onclick="addCmp(\''+a.ticker+'\')" title="'+a.name.replace(/"/g,'&quot;')+' — Efficiency Score '+(a.starter_score??'n/a')+'">+ '+a.ticker+'</button>').join('');
+}
 function updateCmpUI(){
   document.querySelectorAll('.cmp-btn').forEach(b=>{
     const on=CMP.has(b.dataset.cmp);
     b.classList.toggle('on',on); b.textContent=on?'✓ Comparing':'+ Compare';
   });
   const tray=document.getElementById('cmpTray');
-  if(CMP.size){tray.style.display='flex';document.getElementById('cmpCount').textContent=CMP.size+' selected';}
+  if(CMP.size){
+    tray.style.display='flex';document.getElementById('cmpCount').textContent=CMP.size+' selected';
+    // suggestions arrive the moment the first fund is picked — right where the click just landed
+    const sug=document.getElementById('cmpSugg');
+    sug.innerHTML=CMP.size<4?(c=>c.length?'<span class="ct-lab">Similar:</span>'+suggChips(c):'')(cmpSuggestions(3)):'';
+  }
   else{tray.style.display='none';closeCmp();}
 }
 function openCmp(){
@@ -1060,19 +1080,16 @@ function openCmp(){
     row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r);font-weight:700">Exposed</span>':'<span style="color:var(--g);font-weight:700">Safe</span>'))+
     '</tbody></table>';
   // quiet, optional "similar funds" strip: same-class alternatives to the selected funds, one tap to add
-  let sugg='';
-  if(CMP.size<4){
-    const seen=new Map();
-    fs.forEach(f=>closestAlternatives(f).forEach(a=>{ if(!CMP.has(a.ticker)&&!seen.has(a.ticker)) seen.set(a.ticker,a); }));
-    const cand=[...seen.values()].sort((a,b)=>(b.starter_score??-1)-(a.starter_score??-1)).slice(0,4);
-    if(cand.length) sugg='<div class="cmp-sugg">Similar funds &mdash; tap to add:'+cand.map(a=>'<button class="cmp-chip" onclick="addCmp(\''+a.ticker+'\')" title="'+a.name.replace(/"/g,'&quot;')+' — Efficiency Score '+(a.starter_score??'n/a')+'">+ '+a.ticker+'</button>').join('')+'</div>';
-  }
+  const cand=CMP.size<4?cmpSuggestions(4):[];
+  const sugg=cand.length?'<div class="cmp-sugg">Similar funds &mdash; tap to add:'+suggChips(cand)+'</div>':'';
   document.getElementById('cmpBody').innerHTML=h+sugg;
   document.getElementById('cmpModal').style.display='flex';
 }
 function addCmp(tk){
   if(CMP.size>=4||CMP.has(tk)) return;
-  CMP.add(tk); updateCmpUI(); openCmp();
+  const modalOpen=document.getElementById('cmpModal').style.display!=='none';
+  CMP.add(tk); updateCmpUI();
+  if(modalOpen) openCmp();   // refresh columns only if already comparing; a tray chip must not force the modal open
 }
 function closeCmp(){const m=document.getElementById('cmpModal');if(m)m.style.display='none';}
 // Deep-link from anywhere (goal plan, alternatives table) into a fund's full snapshot in the Find tab.
