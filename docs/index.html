@@ -1422,7 +1422,7 @@ function renderForward(){
     'Classes marked <b>USD</b> are estimated in US dollars: an SGD-based investor also faces the SGD/USD exchange rate on top (roughly &plusmn;1%/yr unhedged). Estimates for learning, not advice.';
   const trace={x:cs.map(k=>CMA.asset_classes[k].vol),y:cs.map(k=>CMA.asset_classes[k].ret),
     text:cs.map(k=>CMA.asset_classes[k].label),mode:'markers+text',type:'scatter',
-    textposition:'top center',textfont:{size:9,color:'#5c5c56'},
+    textposition:cs.map(k=>({cash:'middle right',sg_equity:'middle left',reits:'middle right',thematic_equity:'middle left'}[k]||'top center')),textfont:{size:9,color:'#5c5c56'},
     marker:{size:13,color:cs.map(k=>ACOL[k]||'#888'),line:{color:'#fff',width:1.5}},
     hovertemplate:'%{text}<br>Return %{y:.1f}%  ·  Vol %{x:.0f}%<extra></extra>'};
   const layout={paper_bgcolor:'transparent',plot_bgcolor:'transparent',
