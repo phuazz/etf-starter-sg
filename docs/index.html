@@ -124,14 +124,17 @@ td.r{text-align:right;font-family:var(--mono)}
 .ph-btn{font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--t2);background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:3px 12px;cursor:pointer;line-height:1.45}
 .ph-btn:hover{border-color:var(--bd-strong)}
 .ph-btn.on{background:var(--t1);color:#fff;border-color:var(--t1)}
-.perf{display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;max-width:920px}
+.perf{display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin:14px 0 4px;max-width:920px}
 .perf-i{flex:1;padding:9px 8px;border-left:1px solid var(--bd);text-align:center}
 .perf-i:first-child{border-left:none}
 .perf-l{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
 .perf-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px;color:var(--t1)}
 .perf-v.up{color:var(--g)} .perf-v.down{color:var(--r)}
-/* snapshot header: volatility badge + what-to-expect */
-.snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:2px 0 12px;flex-wrap:wrap}
+/* snapshot: title row (which ETF am I looking at) + what-to-expect */
+.snap-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 12px;max-width:920px}
+.st-tk{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--t1)}
+.st-nm{font-size:13.5px;color:var(--t2)}
+.snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:14px 0 10px;flex-wrap:wrap}
 .vol{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
 .vol-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
 .vol-r2{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
@@ -842,11 +845,6 @@ const ACEXPECT={
   cash:'Capital stability and liquidity. Over the long run, returns roughly track inflation at best — a place to wait, not to grow.'
 };
 function expectLine(f){ const t=ACEXPECT[f.asset_class]; return t?'<div class="snap-expect">'+t+'</div>':''; }
-function snapHead(tk){
-  const f=FUNDS.find(x=>x.ticker===tk); if(!f) return '';
-  const rb=volBadge(f), ex=expectLine(f);
-  return (rb||ex)?'<div class="snap-head">'+rb+ex+'</div>':'';
-}
 // Resilience from the weekly price series: worst peak-to-trough drop + best/worst rolling 12-month return.
 function resilience(arr){
   const n=arr.length; let peak=arr[0], mdd=0;
@@ -913,7 +911,11 @@ function renderPriceChart(box, tk){
   const opts=[['1Y',52],['3Y',156],['5Y',260],['Max',null]];
   const shown=opts.filter(o=>o[1]==null||n>o[1]);
   const ctrls=shown.length>1?'<div class="ph-ctrls">'+shown.map(o=>'<button class="ph-btn'+(o[1]==null?' on':'')+'" onclick="setHorizon(this,'+uid+','+(o[1]==null?'null':o[1])+')">'+o[0]+'</button>').join('')+'</div>':'';
-  box.innerHTML=perf+'<div class="ph">'+ctrls+'<div class="ph-svg"></div><div class="chart-legend ph-legend"></div></div>'+
+  const asof=priceAsOf();
+  box.innerHTML='<div class="ph">'+ctrls+'<div class="ph-svg"></div><div class="chart-legend ph-legend"></div></div>'+
+    perf+
+    '<div class="snap-head">'+expectLine(f)+'</div>'+
+    '<div class="chart-cap">Weekly closes via Yahoo Finance'+(asof?' (latest bar: week of <b>'+asof+'</b>)':'')+' &middot; price return &mdash; dividends are on top &middot; the moving averages are context, not a timing signal.</div>'+
     resilBlock(arr,tk)+buyBlock(f)+altBlock(f);
   drawPrice(box.querySelector('.ph'), uid, null);
 }
@@ -940,8 +942,12 @@ function drawPrice(ph,uid,weeks){
   const yv=[max,(max+min)/2,min];
   const grid=yv.map(v=>'<line x1="'+pL+'" y1="'+Y(v).toFixed(1)+'" x2="'+(W-pR)+'" y2="'+Y(v).toFixed(1)+'" stroke="#eeeee8"/>').join('');
   const yl=yv.map(v=>'<text x="'+(pL-6)+'" y="'+(Y(v)+3).toFixed(0)+'" text-anchor="end" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+(+v.toPrecision(3))+'</text>').join('');
+  // Adaptive tick labels: month-year on short windows (a 1Y view no longer shows just two year marks), years on long.
+  const winYears=n/52;
+  const tickLab=i=>{const d=new Date((startTs+i*604800)*1000);   // reading calendar fields from the real bar timestamp, no manual offsets
+    return winYears<=3.5 ? d.toLocaleDateString('en-GB',{month:'short'})+' '+String(d.getFullYear()).slice(2) : String(d.getFullYear());};
   const ticks=narrow?4:6; let xl='',prev=null;
-  for(let k=0;k<=ticks;k++){const i=Math.round(k/ticks*(n-1)),yy=new Date((startTs+i*604800)*1000).getFullYear();if(yy===prev)continue;prev=yy;const anch=k===0?'start':(k===ticks?'end':'middle'),xx=k===0?pL:(k===ticks?W-pR:X(i));xl+='<text x="'+xx.toFixed(0)+'" y="'+(H-7)+'" text-anchor="'+anch+'" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+yy+'</text>';}
+  for(let k=0;k<=ticks;k++){const i=Math.round(k/ticks*(n-1)),lab=tickLab(i);if(lab===prev)continue;prev=lab;const anch=k===0?'start':(k===ticks?'end':'middle'),xx=k===0?pL:(k===ticks?W-pR:X(i));xl+='<text x="'+xx.toFixed(0)+'" y="'+(H-7)+'" text-anchor="'+anch+'" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+lab+'</text>';}
   holder.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+grid+yl+xl+
     '<path d="'+line(arr)+'" fill="none" stroke="#0C4A6E" stroke-width="1.8"/>'+
     (show40?'<path d="'+line(s40)+'" fill="none" stroke="#b45309" stroke-width="1.4"/>':'')+
@@ -1079,9 +1085,9 @@ function priceAsOf(){
   return new Date(mx*1000).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 }
 function renderSnapshot(box, tk){
-  const asof=priceAsOf();
-  const cap='Trailing price-return stats, and the weekly price with 10- and 40-week moving averages. Weekly closes from Yahoo Finance'+(asof?', latest bar the week of <b>'+asof+'</b>':'')+' &mdash; price return, so dividends are on top. For a long-term investor this is context, not a timing signal.';
-  box.innerHTML=snapHead(tk)+'<div class="chart-cap">'+cap+'</div><div class="tvchart"></div>';
+  const f=FUNDS.find(x=>x.ticker===tk);
+  const title=f?'<div class="snap-title"><span class="st-tk">'+f.ticker+'</span><span class="st-nm">'+f.name+'</span>'+volBadge(f)+'</div>':'';
+  box.innerHTML=title+'<div class="tvchart"></div>';
   renderPriceChart(box.querySelector('.tvchart'), tk);
 }
 function toggleChart(btn){
