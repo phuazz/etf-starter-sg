@@ -258,7 +258,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .proj-tile.seltile:hover{border-color:var(--bd-strong);transform:translateY(-1px)}
 .proj-tile.sel{border-color:var(--b);background:var(--b-bg)}
 .pt-dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--t4);margin-right:6px;vertical-align:-1px;background:var(--bg2)}
-.proj-tile.sel .pt-dot{border-color:var(--b);background:var(--b);box-shadow:inset 0 0 0 2.5px var(--b-bg)}
+.proj-tile.sel .pt-dot,.goal.on .pt-dot{border-color:var(--b);background:var(--b);box-shadow:inset 0 0 0 2.5px var(--b-bg)}
 .proj-hint{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;color:var(--t3);margin:14px 0 8px}
 .pt-l{font-size:10.5px;color:var(--t3);font-weight:600}
 .pt-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
@@ -290,7 +290,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .goal{text-align:left;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;font-family:var(--sans);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,box-shadow .15s}
 .goal:hover{border-color:var(--bd-strong);box-shadow:var(--shadow-sm)}
-.goal.on{border-color:var(--t1);box-shadow:var(--shadow)}
+.goal.on{border-color:var(--b);background:var(--b-bg);box-shadow:var(--shadow)}
 .goal b{font-weight:700;font-size:14px}
 .goal span{font-size:12px;color:var(--t2);line-height:1.4}
 .plan{margin-top:22px}
@@ -299,8 +299,15 @@ td.r{text-align:right;font-family:var(--mono)}
 .plan-mix{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
 .pm-row{display:flex;align-items:center;gap:12px}
 .pm-w{font-family:var(--mono);font-weight:700;font-size:13px;width:38px;text-align:right}
-.pm-bar{width:120px;flex-shrink:0;background:var(--bg4);border-radius:4px;height:16px;overflow:hidden}
-.pm-bar div{height:100%;background:var(--b);border-radius:4px}
+.pm-stack{display:flex;height:30px;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:9px}
+.pm-seg{display:flex;align-items:center;justify-content:center;cursor:pointer;min-width:3px;transition:filter .12s}
+.pm-seg:hover{filter:brightness(1.15)}
+.pm-seg span{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;pointer-events:none}
+.pm-seg span.dk{color:#1f2937}
+.pm-caption{display:flex;gap:9px;flex-wrap:wrap;align-items:baseline;font-size:12.5px;color:var(--t2);margin-bottom:13px}
+.pm-caption b{font-family:var(--mono)}
+.pm-sep{color:var(--t4)}
+.pm-sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .pm-f{font-size:13px}
 .plan-stats{display:flex;gap:26px;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);margin-bottom:14px}
 .ps-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3);font-weight:600}
@@ -437,10 +444,10 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <p class="lead">You do not need to be an expert to start well. Tell us what you are investing for, and we will show an <em>illustrative</em> low-cost, tax-smart starter mix &mdash; then you can explore and adjust it yourself. This is an example for learning, <strong>not personalised advice</strong>.</p>
     <div class="goalq">What are you investing for?</div>
     <div class="goals" id="goals">
-      <button class="goal" data-g="grow"><b>Grow my money</b><span>Long horizon, comfortable with ups and downs.</span></button>
-      <button class="goal" data-g="income"><b>Earn income</b><span>Regular payouts from REITs, dividends and bonds.</span></button>
-      <button class="goal" data-g="safe"><b>Keep it safe</b><span>Protect capital, with smaller swings.</span></button>
-      <button class="goal" data-g="start"><b>Just starting small</b><span>Keep it as simple as possible.</span></button>
+      <button class="goal" data-g="grow"><b><span class="pt-dot"></span>Grow my money</b><span>Long horizon, comfortable with ups and downs.</span></button>
+      <button class="goal" data-g="income"><b><span class="pt-dot"></span>Earn income</b><span>Regular payouts from REITs, dividends and bonds.</span></button>
+      <button class="goal" data-g="safe"><b><span class="pt-dot"></span>Keep it safe</b><span>Protect capital, with smaller swings.</span></button>
+      <button class="goal" data-g="start"><b><span class="pt-dot"></span>Just starting small</b><span>Keep it as simple as possible.</span></button>
     </div>
     <div id="planOut"></div>
     <details class="fp" id="fpGuide">
@@ -1551,16 +1558,25 @@ function selectGoal(g){
   const p=GOAL_PLANS[g]; if(!p) return;
   document.querySelectorAll('#goals .goal').forEach(b=>b.classList.toggle('on',b.dataset.g===g));
   let ret=0,cost=0,yld=0;
-  const rows=p.mix.map(m=>{
+  // one stacked bar (parts of a whole, asset-class colours) + bucket caption + swatched rows
+  const BUCKET=k=>k==='gold'?'Gold':(k==='reits'?'REITs':((k==='dev_bonds'||k==='sgd_bonds'||k==='asia_bonds'||k==='cash')?'Bonds & cash':'Shares'));
+  const LIGHT=['dev_bonds','sgd_bonds','cash'];   // light segment colours need dark labels
+  let seg='', rows='', buckets={};
+  p.mix.forEach(m=>{
     const f=FUNDS.find(x=>x.ticker===m[0]);
-    if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);}
-    return '<div class="pm-row"><div class="pm-w">'+m[1]+'%</div><div class="pm-bar"><div style="width:'+m[1]+'%"></div></div>'+
+    if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);
+          buckets[BUCKET(f.asset_class)]=(buckets[BUCKET(f.asset_class)]||0)+m[1];}
+    const col=f?(ACOL[f.asset_class]||'#888'):'#888';
+    seg+='<div class="pm-seg" style="width:'+m[1]+'%;background:'+col+'" title="'+m[0]+' '+m[1]+'% — '+m[2]+'. Tap for the fund snapshot." onclick="planLook(\''+m[0]+'\')">'+(m[1]>=10?'<span'+(f&&LIGHT.includes(f.asset_class)?' class="dk"':'')+'>'+m[1]+'%</span>':'')+'</div>';
+    rows+='<div class="pm-row"><span class="pm-sw" style="background:'+col+'"></span><div class="pm-w">'+m[1]+'%</div>'+
       '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+'</div></div>';
-  }).join('');
+  });
+  const cap=Object.entries(buckets).sort((a,b)=>b[1]-a[1]).map(([k,v])=>'<span><b>'+v+'%</b> '+k+'</span>').join('<span class="pm-sep">&middot;</span>');
+  const mixHtml='<div class="pm-stack">'+seg+'</div><div class="pm-caption">'+cap+'</div>'+rows;
   const incomeStat=g==='income'?'<div><div class="ps-l">Income yield</div><div class="ps-v" style="color:var(--g)">~'+yld.toFixed(1)+'%</div></div>':'';
   document.getElementById('planOut').innerHTML=
     '<div class="plan card"><div class="plan-name">'+p.name+'</div><div class="plan-blurb">'+p.blurb+'</div>'+
-    '<div class="plan-mix">'+rows+'</div>'+
+    '<div class="plan-mix">'+mixHtml+'</div>'+
     '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See the Expected returns tab for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
