@@ -13,6 +13,17 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<script>
+// Privacy-light analytics (GoatCounter: no cookies, no personal data, EU-hosted; loads on the live site only,
+// never in local dev/previews). Hash included in the recorded path so deep-link shares (#fund=..., #cmp=...)
+// are measurable — the empirical answer to "which hook actually works".
+if(location.hostname==='phuazz.github.io'){
+  window.goatcounter={path:function(){return location.pathname+location.hash;}};
+  var gc=document.createElement('script');gc.async=true;gc.src='https://gc.zgo.at/count.js';
+  gc.setAttribute('data-goatcounter','https://etf-starter-sg.goatcounter.com/count');
+  document.head.appendChild(gc);
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -791,7 +802,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   </div>
 
   <div class="footer" id="globalFoot">
-    <strong>Sources &amp; caveats.</strong> Universe: SGX ETF Screener export. Domicile derived from fund ISIN. Forward returns: synthesised house estimates informed by published long-run capital market assumptions (2025-26 vintage); not a forecast, not any single provider's proprietary table. Estate-tax schedule: Financial Horse, "Die holding US Stocks and pay 40% tax?" (3 Jul 2026), cross-checked to IRC §2001(c). <strong>Educational only — not financial, tax, or legal advice.</strong>
+    <strong>Sources &amp; caveats.</strong> Universe: SGX ETF Screener export. Domicile derived from fund ISIN. Forward returns: synthesised house estimates informed by published long-run capital market assumptions (2025-26 vintage); not a forecast, not any single provider's proprietary table. Estate-tax schedule: Financial Horse, "Die holding US Stocks and pay 40% tax?" (3 Jul 2026), cross-checked to IRC §2001(c). <strong>Educational only — not financial, tax, or legal advice.</strong> Visitor counting uses privacy-light GoatCounter (no cookies, no personal data).
   </div>
 
 </div>
@@ -1377,7 +1388,7 @@ function renderCostSim(){
     xaxis:{title:{text:'Years held',font:{size:11}},gridcolor:'#f0f0ea',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'}},
     yaxis:{gridcolor:'#f0f0ea',zeroline:false,linecolor:'#d5d3ca',side:'right',tickprefix:'S$',tickformat:'.2s',tickfont:{size:9,family:'JetBrains Mono'}},
     showlegend:true,legend:{x:0,y:1.04,orientation:'h',font:{size:10},bgcolor:'transparent'},
-    hovermode:'x unified',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:10,family:'DM Sans'}}};
+    hovermode:'x unified',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:12.5,family:'DM Sans',color:'#1a1a16'}}};
   Plotly.react('costChart',traces,layout,{displayModeBar:false,responsive:true});
   const en=document.getElementById('estNum'), es=document.getElementById('estSub');
   if(f.estate_tax_exposed){
@@ -1418,7 +1429,7 @@ function renderForward(){
     font:{family:'DM Sans',size:10,color:'#5c5c56'},margin:{t:12,b:46,l:46,r:14},
     xaxis:{title:{text:'Expected volatility (% p.a.)',font:{size:11}},gridcolor:'#e5e7eb',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'},rangemode:'tozero'},
     yaxis:{title:{text:'Expected return (% p.a.)',font:{size:11}},gridcolor:'#e5e7eb',zeroline:false,linecolor:'#d5d3ca',tickfont:{size:9,family:'JetBrains Mono'},rangemode:'tozero'},
-    showlegend:false,hovermode:'closest',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:10,family:'DM Sans'}}};
+    showlegend:false,hovermode:'closest',hoverlabel:{bgcolor:'#fff',bordercolor:'#d5d3ca',font:{size:12.5,family:'DM Sans',color:'#1a1a16'}}};
   Plotly.newPlot('rrScatter',[trace],layout,{displayModeBar:false,responsive:true});
   const med=medByClass('tr1_tot'), med3=medByClass('tr3_tot');
   const order=cs.slice().sort((a,b)=>CMA.asset_classes[b].ret-CMA.asset_classes[a].ret);
