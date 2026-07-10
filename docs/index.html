@@ -1524,27 +1524,33 @@ function drawProj(holder,P,Y,r,contrib,maxV){
   const cw=holder.clientWidth||holder.parentElement.clientWidth||340;
   const W=Math.max(300,Math.min(760,Math.round(cw))), narrow=W<430, H=narrow?200:230;
   const pL=narrow?46:56, pR=narrow?52:62, pT=12, pB=22, fs=narrow?10.5:11;   // pR holds the end-value labels
-  const series=rr=>{const o=[];for(let k=0;k<=Y;k++)o.push(fvMonthly(P,rr,k));return o;};
+  // monthly sampling: smooth curves at every horizon (a 1-year view is no longer one straight segment)
+  const M=Y*12;
+  const series=rr=>{const i=Math.pow(1+rr/100,1/12)-1;const o=[];for(let m=0;m<=M;m++)o.push(Math.abs(i)<1e-9?P*m:P*((Math.pow(1+i,m)-1)/i));return o;};
   const sLo=series(r-2), sMid=series(r), sHi=series(r+2), sC=[];
-  for(let k=0;k<=Y;k++) sC.push(P*12*k);
+  for(let m=0;m<=M;m++) sC.push(P*m);
   const mx=Math.max(maxV,contrib)||1;
-  const X=k=>pL+(Y>0?k/Y:0)*(W-pL-pR), Yc=v=>pT+(1-v/mx)*(H-pT-pB);
-  const path=a=>a.map((v,k)=>(k?'L':'M')+X(k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' ');
-  const kfmt=v=>v>=1e6?(v/1e6).toFixed(1)+'m':Math.round(v/1000)+'k';
+  const X=m=>pL+(M>0?m/M:0)*(W-pL-pR), Yc=v=>pT+(1-v/mx)*(H-pT-pB);
+  const path=a=>a.map((v,m)=>(m?'L':'M')+X(m).toFixed(1)+' '+Yc(v).toFixed(1)).join(' ');
+  const kfmt=v=>v>=1e6?(v/1e6).toFixed(1)+'m':(v>=100000?Math.round(v/1000)+'k':(v/1000).toFixed(1)+'k');
   const gl=[mx,mx/2].map(v=>'<line x1="'+pL+'" y1="'+Yc(v).toFixed(1)+'" x2="'+(W-pR)+'" y2="'+Yc(v).toFixed(1)+'" stroke="#eeeee8"/>'+
     '<text x="'+(pL-6)+'" y="'+(Yc(v)+3).toFixed(0)+'" text-anchor="end" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+kfmt(v)+'</text>').join('');
-  let xl='';const step=Y<=10?Math.max(1,Math.round(Y/5)):5;
-  for(let k=0;k<=Y;k+=step) xl+='<text x="'+X(k).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+k+'y</text>';
-  const band='M'+sLo.map((v,k)=>X(k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' L'+sHi.slice().reverse().map((v,k)=>X(Y-k).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' Z';
+  // adaptive ticks: months on short horizons, years on long — aim for ~5-7 labels
+  const maxTicks=narrow?5.5:6.5;
+  const tstep=[3,6,12,24,60,120].find(s=>M/s<=maxTicks)||120;
+  const tlab=m=>m===0?'0':(m%12===0?(m/12)+'y':m+'m');
+  let xl='';
+  for(let m=0;m<=M;m+=tstep) xl+='<text x="'+X(m).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="'+fs+'" fill="#57574f">'+tlab(m)+'</text>';
+  const band='M'+sLo.map((v,m)=>X(m).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' L'+sHi.slice().reverse().map((v,m)=>X(M-m).toFixed(1)+' '+Yc(v).toFixed(1)).join(' L')+' Z';
   const SC={lo:{s:sLo,lab:'Weaker ('+(r-2).toFixed(1)+'%/yr)'},mid:{s:sMid,lab:'Central ('+r.toFixed(1)+'%/yr)'},hi:{s:sHi,lab:'Stronger ('+(r+2).toFixed(1)+'%/yr)'}};
   const sel=SC[PROJ.sc]||SC.mid;
   const others=Object.keys(SC).filter(k=>SC[k]!==sel).map(k=>'<path d="'+path(SC[k].s)+'" fill="none" stroke="#b7c8d4" stroke-width="1.1"/>').join('');
   // end-of-line value labels (selected bold; others faint; contributions grey), nudged apart if they collide
   const ends=[
-    {y:Yc(sC[Y]),   txt:'S$'+kfmt(sC[Y]),   col:'#8a8a82', w:400, sz:fs},
-    {y:Yc(sel.s[Y]),txt:'S$'+kfmt(sel.s[Y]),col:'#0C4A6E', w:700, sz:fs+0.5}
+    {y:Yc(sC[M]),   txt:'S$'+kfmt(sC[M]),   col:'#8a8a82', w:400, sz:fs},
+    {y:Yc(sel.s[M]),txt:'S$'+kfmt(sel.s[M]),col:'#0C4A6E', w:700, sz:fs+0.5}
   ];
-  Object.keys(SC).forEach(k=>{ if(SC[k]!==sel) ends.push({y:Yc(SC[k].s[Y]),txt:'S$'+kfmt(SC[k].s[Y]),col:'#9db2c0',w:400,sz:fs-0.5}); });
+  Object.keys(SC).forEach(k=>{ if(SC[k]!==sel) ends.push({y:Yc(SC[k].s[M]),txt:'S$'+kfmt(SC[k].s[M]),col:'#9db2c0',w:400,sz:fs-0.5}); });
   ends.sort((a,b)=>a.y-b.y);
   for(let i=1;i<ends.length;i++){ if(ends[i].y<ends[i-1].y+12) ends[i].y=ends[i-1].y+12; }   // de-overlap downward
   const endLabels=ends.map(e=>'<text x="'+(W-pR+6)+'" y="'+(e.y+3.5).toFixed(1)+'" font-family="monospace" font-size="'+e.sz+'" font-weight="'+e.w+'" fill="'+e.col+'">'+e.txt+'</text>').join('');
