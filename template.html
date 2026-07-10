@@ -250,11 +250,16 @@ td.r{text-align:right;font-family:var(--mono)}
 .proj-ctls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .proj-ctls .ctl input{min-width:110px;width:130px}
 .proj-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
-.proj-tile{flex:1;min-width:128px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:8px 10px}
-.proj-tile.seltile{cursor:pointer;transition:border-color .12s,background .12s}
-.proj-tile.seltile:hover{border-color:var(--bd-strong)}
+/* stats read flat; choosable scenarios read as raised buttons with a radio dot */
+.proj-putin{font-size:13px;color:var(--t2);margin:10px 0 2px}
+.proj-putin b{font-family:var(--mono);font-size:15px;color:var(--t1)}
+.proj-tile{flex:1;min-width:128px;background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--radius);padding:8px 10px;box-shadow:var(--shadow-sm)}
+.proj-tile.seltile{cursor:pointer;transition:border-color .12s,background .12s,transform .12s}
+.proj-tile.seltile:hover{border-color:var(--bd-strong);transform:translateY(-1px)}
 .proj-tile.sel{border-color:var(--b);background:var(--b-bg)}
-.proj-hint{font-size:11px;color:var(--t3);margin:8px 0 2px}
+.pt-dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--t4);margin-right:6px;vertical-align:-1px;background:var(--bg2)}
+.proj-tile.sel .pt-dot{border-color:var(--b);background:var(--b);box-shadow:inset 0 0 0 2.5px var(--b-bg)}
+.proj-hint{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;color:var(--t3);margin:14px 0 8px}
 .pt-l{font-size:10.5px;color:var(--t3);font-weight:600}
 .pt-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
 .pt-s{font-size:10px;color:var(--t4);margin-top:1px}
@@ -1485,10 +1490,11 @@ function updateProj(){
   const rnd=v=>v>=100000?Math.round(v/1000)*1000:Math.round(v/100)*100;
   const f=v=>'S$'+rnd(v).toLocaleString('en-US');
   if(!PROJ.sc) PROJ.sc='mid';
-  const tile=(l,v,s,sc)=>'<div class="proj-tile'+(sc?' seltile':'')+(sc===PROJ.sc?' sel':'')+'"'+(sc?' data-sc="'+sc+'" role="button" tabindex="0" title="Tap to show this scenario on the chart"':'')+'><div class="pt-l">'+l+'</div><div class="pt-v">'+v+'</div><div class="pt-s">'+s+'</div></div>';
+  // Stats read FLAT (no box); choosable scenarios read as RAISED buttons with a radio dot.
+  const tile=(l,v,s,sc)=>'<div class="proj-tile seltile'+(sc===PROJ.sc?' sel':'')+'" data-sc="'+sc+'" role="button" tabindex="0" title="Tap to show this scenario on the chart"><div class="pt-l"><span class="pt-dot"></span>'+l+'</div><div class="pt-v">'+v+'</div><div class="pt-s">'+s+'</div></div>';
   const fall=Math.round(CURPLAN.vol*2);
-  out.innerHTML='<div class="proj-hint">Tap a scenario to draw it on the chart.</div><div class="proj-tiles">'+
-    tile('You would put in',f(contrib),Y+' years &times; 12 &times; S$'+P.toLocaleString('en-US'),null)+
+  out.innerHTML='<div class="proj-putin">You would put in <b>'+f(contrib)+'</b> <span class="pt-s">('+Y+' years &times; 12 &times; S$'+P.toLocaleString('en-US')+')</span></div>'+
+    '<div class="proj-hint">What it could grow to &mdash; choose a scenario:</div><div class="proj-tiles">'+
     tile('Weaker','~'+f(lo),'at '+(r-2).toFixed(1)+'%/yr','lo')+
     tile('Central estimate','~'+f(mid),'at '+r.toFixed(1)+'%/yr','mid')+
     tile('Stronger','~'+f(hi),'at '+(r+2).toFixed(1)+'%/yr','hi')+
@@ -1510,7 +1516,7 @@ function drawProj(holder,P,Y,r,contrib,maxV){
   if(!holder) return;
   const cw=holder.clientWidth||holder.parentElement.clientWidth||340;
   const W=Math.max(300,Math.min(760,Math.round(cw))), narrow=W<430, H=narrow?200:230;
-  const pL=narrow?52:60, pR=12, pT=12, pB=22, fs=narrow?10.5:11;
+  const pL=narrow?46:56, pR=narrow?52:62, pT=12, pB=22, fs=narrow?10.5:11;   // pR holds the end-value labels
   const series=rr=>{const o=[];for(let k=0;k<=Y;k++)o.push(fvMonthly(P,rr,k));return o;};
   const sLo=series(r-2), sMid=series(r), sHi=series(r+2), sC=[];
   for(let k=0;k<=Y;k++) sC.push(P*12*k);
@@ -1526,10 +1532,19 @@ function drawProj(holder,P,Y,r,contrib,maxV){
   const SC={lo:{s:sLo,lab:'Weaker ('+(r-2).toFixed(1)+'%/yr)'},mid:{s:sMid,lab:'Central ('+r.toFixed(1)+'%/yr)'},hi:{s:sHi,lab:'Stronger ('+(r+2).toFixed(1)+'%/yr)'}};
   const sel=SC[PROJ.sc]||SC.mid;
   const others=Object.keys(SC).filter(k=>SC[k]!==sel).map(k=>'<path d="'+path(SC[k].s)+'" fill="none" stroke="#b7c8d4" stroke-width="1.1"/>').join('');
+  // end-of-line value labels (selected bold; others faint; contributions grey), nudged apart if they collide
+  const ends=[
+    {y:Yc(sC[Y]),   txt:'S$'+kfmt(sC[Y]),   col:'#8a8a82', w:400, sz:fs},
+    {y:Yc(sel.s[Y]),txt:'S$'+kfmt(sel.s[Y]),col:'#0C4A6E', w:700, sz:fs+0.5}
+  ];
+  Object.keys(SC).forEach(k=>{ if(SC[k]!==sel) ends.push({y:Yc(SC[k].s[Y]),txt:'S$'+kfmt(SC[k].s[Y]),col:'#9db2c0',w:400,sz:fs-0.5}); });
+  ends.sort((a,b)=>a.y-b.y);
+  for(let i=1;i<ends.length;i++){ if(ends[i].y<ends[i-1].y+12) ends[i].y=ends[i-1].y+12; }   // de-overlap downward
+  const endLabels=ends.map(e=>'<text x="'+(W-pR+6)+'" y="'+(e.y+3.5).toFixed(1)+'" font-family="monospace" font-size="'+e.sz+'" font-weight="'+e.w+'" fill="'+e.col+'">'+e.txt+'</text>').join('');
   holder.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+gl+xl+
     '<path d="'+band+'" fill="rgba(12,74,110,0.07)"/>'+others+
     '<path d="'+path(sC)+'" fill="none" stroke="#8a8a82" stroke-width="1.3" stroke-dasharray="5 3"/>'+
-    '<path d="'+path(sel.s)+'" fill="none" stroke="#0C4A6E" stroke-width="2"/></svg>'+
+    '<path d="'+path(sel.s)+'" fill="none" stroke="#0C4A6E" stroke-width="2"/>'+endLabels+'</svg>'+
     '<div class="chart-legend" style="margin-top:6px"><span style="color:#0C4A6E">&#9644;&nbsp;'+sel.lab+'</span><span style="color:#9db2c0">&#9644;&nbsp;Other scenarios</span><span style="color:#8a8a82">&#9644;&nbsp;What you put in</span></div>';
 }
 function selectGoal(g){
