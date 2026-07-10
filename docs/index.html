@@ -292,6 +292,8 @@ td.r{text-align:right;font-family:var(--mono)}
 .cmp-tbl td.r{font-family:var(--mono)}
 .cmp-tbl td.best{background:var(--g-bg)}
 .cmp-nm{font-size:10.5px;color:var(--t3);font-weight:400;max-width:150px;font-family:var(--sans)}
+.cmp-ext{display:inline-block;font-size:10.5px;font-weight:600;color:var(--b);text-decoration:none;margin-top:3px;font-family:var(--sans)}
+.cmp-ext:hover{text-decoration:underline}
 .cmp-sugg{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 2px 6px;font-size:12px;color:var(--t3)}
 .cmp-chip{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--b);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:14px;padding:3px 11px;cursor:pointer;transition:border-color .12s}
 .cmp-chip:hover{border-color:var(--b)}
@@ -1063,18 +1065,18 @@ function openCmp(){
   const bestScore=Math.max(...fs.map(f=>f.starter_score??-1));
   const costs=fs.map(f=>f.effective_ter).filter(v=>v!=null), minCost=costs.length?Math.min(...costs):null;
   const cell=(html,strong)=>'<td class="r'+(strong?' best':'')+'">'+html+'</td>';
-  const row=(label,fn)=>'<tr><th>'+label+'</th>'+fs.map(fn).join('')+'</tr>';
-  const h='<table class="cmp-tbl"><thead><tr><th></th>'+fs.map(f=>'<th class="r"><a class="tk-link" onclick="closeCmp();openFund(\''+f.ticker+'\')">'+f.ticker+'</a><div class="cmp-nm">'+f.name+'</div></th>').join('')+'</tr></thead><tbody>'+
+  const row=(label,fn,tip)=>'<tr><th'+(tip?' title="'+tip.replace(/"/g,'&quot;')+'"':'')+'>'+label+'</th>'+fs.map(fn).join('')+'</tr>';
+  const h='<table class="cmp-tbl"><thead><tr><th></th>'+fs.map(f=>'<th class="r"><a class="tk-link" onclick="closeCmp();openFund(\''+f.ticker+'\')">'+f.ticker+'</a><div class="cmp-nm">'+f.name+'</div><a class="cmp-ext" href="'+infoUrl(f)+'" target="_blank" rel="noopener">Fund page &#8599;</a></th>').join('')+'</tr></thead><tbody>'+
     row('Asset class',f=>cell(ACLABEL[f.asset_class]||f.asset_class))+
-    row('Domicile / tax',f=>cell(f.estate_tax_exposed?'<span class="alt-trap">⚠</span> '+(DOM_LABEL[f.domicile]||f.domicile):(DOM_LABEL[f.domicile]||f.domicile)))+
-    row('Efficiency Score',f=>cell(f.starter_score!=null?'<b style="color:'+scoreColor(f.starter_score)+'">'+f.starter_score+'</b>':'n/a', f.starter_score===bestScore&&fs.length>1))+
-    row('Annual cost %',f=>cell(f.effective_ter!=null?fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':''):'—', minCost!=null&&f.effective_ter===minCost&&fs.length>1))+
-    row('Mgmt fee %',f=>cell(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—'))+
-    row('Net exp. return %',f=>cell(f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1):'—'))+
-    row('Volatility',f=>cell((volWord(f)||'—')+(f.exp_vol!=null?' <span class="seg-lab">('+f.exp_vol+'%)</span>':'')))+
-    row('Dividend yield %',f=>cell(yieldCell(f)))+
-    row('Liquidity',f=>cell(liqLabel(f)))+
-    row('1Y price return',f=>cell(trailCell(f.trail_1y)))+
+    row('Domicile / tax',f=>cell(f.estate_tax_exposed?'<span class="alt-trap">⚠</span> '+(DOM_LABEL[f.domicile]||f.domicile):(DOM_LABEL[f.domicile]||f.domicile)),'Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.')+
+    row('Efficiency Score',f=>cell(f.starter_score!=null?'<b style="color:'+scoreColor(f.starter_score)+'">'+f.starter_score+'</b>':'n/a', f.starter_score===bestScore&&fs.length>1),'0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Highest shown is shaded.')+
+    row('Annual cost %',f=>cell(f.effective_ter!=null?fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':''):'—', minCost!=null&&f.effective_ter===minCost&&fs.length>1),'The fund’s all-in yearly cost (TER). Lowest shown is shaded.')+
+    row('Mgmt fee %',f=>cell(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—'),'The manager’s cut — a component of, and usually lower than, the all-in annual cost.')+
+    row('Net exp. return %',f=>cell(f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1):'—'),'Long-run expected return (10-15yr synthesised estimate) minus costs and withholding drag. An estimate, not a forecast.')+
+    row('Volatility',f=>cell((volWord(f)||'—')+(f.exp_vol!=null?' <span class="seg-lab">('+f.exp_vol+'%)</span>':'')),'How much the yearly return swings around the average. Not the same as risk.')+
+    row('Dividend yield %',f=>cell(yieldCell(f)),'Trailing 12-month distributions as a % of price. Accumulating funds reinvest instead (Reinvested).')+
+    row('Liquidity',f=>cell(liqLabel(f)),'How easily traded — average daily value traded. The UCITS core trades on the LSE (High).')+
+    row('1Y price return',f=>cell(trailCell(f.trail_1y)),'Backward-looking price return, dividends extra. Last year’s winner is rarely next year’s.')+
     row('3Y p.a.',f=>cell(trailCell(f.trail_3y)))+
     row('5Y p.a.',f=>cell(trailCell(f.trail_5y)))+
     row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r);font-weight:700">Exposed</span>':'<span style="color:var(--g);font-weight:700">Safe</span>'))+
@@ -1150,7 +1152,7 @@ function scoreCell(f){
 function liqLabel(f){
   const t=f.liquidity_tier;
   const m={high:'High',medium:'Medium',low:'Low',thin:'Thin',unknown:'—'};
-  return (m[t]||'—')+(f.val_m!=null?' <span class="seg-lab">('+f.val_m.toFixed(1)+'m)</span>':'');
+  return (m[t]||'—')+(f.val_m!=null?' <span class="seg-lab">('+(f.val_m<0.05?'&lt;0.1':f.val_m.toFixed(1))+'m)</span>':'');   // "<0.1m", never a misleading "0.0m"
 }
 function yieldCell(f){
   if(f.asset_class==='gold') return '<span class="dim">—</span>';            // no dividend
