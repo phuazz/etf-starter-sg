@@ -287,6 +287,9 @@ td.r{text-align:right;font-family:var(--mono)}
 .cmp-tbl td.r{font-family:var(--mono)}
 .cmp-tbl td.best{background:var(--g-bg)}
 .cmp-nm{font-size:10.5px;color:var(--t3);font-weight:400;max-width:150px;font-family:var(--sans)}
+.cmp-sugg{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 2px 6px;font-size:12px;color:var(--t3)}
+.cmp-chip{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--b);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:14px;padding:3px 11px;cursor:pointer;transition:border-color .12s}
+.cmp-chip:hover{border-color:var(--b)}
 .cmp-tbl .tk-link{cursor:pointer}
 .tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
@@ -1056,8 +1059,20 @@ function openCmp(){
     row('5Y p.a.',f=>cell(trailCell(f.trail_5y)))+
     row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r);font-weight:700">Exposed</span>':'<span style="color:var(--g);font-weight:700">Safe</span>'))+
     '</tbody></table>';
-  document.getElementById('cmpBody').innerHTML=h;
+  // quiet, optional "similar funds" strip: same-class alternatives to the selected funds, one tap to add
+  let sugg='';
+  if(CMP.size<4){
+    const seen=new Map();
+    fs.forEach(f=>closestAlternatives(f).forEach(a=>{ if(!CMP.has(a.ticker)&&!seen.has(a.ticker)) seen.set(a.ticker,a); }));
+    const cand=[...seen.values()].sort((a,b)=>(b.starter_score??-1)-(a.starter_score??-1)).slice(0,4);
+    if(cand.length) sugg='<div class="cmp-sugg">Similar funds &mdash; tap to add:'+cand.map(a=>'<button class="cmp-chip" onclick="addCmp(\''+a.ticker+'\')" title="'+a.name.replace(/"/g,'&quot;')+' — Efficiency Score '+(a.starter_score??'n/a')+'">+ '+a.ticker+'</button>').join('')+'</div>';
+  }
+  document.getElementById('cmpBody').innerHTML=h+sugg;
   document.getElementById('cmpModal').style.display='flex';
+}
+function addCmp(tk){
+  if(CMP.size>=4||CMP.has(tk)) return;
+  CMP.add(tk); updateCmpUI(); openCmp();
 }
 function closeCmp(){const m=document.getElementById('cmpModal');if(m)m.style.display='none';}
 // Deep-link from anywhere (goal plan, alternatives table) into a fund's full snapshot in the Find tab.
