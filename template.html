@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ETF Starter · Singapore</title>
+<meta name="description" content="Free educational ETF guide for Singapore beginners — every route shown, every cost, and the 40% US estate-tax trap most investors have never heard of. Chosen on cost, domicile and forward-looking return, not last year's winner.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://phuazz.github.io/etf-starter-sg/">
+<meta property="og:title" content="Same 500 companies. Two very different goodbyes.">
+<meta property="og:description" content="Die holding S$300,000 of the SGX-listed S&P 500 fund and US estate tax claims ~S$66,000. The same index via Ireland: S$0. Free educational guide for Singapore beginners — every number sourced.">
+<meta property="og:image" content="https://phuazz.github.io/etf-starter-sg/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -134,6 +143,8 @@ td.r{text-align:right;font-family:var(--mono)}
 .snap-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 12px;max-width:920px}
 .st-tk{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--t1)}
 .st-nm{font-size:13.5px;color:var(--t2)}
+.cp-btn{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--b);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:12px;padding:3px 10px;cursor:pointer}
+.cp-btn:hover{border-color:var(--b)}
 .snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:14px 0 10px;flex-wrap:wrap}
 .vol{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
 .vol-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
@@ -299,6 +310,19 @@ td.r{text-align:right;font-family:var(--mono)}
 .cmp-chip:hover{border-color:var(--b)}
 .cmp-tbl .tk-link{cursor:pointer}
 .tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
+/* hook: two receipts */
+.hookA{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px 18px;margin:4px 0 20px;max-width:760px;box-shadow:var(--shadow-sm)}
+.ha-head{font-family:var(--serif);font-size:21px;margin-bottom:12px}
+.ha-receipts{display:flex;gap:12px;margin-bottom:10px}
+.ha-r{flex:1;border:1px dashed var(--bd2);border-radius:var(--radius);padding:10px 12px;background:var(--bg3);text-align:center}
+.ha-tk{font-family:var(--mono);font-weight:700;font-size:14px}
+.ha-tk span{font-family:var(--sans);font-weight:600;font-size:10.5px;color:var(--t3);margin-left:5px}
+.ha-amt{font-family:var(--mono);font-weight:700;font-size:22px;margin-top:3px}
+.ha-amt.bad{color:var(--r)} .ha-amt.ok{color:var(--g)}
+.ha-sub{font-size:11px;color:var(--t3)}
+.ha-note{font-size:12.5px;color:var(--t2);line-height:1.55}
+.ha-note a{color:var(--b);cursor:pointer;font-weight:700}
+.ha-fine{font-size:10.5px;color:var(--t4)}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .goal{text-align:left;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;font-family:var(--sans);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,box-shadow .15s}
@@ -455,6 +479,14 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   <div class="panel active" id="p-start">
     <h2 class="sec">Let&rsquo;s find you a sensible starting point</h2>
     <p class="lead">You do not need to be an expert to start well. Tell us what you are investing for, and we will show an <em>illustrative</em> low-cost, tax-smart starter mix &mdash; then you can explore and adjust it yourself. This is an example for learning, <strong>not personalised advice</strong>.</p>
+    <div class="hookA">
+      <div class="ha-head">Same 500 companies. Two very different goodbyes.</div>
+      <div class="ha-receipts">
+        <div class="ha-r"><div class="ha-tk">S27 <span>US-domiciled</span></div><div class="ha-amt bad">~S$66,000</div><div class="ha-sub">to the US taxman</div></div>
+        <div class="ha-r"><div class="ha-tk">CSPX <span>Ireland</span></div><div class="ha-amt ok">S$0</div><div class="ha-sub">to the US taxman</div></div>
+      </div>
+      <div class="ha-note">On a S$300,000 holding at death — the same S&amp;P 500, different fund domicile. A rule most Singapore investors have never heard of. <a onclick="switchTab('learn')">See why, and check your own holdings &rarr;</a><br><span class="ha-fine">Illustration: 2026 US schedule, S$1&thinsp;&asymp;&thinsp;US$0.74. Educational, not tax advice.</span></div>
+    </div>
     <div class="goalq">What are you investing for?</div>
     <div class="goals" id="goals">
       <button class="goal" data-g="grow"><b><span class="pt-dot"></span>Grow my money</b><span>Long horizon, comfortable with ups and downs.</span></button>
@@ -772,7 +804,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 </div>
 <div id="cmpModal" style="display:none">
   <div class="cmp-card">
-    <div class="cmp-head"><b>Side-by-side comparison</b><button id="cmpClose" aria-label="Close">✕</button></div>
+    <div class="cmp-head"><b>Side-by-side comparison</b><span style="flex:1"></span><button class="cp-btn" onclick="copyLink('cmp='+[...CMP].join(','),this)">Copy link</button><button id="cmpClose" aria-label="Close">✕</button></div>
     <div class="cmp-scroll" id="cmpBody"></div>
     <div class="cmp-foot">Same figures and caveats as the main table — efficiency for a long-term hold, not a buy call. Estimates, not advice.</div>
   </div>
@@ -1120,7 +1152,7 @@ function priceAsOf(){
 }
 function renderSnapshot(box, tk){
   const f=FUNDS.find(x=>x.ticker===tk);
-  const title=f?'<div class="snap-title"><span class="st-tk">'+f.ticker+'</span><span class="st-nm">'+f.name+'</span>'+volBadge(f)+'</div>':'';
+  const title=f?'<div class="snap-title"><span class="st-tk">'+f.ticker+'</span><span class="st-nm">'+f.name+'</span>'+volBadge(f)+'<button class="cp-btn" onclick="copyLink(\'fund='+tk+'\',this)">Copy link</button></div>':'';
   box.innerHTML=title+'<div class="tvchart"></div>';
   renderPriceChart(box.querySelector('.tvchart'), tk);
 }
@@ -1718,6 +1750,20 @@ async function init(){
   document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
   document.getElementById('eAmt').addEventListener('input',()=>{reformatAmt('eAmt');renderEstateCalc();});
   initTipPop();
+  applyHash();
+}
+// Deep links: a shared URL lands the recipient on the exact view — #fund=CSPX, #cmp=ES3,G3B, #tab=learn
+function applyHash(){
+  const h=decodeURIComponent(location.hash.slice(1)); if(!h) return;
+  const m=h.match(/^(fund|cmp|tab)=(.+)$/); if(!m) return;
+  if(m[1]==='tab'){switchTab(m[2]);return;}
+  if(m[1]==='fund'){openFund(m[2].toUpperCase());return;}
+  const tks=m[2].toUpperCase().split(',').slice(0,4).filter(t=>FUNDS.some(f=>f.ticker===t));
+  if(tks.length){switchTab('find');CMP=new Set(tks);updateCmpUI();openCmp();}
+}
+function copyLink(hash,btn){
+  const u=location.origin+location.pathname+'#'+hash;
+  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{const t=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>{btn.textContent=t;},1300);}).catch(()=>{prompt('Copy this link:',u);});
 }
 // Tap-to-open tooltips: the educational title="" attributes are hover-only and therefore invisible on
 // touch screens. Tapping any non-interactive element that carries one opens a styled popover instead.
