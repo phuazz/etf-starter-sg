@@ -37,6 +37,10 @@ if(location.hostname==='phuazz.github.io'){
   --p:#7c3aed; --p-bg:rgba(124,58,237,0.06);
   --c:#0891b2; --c-bg:rgba(8,145,178,0.06);
   --pk:#be185d; --pk-bg:rgba(190,24,93,0.06);
+  /* -text variants per C:\dev\design.md — for TEXT; the values above are for
+     fills, borders and large type. At 11px the base colours fail WCAG AA. */
+  --g-text:#146c43; --r-text:#a93226; --b-text:#1d4ed8; --a-text:#92400e;
+  --p-text:#7c3aed; --c-text:#0e7490; --pk-text:#be185d; --t3-text:#66665e;
   --serif:'Instrument Serif',Georgia,serif;
   --sans:'DM Sans',-apple-system,sans-serif;
   --mono:'JetBrains Mono','SF Mono','Menlo',monospace;
@@ -49,7 +53,7 @@ if(location.hostname==='phuazz.github.io'){
 body{background:var(--bg);color:var(--t1);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
 .shell{max-width:1520px;margin:0 auto;padding:20px 32px 60px}
 .mono{font-family:var(--mono)}
-a{color:var(--b);text-decoration:none}
+a{color:var(--b-text);text-decoration:none}
 
 /* masthead */
 .masthead{padding:28px 0 20px;border-bottom:2px solid var(--t1);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
@@ -58,17 +62,17 @@ a{color:var(--b);text-decoration:none}
 .masthead .sub{color:var(--t2);font-size:13.5px;margin-top:8px;max-width:640px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .pill{font-size:11px;font-weight:600;letter-spacing:0.3px;padding:5px 10px;border-radius:20px;border:1px solid}
-.pill-advice{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
-.pill-date{background:var(--bg3);color:var(--t3);border-color:var(--bd)}
-.pill-stale{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.35);cursor:help}
+.pill-advice{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.25)}
+.pill-date{background:var(--bg3);color:var(--t3-text);border-color:var(--bd)}
+.pill-stale{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.35);cursor:help}
 
 /* notice */
 .notice{margin-top:16px;background:var(--a-bg);border:1px solid rgba(180,83,9,0.22);border-radius:var(--radius);padding:11px 14px;font-size:12.5px;color:var(--t2)}
-.notice strong{color:var(--a)}
+.notice strong{color:var(--a-text)}
 
 /* tabs */
 .tabs{display:flex;gap:4px;margin:22px 0 20px;border-bottom:1px solid var(--bd);overflow-x:auto;overflow-y:hidden}
-.tab{position:relative;background:none;border:none;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--t3);padding:12px 16px;min-height:44px;cursor:pointer;white-space:nowrap}
+.tab{position:relative;background:none;border:none;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--t3-text);padding:12px 16px;min-height:44px;cursor:pointer;white-space:nowrap}
 .tab:hover{color:var(--t1)}
 .tab.active{color:var(--t1);font-weight:600}
 .tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--t1)}
@@ -79,15 +83,15 @@ a{color:var(--b);text-decoration:none}
 /* kpi strip */
 .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px}
 .kpi{background:var(--bg2);padding:16px 18px}
-.kpi-lab{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;color:var(--t3)}
+.kpi-lab{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;color:var(--t3-text)}
 .kpi-val{font-size:24px;font-weight:700;letter-spacing:-0.5px;font-family:var(--mono);margin-top:4px}
-.kpi-val.pos{color:var(--g)} .kpi-val.neg{color:var(--r)}
-.kpi-sub{font-size:11.5px;color:var(--t3);margin-top:2px}
+.kpi-val.pos{color:var(--g-text)} .kpi-val.neg{color:var(--r-text)}
+.kpi-sub{font-size:11.5px;color:var(--t3-text);margin-top:2px}
 
 /* controls */
 .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
 .ctl{display:flex;flex-direction:column;gap:5px}
-.ctl label{font-size:11px;text-transform:uppercase;letter-spacing:0.7px;font-weight:600;color:var(--t3)}
+.ctl label{font-size:11px;text-transform:uppercase;letter-spacing:0.7px;font-weight:600;color:var(--t3-text)}
 .ctl select,.ctl input{font-family:var(--sans);font-size:13px;color:var(--t1);background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--radius);padding:8px 10px;min-width:150px}
 .ctl input:focus,.ctl select:focus{outline:none;border-color:var(--b)}
 .seg{display:inline-flex;border:1px solid var(--bd2);border-radius:var(--radius);overflow:hidden}
@@ -102,11 +106,11 @@ a{color:var(--b);text-decoration:none}
 .cc-tk{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:0.3px}
 .cc-role{font-weight:600;font-size:12.5px;color:var(--t1);margin-top:9px}
 .cc-what{font-size:12px;color:var(--t2);margin-top:5px;line-height:1.45;min-height:34px}
-.cc-link{display:block;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd);font-size:11.5px;font-weight:600;color:var(--b);text-decoration:none;line-height:1.35}
+.cc-link{display:block;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd);font-size:11.5px;font-weight:600;color:var(--b-text);text-decoration:none;line-height:1.35}
 .cc-link:hover{text-decoration:underline}
 .cc-stats{display:flex;gap:18px;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd)}
 .cc-sv{font-family:var(--mono);font-weight:700;font-size:15px}
-.cc-sl{font-size:9.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3);font-weight:600;margin-top:1px}
+.cc-sl{font-size:9.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3-text);font-weight:600;margin-top:1px}
 
 /* table */
 .tw{overflow-x:auto;border:1px solid var(--bd);border-radius:var(--radius-lg)}
@@ -116,7 +120,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}
 thead th{position:sticky;top:0;background:var(--bg3);text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.6px;font-weight:600;color:var(--t2);padding:11px 12px;border-bottom:2px solid var(--bd2);cursor:pointer;white-space:nowrap;user-select:none}
 thead th.r{text-align:right}
 thead th.sortable:hover{color:var(--t1)}
-thead th .arw{color:var(--t4);font-size:9px;margin-left:3px}
+thead th .arw{color:var(--t3-text);font-size:9px;margin-left:3px}
 tbody td{padding:11px 12px;border-bottom:1px solid var(--bd);vertical-align:middle}
 tbody tr:hover{background:var(--bg-hover)}
 tbody tr:last-child td{border-bottom:none}
@@ -124,19 +128,20 @@ td.r{text-align:right;font-family:var(--mono)}
 .tk{font-family:var(--mono);font-weight:700;font-size:13px}
 .nm{font-size:12px;color:var(--t2);margin-top:2px;max-width:280px}
 .tk-link{color:var(--t1);text-decoration:none}
-.tk-link:hover{color:var(--b);text-decoration:underline}
-.tk-link .ext{color:var(--t4);font-size:10px;font-family:var(--sans)}
-.chart-btn{margin-top:7px;background:none;border:none;padding:0;font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--b);cursor:pointer}
+.tk-link:hover{color:var(--b-text);text-decoration:underline}
+.tk-link .ext{color:var(--t3-text);font-size:10px;font-family:var(--sans)}
+.chart-btn{margin-top:7px;background:none;border:none;padding:0;font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--b-text);cursor:pointer}
 .chart-btn:hover{text-decoration:underline}
 .chart-row td{padding:2px 12px 16px;background:var(--bg)}
 .chart-row:hover td{background:var(--bg)}
-.chart-cap{font-size:11.5px;color:var(--t3);margin:6px 0 9px}
+.chart-cap{font-size:11.5px;color:var(--t3-text);margin:6px 0 9px}
 .tvchart{width:100%}
-.dim{color:var(--t3);font-size:11.5px}
+.dim{color:var(--t3-text);font-size:11.5px}
 .scoreinfo{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 15px;font-size:12.5px;color:var(--t2);margin-bottom:16px;line-height:1.6;max-width:1040px}
 .scoreinfo b{color:var(--t1)}
-.chart-loading{padding:34px;text-align:center;color:var(--t3);font-size:13px}
+.chart-loading{padding:34px;text-align:center;color:var(--t3-text);font-size:13px}
 .chart-legend{font-size:11px;color:var(--t2);margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
+.chart-legend i.lg-sw{display:inline-block;width:11px;height:3px;border-radius:1px;vertical-align:middle;margin-right:5px}
 .tvchart{max-width:920px}
 .tvchart svg{border:1px solid var(--bd);border-radius:var(--radius);background:var(--bg2)}
 .ph{max-width:920px}
@@ -147,60 +152,60 @@ td.r{text-align:right;font-family:var(--mono)}
 .perf{display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin:14px 0 4px;max-width:920px}
 .perf-i{flex:1;padding:9px 8px;border-left:1px solid var(--bd);text-align:center}
 .perf-i:first-child{border-left:none}
-.perf-l{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
+.perf-l{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:600}
 .perf-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px;color:var(--t1)}
-.perf-v.up{color:var(--g)} .perf-v.down{color:var(--r)}
+.perf-v.up{color:var(--g-text)} .perf-v.down{color:var(--r-text)}
 /* snapshot: title row (which ETF am I looking at) + what-to-expect */
 .snap-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 12px;max-width:920px}
 .st-tk{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--t1)}
 .st-nm{font-size:13.5px;color:var(--t2)}
-.cp-btn{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--b);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:12px;padding:3px 10px;cursor:pointer}
+.cp-btn{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--b-text);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:12px;padding:3px 10px;cursor:pointer}
 .cp-btn:hover{border-color:var(--b)}
 .snap-head{display:flex;align-items:flex-start;gap:12px;max-width:920px;margin:14px 0 10px;flex-wrap:wrap}
 .vol{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.2px;padding:3px 9px;border-radius:12px;border:1px solid;white-space:nowrap;cursor:help;flex-shrink:0}
-.vol-r1{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
-.vol-r2{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
-.vol-r3{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
-.vol-r4{background:var(--r-bg);color:var(--r);border-color:var(--r-bg2)}
+.vol-r1{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
+.vol-r2{background:var(--b-bg);color:var(--b-text);border-color:var(--b-bg2)}
+.vol-r3{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.25)}
+.vol-r4{background:var(--r-bg);color:var(--r-text);border-color:var(--r-bg2)}
 .snap-expect{font-size:12.5px;color:var(--t2);line-height:1.5;flex:1;min-width:220px}
 /* resilience: worst drawdown / best & worst 12m + down-year bars */
 .resil{max-width:920px;margin-top:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
-.resil-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:9px}
+.resil-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:700;margin-bottom:9px}
 .resil-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .resil-i{flex:1;min-width:120px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:8px 10px}
-.resil-l{font-size:10.5px;color:var(--t3);font-weight:600}
+.resil-l{font-size:10.5px;color:var(--t3-text);font-weight:600}
 .resil-v{font-family:var(--mono);font-weight:700;font-size:16px;margin-top:2px}
-.resil-v.down{color:var(--r)} .resil-v.up{color:var(--g)}
-.resil-sub{font-size:10px;color:var(--t4);margin-top:1px}
+.resil-v.down{color:var(--r-text)} .resil-v.up{color:var(--g-text)}
+.resil-sub{font-size:10px;color:var(--t3-text);margin-top:1px}
 .resil svg{margin-top:2px}
 /* closest-alternatives compare (Lazada-style "similar items") */
 .altc{max-width:920px;margin-top:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
-.alt-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:9px}
+.alt-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:700;margin-bottom:9px}
 .alt-callout{font-size:12.5px;background:var(--g-bg);border:1px solid var(--g-bg2);color:var(--t1);border-radius:var(--radius);padding:8px 11px;margin-bottom:10px;line-height:1.5}
 .alt-scroll{overflow-x:auto}
 .alt-tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:470px}
-.alt-tbl th{text-align:left;color:var(--t3);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.3px;padding:5px 8px;border-bottom:1px solid var(--bd)}
+.alt-tbl th{text-align:left;color:var(--t3-text);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.3px;padding:5px 8px;border-bottom:1px solid var(--bd)}
 .alt-tbl th.r,.alt-tbl td.r{text-align:right}
 .alt-tbl td{padding:6px 8px;border-bottom:1px solid var(--bd);font-family:var(--mono)}
 .alt-tbl td:first-child,.alt-tbl td:nth-child(2){font-family:var(--sans)}
 .alt-tbl tr:last-child td{border-bottom:none}
 .alt-selfrow{background:var(--bg3)}
-.alt-self{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.3px;margin-left:6px}
-.alt-best{font-size:9px;font-weight:700;color:var(--g);background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:8px;padding:0 5px;margin-left:6px;text-transform:uppercase;letter-spacing:0.3px}
-.alt-trap{color:var(--r);cursor:help}
+.alt-self{font-size:9px;color:var(--t3-text);text-transform:uppercase;letter-spacing:0.3px;margin-left:6px}
+.alt-best{font-size:9px;font-weight:700;color:var(--g-text);background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:8px;padding:0 5px;margin-left:6px;text-transform:uppercase;letter-spacing:0.3px}
+.alt-trap{color:var(--r-text);cursor:help}
 .alt-tbl .tk-link{cursor:pointer}
-.alt-note{font-size:10.5px;color:var(--t4);margin-top:8px;line-height:1.5}
+.alt-note{font-size:10.5px;color:var(--t3-text);margin-top:8px;line-height:1.5}
 /* goal-plan per-fund chip + quick-look */
 .pm-look{cursor:pointer}
-.pm-view{font-size:10.5px;color:var(--b);font-weight:600}
+.pm-view{font-size:10.5px;color:var(--b-text);font-weight:600}
 #planDetail:not(:empty){margin-top:14px;border-top:1px solid var(--bd);padding-top:14px}
 .buy{max-width:920px;margin-top:12px;background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius);padding:12px 14px}
-.buy-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--b);font-weight:700}
+.buy-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--b-text);font-weight:700}
 .buy-pos{font-size:12px;font-style:italic;color:var(--t2);margin-top:3px}
 .buy-body{font-size:13px;color:var(--t2);line-height:1.55;margin-top:8px}
 .buy-body strong{color:var(--t1)}
-.buy-verify{font-weight:600;color:var(--a)}
-.buy-note{font-size:11px;color:var(--t3);margin-top:8px;line-height:1.45}
+.buy-verify{font-weight:600;color:var(--a-text)}
+.buy-note{font-size:11px;color:var(--t3-text);margin-top:8px;line-height:1.45}
 @media(max-width:640px){
   #fundTw{max-height:none;overflow:visible;border:none;border-radius:0}
   #fundTbl thead{display:none}
@@ -208,7 +213,7 @@ td.r{text-align:right;font-family:var(--mono)}
   #fundTbl tr{border:1px solid var(--bd);border-radius:var(--radius-lg);margin-bottom:12px;padding:12px 14px;background:var(--bg2)}
   #fundTbl tr:hover td{background:var(--bg2)}
   #fundTbl td{padding:6px 0;border:none !important;text-align:left !important}
-  #fundTbl td[data-label]::before{content:attr(data-label);font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
+  #fundTbl td[data-label]::before{content:attr(data-label);font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:600}
   #fundTbl td.r{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
   #fundTbl td.r[data-label]::before{flex-shrink:0}
   #fundTbl td:not(.r)[data-label]::before{display:block;margin-bottom:3px}
@@ -219,33 +224,33 @@ td.r{text-align:right;font-family:var(--mono)}
   .chart-row td{display:block !important;padding:0 !important;border:none !important}
   .chart-row td::before{content:none !important}
 }
-.seg-lab{font-size:11px;color:var(--t3)}
-.tr{font-family:var(--mono);font-weight:600} .tr.up{color:var(--g)} .tr.down{color:var(--r)} .tr-na{color:var(--t4)}
+.seg-lab{font-size:11px;color:var(--t3-text)}
+.tr{font-family:var(--mono);font-weight:600} .tr.up{color:var(--g-text)} .tr.down{color:var(--r-text)} .tr-na{color:var(--t3-text)}
 .trail-banner{display:flex;align-items:center;gap:12px;background:var(--a-bg);border:1px solid rgba(180,83,9,0.28);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px}
 .tb-msg{flex:1;font-size:12.5px;color:var(--t2);line-height:1.45}
 .tb-reset{flex-shrink:0;background:var(--t1);color:#fff;border:none;border-radius:var(--radius);padding:7px 12px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer}
 .tb-reset:hover{background:#000}
-.tb-x{flex-shrink:0;background:none;border:none;color:var(--t3);font-size:20px;line-height:1;cursor:pointer;padding:0 4px}
+.tb-x{flex-shrink:0;background:none;border:none;color:var(--t3-text);font-size:20px;line-height:1;cursor:pointer;padding:0 4px}
 .tb-x:hover{color:var(--t1)}
 @media(max-width:640px){.trail-banner{flex-wrap:wrap}.tb-msg{flex-basis:100%}}
 
 /* badges */
 .bdg{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:0.2px;padding:2px 7px;border-radius:12px;border:1px solid;white-space:nowrap}
 .bdg-sg{background:var(--bg3);color:var(--t2);border-color:var(--bd2)}
-.bdg-ie{background:var(--b-bg);color:var(--b);border-color:var(--b-bg2)}
-.bdg-lu,.bdg-fr{background:var(--c-bg);color:var(--c);border-color:rgba(8,145,178,0.2)}
-.bdg-us{background:var(--r-bg);color:var(--r);border-color:var(--r-bg2)}
-.bdg-verify{background:var(--a-bg);color:var(--a);border-color:rgba(180,83,9,0.25)}
-.bdg-core{background:var(--g-bg);color:var(--g);border-color:var(--g-bg2)}
+.bdg-ie{background:var(--b-bg);color:var(--b-text);border-color:var(--b-bg2)}
+.bdg-lu,.bdg-fr{background:var(--c-bg);color:var(--c-text);border-color:rgba(8,145,178,0.2)}
+.bdg-us{background:var(--r-bg);color:var(--r-text);border-color:var(--r-bg2)}
+.bdg-verify{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.25)}
+.bdg-core{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
 .bdg-estate{background:var(--r);color:#fff;border-color:var(--r)}
-.est-note{font-size:10.5px;color:var(--r);margin-top:3px;font-weight:500}
+.est-note{font-size:10.5px;color:var(--r-text);margin-top:3px;font-weight:500}
 .tip{cursor:help;border-bottom:1px dotted var(--t4)}
 #tipPop{display:none;position:absolute;z-index:200;background:var(--t1);color:#fff;font-size:12px;line-height:1.55;padding:9px 12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);max-width:300px;white-space:pre-line}
 .scorewrap{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end;cursor:help}
 .scorebar{width:36px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .scorefill{display:block;height:100%;border-radius:3px}
 .scoreval{font-family:var(--mono);font-weight:700;font-size:13px;width:22px;text-align:right}
-.est-tag{font-size:9px;font-weight:600;color:var(--a);text-transform:uppercase;letter-spacing:0.3px;vertical-align:middle}
+.est-tag{font-size:9px;font-weight:600;color:var(--a-text);text-transform:uppercase;letter-spacing:0.3px;vertical-align:middle}
 .hook{margin-top:16px}
 .hook-lead{font-size:14.5px;color:var(--t2);max-width:740px;line-height:1.55}
 .hook-lead strong{color:var(--t1)}
@@ -255,23 +260,23 @@ td.r{text-align:right;font-family:var(--mono)}
 .step-n{width:26px;height:26px;border-radius:50%;background:var(--t1);color:#fff;font-weight:700;font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
 .step-t{font-weight:700;font-size:14px;margin-bottom:3px}
 .step-d{font-size:12.5px;color:var(--t2);line-height:1.45}
-.step-go{font-size:12px;font-weight:600;color:var(--b);margin-top:9px}
-.hook-note{font-size:11.5px;color:var(--t3);margin-top:6px}
+.step-go{font-size:12px;font-weight:600;color:var(--b-text);margin-top:9px}
+.hook-note{font-size:11.5px;color:var(--t3-text);margin-top:6px}
 /* first-purchase guide */
 .fp{margin-top:16px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);max-width:1040px}
 .fp summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:14px;list-style:none;display:flex;align-items:center;gap:9px}
-.fp summary::before{content:'▸';color:var(--b);transition:transform .15s}
+.fp summary::before{content:'▸';color:var(--b-text);transition:transform .15s}
 .fp[open] summary::before{transform:rotate(90deg)}
 .fp summary::-webkit-details-marker{display:none}
 .fp-body{padding:0 18px 16px}
 .fp-steps{margin:0;padding-left:20px}
 .fp-steps li{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:11px}
 .fp-steps li b{color:var(--t1)}
-.fp-flag{font-size:11.5px;color:var(--a);font-weight:600}
-.fp-note{font-size:11.5px;color:var(--t3);border-top:1px solid var(--bd);padding-top:10px;margin-top:4px}
+.fp-flag{font-size:11.5px;color:var(--a-text);font-weight:600}
+.fp-note{font-size:11.5px;color:var(--t3-text);border-top:1px solid var(--bd);padding-top:10px;margin-top:4px}
 /* compounding illustration */
 .proj{margin-top:16px;border-top:1px solid var(--bd);padding-top:14px}
-.proj-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700;margin-bottom:10px}
+.proj-t{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:700;margin-bottom:10px}
 .proj-ctls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .proj-ctls .ctl input{min-width:110px;width:130px}
 .proj-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
@@ -284,14 +289,14 @@ td.r{text-align:right;font-family:var(--mono)}
 .proj-tile.sel{border-color:var(--b);background:var(--b-bg)}
 .pt-dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--t4);margin-right:6px;vertical-align:-1px;background:var(--bg2)}
 .proj-tile.sel .pt-dot,.goal.on .pt-dot{border-color:var(--b);background:var(--b);box-shadow:inset 0 0 0 2.5px var(--b-bg)}
-.proj-hint{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;color:var(--t3);margin:14px 0 8px}
-.pt-l{font-size:10.5px;color:var(--t3);font-weight:600}
+.proj-hint{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;color:var(--t3-text);margin:14px 0 8px}
+.pt-l{font-size:10.5px;color:var(--t3-text);font-weight:600}
 .pt-v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
-.pt-s{font-size:10px;color:var(--t4);margin-top:1px}
-.proj-note{font-size:11px;color:var(--t3);margin-top:8px;line-height:1.55}
+.pt-s{font-size:10px;color:var(--t3-text);margin-top:1px}
+.proj-note{font-size:11px;color:var(--t3-text);margin-top:8px;line-height:1.55}
 .proj-fall{font-size:12px;color:var(--t2);margin-top:10px;line-height:1.5;background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:8px 11px}
 /* compare tray + modal */
-.cmp-btn.on{color:var(--g)}
+.cmp-btn.on{color:var(--g-text)}
 #cmpTray{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:150;display:flex;align-items:center;gap:12px;background:var(--t1);color:#fff;border-radius:24px;padding:9px 16px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:12.5px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,720px)}
 #cmpSugg{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 #cmpSugg:empty{display:none}
@@ -303,21 +308,21 @@ td.r{text-align:right;font-family:var(--mono)}
 #cmpModal{position:fixed;inset:0;z-index:180;background:rgba(20,20,16,0.45);display:flex;align-items:center;justify-content:center;padding:18px}
 .cmp-card{background:var(--bg2);border-radius:var(--radius-lg);max-width:960px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.35)}
 .cmp-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--bd);font-size:15px}
-.cmp-head button{background:none;border:none;font-size:16px;color:var(--t3);cursor:pointer;padding:4px 8px}
+.cmp-head button{background:none;border:none;font-size:16px;color:var(--t3-text);cursor:pointer;padding:4px 8px}
 .cmp-scroll{overflow:auto;padding:6px 18px}
-.cmp-foot{padding:10px 18px;border-top:1px solid var(--bd);font-size:11px;color:var(--t3)}
+.cmp-foot{padding:10px 18px;border-top:1px solid var(--bd);font-size:11px;color:var(--t3-text)}
 .cmp-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:12.5px}
 .cmp-tbl th,.cmp-tbl td{padding:7px 10px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}
 .cmp-tbl thead th{position:sticky;top:0;background:var(--bg2)}
-.cmp-tbl tbody th{font-weight:600;color:var(--t3);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
+.cmp-tbl tbody th{font-weight:600;color:var(--t3-text);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
 .cmp-tbl th.r,.cmp-tbl td.r{text-align:right}
 .cmp-tbl td.r{font-family:var(--mono)}
 .cmp-tbl td.best{background:var(--g-bg)}
-.cmp-nm{font-size:10.5px;color:var(--t3);font-weight:400;max-width:150px;font-family:var(--sans)}
-.cmp-ext{display:inline-block;font-size:10.5px;font-weight:600;color:var(--b);text-decoration:none;margin-top:3px;font-family:var(--sans)}
+.cmp-nm{font-size:10.5px;color:var(--t3-text);font-weight:400;max-width:150px;font-family:var(--sans)}
+.cmp-ext{display:inline-block;font-size:10.5px;font-weight:600;color:var(--b-text);text-decoration:none;margin-top:3px;font-family:var(--sans)}
 .cmp-ext:hover{text-decoration:underline}
-.cmp-sugg{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 2px 6px;font-size:12px;color:var(--t3)}
-.cmp-chip{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--b);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:14px;padding:3px 11px;cursor:pointer;transition:border-color .12s}
+.cmp-sugg{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 2px 6px;font-size:12px;color:var(--t3-text)}
+.cmp-chip{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--b-text);background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:14px;padding:3px 11px;cursor:pointer;transition:border-color .12s}
 .cmp-chip:hover{border-color:var(--b)}
 .cmp-tbl .tk-link{cursor:pointer}
 .tw.simple th.col-detail,.tw.simple td.col-detail{display:none !important}
@@ -327,13 +332,13 @@ td.r{text-align:right;font-family:var(--mono)}
 .ha-receipts{display:flex;gap:12px;margin-bottom:10px}
 .ha-r{flex:1;border:1px dashed var(--bd2);border-radius:var(--radius);padding:10px 12px;background:var(--bg3);text-align:center}
 .ha-tk{font-family:var(--mono);font-weight:700;font-size:14px}
-.ha-tk span{font-family:var(--sans);font-weight:600;font-size:10.5px;color:var(--t3);margin-left:5px}
+.ha-tk span{font-family:var(--sans);font-weight:600;font-size:10.5px;color:var(--t3-text);margin-left:5px}
 .ha-amt{font-family:var(--mono);font-weight:700;font-size:22px;margin-top:3px}
-.ha-amt.bad{color:var(--r)} .ha-amt.ok{color:var(--g)}
-.ha-sub{font-size:11px;color:var(--t3)}
+.ha-amt.bad{color:var(--r-text)} .ha-amt.ok{color:var(--g-text)}
+.ha-sub{font-size:11px;color:var(--t3-text)}
 .ha-note{font-size:12.5px;color:var(--t2);line-height:1.55}
-.ha-note a{color:var(--b);cursor:pointer;font-weight:700}
-.ha-fine{font-size:10.5px;color:var(--t4)}
+.ha-note a{color:var(--b-text);cursor:pointer;font-weight:700}
+.ha-fine{font-size:10.5px;color:var(--t3-text)}
 .goalq{font-weight:700;font-size:15px;margin:20px 0 12px}
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .goal{text-align:left;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;font-family:var(--sans);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,box-shadow .15s}
@@ -354,15 +359,15 @@ td.r{text-align:right;font-family:var(--mono)}
 .pm-seg span.dk{color:#1f2937}
 .pm-caption{display:flex;gap:9px;flex-wrap:wrap;align-items:baseline;font-size:12.5px;color:var(--t2);margin-bottom:13px}
 .pm-caption b{font-family:var(--mono)}
-.pm-sep{color:var(--t4)}
+.pm-sep{color:var(--t3-text)}
 .pm-sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .pm-f{font-size:13px}
 .plan-stats{display:flex;gap:26px;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);margin-bottom:14px}
-.ps-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3);font-weight:600}
+.ps-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;color:var(--t3-text);font-weight:600}
 .ps-v{font-family:var(--mono);font-weight:700;font-size:18px;margin-top:2px}
 .plan-how{font-size:13px;color:var(--t2);line-height:1.55;margin-bottom:10px}
 .plan-how strong{color:var(--t1)}
-.plan-note{font-size:11.5px;color:var(--t3)}
+.plan-note{font-size:11.5px;color:var(--t3-text)}
 /* Wide screens: plan card goes two-column — mix/stats/how left, compounding illustration right.
    Prose stays at readable line lengths; the width is used by CONTENT, not stretched text. */
 @media(min-width:1100px){
@@ -398,31 +403,31 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .barrow .bv{font-family:var(--mono);font-size:12px;width:64px;text-align:right;flex-shrink:0}
 .cmp{width:100%;font-size:13px;border-collapse:collapse;margin-top:8px}
 .cmp td,.cmp th{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:left}
-.cmp th{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:600}
+.cmp th{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:600}
 .cmp td.r,.cmp th.r{text-align:right;font-family:var(--mono)}
-.win{color:var(--g);font-weight:700}
-.lose{color:var(--r);font-weight:600}
+.win{color:var(--g-text);font-weight:700}
+.lose{color:var(--r-text);font-weight:600}
 .calcgrid{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
 .bignum{font-family:var(--mono);font-size:30px;font-weight:700;letter-spacing:-1px}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);line-height:1.6;max-width:1040px}
-.stub{padding:50px 20px;text-align:center;color:var(--t3);font-size:14px;border:1px dashed var(--bd2);border-radius:var(--radius-lg);background:var(--bg2)}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3-text);line-height:1.6;max-width:1040px}
+.stub{padding:50px 20px;text-align:center;color:var(--t3-text);font-size:14px;border:1px dashed var(--bd2);border-radius:var(--radius-lg);background:var(--bg2)}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.shell{padding:16px 16px 50px}.masthead h1{font-size:28px}}
-.footlet{font-size:12px;color:var(--t3);margin-top:10px;line-height:1.5}
+.footlet{font-size:12px;color:var(--t3-text);margin-top:10px;line-height:1.5}
 .ec-grid{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 4px}
 .ec-cell{flex:1;min-width:150px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
-.ec-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3);font-weight:700}
+.ec-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--t3-text);font-weight:700}
 .ec-v{font-family:var(--mono);font-weight:700;font-size:26px;letter-spacing:-0.5px;margin-top:3px}
-.ec-v.ec-bad{color:var(--r)}
-.ec-s{font-size:11.5px;color:var(--t3);margin-top:2px}
+.ec-v.ec-bad{color:var(--r-text)}
+.ec-s{font-size:11.5px;color:var(--t3-text);margin-top:2px}
 .ec-alt{margin-top:12px;background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:var(--radius);padding:11px 14px;font-size:13px;color:var(--t2);line-height:1.5}
-.ec-alt strong{color:var(--g)}
+.ec-alt strong{color:var(--g-text)}
 .pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 .pc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
 .pc:hover{border-color:var(--bd-strong)}
 .pc.on{border-color:var(--t1);box-shadow:var(--shadow)}
 .pc .pc-n{font-weight:700;font-size:15px;margin-bottom:2px}
-.pc .pc-dd{font-size:11px;color:var(--t3);margin-bottom:8px}
+.pc .pc-dd{font-size:11px;color:var(--t3-text);margin-bottom:8px}
 .pc .pc-row{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);margin:3px 0}
 .pc .pc-row b{font-family:var(--mono);color:var(--t1)}
 .sliders{display:flex;flex-direction:column;gap:7px}
@@ -432,7 +437,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .sl .slv{font-family:var(--mono);font-size:12px;text-align:right;color:var(--t2)}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin-bottom:18px}
 .metric{background:var(--bg2);padding:12px 14px}
-.metric .m-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;font-weight:600;color:var(--t3)}
+.metric .m-l{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;font-weight:600;color:var(--t3-text)}
 .metric .m-v{font-size:20px;font-weight:700;font-family:var(--mono);letter-spacing:-0.5px;margin-top:3px}
 .impl{list-style:none;font-size:12.5px}
 .impl li{padding:8px 0;border-bottom:1px solid var(--bd)}
@@ -443,7 +448,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .estline .el-v{font-family:var(--mono);font-weight:700}
 .lst{list-style:none;font-size:13px}
 .lst li{padding:6px 0 6px 18px;position:relative;border-bottom:1px solid var(--bd);color:var(--t2)}
-.lst li:before{content:'•';position:absolute;left:2px;color:var(--t4)}
+.lst li:before{content:'•';position:absolute;left:2px;color:var(--t3-text)}
 .lst li:last-child{border-bottom:none}
 .fixes{display:flex;flex-direction:column;gap:10px}
 .fix{display:flex;gap:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow-sm)}
@@ -455,10 +460,10 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 .flow-q{font-weight:600;font-size:13.5px;text-align:center;margin-bottom:10px}
 .flow-outs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .flow-out{font-size:12px;padding:8px 10px;border-radius:var(--radius);border:1px solid;line-height:1.4}
-.flow-out.ok{background:var(--g-bg);border-color:var(--g-bg2);color:var(--g)}
-.flow-out.warn{background:var(--a-bg);border-color:rgba(180,83,9,0.25);color:var(--a);text-align:center;font-weight:600}
-.flow-out.danger{background:var(--r-bg);border-color:var(--r-bg2);color:var(--r)}
-.flow-arrow{text-align:center;color:var(--t4);font-size:16px;padding:6px 0}
+.flow-out.ok{background:var(--g-bg);border-color:var(--g-bg2);color:var(--g-text)}
+.flow-out.warn{background:var(--a-bg);border-color:rgba(180,83,9,0.25);color:var(--a-text);text-align:center;font-weight:600}
+.flow-out.danger{background:var(--r-bg);border-color:var(--r-bg2);color:var(--r-text)}
+.flow-arrow{text-align:center;color:var(--t3-text);font-size:16px;padding:6px 0}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.threecost{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}.pcards{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}</style>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
@@ -528,7 +533,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <ol class="fp-steps">
           <li><b>Add money on a schedule, not on a hunch.</b> Set a fixed amount every month and buy regardless of the headlines. This spreads your entry price over time and removes the impossible job of timing the market. Automate it if your broker allows.</li>
           <li><b>Rebalance about once a year.</b> Winners grow to dominate the mix and quietly raise your risk. Once a year, sell a little of what has run and top up what has lagged to return to your target weights &mdash; or simply steer new contributions toward the underweight funds, which avoids selling and its costs. A calendar reminder is enough; there is no need to watch markets.</li>
-          <li><b>Expect the falls &mdash; they are the price of the returns, not a malfunction.</b> A globally diversified portfolio can drop 30% or more in a bad year; it has happened repeatedly and will again. The investors who do well are the ones who keep buying through it. Selling in a fall converts a paper dip into a permanent loss. If a plausible fall would make you sell, you are holding too much equity &mdash; dial back to a calmer mix in the <a onclick="switchTab('build')" style="color:var(--b);cursor:pointer;font-weight:600">Build tab</a> <em>now</em>, while calm.</li>
+          <li><b>Expect the falls &mdash; they are the price of the returns, not a malfunction.</b> A globally diversified portfolio can drop 30% or more in a bad year; it has happened repeatedly and will again. The investors who do well are the ones who keep buying through it. Selling in a fall converts a paper dip into a permanent loss. If a plausible fall would make you sell, you are holding too much equity &mdash; dial back to a calmer mix in the <a onclick="switchTab('build')" style="color:var(--b-text);cursor:pointer;font-weight:600">Build tab</a> <em>now</em>, while calm.</li>
           <li><b>Leave it alone, and ignore the noise.</b> Checking daily and reacting to news is where returns go to die. Review once or twice a year against your plan &mdash; not against the latest hot fund. Costs, taxes and time in the market are the levers you control; next quarter&rsquo;s price is not.</li>
         </ol>
         <div class="fp-note">The behavioural half of buy-and-hold investing. General education, not financial advice.</div>
@@ -622,7 +627,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <div class="card">
         <h3>Worked example — same S&amp;P 500, two routes</h3>
         <table class="cmp" id="cmpTbl"></table>
-        <p style="font-size:12px;color:var(--t3);margin-top:12px">Net return = asset-class expected return − TER − estimated withholding drag. The Irish route wins on annual cost <em>and</em> removes the estate-tax tail. Estimates; educational.</p>
+        <p style="font-size:12px;color:var(--t3-text);margin-top:12px">Net return = asset-class expected return − TER − estimated withholding drag. The Irish route wins on annual cost <em>and</em> removes the estate-tax tail. Estimates; educational.</p>
       </div>
       <div class="card">
         <h3>What the drag costs you</h3>
@@ -670,18 +675,18 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
   <div class="panel" id="p-build">
     <h2 class="sec">Build a portfolio</h2>
     <div class="lead">Pick a risk profile, then nudge the mix. Everything recomputes live: expected return, volatility, income, and — crucially — the portfolio's US estate-tax exposure, which depends on <em>how</em> you implement it. A starting point for discussion, not advice.</div>
-    <div class="scoreinfo">Every figure here is <b>model output, not a promise</b>. The blended return uses the long-run asset-class estimates <a onclick="switchTab('forward')" style="color:var(--b);cursor:pointer;font-weight:600">explained on the Expected returns tab</a>; the portfolio volatility and the &ldquo;typical worst fall&rdquo; also depend on assumed <b>correlations</b> between asset classes — how much they tend to move together — which are themselves estimates from history and can rise sharply in a crisis, when diversification helps least. Treat the outputs as directional.</div>
+    <div class="scoreinfo">Every figure here is <b>model output, not a promise</b>. The blended return uses the long-run asset-class estimates <a onclick="switchTab('forward')" style="color:var(--b-text);cursor:pointer;font-weight:600">explained on the Expected returns tab</a>; the portfolio volatility and the &ldquo;typical worst fall&rdquo; also depend on assumed <b>correlations</b> between asset classes — how much they tend to move together — which are themselves estimates from history and can rise sharply in a crisis, when diversification helps least. Treat the outputs as directional.</div>
     <div class="pcards" id="pcards"></div>
     <div class="grid2">
       <div class="card">
-        <h3>Adjust the mix <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3)">— normalised to 100%</span></h3>
+        <h3>Adjust the mix <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3-text)">— normalised to 100%</span></h3>
         <div class="sliders" id="sliders"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:var(--t3)"><span id="wsum"></span><button class="tab" style="padding:6px 12px;min-height:0;border:1px solid var(--bd2);border-radius:var(--radius)" id="resetBtn">Reset to preset</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:var(--t3-text)"><span id="wsum"></span><button class="tab" style="padding:6px 12px;min-height:0;border:1px solid var(--bd2);border-radius:var(--radius)" id="resetBtn">Reset to preset</button></div>
       </div>
       <div class="card">
         <h3>This portfolio</h3>
         <div class="metrics" id="bmetrics"></div>
-        <div class="kpi-lab" style="color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;font-size:10.5px;font-weight:600">Return contribution by block</div>
+        <div class="kpi-lab" style="color:var(--t3-text);text-transform:uppercase;letter-spacing:0.6px;font-size:10.5px;font-weight:600">Return contribution by block</div>
         <div id="contribBars" style="margin-top:10px"></div>
       </div>
     </div>
@@ -729,14 +734,14 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
     <h2 class="sec" style="margin-top:28px">What is exposed, and what is safe</h2>
     <div class="grid2">
-      <div class="card"><h3 style="color:var(--r)">US-situs — exposed</h3><ul class="lst">
+      <div class="card"><h3 style="color:var(--r-text)">US-situs — exposed</h3><ul class="lst">
         <li>US-listed stocks (Apple, Nvidia, Tesla…)</li>
         <li>US-domiciled ETFs (VOO, SPY, QQQ — and SGX's S27, D07, GSD)</li>
         <li>Cash sitting in a US brokerage account</li>
         <li>US retirement accounts (IRA / 401k)</li>
         <li>US real estate</li>
       </ul></div>
-      <div class="card"><h3 style="color:var(--g)">Not US-situs — safe</h3><ul class="lst">
+      <div class="card"><h3 style="color:var(--g-text)">Not US-situs — safe</h3><ul class="lst">
         <li>Irish / other non-US-domiciled ETFs (e.g. CSPX)</li>
         <li>Non-US and SGX-listed shares</li>
         <li>Cash in a US <em>bank</em> deposit account</li>
@@ -755,7 +760,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <div class="fix"><div class="fix-n">4</div><div><div class="fix-t">Life insurance — to fund the bill, not dodge it</div><div class="fix-b">Death-benefit payouts are generally outside the US estate. This does not remove the liability; it gives your estate the cash to pay it without a forced sale of your holdings.</div></div></div>
       <div class="fix"><div class="fix-n">5</div><div><div class="fix-t">Foreign company or trust <span class="bdg bdg-verify">&gt;US$5m · get advice</span></div><div class="fix-b">Holding US assets through a foreign company or trust can move them out of your US estate. Costly and complex — not a DIY job. If you are at that size, see a cross-border tax and legal adviser.</div></div></div>
     </div>
-    <div class="notice" style="margin-top:16px;background:var(--r-bg);border-color:var(--r-bg2)"><strong style="color:var(--r)">Does not work:</strong> joint accounts (for non-spouse holders the IRS presumes the whole account belongs to the first to die) and the spousal exemption (it only applies when the surviving spouse is a US citizen).</div>
+    <div class="notice" style="margin-top:16px;background:var(--r-bg);border-color:var(--r-bg2)"><strong style="color:var(--r-text)">Does not work:</strong> joint accounts (for non-spouse holders the IRS presumes the whole account belongs to the first to die) and the spousal exemption (it only applies when the surviving spouse is a US citizen).</div>
 
     <h2 class="sec" style="margin-top:28px">In one picture</h2>
     <div class="flow">
@@ -839,7 +844,11 @@ let sortKey='starter_score', sortDir=-1, routeFilter='';
 const TRAIL_KEYS=['trail_1y','trail_3y','trail_5y']; let trailBannerDismissed=false;
 let BW={}, BPRESET='balanced', BBASE={band:[10,15],vol:1}, fwdDone=false, buildDone=false;
 const BKEYS=['dev_equity','sg_equity','em_asia_equity','reits','dev_bonds','sgd_bonds','gold','cash'];
-const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0891b2',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#8a8a82'};
+// em_asia_equity and cash were mid-tones (#0891b2, #8a8a82): they carry an 11px
+// label in the allocation bar, and a mid-tone hosts NO label — white measured
+// 3.68 and dark ink 3.99, both short of 4.5. Moved to the -text values of the
+// same hues so a white label clears it (5.36 / 5.79).
+const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0e7490',thematic_equity:'#7c3aed',dev_bonds:'#60A5FA',sgd_bonds:'#93C5FD',asia_bonds:'#22a366',reits:'#be185d',gold:'#b45309',cash:'#66665e'};
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
 // Trailing-return cell: signed %, green up / red down; em-dash where history is too short.
@@ -938,7 +947,7 @@ function calBarsSVG(cy){
     const lbl=(pos?'+':'')+(x.r*100).toFixed(0)+'%';
     s+='<rect x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2" fill="'+col+'"/>'+
        '<text x="'+cx.toFixed(1)+'" y="'+(pos?y-4:y+h+11).toFixed(1)+'" text-anchor="middle" font-family="monospace" font-size="9.5" font-weight="600" fill="'+col+'">'+lbl+'</text>'+
-       '<text x="'+cx.toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#8a8a82">'+("'"+String(x.y).slice(2)+(x.ytd?'*':''))+'</text>';
+       '<text x="'+cx.toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#66665e">'+("'"+String(x.y).slice(2)+(x.ytd?'*':''))+'</text>';
   });
   return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block;max-width:'+W+'px">'+s+'</svg>';
 }
@@ -1013,7 +1022,7 @@ function drawPrice(ph,uid,weeks){
 function cpfLine(f){
   if(f.cpf==='Yes'){
     const gold=f.asset_class==='gold'?' within the <strong>10% gold limit</strong>':' and, as a CPFIS ETF, <strong>not</strong> subject to the 35% stock limit';
-    return '<strong>CPF-OA</strong>: on the CPFIS-included list &mdash; investable above the first S$20,000 of OA'+gold+'. See <a onclick="switchTab(\'learn\')" style="color:var(--b);cursor:pointer;font-weight:600">Learn</a> for whether investing CPF makes sense at all.';
+    return '<strong>CPF-OA</strong>: on the CPFIS-included list &mdash; investable above the first S$20,000 of OA'+gold+'. See <a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn</a> for whether investing CPF makes sense at all.';
   }
   if(f.cpf==='No') return '<strong>CPF-OA</strong>: not on the CPFIS list &mdash; cash or SRS only.';
   return '<strong>CPF-OA</strong>: only funds on the CPFIS-included list qualify &mdash; <span class="buy-verify">verify current eligibility</span> before assuming.';
@@ -1122,7 +1131,7 @@ function openCmp(){
     row('1Y price return',f=>cell(trailCell(f.trail_1y)),'Backward-looking price return, dividends extra. Last year’s winner is rarely next year’s.')+
     row('3Y p.a.',f=>cell(trailCell(f.trail_3y)))+
     row('5Y p.a.',f=>cell(trailCell(f.trail_5y)))+
-    row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r);font-weight:700">Exposed</span>':'<span style="color:var(--g);font-weight:700">Safe</span>'))+
+    row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r-text);font-weight:700">Exposed</span>':'<span style="color:var(--g-text);font-weight:700">Safe</span>'))+
     '</tbody></table>';
   // quiet, optional "similar funds" strip: same-class alternatives to the selected funds, one tap to add
   const cand=CMP.size<4?cmpSuggestions(4):[];
@@ -1377,7 +1386,7 @@ function renderCostSim(){
     const gap=Math.abs(wF[yrs]-wC[yrs]);
     const better=fBetter?f:comp, worse=fBetter?comp:f;
     const dl={SG:'Singapore',IE:'Irish',LU:'Lux',FR:'French',US:'US'}[worse.domicile]||worse.domicile;
-    head='After <b>'+yrs+' years</b>, the '+dl+'-domiciled <b class="mono">'+worse.ticker+'</b> leaves you about <b style="color:var(--r)">S$'+Math.round(gap).toLocaleString()+'</b> poorer than <b class="mono">'+better.ticker+'</b> — from cost and withholding alone, before any estate tax.';
+    head='After <b>'+yrs+' years</b>, the '+dl+'-domiciled <b class="mono">'+worse.ticker+'</b> leaves you about <b style="color:var(--r-text)">S$'+Math.round(gap).toLocaleString()+'</b> poorer than <b class="mono">'+better.ticker+'</b> — from cost and withholding alone, before any estate tax.';
   }else{
     traces.push({x:t,y:wF,mode:'lines',name:f.ticker,line:{color:'#1a8754',width:2.6},hovertemplate:f.ticker+' · yr %{x}<br>S$%{y:,.0f}<extra></extra>'});
     head='Growth of S$'+Math.round(amt).toLocaleString()+' in '+f.ticker+' at its net expected return.';
@@ -1393,10 +1402,10 @@ function renderCostSim(){
   const en=document.getElementById('estNum'), es=document.getElementById('estSub');
   if(f.estate_tax_exposed){
     const usd=amt*0.74, tax=estateTax(usd);
-    en.innerHTML='<span style="color:var(--r)">S$'+Math.round(tax/0.74).toLocaleString()+'</span>';
+    en.innerHTML='<span style="color:var(--r-text)">S$'+Math.round(tax/0.74).toLocaleString()+'</span>';
     es.textContent='Potential US estate tax if you died holding this US-domiciled fund (~'+(tax/usd*100).toFixed(0)+'% effective). A non-US-domiciled fund = S$0.';
   }else{
-    en.innerHTML='<span style="color:var(--g)">S$0</span>';
+    en.innerHTML='<span style="color:var(--g-text)">S$0</span>';
     es.textContent=f.domicile==='verify'?'Domicile unconfirmed — verify before relying on this.':'Not US-domiciled — no US estate-tax exposure.';
   }
 }
@@ -1494,13 +1503,13 @@ function recompute(){
     ['Typical worst fall','-'+ddL.toFixed(0)+' to -'+ddH.toFixed(0)+'%','Rough guide to how far this mix could fall from a peak in a bad stretch, scaled from the preset bands. Larger falls happen occasionally.']
   ].map(x=>`<div class="metric" title="${x[2]}"><div class="m-l">${x[0]}</div><div class="m-v">${x[1]}</div></div>`).join('');
   const raw=BKEYS.reduce((s,k)=>s+BW[k],0);
-  document.getElementById('wsum').innerHTML='Sliders sum to <b class="mono">'+raw+'%</b> · blended income yield ~'+m.yld.toFixed(1)+'%'+(raw!==100?' <span style="color:var(--a)">(metrics use normalised weights)</span>':'');
+  document.getElementById('wsum').innerHTML='Sliders sum to <b class="mono">'+raw+'%</b> · blended income yield ~'+m.yld.toFixed(1)+'%'+(raw!==100?' <span style="color:var(--a-text)">(metrics use normalised weights)</span>':'');
   const ck=BKEYS.filter(k=>m.norm[k]>0.001).sort((a,b)=>m.norm[b]*CMA.asset_classes[b].ret-m.norm[a]*CMA.asset_classes[a].ret);
   const mxc=Math.max(...ck.map(k=>m.norm[k]*CMA.asset_classes[k].ret),0.01);
   document.getElementById('contribBars').innerHTML=ck.map(k=>{
     const c=m.norm[k]*CMA.asset_classes[k].ret;
-    return `<div style="display:flex;align-items:center;gap:8px;margin:5px 0"><div style="width:132px;font-size:12px">${ACLABEL[k]} <span class="mono" style="color:var(--t3);font-size:11px">${(m.norm[k]*100).toFixed(0)}%</span></div><div style="flex:1;background:var(--bg4);border-radius:3px;height:16px"><div style="height:100%;width:${c/mxc*100}%;background:${ACOL[k]};border-radius:3px"></div></div><div class="mono" style="font-size:11px;width:42px;text-align:right">${c.toFixed(2)}%</div></div>`;
-  }).join('')+`<div style="display:flex;justify-content:space-between;border-top:2px solid var(--t1);margin-top:6px;padding-top:8px"><span style="font-size:13px;font-weight:700">Portfolio total</span><span class="mono" style="color:var(--g);font-size:15px;font-weight:700">${m.ret.toFixed(1)}%</span></div>`;
+    return `<div style="display:flex;align-items:center;gap:8px;margin:5px 0"><div style="width:132px;font-size:12px">${ACLABEL[k]} <span class="mono" style="color:var(--t3-text);font-size:11px">${(m.norm[k]*100).toFixed(0)}%</span></div><div style="flex:1;background:var(--bg4);border-radius:3px;height:16px"><div style="height:100%;width:${c/mxc*100}%;background:${ACOL[k]};border-radius:3px"></div></div><div class="mono" style="font-size:11px;width:42px;text-align:right">${c.toFixed(2)}%</div></div>`;
+  }).join('')+`<div style="display:flex;justify-content:space-between;border-top:2px solid var(--t1);margin-top:6px;padding-top:8px"><span style="font-size:13px;font-weight:700">Portfolio total</span><span class="mono" style="color:var(--g-text);font-size:15px;font-weight:700">${m.ret.toFixed(1)}%</span></div>`;
   const ri=MP.recommended_instruments;
   document.getElementById('implList').innerHTML=ck.map(k=>{
     const r=ri[k]||{}, route=r.prefer||'sgx', inst=r[route]||r.sgx||r.core||'—';
@@ -1515,9 +1524,9 @@ function renderEstate(){
   const situsSgd=amt*((m.norm.dev_equity||0)+(m.norm.gold||0));
   const tax=estateTax(situsSgd*0.74)/0.74;
   document.getElementById('estBox').innerHTML=
-    `<div class="estline"><span><span class="bdg bdg-core">Recommended</span> Irish-UCITS core + SGX satellites</span><span class="el-v" style="color:var(--g)">S$0 exposed</span></div>`+
-    `<div class="estline"><span><span class="bdg bdg-us">Alt.</span> if you use SGX-listed S27 + GSD instead</span><span class="el-v" style="color:var(--r)">S$${Math.round(situsSgd).toLocaleString()} US-situs</span></div>`+
-    `<div class="estline" style="border-bottom:none"><span>&nbsp;&nbsp;&rarr; potential US estate tax on that</span><span class="el-v" style="color:var(--r)">~S$${Math.round(tax).toLocaleString()}</span></div>`;
+    `<div class="estline"><span><span class="bdg bdg-core">Recommended</span> Irish-UCITS core + SGX satellites</span><span class="el-v" style="color:var(--g-text)">S$0 exposed</span></div>`+
+    `<div class="estline"><span><span class="bdg bdg-us">Alt.</span> if you use SGX-listed S27 + GSD instead</span><span class="el-v" style="color:var(--r-text)">S$${Math.round(situsSgd).toLocaleString()} US-situs</span></div>`+
+    `<div class="estline" style="border-bottom:none"><span>&nbsp;&nbsp;&rarr; potential US estate tax on that</span><span class="el-v" style="color:var(--r-text)">~S$${Math.round(tax).toLocaleString()}</span></div>`;
 }
 
 function renderLearn(){
@@ -1567,7 +1576,7 @@ function renderProjShell(){
       '<div class="ctl"><label>Monthly amount (S$)</label><input id="pjAmt" inputmode="numeric" value="'+PROJ.amt.toLocaleString('en-US')+'"></div>'+
       '<div class="ctl"><label>Years</label><input id="pjYrs" type="number" min="1" max="40" value="'+PROJ.yrs+'"></div>'+
     '</div><div id="projOut"></div>'+
-    '<div class="proj-note">Compounding arithmetic at assumed constant rates, using this mix&rsquo;s blended long-run net estimate (<a onclick="switchTab(\'forward\')" style="color:var(--b);cursor:pointer;font-weight:600">how the estimates are built</a>). Real returns arrive unevenly, and the weaker/stronger scenarios (&plusmn;2 percentage points) are illustrative brackets, not guarantees or probabilities. Figures are before inflation and any platform fees. An illustration to learn from &mdash; not a projection of your outcome, and not personalised advice.</div></div>';
+    '<div class="proj-note">Compounding arithmetic at assumed constant rates, using this mix&rsquo;s blended long-run net estimate (<a onclick="switchTab(\'forward\')" style="color:var(--b-text);cursor:pointer;font-weight:600">how the estimates are built</a>). Real returns arrive unevenly, and the weaker/stronger scenarios (&plusmn;2 percentage points) are illustrative brackets, not guarantees or probabilities. Figures are before inflation and any platform fees. An illustration to learn from &mdash; not a projection of your outcome, and not personalised advice.</div></div>';
   document.getElementById('pjAmt').addEventListener('input',e=>{const n=parseInt((e.target.value||'').replace(/[^\d]/g,''),10)||0;PROJ.amt=n;e.target.value=n?n.toLocaleString('en-US'):'';updateProj();});
   document.getElementById('pjYrs').addEventListener('input',e=>{PROJ.yrs=Math.max(1,Math.min(40,parseInt(e.target.value,10)||1));updateProj();});
   updateProj();
@@ -1630,10 +1639,11 @@ function drawProj(holder,P,Y,r,contrib,maxV){
   const others=Object.keys(SC).filter(k=>SC[k]!==sel).map(k=>'<path d="'+path(SC[k].s)+'" fill="none" stroke="#b7c8d4" stroke-width="1.1"/>').join('');
   // end-of-line value labels (selected bold; others faint; contributions grey), nudged apart if they collide
   const ends=[
-    {y:Yc(sC[M]),   txt:'S$'+kfmt(sC[M]),   col:'#8a8a82', w:400, sz:fs},
+    {y:Yc(sC[M]),   txt:'S$'+kfmt(sC[M]),   col:'#66665e', w:400, sz:fs},   // --t3-text: these are value labels, i.e. text
     {y:Yc(sel.s[M]),txt:'S$'+kfmt(sel.s[M]),col:'#0C4A6E', w:700, sz:fs+0.5}
   ];
-  Object.keys(SC).forEach(k=>{ if(SC[k]!==sel) ends.push({y:Yc(SC[k].s[M]),txt:'S$'+kfmt(SC[k].s[M]),col:'#9db2c0',w:400,sz:fs-0.5}); });
+  // #5f7684, not #9db2c0: still reads as the faint "other" series, but 4.56:1 rather than 2.20:1
+  Object.keys(SC).forEach(k=>{ if(SC[k]!==sel) ends.push({y:Yc(SC[k].s[M]),txt:'S$'+kfmt(SC[k].s[M]),col:'#5f7684',w:400,sz:fs-0.5}); });
   ends.sort((a,b)=>a.y-b.y);
   for(let i=1;i<ends.length;i++){ if(ends[i].y<ends[i-1].y+12) ends[i].y=ends[i-1].y+12; }   // de-overlap downward
   const endLabels=ends.map(e=>'<text x="'+(W-pR+6)+'" y="'+(e.y+3.5).toFixed(1)+'" font-family="monospace" font-size="'+e.sz+'" font-weight="'+e.w+'" fill="'+e.col+'">'+e.txt+'</text>').join('');
@@ -1641,7 +1651,11 @@ function drawProj(holder,P,Y,r,contrib,maxV){
     '<path d="'+band+'" fill="rgba(12,74,110,0.07)"/>'+others+
     '<path d="'+path(sC)+'" fill="none" stroke="#8a8a82" stroke-width="1.3" stroke-dasharray="5 3"/>'+
     '<path d="'+path(sel.s)+'" fill="none" stroke="#0C4A6E" stroke-width="2"/>'+endLabels+'</svg>'+
-    '<div class="chart-legend" style="margin-top:6px"><span style="color:#0C4A6E">&#9644;&nbsp;'+sel.lab+'</span><span style="color:#9db2c0">&#9644;&nbsp;Other scenarios</span><span style="color:#8a8a82">&#9644;&nbsp;What you put in</span></div>';
+    // Swatch and label are separated deliberately: the swatch keeps the exact
+    // series colour (it must match its line to be a legend), while the label
+    // inherits .chart-legend's --t2 and is readable. Colouring the label to
+    // match the line put "Other scenarios" at 2.20:1.
+    '<div class="chart-legend" style="margin-top:6px"><span><i class="lg-sw" style="background:#0C4A6E"></i>'+sel.lab+'</span><span><i class="lg-sw" style="background:#9db2c0"></i>Other scenarios</span><span><i class="lg-sw" style="background:#8a8a82"></i>What you put in</span></div>';
 }
 function selectGoal(g){
   const p=GOAL_PLANS[g]; if(!p) return;
@@ -1649,29 +1663,40 @@ function selectGoal(g){
   let ret=0,cost=0,yld=0;
   // one stacked bar (parts of a whole, asset-class colours) + bucket caption + swatched rows
   const BUCKET=k=>k==='gold'?'Gold':(k==='reits'?'REITs':((k==='dev_bonds'||k==='sgd_bonds'||k==='asia_bonds'||k==='cash')?'Bonds & cash':'Shares'));
-  const LIGHT=['dev_bonds','sgd_bonds','cash'];   // light segment colours need dark labels
+  // Pick the label colour from the segment colour itself rather than from a
+  // hand-kept list of asset classes: the list drifts the moment a palette value
+  // changes, and it had already missed em_asia_equity (#0891b2), leaving white
+  // text at 3.68:1. Returns true when dark text wins on that background.
+  const needsDark = hex => {
+    const m = String(hex).replace('#','').match(/../g).map(v => parseInt(v,16) / 255)
+      .map(v => v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4));
+    const L = 0.2126*m[0] + 0.7152*m[1] + 0.0722*m[2];
+    const onWhite = 1.05 / (L + 0.05);        // contrast of #fff against it
+    const onInk   = (L + 0.05) / 0.0561;      // contrast of #1f2937 against it
+    return onInk > onWhite;
+  };
   let seg='', rows='', buckets={};
   p.mix.forEach(m=>{
     const f=FUNDS.find(x=>x.ticker===m[0]);
     if(f){ret+=m[1]/100*(f.net_expected_return_pct||0);cost+=m[1]/100*(f.effective_ter||0);yld+=m[1]/100*(f.yield||0);
           buckets[BUCKET(f.asset_class)]=(buckets[BUCKET(f.asset_class)]||0)+m[1];}
     const col=f?(ACOL[f.asset_class]||'#888'):'#888';
-    seg+='<div class="pm-seg" style="width:'+m[1]+'%;background:'+col+'" title="'+m[0]+' '+m[1]+'% — '+m[2]+'. Tap for the fund snapshot." onclick="planLook(\''+m[0]+'\')">'+(m[1]>=10?'<span'+(f&&LIGHT.includes(f.asset_class)?' class="dk"':'')+'>'+m[1]+'%</span>':'')+'</div>';
+    seg+='<div class="pm-seg" style="width:'+m[1]+'%;background:'+col+'" title="'+m[0]+' '+m[1]+'% — '+m[2]+'. Tap for the fund snapshot." onclick="planLook(\''+m[0]+'\')">'+(m[1]>=10?'<span'+(needsDark(col)?' class="dk"':'')+'>'+m[1]+'%</span>':'')+'</div>';
     rows+='<div class="pm-row"><span class="pm-sw" style="background:'+col+'"></span><div class="pm-w">'+m[1]+'%</div>'+
       '<div class="pm-f"><a class="tk-link pm-look" onclick="planLook(\''+m[0]+'\')">'+m[0]+' <span class="pm-view">view &rsaquo;</span></a> &mdash; '+m[2]+'</div></div>';
   });
   const cap=Object.entries(buckets).sort((a,b)=>b[1]-a[1]).map(([k,v])=>'<span><b>'+v+'%</b> '+k+'</span>').join('<span class="pm-sep">&middot;</span>');
   const mixHtml='<div class="pm-stack">'+seg+'</div><div class="pm-caption">'+cap+'</div>'+rows;
-  const incomeStat=g==='income'?'<div><div class="ps-l">Income yield</div><div class="ps-v" style="color:var(--g)">~'+yld.toFixed(1)+'%</div></div>':'';
+  const incomeStat=g==='income'?'<div><div class="ps-l">Income yield</div><div class="ps-v" style="color:var(--g-text)">~'+yld.toFixed(1)+'%</div></div>':'';
   document.getElementById('planOut').innerHTML=
     '<div class="plan card"><div class="plan-name">'+p.name+'</div><div class="plan-blurb">'+p.blurb+'</div>'+
     '<div class="plan-mix">'+mixHtml+'</div>'+
     '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See the Expected returns tab for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
-    '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g)">S$0</div></div></div>'+
-    '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>. A step-by-step purchase walkthrough is just below <a onclick="var g=document.getElementById(\'fpGuide\');g.open=true;g.scrollIntoView({behavior:\'smooth\',block:\'start\'})" style="color:var(--b);cursor:pointer;font-weight:600">&darr; open the guide</a>.</div>'+
+    '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g-text)">S$0</div></div></div>'+
+    '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>. A step-by-step purchase walkthrough is just below <a onclick="var g=document.getElementById(\'fpGuide\');g.open=true;g.scrollIntoView({behavior:\'smooth\',block:\'start\'})" style="color:var(--b-text);cursor:pointer;font-weight:600">&darr; open the guide</a>.</div>'+
     '<div id="projBox"></div>'+
-    '<div class="plan-note">An illustration to learn from &mdash; not personalised advice. Fine-tune the exact weights in <a onclick="switchTab(\'build\')" style="color:var(--b);cursor:pointer;font-weight:600">Build a portfolio</a>.</div>'+
+    '<div class="plan-note">An illustration to learn from &mdash; not personalised advice. Fine-tune the exact weights in <a onclick="switchTab(\'build\')" style="color:var(--b-text);cursor:pointer;font-weight:600">Build a portfolio</a>.</div>'+
     '</div><div id="planDetail"></div>';
   // blended volatility of the mix (fund weights -> asset-class weights -> correlation model)
   const w={}; p.mix.forEach(m=>{const f=FUNDS.find(x=>x.ticker===m[0]); if(f) w[f.asset_class]=(w[f.asset_class]||0)+m[1];});
