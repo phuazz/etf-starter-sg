@@ -110,7 +110,7 @@ _BREADTH_BASE = {"dev_equity": 95, "sg_equity": 72, "em_asia_equity": 70, "reits
                  "dev_bonds": 82, "sgd_bonds": 80, "asia_bonds": 62, "gold": 60,
                  "cash": 60, "thematic_equity": 30}
 
-def starter_score(rec, rf=2.8):
+def starter_score(rec):
     """Transparent 0-100 efficiency composite for a long-term-hold starter — NOT a buy
     recommendation. Returns (score, parts) or (None, None) when TER/return/vol are unknown.
     Components each 0-100:
@@ -323,7 +323,7 @@ def main():
         else:
             rec["cost_drag_total_pct"] = round(ter + drag, 3)
             rec["net_expected_return_pct"] = round(acinfo["ret"] - ter - drag, 2)
-        score, parts = starter_score(rec, cma["_meta"]["risk_free_pct"])
+        score, parts = starter_score(rec)
         rec["starter_score"] = score
         rec["score_parts"] = parts
         return rec
