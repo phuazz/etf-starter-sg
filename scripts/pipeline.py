@@ -305,7 +305,21 @@ def main():
         rec["estate_tax_exposed"] = (dom == "US")
         wr = wht_by_dom.get(dom, 0.30)
         rec["us_div_wht_rate"] = wr
-        drag = round(yld_by_class.get(ac, 0) * us_content.get(ac, 0) * wr, 3)
+        # us_content is the US-source share of the fund's income, and it is the
+        # right multiplier for a NON-US fund: an Irish UCITS suffers the treaty
+        # rate on its US dividends only. It is the WRONG multiplier for a
+        # US-domiciled fund. A US RIC distributing to a non-resident alien is
+        # withheld at 30 per cent on the whole distribution, whatever the
+        # underlying holdings are -- there is no look-through, and Singapore has
+        # no treaty to reduce it.
+        #
+        # Corrected 2026-08-02. Previously S27 and D07, both 100 per cent US
+        # index funds, were multiplied by dev_equity's 0.65 and showed a drag of
+        # 0.351 against a true 0.54. The error ran AGAINST this dashboard's own
+        # argument: it understated the cost of the US-domiciled route, making
+        # the Irish-UCITS core look less advantageous than it is.
+        eff_us_content = 1.0 if dom == "US" else us_content.get(ac, 0)
+        drag = round(yld_by_class.get(ac, 0) * eff_us_content * wr, 3)
         rec["est_wht_drag_pct"] = drag
         rec["gross_expected_return_pct"] = acinfo["ret"]
         rec["exp_vol"] = acinfo["vol"]          # asset-class-level expected volatility (% p.a.)

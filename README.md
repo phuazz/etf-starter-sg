@@ -95,6 +95,25 @@ Automated refresh: `.github/workflows/refresh-prices.yml` re-runs `--prices` on 
 3. **Netting** (return − TER − withholding drag) uses assumed underlying dividend yields; the
    withholding model is simplified to the dominant US-dividend case and flagged where it is not.
 
+## Corrections (2026-08-02)
+
+Three errors found while building the domicile-swap feature, all now fixed:
+
+1. **VWRA expense ratio 0.22 → 0.14.** The curated figure had gone stale. Vanguard
+   publishes 0.14 for both All-World share classes; the distributing line's SEDOL
+   (B7NLLH2) matches the exchange record exactly, confirming product identity.
+2. **Luxembourg (and French) withholding 0.15 → 0.30** in `cma.json`. LU and FR UCITS
+   generally do *not* obtain the US treaty rate — Limitation-on-Benefits clauses leave
+   most paying the full 30%, which is a principal reason Irish domicile dominates.
+   Latent rather than live: every LU fund here has zero `us_content`, so the drag
+   computed to zero either way.
+3. **US-domiciled funds now use `us_content` = 1.0.** A US RIC distributing to a
+   non-resident alien is withheld at 30% on the *whole* distribution — no look-through,
+   and Singapore has no treaty. S27 and D07 are 100% US index funds and were being
+   multiplied by `dev_equity`'s 0.65, showing 0.351 drag against a true 0.54. This error
+   ran **against** the dashboard's own argument: it understated the cost of the
+   US-domiciled route. CSPX-versus-S27 is +0.38%/yr net, not the +0.2% previously stated.
+
 ## Status
 
 Feature-complete and **deployed** at https://phuazz.github.io/etf-starter-sg/. Latest additions

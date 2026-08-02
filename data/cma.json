@@ -88,7 +88,8 @@
     },
     "us_div_withholding": {
       "_note": "Withholding tax suffered on US-source dividends INSIDE the fund, by fund domicile. Irish/Lux UCITS get the 15% treaty rate; US-domiciled funds held by a Singaporean suffer 30%; synthetic (swap-based) funds can reduce this further but are flagged separately. Applied only to the US-dividend portion of a fund's income.",
-      "by_domicile": {"US": 0.30, "SG": 0.30, "HK": 0.30, "IE": 0.15, "LU": 0.15, "FR": 0.15},
+      "by_domicile": {"US": 0.30, "SG": 0.30, "HK": 0.30, "IE": 0.15, "LU": 0.30, "FR": 0.30},
+      "_by_domicile_note": "LU and FR corrected from 0.15 to 0.30 on 2026-08-02. Luxembourg and French UCITS generally do NOT obtain the US treaty rate: Limitation-on-Benefits clauses leave most paying the full 30 per cent on US dividends, which is a principal reason Irish domicile dominates for US equity exposure. The error was latent rather than live -- every LU fund in the universe has zero us_content, so the drag computed to zero either way -- but it would have understated the cost of any Luxembourg fund holding US assets.",
       "assumed_div_yield_by_class": {
         "dev_equity": 1.8, "sg_equity": 3.2, "em_asia_equity": 2.5, "thematic_equity": 1.0,
         "dev_bonds": 3.5, "sgd_bonds": 2.5, "asia_bonds": 4.5, "reits": 6.0, "gold": 0.0, "cash": 1.8
