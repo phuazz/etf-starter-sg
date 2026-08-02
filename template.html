@@ -68,6 +68,35 @@ a{color:var(--b-text);text-decoration:none}
 
 /* notice */
 .notice{margin-top:16px;background:var(--a-bg);border:1px solid rgba(180,83,9,0.22);border-radius:var(--radius);padding:11px 14px;font-size:12.5px;color:var(--t2)}
+/* ---- Swap tab ---- */
+.swap-sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.swap-sug button{font:inherit;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--bd);background:var(--bg2);color:var(--t2);cursor:pointer}
+.swap-sug button:hover{background:var(--bg-hover);color:var(--t1)}
+.tierb{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.02em;padding:2px 7px;border-radius:999px;vertical-align:middle}
+.tier1{background:var(--g-bg);color:var(--g-text)}
+.tier2{background:var(--a-bg);color:var(--a-text)}
+.tier3{background:var(--r-bg);color:var(--r-text)}
+.gradep{display:inline-block;font-size:10.5px;font-weight:700;width:17px;height:17px;line-height:17px;text-align:center;border-radius:4px}
+.gA{background:var(--g-bg);color:var(--g-text)}
+.gB{background:var(--b-bg);color:var(--b-text)}
+.gC{background:var(--a-bg);color:var(--a-text)}
+.gX{background:var(--bg4);color:var(--t3)}
+.swap-hold{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:2px}
+.swap-hold .tk{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.decbar{display:flex;height:24px;border-radius:5px;overflow:hidden;background:var(--bg4);margin:10px 0 6px}
+.decbar span{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.dec-rep{background:var(--b)}
+.dec-idio{background:var(--r)}
+.declegend{display:flex;gap:16px;font-size:11.5px;color:var(--t2)}
+.declegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.setaside{margin-top:12px;padding-top:10px;border-top:1px dashed var(--bd)}
+.setaside li{font-size:12px;color:var(--t3);margin-bottom:3px}
+.rk-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+@media(max-width:620px){.rk-two{grid-template-columns:1fr}}
+.rk-box{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
+.rk-box .k{font-size:11.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em}
+.rk-box .v{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
+.rk-box .s{font-size:11.5px;color:var(--t3);margin-top:3px}
 .notice strong{color:var(--a-text)}
 
 /* tabs */
@@ -488,6 +517,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <button class="tab" data-p="cost">Costs &amp; tax</button>
     <button class="tab" data-p="forward">Expected returns</button>
     <button class="tab" data-p="build">Build a portfolio</button>
+    <button class="tab" data-p="swap">Swap a US holding</button>
     <button class="tab" data-p="learn">Learn</button>
   </div>
 
@@ -705,6 +735,36 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     </div>
   </div>
   <!-- LEARN -->
+  <!-- SWAP -->
+  <div class="panel" id="p-swap">
+    <h2 class="sec">Swap a US holding for one outside US situs</h2>
+    <div class="lead">Enter something you hold. If a fund outside US situs tracks the same index, this shows it, prices the difference, and says how well the two have actually kept pace. If nothing does, it says that instead of offering the nearest thing. <strong>Educational only — not tax, legal or investment advice.</strong></div>
+
+    <div class="card" id="swapPickCard">
+      <div class="calcgrid">
+        <div class="ctl"><label>Ticker you hold (US-listed ETF or share)</label><input id="swapQ" type="text" autocomplete="off" spellcheck="false" placeholder="SPY, QQQ, VTI, NVDA…" value="SPY"></div>
+      </div>
+      <div id="swapSug" class="swap-sug"></div>
+      <p class="footlet" style="margin-top:2px">Covers <span id="swapCov"></span>. Not an exhaustive list of what exists — a validated set. If your holding is missing, the mechanism on the <a onclick="switchTab('learn')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn tab</a> still applies.</p>
+    </div>
+
+    <div id="swapOut"></div>
+
+    <div class="card" id="swapRiskCard" style="margin-top:20px">
+      <h3>How big is this risk, really?</h3>
+      <p style="font-size:14px;color:var(--t2);margin-bottom:14px">The liability is what you owe <em>if</em> it happens. Both halves of the question belong on the page, so this puts the size next to the likelihood. Neither number is a reason to act or not act on its own.</p>
+      <div class="calcgrid">
+        <div class="ctl"><label>US-situs value (US$)</label><input id="rkAmt" type="text" inputmode="numeric" value="250,000"></div>
+        <div class="ctl"><label>Age</label><input id="rkAge" type="text" inputmode="numeric" value="45"></div>
+        <div class="ctl"><label>Sex</label><select id="rkSex"><option value="total">Prefer not to say</option><option value="male">Male</option><option value="female">Female</option></select></div>
+      </div>
+      <div id="rkOut"></div>
+      <div class="notice" style="margin-top:14px"><strong>Read both numbers together.</strong> A small annual expected cost sitting beside a large liability is not a reason to ignore it — that shape, low probability against a severe outcome, is what people normally insure against rather than average away. It is also the reason the swap matters more than the arithmetic suggests: for index exposure it usually costs nothing, so you are removing the tail for free. Death rates are <span id="rkSrc"></span> population averages, not a personal probability, and say nothing about your health.</div>
+    </div>
+
+    <div class="footer" id="swapFooter"></div>
+  </div>
+
   <div class="panel" id="p-learn">
     <h2 class="sec">The 40% trap: US estate tax for Singapore investors</h2>
     <div class="lead">Singapore abolished estate duty in 2008, so most of us assume inheritance is tax-free. On the Singapore side, it is. The trap is on the <strong>US</strong> side — and it lands on the assets many of us hold most: US stocks and US-domiciled ETFs. A plain-language summary of the issue and the fixes. <strong>Educational only — not tax or legal advice.</strong></div>
@@ -1553,6 +1613,167 @@ function renderEstateCalc(){
     '<div class="ec-alt"><strong>Held instead via Irish-domiciled UCITS</strong> (CSPX, VWRA, IWDA&hellip;): US estate tax = <strong>US$0</strong> (non-US-situs), and dividend withholding is <strong>15%, not 30%</strong>.</div>';
 }
 
+// ---------- Swap: US-situs holding -> non-US-situs alternative ----------
+// Matching happens in scripts/build_swap_map.py, on INDEX IDENTITY. Nothing is
+// matched here; this only renders what the build produced, including the cases
+// where the build refused to offer anything. The estate-tax figure reuses the
+// one shared estateTax() schedule above, so the brackets cannot drift.
+let SWAP=null, MORT=null;
+
+function swapLookup(q){
+  if(!SWAP) return null;
+  const t=(q||'').trim().toUpperCase();
+  if(!t) return null;
+  return SWAP.etfs.find(e=>e.ticker===t) || SWAP.single_names.find(n=>n.ticker===t) || null;
+}
+function gradeCls(g){return g==='A'?'gA':g==='B'?'gB':g==='C'?'gC':'gX';}
+// Boilerplate the build strips before inlining, because it is identical across
+// every record. Falls back to the per-record copy when the full file is loaded
+// (source-mode dev via fetch), so both paths render the same words.
+function SWAPBP(){return (SWAP&&SWAP._meta&&SWAP._meta.boilerplate)||{};}
+function pp(v,dp){return (v>0?'+':'')+v.toFixed(dp==null?2:dp);}
+
+function renderSwapSug(){
+  const box=document.getElementById('swapSug'); if(!box||!SWAP) return;
+  const q=(document.getElementById('swapQ').value||'').trim().toUpperCase();
+  let pool=SWAP.etfs.map(e=>e.ticker).concat(SWAP.single_names.map(n=>n.ticker));
+  let hits=q?pool.filter(t=>t.startsWith(q)):[];
+  if(q && hits.length===1 && hits[0]===q) hits=[];
+  const show=hits.length?hits.slice(0,12):['SPY','QQQ','VTI','VOO','SCHD','GLD','NVDA','AAPL','TSLA'];
+  box.innerHTML=(hits.length?'':'<span style="font-size:11.5px;color:var(--t3);align-self:center;margin-right:2px">Try:</span>')+
+    show.map(t=>'<button onclick="pickSwap(\''+t+'\')">'+t+'</button>').join('');
+}
+function pickSwap(t){document.getElementById('swapQ').value=t;renderSwapSug();renderSwap();}
+
+function altRow(a){
+  const v=a.verification||{}, c=a.cost||{};
+  // Tooltip is rebuilt from the numbers rather than shipped as prose on every
+  // pair — the wording is identical across 112 pairs, only the figures differ.
+  const tip=v.gap_pp==null?'Not verifiable from the available history.'
+    :('Compounded outcomes over '+(v.years||5)+' years differed by '+pp(v.gap_pp)+
+      'pp a year, after putting the US line on a Singapore-holder tax basis'+
+      (v.monthly_corr!=null?'; monthly correlation '+v.monthly_corr.toFixed(3):'')+'.');
+  const g='<span class="gradep '+gradeCls(v.grade)+'" title="'+tip+'">'+(v.grade&&v.grade.length===1?v.grade:'?')+'</span>';
+  const net=c.net_annual_delta_pp;
+  const netTxt=net==null?'<span style="color:var(--t3)">n/a</span>'
+    :'<strong style="color:'+(net>=0?'var(--g-text)':'var(--r-text)')+'">'+pp(net)+'pp</strong>';
+  const gap=v.gap_pp==null?'—':pp(v.gap_pp);
+  const ccy=a.ccy_is_pence?'GBp':a.ccy;
+  return '<tr>'+
+    '<td><strong>'+a.ticker+'</strong><div style="font-size:11px;color:var(--t3)">'+a.name+'</div></td>'+
+    '<td>'+a.domicile+'</td>'+
+    '<td class="r">'+(a.ter==null?'—':a.ter.toFixed(2)+'%')+'</td>'+
+    '<td class="r">'+netTxt+'</td>'+
+    '<td class="r">'+gap+'</td>'+
+    '<td class="r">'+g+'</td>'+
+    '<td>'+ccy+' · '+(a.income==='Accumulating'?'Acc':'Dist')+'</td></tr>';
+}
+
+function renderSwapEtf(e){
+  const rec=e.alternatives.filter(a=>a.recommended), set=e.alternatives.filter(a=>!a.recommended);
+  const tier=e.tier===1?'<span class="tierb tier1">EXACT INDEX</span>'
+    :e.tier===2?'<span class="tierb tier2">RELATED INDEX</span>'
+    :'<span class="tierb tier3">NO EQUIVALENT</span>';
+  let h='<div class="card" style="margin-top:20px">'+
+    '<div class="swap-hold"><span class="tk">'+e.ticker+'</span><span style="color:var(--t2);font-size:14px">'+e.name+'</span>'+tier+'</div>'+
+    '<div style="font-size:12.5px;color:var(--t3);margin-bottom:12px">Tracks '+e.index_label+
+      ' · <strong style="color:var(--r-text)">US-situs, exposed to US estate tax</strong></div>';
+
+  if(e.caveat) h+='<div class="notice" style="margin-top:0"><strong>This is not a like-for-like swap.</strong> '+e.caveat+'</div>';
+
+  if(rec.length){
+    // .tw is the house scroll wrapper: the table scrolls inside its own box so
+    // a narrow viewport never drags the whole page sideways
+    h+='<div class="tw" style="margin-top:14px"><table class="cmp"><thead><tr>'+
+      '<th>Alternative</th><th>Dom.</th><th class="r">Fee</th>'+
+      '<th class="r" title="Fee difference plus the withholding you stop paying. Positive means the alternative is cheaper to hold each year.">Annual gain</th>'+
+      '<th class="r" title="Realised annualised return gap over the overlap window, after putting the US line on a Singapore-holder tax basis. Positive means the alternative came out ahead.">Realised gap</th>'+
+      '<th class="r" title="How closely the compounded outcomes matched. A best, C weakest.">Fit</th><th>Line</th></tr></thead><tbody>'+
+      rec.map(altRow).join('')+'</tbody></table></div>'+
+      '<p class="footlet"><strong>Annual gain</strong> is the fee difference plus the US dividend withholding you stop paying. A Singapore resident holding a US-domiciled fund is withheld 30% on the <em>whole</em> distribution with no treaty; an Irish UCITS bears 15% inside the fund on its US-source income only. <strong>Realised gap</strong> is what actually happened, with the US line put on the same after-tax basis. Fees and withholding are annual and recurring; the estate exposure is removed outright.</p>';
+  } else if(e.verdict){
+    h+='<div class="notice" style="margin-top:14px;background:var(--r-bg);border-color:rgba(190,40,40,.25)"><strong>No verified alternative.</strong> '+(e.verdict_note||'')+'</div>';
+  }
+
+  if(e.unresolved_alternatives && e.unresolved_alternatives.length){
+    h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Listed, but situs unresolved — not offered as a swap</div><ul class="lst">'+
+      e.unresolved_alternatives.map(u=>'<li><strong>'+u.ticker+'</strong> — '+u.name+'. '+(u.why||SWAPBP().etc_why)+'</li>').join('')+'</ul></div>';
+  }
+  if(set.length){
+    h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Considered and set aside</div><ul class="lst">'+
+      set.map(a=>'<li><strong>'+a.ticker+'</strong> — '+a.not_recommended_because+'</li>').join('')+'</ul></div>';
+  }
+  return h+'</div>';
+}
+
+function renderSwapName(n){
+  const d=n.decomposition||{}, r=n.replicable_share;
+  const foreign=n.situs!=='us';
+  let h='<div class="card" style="margin-top:20px">'+
+    '<div class="swap-hold"><span class="tk">'+n.ticker+'</span><span style="color:var(--t2);font-size:14px">'+n.name+'</span>'+
+      (foreign?'<span class="tierb tier2">MAY ALREADY BE OUTSIDE US SITUS</span>':'<span class="tierb tier3">NO EQUIVALENT EXISTS</span>')+'</div>'+
+    '<div style="font-size:12.5px;color:var(--t3);margin-bottom:12px">'+(n.sector||'—')+
+      (foreign?'':' · <strong style="color:var(--r-text)">US-situs, exposed to US estate tax</strong>')+'</div>'+
+    '<p style="font-size:14px;color:var(--t2)">'+(n.verdict_note||(foreign?SWAPBP().foreign_incorporated_verdict:SWAPBP().single_name_verdict)||'')+'</p>';
+
+  if(!foreign && r!=null){
+    const rp=Math.round(r*100), ip=100-rp;
+    h+='<div class="decbar">'+
+        '<span class="dec-rep" style="width:'+rp+'%">'+(rp>=14?rp+'% buyable':'')+'</span>'+
+        '<span class="dec-idio" style="width:'+ip+'%">'+(ip>=14?ip+'% company-specific':'')+'</span></div>'+
+      '<div class="declegend"><span><i class="dec-rep" style="background:var(--b)"></i>Market &amp; sector — a UCITS basket can buy this</span>'+
+        '<span><i class="dec-idio" style="background:var(--r)"></i>Specific to '+n.ticker+' — cannot be bought outside US situs at any price</span></div>'+
+      '<p class="footlet" style="margin-top:10px">'+n.verdict_detail+'</p>';
+    if(n.sector_proxies&&n.sector_proxies.length){
+      h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Closest sector exposure — a partial proxy, <em>not</em> an equivalent</div><ul class="lst">'+
+        n.sector_proxies.map(p=>'<li><strong>'+p.ticker+'</strong> — '+p.name+' ('+p.index_label+(p.ter==null?'':', '+p.ter.toFixed(2)+'% fee')+'). Buys the sector, not the company.</li>').join('')+'</ul></div>';
+    }
+    h+='<div class="notice"><strong>Why there is no equivalent.</strong> UCITS diversification rules cap how much of a fund one holding may be — 5/10/40, relaxed to 20/35 for index trackers. A single-stock UCITS fund is therefore not permitted to exist, so this is a structural fact rather than a gap in the market. Swapping means accepting a different portfolio, and the '+Math.round((1-r)*100)+'% above is what you would be giving up.</div>';
+  } else if(foreign){
+    h+='<div class="notice"><strong>Verify before relying on this.</strong> Situs turns on where the company is <em>incorporated</em>, not where it lists or trades. This screen uses the incorporation country reported for the security, which is an indicator and not a legal opinion. Confirm with a qualified cross-border adviser.</div>';
+  }
+  return h+'</div>';
+}
+
+function renderSwap(){
+  const out=document.getElementById('swapOut'); if(!out) return;
+  if(!SWAP){out.innerHTML='<div class="notice" style="margin-top:20px">Swap data is not loaded in this build.</div>';return;}
+  const cov=document.getElementById('swapCov');
+  if(cov) cov.textContent=SWAP.etfs.length+' US-domiciled ETFs and '+SWAP.single_names.length+' US shares, against '+SWAP._meta.counts.safe_universe+' validated non-US-situs lines';
+  const hit=swapLookup(document.getElementById('swapQ').value);
+  if(!hit){
+    out.innerHTML='<div class="notice" style="margin-top:20px">Not in the validated set. That is not a verdict on the holding — only that this tool has not checked it. The mechanism on the <a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn tab</a> still applies: exposure follows the domicile of the security, not your broker.</div>';
+    return;
+  }
+  out.innerHTML=hit.kind==='etf'?renderSwapEtf(hit):renderSwapName(hit);
+  const f=document.getElementById('swapFooter');
+  if(f) f.innerHTML='Matched on <strong>index identity</strong>, not correlation — every US large-cap ETF correlates above 0.98 with every other one, so correlation cannot tell one index from another. Matches are then checked against realised returns and any pair the record contradicts is set aside rather than shown. Fund data verified '+SWAP._meta.built+'; realised comparison over '+(SWAP._meta.return_verification?SWAP._meta.return_verification.window_years:5)+' years. <strong>Educational only — not tax, legal or investment advice.</strong> Confirm situs and eligibility with a qualified cross-border adviser before acting.';
+}
+
+// ---------- Swap: scale of the risk (SingStat age-specific death rates) -----
+function renderRisk(){
+  const out=document.getElementById('rkOut'); if(!out) return;
+  if(!MORT){out.innerHTML='';return;}
+  const src=document.getElementById('rkSrc');
+  if(src) src.textContent='SingStat '+MORT._meta.year;
+  const usd=amtVal('rkAmt'), age=amtVal('rkAge'), sex=document.getElementById('rkSex').value;
+  const tax=estateTax(usd);
+  const bands=MORT.rates[sex]||MORT.rates.total;
+  // five-year bands are kept as bands; picking the band the age falls into
+  // rather than interpolating, which would invent precision the source lacks
+  const keys=Object.keys(bands).map(Number).sort((a,b)=>a-b);
+  let k=keys[0]; for(const x of keys){ if(age>=x) k=x; }
+  const band=bands[String(k)];
+  const q=band.rate_per_1000/1000;
+  const expected=tax*q;
+  out.innerHTML='<div class="rk-two">'+
+    '<div class="rk-box"><div class="k">If it happens</div><div class="v" style="color:var(--r-text)">US$'+Math.round(tax).toLocaleString()+'</div>'+
+      '<div class="s">estate tax on US$'+usd.toLocaleString()+' &middot; '+(usd>0?(tax/usd*100).toFixed(1):'0.0')+'% effective</div></div>'+
+    '<div class="rk-box"><div class="k">Expected cost per year</div><div class="v">US$'+Math.round(expected).toLocaleString()+'</div>'+
+      '<div class="s">'+band.rate_per_1000.toFixed(1)+' per 1,000 a year at age '+band.band.replace(' Years','')+'</div></div>'+
+    '</div>';
+}
+
 // ---------- Start: goal-based front door (illustrative, not advice) ----------
 const GOAL_PLANS={
   grow:{name:'A simple growth starter',blurb:'Mostly global shares for long-term growth, with bonds and a little gold as ballast.',mix:[['VWRA',65,'Global shares (all-world)'],['EIMI',10,'Emerging markets'],['AGGU',15,'Global bonds'],['SGLN',10,'Gold']]},
@@ -1722,12 +1943,14 @@ function switchTab(p){
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
+  if(p==='swap'){renderSwapSug();renderSwap();renderRisk();}
   if(p==='learn') renderLearn();
 }
 
 async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
+  SWAP=DATA.swap||null; MORT=DATA.mortality||null;
   // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
   FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;
     // ≈ total return for the Expected-returns tab: price return + trailing yield for distributing funds
@@ -1786,14 +2009,21 @@ async function init(){
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
   document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
   document.getElementById('eAmt').addEventListener('input',()=>{reformatAmt('eAmt');renderEstateCalc();});
+  document.getElementById('swapQ').addEventListener('input',()=>{renderSwapSug();renderSwap();});
+  document.getElementById('rkAmt').addEventListener('input',()=>{reformatAmt('rkAmt');renderRisk();});
+  document.getElementById('rkAge').addEventListener('input',renderRisk);
+  document.getElementById('rkSex').addEventListener('change',renderRisk);
   initTipPop();
   applyHash();
 }
 // Deep links: a shared URL lands the recipient on the exact view — #fund=CSPX, #cmp=ES3,G3B, #tab=learn
 function applyHash(){
   const h=decodeURIComponent(location.hash.slice(1)); if(!h) return;
-  const m=h.match(/^(fund|cmp|tab)=(.+)$/); if(!m) return;
+  const m=h.match(/^(fund|cmp|tab|swap)=(.+)$/); if(!m) return;
   if(m[1]==='tab'){switchTab(m[2]);return;}
+  // #swap=SPY lands the reader on a pre-filled answer, so an article can link
+  // straight to the holding it just discussed
+  if(m[1]==='swap'){const q=document.getElementById('swapQ'); if(q) q.value=m[2].toUpperCase(); switchTab('swap'); return;}
   if(m[1]==='fund'){openFund(m[2].toUpperCase());return;}
   const tks=m[2].toUpperCase().split(',').slice(0,4).filter(t=>FUNDS.some(f=>f.ticker===t));
   if(tks.length){switchTab('find');CMP=new Set(tks);updateCmpUI();openCmp();}

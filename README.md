@@ -95,6 +95,55 @@ Automated refresh: `.github/workflows/refresh-prices.yml` re-runs `--prices` on 
 3. **Netting** (return − TER − withholding drag) uses assumed underlying dividend yields; the
    withholding model is simplified to the dominant US-dividend case and flagged where it is not.
 
+## Swap a US holding (2026-08-02)
+
+Enter a US-listed ticker; get the non-US-situs alternative, priced and checked.
+Built as the compute-side companion to The Enough Point's US-estate-tax article,
+which names no products by design — the article explains the mechanism, the tool
+carries the specifics. Deep-linkable: `#swap=SPY` lands on a pre-filled answer.
+
+**Matching is on index identity, never correlation.** Every US large-cap ETF
+correlates above 0.98 with every other one, so correlation cannot distinguish an
+S&P 500 tracker from a Nasdaq-100 tracker and would return confident wrong
+answers. Three tiers: exact index (37 of 48), related index with the caveat
+naming what changes (7), and no equivalent (4). Realised returns then *verify*
+the match; any pair the record contradicts is set aside rather than shown.
+
+**Single names get a decomposition, not an equivalent.** UCITS diversification
+rules (5/10/40, relaxed to 20/35 for index trackers) structurally forbid a
+single-stock UCITS fund, so none exists to find. Instead each name is regressed
+on the market plus an orthogonalised sector: median replicable share is **0.42**,
+so for the typical widely held US stock most of the position is company-specific
+and cannot be bought outside US situs at any price. IBM 14%, Exxon 89%.
+
+**Gold gets an honest non-answer.** Physical gold has no UCITS fund — only ETCs,
+which are debt securities whose situs does not follow from UCITS status. They are
+listed as unresolved, never as a safe swap.
+
+**A risk-scale panel** shows the liability beside the annual expected cost, using
+SingStat age-specific death rates, because quoting only the headline invites fear
+and quoting only the expected value invites shrugging off a swap that costs
+nothing.
+
+### Build order
+
+```
+python scripts/verify_issuer_data.py       # LSE ISINs + Vanguard OCFs  (static)
+python scripts/build_ucits_universe.py     # validated non-US-situs universe
+python scripts/build_us_situs_map.py       # the exposed side
+python scripts/build_swap_map.py           # tiered index matching
+python scripts/verify_matches.py           # realised-return check + refusal floor
+python scripts/decompose_single_names.py   # variance decomposition
+python scripts/fetch_mortality.py          # SingStat death rates
+python scripts/pipeline.py                 # inline everything -> docs/index.html
+python -m pytest tests/ -q                 # 40 guards
+```
+
+The UCITS universe is near-static and deliberately **not** wired into the weekly
+price Action — refresh it manually at the quarterly review. `pipeline.py` slims
+the swap map before inlining (repeated boilerplate moves to `_meta` once), which
+keeps `docs/index.html` under 500KB; the repo file stays complete for audit.
+
 ## Corrections (2026-08-02)
 
 Three errors found while building the domicile-swap feature, all now fixed:

@@ -235,6 +235,61 @@ def apply_yahoo_yields(funds, prices):
     print(f"  yields: {filled} filled + {replaced} refreshed from Yahoo trailing-12m distributions")
 
 
+def slim_swap(d):
+    """Project swap_map.json down to what the page actually renders.
+
+    The repo file stays complete so the record is auditable. The shipped page
+    does not need it: the same verdict_note is repeated on all 50 single names,
+    the same ETC explanation on every gold row, and a prose `basis` string on
+    every one of 112 pairs whose content the UI can reconstruct from the numbers
+    beside it. Boilerplate moves into _meta once and the UI supplies it.
+
+    Nothing that VARIES per record is dropped, and nothing is rounded here --
+    this removes repetition, never evidence.
+    """
+    out = {"_meta": d["_meta"], "etfs": [], "single_names": []}
+    m = out["_meta"]
+    m["boilerplate"] = {
+        "single_name_verdict": next(
+            (n["verdict_note"] for n in d["single_names"] if n["situs"] == "us"), ""),
+        "foreign_incorporated_verdict": next(
+            (n["verdict_note"] for n in d["single_names"] if n["situs"] != "us"), ""),
+        "etc_why": next((u["why"] for e in d["etfs"]
+                         for u in e["unresolved_alternatives"]), ""),
+    }
+    keep_alt = ("ticker", "name", "domicile", "isin", "index_label", "ccy",
+                "ccy_is_pence", "income", "ter", "aum_usd", "tier", "caveat",
+                "recommended", "not_recommended_because", "estate_tax_exposed")
+    keep_ver = ("grade", "gap_pp", "years", "monthly_corr", "contradiction")
+    keep_cost = ("ter_delta_pp", "wht_saving_pp", "net_annual_delta_pp")
+    for e in d["etfs"]:
+        r = {k: e[k] for k in ("ticker", "name", "index_label", "tier", "caveat",
+                               "verdict", "verdict_note", "ter", "yield") if k in e}
+        r["kind"] = "etf"
+        r["alternatives"] = []
+        for a in e["alternatives"]:
+            b = {k: a[k] for k in keep_alt if k in a}
+            v, c = a.get("verification", {}), a.get("cost", {})
+            b["verification"] = {k: v[k] for k in keep_ver if v.get(k) is not None}
+            b["cost"] = {k: c[k] for k in keep_cost if c.get(k) is not None}
+            r["alternatives"].append(b)
+        r["unresolved_alternatives"] = [
+            {"ticker": u["ticker"], "name": u["name"]}
+            for u in e.get("unresolved_alternatives", [])]
+        out["etfs"].append(r)
+    for n in d["single_names"]:
+        r = {k: n[k] for k in ("ticker", "name", "sector", "situs", "verdict",
+                               "verdict_detail", "replicable_share") if k in n}
+        r["kind"] = "single_name"
+        r["sector_proxies"] = [
+            {"ticker": p["ticker"], "name": p["name"],
+             "index_label": p["index_label"], "ter": p.get("ter"),
+             "is_equivalent": False}
+            for p in n.get("sector_proxies", [])]
+        out["single_names"].append(r)
+    return out
+
+
 def build_docs(universe, cma, mp, prices):
     """Inline the data objects into template.html -> docs/index.html so
     the GitHub Pages build is self-contained (no runtime fetch needed)."""
@@ -244,7 +299,23 @@ def build_docs(universe, cma, mp, prices):
         return
     with open(tpl_path, encoding="utf-8") as f:
         html = f.read()
-    blob = json.dumps({"universe": universe, "cma": cma, "mp": mp, "prices": prices}, ensure_ascii=False)
+    # The swap map and mortality table are built by their own scripts on their
+    # own cadence (the UCITS universe is near-static and deliberately not wired
+    # into the weekly price Action). Both are optional so a clone without them
+    # still builds -- the Swap tab then reports that the data is absent rather
+    # than rendering an empty shell.
+    payload = {"universe": universe, "cma": cma, "mp": mp, "prices": prices}
+    for key, fname in (("swap", "swap_map.json"), ("mortality", "mortality_sg.json")):
+        p = os.path.join(DATA, fname)
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as fh:
+                obj = json.load(fh)
+            if key == "swap":
+                obj = slim_swap(obj)
+            payload[key] = obj
+        else:
+            print(f"  ! {fname} absent — Swap tab will report missing data")
+    blob = json.dumps(payload, ensure_ascii=False)
     needle = "window.__DATA__=null;"
     if needle not in html:
         print("  WARNING: data-boot sentinel not found in template.html; docs not built")
