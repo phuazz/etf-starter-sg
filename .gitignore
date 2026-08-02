@@ -8,3 +8,4 @@ node_modules/
 *.log
 data/.lse_cache.json
 data/.swap_prices.pkl
+data/.name_prices.pkl

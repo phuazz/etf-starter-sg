@@ -398,3 +398,86 @@ def test_tracking_error_is_not_used_as_the_metric(swap):
         for a in e["alternatives"]:
             assert "te_pp" not in a.get("verification", {}), (
                 f"{e['ticker']}->{a['ticker']}: tracking error reintroduced")
+
+
+# --------------------------------------------------------------------------
+# 8. Single-name decomposition
+# --------------------------------------------------------------------------
+def test_decomposition_shares_are_valid_and_complementary(swap):
+    for n in swap["single_names"]:
+        d = n.get("decomposition")
+        assert d is not None, f"{n['ticker']}: no decomposition recorded"
+        r = d.get("replicable_share")
+        if r is None:
+            assert d.get("basis"), f"{n['ticker']}: null share with no reason"
+            continue
+        assert 0.0 <= r <= 1.0, f"{n['ticker']}: share {r} out of range"
+        assert abs((r + d["idiosyncratic_share"]) - 1.0) < 1e-6, n["ticker"]
+        assert n["replicable_share"] == r, f"{n['ticker']}: top-level share out of sync"
+
+
+def test_decomposition_never_upgrades_a_proxy_to_an_equivalent(swap):
+    """A high replicable share is not permission to call a sector fund a
+    substitute. The concentration risk of a single name IS the residual."""
+    for n in swap["single_names"]:
+        for p in n["sector_proxies"]:
+            assert p["is_equivalent"] is False, n["ticker"]
+        assert n["verdict"] in ("no_ucits_equivalent_possible",
+                                "may_already_be_outside_us_situs"), n["ticker"]
+
+
+def test_decomposition_states_the_unbuyable_residual(swap):
+    for n in swap["single_names"]:
+        if n.get("replicable_share") is not None:
+            assert n.get("verdict_detail"), f"{n['ticker']}: share without an explanation"
+            assert "cannot be bought" in n["verdict_detail"], n["ticker"]
+
+
+def test_decomposition_used_same_venue_proxies(swap):
+    """Cross-venue regressors would import the close-time artefact that
+    measured 6.03pp on a pair that genuinely tracks."""
+    meta = swap["_meta"]["single_name_decomposition"]
+    assert meta["why_us_listed_proxies"]
+    assert "hedge ratio" in meta["caveat"]
+    for n in swap["single_names"]:
+        d = n.get("decomposition") or {}
+        if d.get("market_proxy"):
+            assert not d["market_proxy"].endswith(".L"), n["ticker"]
+        if d.get("sector_proxy_used"):
+            assert not d["sector_proxy_used"].endswith(".L"), n["ticker"]
+
+
+# --------------------------------------------------------------------------
+# 9. Mortality data for the risk-scale panel
+# --------------------------------------------------------------------------
+@pytest.fixture(scope="module")
+def mort():
+    return load("mortality_sg.json")
+
+
+def test_mortality_is_sourced_and_dated(mort):
+    m = mort["_meta"]
+    assert "SingStat" in m["source"]
+    assert m["year"] and m["units"]
+    assert m["what_this_is_not"], "the limits of this figure must travel with it"
+    assert m["how_to_present"], "presentation rule must travel with the data"
+
+
+def test_mortality_rates_are_plausible_and_rise_with_age(mort):
+    for sex, bands in mort["rates"].items():
+        keys = sorted((int(k) for k in bands), key=int)
+        assert keys, sex
+        for k in keys:
+            r = bands[str(k)]["rate_per_1000"]
+            assert 0 <= r < 500, f"{sex} age {k}: implausible rate {r}"
+        # from age 30 upward mortality should be non-decreasing across bands
+        adult = [bands[str(k)]["rate_per_1000"] for k in keys if k >= 30]
+        assert adult == sorted(adult), f"{sex}: adult rates not monotonic: {adult}"
+
+
+def test_mortality_bands_are_disjoint(mort):
+    """The source also publishes cumulative '70 Years & Over' rows. Mixing
+    those with the five-year bands would double-count."""
+    for sex, bands in mort["rates"].items():
+        for k, v in bands.items():
+            assert " - " in v["band"], f"{sex}: cumulative band leaked in: {v['band']}"

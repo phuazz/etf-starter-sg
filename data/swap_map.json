@@ -36,6 +36,17 @@
     "insufficient": 5
    },
    "tier1_contradictions": 2
+  },
+  "single_name_decomposition": {
+   "run": "2026-08-02",
+   "method": "weekly total returns regressed on SPY plus a market-orthogonalised US sector ETF; R-squared is the share a UCITS market-plus-sector combination reproduces",
+   "why_us_listed_proxies": "Both regressors are US-listed. Cross-venue return differences carry a close-time artefact large enough to swamp this measurement -- it measured 6.03pp on a pair that genuinely tracks. The UCITS line is named separately as the thing to buy; it is not the thing being regressed.",
+   "caveat": "A variance share over one window, not a hedge ratio and not a forecast. A high figure does not make a sector fund a substitute; the concentration risk of a single name IS the residual.",
+   "names_decomposed": 50,
+   "names_skipped": 0,
+   "median_replicable_share": 0.4186,
+   "min_replicable_share": 0.1397,
+   "max_replicable_share": 0.8872
   }
  },
  "etfs": [
@@ -5784,7 +5795,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4868,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4868,
+    "idiosyncratic_share": 0.5132,
+    "market_beta": 1.166,
+    "sector_beta_orthogonal": 0.362,
+    "stock_ann_vol_pp": 27.63,
+    "idio_ann_vol_pp": 19.79,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 49 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 51 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 20 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "ABBV",
@@ -5817,7 +5842,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4255,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4255,
+    "idiosyncratic_share": 0.5745,
+    "market_beta": 0.304,
+    "sector_beta_orthogonal": 1.249,
+    "stock_ann_vol_pp": 24.86,
+    "idio_ann_vol_pp": 18.84,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 43 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 57 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 19 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "ABT",
@@ -5850,7 +5889,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3463,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3463,
+    "idiosyncratic_share": 0.6537,
+    "market_beta": 0.485,
+    "sector_beta_orthogonal": 0.892,
+    "stock_ann_vol_pp": 23.02,
+    "idio_ann_vol_pp": 18.62,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 35 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 65 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 19 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "ACN",
@@ -5883,7 +5936,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2756,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2756,
+    "idiosyncratic_share": 0.7244,
+    "market_beta": 1.005,
+    "sector_beta_orthogonal": -0.246,
+    "stock_ann_vol_pp": 31.43,
+    "idio_ann_vol_pp": 26.75,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 28 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 72 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 27 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "ADBE",
@@ -5916,7 +5983,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3595,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3595,
+    "idiosyncratic_share": 0.6405,
+    "market_beta": 1.404,
+    "sector_beta_orthogonal": 0.418,
+    "stock_ann_vol_pp": 38.65,
+    "idio_ann_vol_pp": 30.93,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 36 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 64 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 31 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "AMD",
@@ -5949,7 +6030,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4809,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4809,
+    "idiosyncratic_share": 0.5191,
+    "market_beta": 1.903,
+    "sector_beta_orthogonal": 2.217,
+    "stock_ann_vol_pp": 54.67,
+    "idio_ann_vol_pp": 39.39,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 48 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 52 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 39 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "AMZN",
@@ -5982,7 +6077,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6124,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6124,
+    "idiosyncratic_share": 0.3876,
+    "market_beta": 1.475,
+    "sector_beta_orthogonal": 1.082,
+    "stock_ann_vol_pp": 34.17,
+    "idio_ann_vol_pp": 21.27,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLY"
+   },
+   "verdict_detail": "About 61 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 39 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 21 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "AVGO",
@@ -6015,7 +6124,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5533,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5533,
+    "idiosyncratic_share": 0.4467,
+    "market_beta": 1.807,
+    "sector_beta_orthogonal": 1.536,
+    "stock_ann_vol_pp": 44.44,
+    "idio_ann_vol_pp": 29.7,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 55 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 45 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 30 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "BA",
@@ -6048,7 +6171,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3273,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3273,
+    "idiosyncratic_share": 0.6727,
+    "market_beta": 1.244,
+    "sector_beta_orthogonal": 0.837,
+    "stock_ann_vol_pp": 37.62,
+    "idio_ann_vol_pp": 30.86,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLI"
+   },
+   "verdict_detail": "About 33 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 67 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 31 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "CAT",
@@ -6081,7 +6218,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5848,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5848,
+    "idiosyncratic_share": 0.4152,
+    "market_beta": 1.018,
+    "sector_beta_orthogonal": 1.96,
+    "stock_ann_vol_pp": 31.36,
+    "idio_ann_vol_pp": 20.21,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLI"
+   },
+   "verdict_detail": "About 58 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 42 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 20 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "COST",
@@ -6114,7 +6265,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4413,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4413,
+    "idiosyncratic_share": 0.5587,
+    "market_beta": 0.757,
+    "sector_beta_orthogonal": 0.863,
+    "stock_ann_vol_pp": 23.54,
+    "idio_ann_vol_pp": 17.6,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 44 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 56 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 18 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "CRM",
@@ -6147,7 +6312,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3783,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3783,
+    "idiosyncratic_share": 0.6217,
+    "market_beta": 1.403,
+    "sector_beta_orthogonal": 0.432,
+    "stock_ann_vol_pp": 37.71,
+    "idio_ann_vol_pp": 29.73,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 38 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 62 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 30 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "CSCO",
@@ -6180,7 +6359,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2698,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2698,
+    "idiosyncratic_share": 0.7302,
+    "market_beta": 0.81,
+    "sector_beta_orthogonal": 0.148,
+    "stock_ann_vol_pp": 25.5,
+    "idio_ann_vol_pp": 21.79,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 27 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 73 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 22 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "DIS",
@@ -6213,7 +6406,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3685,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3685,
+    "idiosyncratic_share": 0.6315,
+    "market_beta": 1.061,
+    "sector_beta_orthogonal": 0.333,
+    "stock_ann_vol_pp": 28.99,
+    "idio_ann_vol_pp": 23.04,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLC"
+   },
+   "verdict_detail": "About 37 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 63 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 23 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "GE",
@@ -6246,7 +6453,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4904,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4904,
+    "idiosyncratic_share": 0.5096,
+    "market_beta": 1.162,
+    "sector_beta_orthogonal": 1.325,
+    "stock_ann_vol_pp": 31.75,
+    "idio_ann_vol_pp": 22.66,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLI"
+   },
+   "verdict_detail": "About 49 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 51 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 23 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "GOOGL",
@@ -6279,7 +6500,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5145,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5145,
+    "idiosyncratic_share": 0.4855,
+    "market_beta": 1.237,
+    "sector_beta_orthogonal": 1.091,
+    "stock_ann_vol_pp": 32.49,
+    "idio_ann_vol_pp": 22.64,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLC"
+   },
+   "verdict_detail": "About 51 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 49 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 23 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "GS",
@@ -6312,7 +6547,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6958,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6958,
+    "idiosyncratic_share": 0.3042,
+    "market_beta": 1.232,
+    "sector_beta_orthogonal": 1.085,
+    "stock_ann_vol_pp": 28.18,
+    "idio_ann_vol_pp": 15.54,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLF"
+   },
+   "verdict_detail": "About 70 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 30 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 16 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "HD",
@@ -6345,7 +6594,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3881,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3881,
+    "idiosyncratic_share": 0.6119,
+    "market_beta": 0.889,
+    "sector_beta_orthogonal": 0.506,
+    "stock_ann_vol_pp": 24.82,
+    "idio_ann_vol_pp": 19.42,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLY"
+   },
+   "verdict_detail": "About 39 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 61 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 19 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "IBM",
@@ -6378,7 +6641,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.1397,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.1397,
+    "idiosyncratic_share": 0.8603,
+    "market_beta": 0.704,
+    "sector_beta_orthogonal": 0.123,
+    "stock_ann_vol_pp": 30.75,
+    "idio_ann_vol_pp": 28.52,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 14 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 86 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 29 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "INTC",
@@ -6411,7 +6688,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2489,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2489,
+    "idiosyncratic_share": 0.7511,
+    "market_beta": 1.546,
+    "sector_beta_orthogonal": 0.922,
+    "stock_ann_vol_pp": 53.55,
+    "idio_ann_vol_pp": 46.41,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 25 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 75 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 46 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "INTU",
@@ -6444,7 +6735,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2725,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2725,
+    "idiosyncratic_share": 0.7275,
+    "market_beta": 1.178,
+    "sector_beta_orthogonal": 0.244,
+    "stock_ann_vol_pp": 36.93,
+    "idio_ann_vol_pp": 31.5,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 27 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 73 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 32 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "JNJ",
@@ -6477,7 +6782,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4352,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4352,
+    "idiosyncratic_share": 0.5648,
+    "market_beta": 0.199,
+    "sector_beta_orthogonal": 0.914,
+    "stock_ann_vol_pp": 17.82,
+    "idio_ann_vol_pp": 13.39,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 44 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 56 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 13 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "JPM",
@@ -6510,7 +6829,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.7706,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.7706,
+    "idiosyncratic_share": 0.2294,
+    "market_beta": 1.006,
+    "sector_beta_orthogonal": 1.303,
+    "stock_ann_vol_pp": 25.12,
+    "idio_ann_vol_pp": 12.03,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLF"
+   },
+   "verdict_detail": "About 77 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 23 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 12 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "KO",
@@ -6543,7 +6876,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6352,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6352,
+    "idiosyncratic_share": 0.3648,
+    "market_beta": 0.357,
+    "sector_beta_orthogonal": 1.051,
+    "stock_ann_vol_pp": 16.47,
+    "idio_ann_vol_pp": 9.95,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 64 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 36 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 10 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "LLY",
@@ -6576,7 +6923,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4078,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4078,
+    "idiosyncratic_share": 0.5922,
+    "market_beta": 0.54,
+    "sector_beta_orthogonal": 1.582,
+    "stock_ann_vol_pp": 33.56,
+    "idio_ann_vol_pp": 25.83,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 41 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 59 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 26 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "MA",
@@ -6609,7 +6970,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5046,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5046,
+    "idiosyncratic_share": 0.4954,
+    "market_beta": 0.886,
+    "sector_beta_orthogonal": 0.586,
+    "stock_ann_vol_pp": 22.33,
+    "idio_ann_vol_pp": 15.72,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLF"
+   },
+   "verdict_detail": "About 50 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 50 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 16 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "MCD",
@@ -6642,7 +7017,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.197,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.197,
+    "idiosyncratic_share": 0.803,
+    "market_beta": 0.478,
+    "sector_beta_orthogonal": 0.141,
+    "stock_ann_vol_pp": 17.83,
+    "idio_ann_vol_pp": 15.97,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLY"
+   },
+   "verdict_detail": "About 20 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 80 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 16 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "META",
@@ -6675,7 +7064,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6064,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6064,
+    "idiosyncratic_share": 0.3936,
+    "market_beta": 1.376,
+    "sector_beta_orthogonal": 2.27,
+    "stock_ann_vol_pp": 42.66,
+    "idio_ann_vol_pp": 26.76,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLC"
+   },
+   "verdict_detail": "About 61 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 39 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 27 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "MRK",
@@ -6708,7 +7111,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4018,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4018,
+    "idiosyncratic_share": 0.5982,
+    "market_beta": 0.209,
+    "sector_beta_orthogonal": 1.288,
+    "stock_ann_vol_pp": 25.69,
+    "idio_ann_vol_pp": 19.87,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 40 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 60 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 20 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "MSFT",
@@ -6741,7 +7158,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5202,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5202,
+    "idiosyncratic_share": 0.4798,
+    "market_beta": 1.133,
+    "sector_beta_orthogonal": 0.779,
+    "stock_ann_vol_pp": 27.67,
+    "idio_ann_vol_pp": 19.17,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 52 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 48 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 19 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "MU",
@@ -6774,7 +7205,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.429,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.429,
+    "idiosyncratic_share": 0.571,
+    "market_beta": 1.837,
+    "sector_beta_orthogonal": 2.151,
+    "stock_ann_vol_pp": 55.97,
+    "idio_ann_vol_pp": 42.29,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 43 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 57 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 42 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "NFLX",
@@ -6807,7 +7252,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.355,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.355,
+    "idiosyncratic_share": 0.645,
+    "market_beta": 1.389,
+    "sector_beta_orthogonal": 1.127,
+    "stock_ann_vol_pp": 43.04,
+    "idio_ann_vol_pp": 34.57,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLC"
+   },
+   "verdict_detail": "About 36 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 64 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 35 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "NKE",
@@ -6840,7 +7299,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2539,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2539,
+    "idiosyncratic_share": 0.7461,
+    "market_beta": 1.048,
+    "sector_beta_orthogonal": 0.374,
+    "stock_ann_vol_pp": 34.75,
+    "idio_ann_vol_pp": 30.01,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLY"
+   },
+   "verdict_detail": "About 25 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 75 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 30 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "NOW",
@@ -6873,7 +7346,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3726,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3726,
+    "idiosyncratic_share": 0.6274,
+    "market_beta": 1.551,
+    "sector_beta_orthogonal": 0.8,
+    "stock_ann_vol_pp": 43.27,
+    "idio_ann_vol_pp": 34.27,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 37 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 63 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 34 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "NVDA",
@@ -6906,7 +7393,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6348,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6348,
+    "idiosyncratic_share": 0.3652,
+    "market_beta": 2.057,
+    "sector_beta_orthogonal": 1.853,
+    "stock_ann_vol_pp": 47.85,
+    "idio_ann_vol_pp": 28.92,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 63 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 37 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 29 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "ORCL",
@@ -6939,7 +7440,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3278,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3278,
+    "idiosyncratic_share": 0.6722,
+    "market_beta": 1.336,
+    "sector_beta_orthogonal": 1.108,
+    "stock_ann_vol_pp": 42.47,
+    "idio_ann_vol_pp": 34.82,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 33 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 67 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 35 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "PEP",
@@ -6972,7 +7487,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5548,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5548,
+    "idiosyncratic_share": 0.4452,
+    "market_beta": 0.322,
+    "sector_beta_orthogonal": 1.12,
+    "stock_ann_vol_pp": 18.26,
+    "idio_ann_vol_pp": 12.18,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 55 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 45 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 12 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "PFE",
@@ -7005,7 +7534,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3223,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3223,
+    "idiosyncratic_share": 0.6777,
+    "market_beta": 0.469,
+    "sector_beta_orthogonal": 0.982,
+    "stock_ann_vol_pp": 25.24,
+    "idio_ann_vol_pp": 20.78,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 32 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 68 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 21 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "PG",
@@ -7038,7 +7581,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6029,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6029,
+    "idiosyncratic_share": 0.3971,
+    "market_beta": 0.409,
+    "sector_beta_orthogonal": 1.048,
+    "stock_ann_vol_pp": 17.38,
+    "idio_ann_vol_pp": 10.95,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 60 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 40 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 11 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "PLTR",
@@ -7071,7 +7628,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2863,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2863,
+    "idiosyncratic_share": 0.7137,
+    "market_beta": 2.104,
+    "sector_beta_orthogonal": 1.152,
+    "stock_ann_vol_pp": 67.33,
+    "idio_ann_vol_pp": 56.88,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 29 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 71 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 57 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "PM",
@@ -7104,7 +7675,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3325,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3325,
+    "idiosyncratic_share": 0.6675,
+    "market_beta": 0.336,
+    "sector_beta_orthogonal": 1.096,
+    "stock_ann_vol_pp": 23.31,
+    "idio_ann_vol_pp": 19.04,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 33 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 67 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 19 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "QCOM",
@@ -7137,7 +7722,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.5006,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.5006,
+    "idiosyncratic_share": 0.4994,
+    "market_beta": 1.539,
+    "sector_beta_orthogonal": 1.458,
+    "stock_ann_vol_pp": 40.79,
+    "idio_ann_vol_pp": 28.83,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 50 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 50 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 29 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "TMO",
@@ -7170,7 +7769,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4809,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4809,
+    "idiosyncratic_share": 0.5191,
+    "market_beta": 0.837,
+    "sector_beta_orthogonal": 1.098,
+    "stock_ann_vol_pp": 27.7,
+    "idio_ann_vol_pp": 19.96,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 48 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 52 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 20 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "TSLA",
@@ -7203,7 +7816,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.6163,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.6163,
+    "idiosyncratic_share": 0.3837,
+    "market_beta": 1.937,
+    "sector_beta_orthogonal": 2.989,
+    "stock_ann_vol_pp": 57.88,
+    "idio_ann_vol_pp": 35.85,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLY"
+   },
+   "verdict_detail": "About 62 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 38 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 36 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "TXN",
@@ -7236,7 +7863,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.3694,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.3694,
+    "idiosyncratic_share": 0.6306,
+    "market_beta": 1.125,
+    "sector_beta_orthogonal": 0.545,
+    "stock_ann_vol_pp": 31.34,
+    "idio_ann_vol_pp": 24.88,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 37 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 63 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 25 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "UBER",
@@ -7269,7 +7910,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2307,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2307,
+    "idiosyncratic_share": 0.7693,
+    "market_beta": 1.27,
+    "sector_beta_orthogonal": 0.405,
+    "stock_ann_vol_pp": 43.73,
+    "idio_ann_vol_pp": 38.35,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLK"
+   },
+   "verdict_detail": "About 23 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 77 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 38 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "UNH",
@@ -7302,7 +7957,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.2089,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.2089,
+    "idiosyncratic_share": 0.7911,
+    "market_beta": 0.34,
+    "sector_beta_orthogonal": 1.188,
+    "stock_ann_vol_pp": 34.32,
+    "idio_ann_vol_pp": 30.53,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLV"
+   },
+   "verdict_detail": "About 21 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 79 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 31 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "V",
@@ -7335,7 +8004,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4684,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4684,
+    "idiosyncratic_share": 0.5316,
+    "market_beta": 0.84,
+    "sector_beta_orthogonal": 0.561,
+    "stock_ann_vol_pp": 22.01,
+    "idio_ann_vol_pp": 16.05,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLF"
+   },
+   "verdict_detail": "About 47 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 53 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 16 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "WMT",
@@ -7368,7 +8051,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.4118,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.4118,
+    "idiosyncratic_share": 0.5882,
+    "market_beta": 0.585,
+    "sector_beta_orthogonal": 0.989,
+    "stock_ann_vol_pp": 22.76,
+    "idio_ann_vol_pp": 17.46,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLP"
+   },
+   "verdict_detail": "About 41 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 59 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 17 points of annualised volatility, is what a swap actually gives up."
   },
   {
    "ticker": "XOM",
@@ -7401,7 +8098,21 @@
      "note": "Partial sector proxy, NOT an equivalent."
     }
    ],
-   "replicable_share": null
+   "replicable_share": 0.8872,
+   "decomposition": {
+    "weeks": 260,
+    "replicable_share": 0.8872,
+    "idiosyncratic_share": 0.1128,
+    "market_beta": 0.296,
+    "sector_beta_orthogonal": 0.985,
+    "stock_ann_vol_pp": 27.94,
+    "idio_ann_vol_pp": 9.38,
+    "used_sector": true,
+    "basis": "weekly total returns, 260 weeks, regressed on SPY plus market-orthogonalised sector. R-squared is a variance share over this window, not a hedge ratio and not a forecast.",
+    "market_proxy": "SPY",
+    "sector_proxy_used": "XLE"
+   },
+   "verdict_detail": "About 89 per cent of this position's return variance over the past 5 years came from the broad US market and its sector, which UCITS funds can buy. The other 11 per cent was specific to the company and cannot be bought outside US situs at any price -- that residual, 9 points of annualised volatility, is what a swap actually gives up."
   }
  ]
 }
