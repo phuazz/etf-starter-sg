@@ -6,3 +6,4 @@ data/.us_situs_cache.json
 node_modules/
 .DS_Store
 *.log
+data/.lse_cache.json

@@ -1,0 +1,954 @@
+{
+ "_meta": {
+  "purpose": "Authoritative reference data. Top-priority input to build_ucits_universe.py for domicile (ISIN) and expense ratio.",
+  "fetched": "2026-08-02",
+  "builder": "scripts/verify_issuer_data.py",
+  "sources": {
+   "isin_domicile": "London Stock Exchange public instrument API -- authoritative, ungated",
+   "vanguard_ter": "Vanguard UK product list API -- issuer-published ongoing charges figure"
+  },
+  "not_used": "iShares product list, which sits behind a terms-of-use acceptance gate.",
+  "counts": {
+   "tickers": 100,
+   "with_isin": 95,
+   "with_issuer_ter": 14,
+   "warnings": 32
+  }
+ },
+ "data": {
+  "CSPX": {
+   "isin": "IE00B5BMR087",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE S&P 500 UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "CSP1": {
+   "isin": "IE00B5BMR087",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE S&P 500 UCITS ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "IUSA": {
+   "isin": "IE0031442068",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES S&P 500 UCITS ETF USD (DIST)",
+   "lse_currency": "GBX"
+  },
+  "IDUS": {
+   "isin": "IE0031442068",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES S&P 500 UCITS ETF USD (DIST)",
+   "lse_currency": "USD"
+  },
+  "VUAA": {
+   "isin": "IE00BFMXXD54",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD S&P 500 UCITS ETF",
+   "lse_currency": "USD",
+   "ter": 0.07,
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VUAG": {
+   "isin": "IE00BFMXXD54",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD S&P 500 UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.07,
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VUSA": {
+   "isin": "IE00B3XXRP09",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD S&P 500 UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.07,
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "SPY5": {
+   "isin": "IE00B6YX5C33",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P 500 UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "SPXS": {
+   "isin": "IE00B3YCGJ38",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "INVESCO S&P 500 UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "SPXP": {
+   "isin": "IE00B3YCGJ38",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "INVESCO S&P 500 UCITS ETF",
+   "lse_currency": "GBX"
+  },
+  "CSUS": {
+   "isin": "IE00B52SFT06",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS MSCI USA UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "XMUS": {
+   "isin": "LU0274210672",
+   "isin_src": "LSE instrument API",
+   "domicile": "LU",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X MSCI USA SWAP",
+   "lse_currency": "GBX"
+  },
+  "XDUS": {
+   "isin": "IE00BJ0KDR00",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X MSCI USA",
+   "lse_currency": "GBX"
+  },
+  "CNDX": {
+   "isin": "IE00B53SZB19",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS NASDAQ 100 UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "CNX1": {
+   "isin": "IE00B53SZB19",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS NASDAQ 100 UCITS ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "EQQQ": {
+   "isin": "IE0032077012",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF",
+   "lse_currency": "GBX"
+  },
+  "EQQU": {
+   "isin": "IE0032077012",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "XNAS": {
+   "isin": "IE00BMFKG444",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X NASDAQ 100 ETF 1C",
+   "lse_currency": "USD"
+  },
+  "IDP6": {
+   "isin": "IE00B2QWCY14",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P SMLL CAP 600 ETF USD (DIST)",
+   "lse_currency": "USD"
+  },
+  "IWDA": {
+   "isin": "IE00B4L5Y983",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE MSCI WORLD ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "SWDA": {
+   "isin": "IE00B4L5Y983",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE MSCI WORLD ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "IWRD": {
+   "isin": "IE00B0M62Q58",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES MSCI WORLD UCITS ETF USD (DIST)",
+   "lse_currency": "GBX"
+  },
+  "XDWD": {
+   "isin": "IE00BJ0KDQ92",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X MSCI WORLD 1C",
+   "lse_currency": "USD"
+  },
+  "HMWO": {
+   "isin": "IE00B4X9L533",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "HSBC MSCI WORLD UCITS ETF",
+   "lse_currency": "GBX"
+  },
+  "VEVE": {
+   "isin": "IE00BKX55T58",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VHVG": {
+   "isin": "IE00BK5BQV03",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VHVE": {
+   "isin": "IE00BK5BQV03",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF",
+   "lse_currency": "USD",
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VWRL": {
+   "isin": "IE00B3RBWM25",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE ALL-WORLD UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VWRA": {
+   "isin": "IE00BK5BQT80",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE ALL-WORLD UCITS ETF",
+   "lse_currency": "USD",
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VWRP": {
+   "isin": "IE00BK5BQT80",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE ALL-WORLD UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "SSAC": {
+   "isin": "IE00B6R52259",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS MSCI ACWI UCITS ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "ISAC": {
+   "isin": "IE00B6R52259",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS MSCI ACWI UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "IEEM": {
+   "isin": "IE00B0M63177",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES MSCI EM UCITS ETF USD (DIST)",
+   "lse_currency": "GBX"
+  },
+  "XMME": {
+   "isin": "IE00BTJRMP35",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X MSCI EMERGING MARKETS",
+   "lse_currency": "USD"
+  },
+  "VFEM": {
+   "isin": "IE00B3VVMM84",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE EMERGING MARKETS UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.17,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-emerging-markets-ucits-etf-usd-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "VFEG": {
+   "isin": "IE00BK5BR733",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE EMERGING MARKETS UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.17,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-emerging-markets-ucits-etf-usd-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "EIMI": {
+   "isin": "IE00BKM4GZ66",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES CORE EM IMI UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "EMIM": {
+   "isin": "IE00BKM4GZ66",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES CORE EM IMI UCITS ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "IMEU": {
+   "isin": "IE00B1YZSC51",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES MSCI EUROPE UCITS ETF EUR (DIST)",
+   "lse_currency": "GBX"
+  },
+  "VEUR": {
+   "isin": "IE00B945VV12",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE DEVELOPED EUROPE UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.1,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-europe-ucits-etf-eur-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "MEUD": {
+   "isin": "LU0908500753",
+   "isin_src": "LSE instrument API",
+   "domicile": "LU",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "AMUNDI CORE STOXX EUROPE 600 ETF ACC",
+   "lse_currency": "GBX"
+  },
+  "IJPA": {
+   "isin": "IE00B4L5YX21",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE MSCI JAPAN IMI ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "SJPA": {
+   "isin": "IE00B4L5YX21",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS CORE MSCI JAPAN IMI ETF USD (ACC)",
+   "lse_currency": "GBX"
+  },
+  "VJPN": {
+   "isin": "IE00B95PGT31",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD FTSE JAPAN UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.1,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-japan-ucits-etf-usd-distributing",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "XDJP": {
+   "isin": "LU0839027447",
+   "isin_src": "LSE instrument API",
+   "domicile": "LU",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "X NIKKEI 225",
+   "lse_currency": "GBX"
+  },
+  "IUIT": {
+   "isin": "IE00B3WJKG14",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P 500 INF TECH SECT ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLK": {
+   "isin": "IE00BWBXM948",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US TECHNOLOGY UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUHC": {
+   "isin": "IE00B43HR379",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P 500 HEALTH CR SECT ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLV": {
+   "isin": "IE00BWBXM617",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US HEALTH CARE UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUFS": {
+   "isin": "IE00B4JNQZ49",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P 500 FIN SECT ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "SXLF": {
+   "isin": "IE00BWBXM500",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US FINANCIALS UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUES": {
+   "isin": "IE00B42NKQ00",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P 500 ENERGY SECT ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "SXLE": {
+   "isin": "IE00BWBXM492",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US ENERGY UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUCD": {
+   "isin": "IE00B4MCHD36",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS S&P 500 CON DISC SECT ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLY": {
+   "isin": "IE00BWBXM278",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US CONSUMER DIS UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUCS": {
+   "isin": "IE00B40B8R38",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "IS SP500 CON STPL SCTR UCITS ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLP": {
+   "isin": "IE00BWBXM385",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US CONSUMER STAPLES UCITSETF",
+   "lse_currency": "USD"
+  },
+  "IUIS": {
+   "isin": "IE00B4LN9N13",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS SP500 INDUS SCTR UCITS ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLI": {
+   "isin": "IE00BWBXM724",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US INDUSTRIALS UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUUS": {
+   "isin": "IE00B4KBBD01",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISH SP500 UTILIT SCTR UCITS ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLU": {
+   "isin": "IE00BWBXMB69",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US UTILITIES UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUCM": {
+   "isin": "IE00BDDRF478",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISH SP500 COMMS UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "SXLC": {
+   "isin": "IE00BFWFPX50",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US COMM SERV UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "IUMS": {
+   "isin": "IE00B4MKCJ84",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS SP500 MAT SCTR UCITS ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "SXLB": {
+   "isin": "IE00BWBXM831",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US MATERIALS UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "SMGB": {
+   "isin": "IE00BMC38736",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANECK SEMICONDUCTOR UCITS ETF",
+   "lse_currency": "GBP"
+  },
+  "SMH": {
+   "isin": "IE00BMC38736",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANECK SEMICONDUCTOR UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "SEMI": {
+   "isin": "IE000I8KRLL9",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES MSCI GLOBAL SEMIC UCITS USD ACC",
+   "lse_currency": "GBP"
+  },
+  "IUSP": {
+   "isin": "IE00B1FZSF77",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS US PROP YIELD UCITS ETF USD (DIST)",
+   "lse_currency": "GBX"
+  },
+  "IWQU": {
+   "isin": "IE00BP3QZ601",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHS EDGE MSCI WRLD QLTY FAC ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "IWMO": {
+   "isin": "IE00BP3QZ825",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHS EDGE MSCI WLD MMNT FACT ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "IWVL": {
+   "isin": "IE00BP3QZB59",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHS EDGE MSCI WRL VAL FCT UCITS ETF ACC",
+   "lse_currency": "USD"
+  },
+  "UDVD": {
+   "isin": "IE00B6YX5D40",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US DIVID ARISTOCRATS ETF $",
+   "lse_currency": "USD"
+  },
+  "USDV": {
+   "isin": "IE00B6YX5D40",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "SS SPDR S&P US DIVID ARISTOCRATS UCITETF",
+   "lse_currency": "GBP"
+  },
+  "AGGU": {
+   "isin": "IE00BZ043R46",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISH GLOBAL AGG BOND ETF USD HEDGED ACC",
+   "lse_currency": "USD"
+  },
+  "AGGG": {
+   "isin": "IE00B3F81409",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISH GLOBAL AGG BOND ETF USD DIST",
+   "lse_currency": "USD"
+  },
+  "VAGU": {
+   "isin": "IE00BG47KJ78",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD GLOBAL AGGREGATE BD UCITS ETF",
+   "lse_currency": "USD"
+  },
+  "VAGP": {
+   "isin": "IE00BG47KG48",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "VANGUARD GLOBAL AGGREGATE BD UCITS ETF",
+   "lse_currency": "GBP",
+   "ter": 0.08,
+   "ter_src": "Vanguard UK product API, vanguard-global-aggregate-bond-ucits-etf-gbp-hedged-accumulating",
+   "issuer_domicile_note": "ie-domicile"
+  },
+  "IUAG": {
+   "isin": "IE00B44CGS96",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS US AGG BOND UCITS ETF USD (DIST)",
+   "lse_currency": "USD"
+  },
+  "SUAG": {
+   "isin": "IE00B44CGS96",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS US AGG BOND UCITS ETF USD (DIST)",
+   "lse_currency": "GBP"
+  },
+  "IDTL": {
+   "isin": "IE00BSKRJZ44",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHS $ TRSRY BD 20+YR UCITS ETF USD DIST",
+   "lse_currency": "USD"
+  },
+  "DTLA": {
+   "isin": "IE00BFM6TC58",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISH $ T BND 20+YR ETF USD ACC",
+   "lse_currency": "USD"
+  },
+  "IDTM": {
+   "isin": "IE00B1FZS798",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS $ TREAS BOND 7-10YR ETF USD (DIST)",
+   "lse_currency": "USD"
+  },
+  "IBTM": {
+   "isin": "IE00B1FZS798",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS $ TREAS BOND 7-10YR ETF USD (DIST)",
+   "lse_currency": "GBP"
+  },
+  "IBTS": {
+   "isin": "IE00B14X4S71",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES $TRES.BD1-3YR UCITS ETF USD DIST",
+   "lse_currency": "GBP"
+  },
+  "ITPS": {
+   "isin": "IE00B1FZSC47",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES USD TIPS UCITS ETF USD (ACC)",
+   "lse_currency": "GBP"
+  },
+  "IDTP": {
+   "isin": "IE00B1FZSC47",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES USD TIPS UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "LQDE": {
+   "isin": "IE0032895942",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES $ CORP.BOND UCITS ETF USD (DIST)",
+   "lse_currency": "USD"
+  },
+  "LQDA": {
+   "isin": "IE00BYXYYJ35",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES $ CORP BOND UCITS ETF USD (ACC)",
+   "lse_currency": "USD"
+  },
+  "IHYU": {
+   "isin": "IE00B4PY7Y77",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS $ HIGH YIELD CRP BND ETF USD DIST",
+   "lse_currency": "USD"
+  },
+  "SHYU": {
+   "isin": "IE00B4PY7Y77",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHRS $ HIGH YIELD CRP BND ETF USD DIST",
+   "lse_currency": "GBP"
+  },
+  "SGLN": {
+   "isin": "IE00B4ND3602",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES PHYSICAL GOLD ETC",
+   "lse_currency": "GBX"
+  },
+  "IGLN": {
+   "isin": "IE00B4ND3602",
+   "isin_src": "LSE instrument API",
+   "domicile": "IE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "ISHARES PHYSICAL GOLD ETC",
+   "lse_currency": "USD"
+  },
+  "PHAU": {
+   "isin": "JE00B1VS3770",
+   "isin_src": "LSE instrument API",
+   "domicile": "JE",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "WISDOMTREE PHYSICAL GOLD",
+   "lse_currency": "USD"
+  },
+  "GBS": {
+   "isin": "GB00B00FHZ82",
+   "isin_src": "LSE instrument API",
+   "domicile": "GB",
+   "domicile_src": "ISIN prefix (LSE instrument API)",
+   "lse_name": "GOLD BULLION SECURITIES",
+   "lse_currency": "USD"
+  }
+ },
+ "warnings": [
+  {
+   "ticker": "CSP1",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "IDUS",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "VUAG",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SPY5",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SPXP",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "UIMI",
+   "warn": "no ISIN from LSE (HTTP 404)"
+  },
+  {
+   "ticker": "CNX1",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "EQQU",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "XNAS",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "XRS2",
+   "warn": "no ISIN from LSE (HTTP 404)"
+  },
+  {
+   "ticker": "RS2K",
+   "warn": "no ISIN from LSE (HTTP 404)"
+  },
+  {
+   "ticker": "IDP6",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "ZPRV",
+   "warn": "no ISIN from LSE (HTTP 404)"
+  },
+  {
+   "ticker": "SWDA",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "XDWD",
+   "warn": "LSE country LU disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "VHVG",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "VWRA",
+   "warn": "TER DISAGREEMENT: curated 0.22 vs issuer 0.14 -- issuer figure used, curated.json may be stale",
+   "curated": 0.22,
+   "issuer": 0.14
+  },
+  {
+   "ticker": "VWRP",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SSAC",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "VFEG",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "EIMI",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SJPA",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SMGB",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "UDVD",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "AGGG",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SUAG",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "IDTM",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "IDTS",
+   "warn": "no ISIN from LSE (HTTP 404)"
+  },
+  {
+   "ticker": "IDTP",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SHYU",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "SGLN",
+   "warn": "LSE country ZZ disagrees with ISIN prefix IE"
+  },
+  {
+   "ticker": "GBS",
+   "warn": "LSE country JE disagrees with ISIN prefix GB"
+  }
+ ]
+}

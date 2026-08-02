@@ -136,6 +136,19 @@ def _save_cache(cache):
         json.dump(cache, fh, indent=1, sort_keys=True)
 
 
+def resolve_wht_domicile_from_isin(isin):
+    """Domicile from the ISIN prefix -- the house rule, and authoritative.
+
+    An ISIN prefix is the fund's own registered identifier, not an inference
+    from a marketing string. Where data/issuer_verified.json supplies one this
+    supersedes the fund-family heuristic entirely.
+    """
+    if not isin or len(isin) < 2:
+        return None
+    dom = isin[:2]
+    return dom, "isin_prefix", (0.15 if dom == "IE" else 0.30)
+
+
 def resolve_wht_domicile(fund_family):
     """Return (domicile, confidence, us_div_wht_rate).
 
@@ -165,6 +178,18 @@ def main():
     seed = load("ucits_seed.json")
     index_map = load("index_map.json")
     known_idx = set(index_map["indices"])
+
+    # Authoritative overlay: ISIN-derived domicile and issuer-published TER.
+    # Optional so a fresh clone still builds, but its absence means every
+    # domicile falls back to the weaker fund-family heuristic.
+    vpath = os.path.join(DATA, "issuer_verified.json")
+    verified = {}
+    if os.path.exists(vpath):
+        with open(vpath, encoding="utf-8") as fh:
+            verified = json.load(fh)["data"]
+        print(f"issuer_verified.json: {len(verified)} lines")
+    else:
+        print("! issuer_verified.json absent -- run scripts/verify_issuer_data.py first")
 
     cands = seed["candidates"]
     tickers = [c["t"] for c in cands]
@@ -221,13 +246,34 @@ def main():
 
         situs = "non_us" if is_ucits else "unresolved"
 
-        dom, dom_conf, wht = resolve_wht_domicile(y.get("fundFamily"))
-
         ccy = y.get("currency")
         ov = seed.get("curated_overrides", {}).get(t, {})
-        ter = ov.get("ter", y.get("netExpenseRatio"))
-        ter_src = ov.get("ter_src") if "ter" in ov else (
-            "yahoo" if y.get("netExpenseRatio") is not None else None)
+        iv = verified.get(t, {})
+
+        by_isin = resolve_wht_domicile_from_isin(iv.get("isin"))
+        if by_isin:
+            dom, dom_conf, wht = by_isin
+        else:
+            dom, dom_conf, wht = resolve_wht_domicile(y.get("fundFamily"))
+
+        # TER priority: issuer-published > curated snapshot > Yahoo.
+        # The issuer's current figure outranks a curated one because curated
+        # figures are dated snapshots and go stale; where the two disagree the
+        # builder says so rather than quietly preferring one.
+        if iv.get("ter") is not None:
+            ter, ter_src = iv["ter"], iv.get("ter_src", "issuer")
+            if "ter" in ov and abs(ov["ter"] - ter) > 1e-9:
+                warnings.append({
+                    "ticker": t,
+                    "flag": (f"TER disagreement: curated.json {ov['ter']} vs issuer "
+                             f"{ter} -- issuer used; the curated figure is stale"),
+                })
+        elif "ter" in ov:
+            ter, ter_src = ov["ter"], ov.get("ter_src")
+        elif y.get("netExpenseRatio") is not None:
+            ter, ter_src = y["netExpenseRatio"], "yahoo"
+        else:
+            ter, ter_src = None, None
         rec = {
             "ticker": t,
             "yahoo": f"{t}.L",
@@ -257,6 +303,14 @@ def main():
             "us_div_wht_rate": wht,
             "figi": f.get("figi"),
             "figi_name": f.get("name"),
+            "isin": iv.get("isin"),
+            "isin_src": iv.get("isin_src"),
+            # The exchange's official name. Used by the index-attribution guard:
+            # a line whose official name names one index provider while its
+            # assigned index key belongs to another is a mis-mapping, and that
+            # is the failure mode where someone swaps into a different exposure
+            # and is never told.
+            "official_name": iv.get("lse_name"),
         }
         if rec["ter"] is None:
             warnings.append({"ticker": t, "flag": "no TER from Yahoo -- needs issuer verification"})

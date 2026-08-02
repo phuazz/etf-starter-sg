@@ -158,9 +158,67 @@ def test_single_names_never_claim_an_equivalent(us):
             f"{n['ticker']}: decomposition present without a regression having been run")
 
 
+PROVIDER_TOKENS = {
+    "MSCI": ("MSCI",),
+    "FTSE Russell": ("FTSE", "RUSSELL"),
+    "S&P Dow Jones": ("S&P", "S AND P"),
+    "Nasdaq": ("NASDAQ",),
+    "Nikkei": ("NIKKEI",),
+    "STOXX": ("STOXX",),
+    "CRSP": ("CRSP",),
+}
+
+
+def test_index_provider_matches_the_official_fund_name():
+    """The fund's official exchange name must not name a DIFFERENT index
+    provider than the index it is mapped to.
+
+    This guard exists because the first cut of the seed got six of these
+    wrong: Vanguard's Europe, Japan and emerging-market lines track FTSE
+    indices and were mapped to MSCI ones, and XDJP tracks the price-weighted
+    Nikkei 225 and was mapped to MSCI Japan. Every one of those would have
+    produced a confident tier-1 "exact index match" for a fund tracking a
+    different index -- the exact failure this tool is supposed to prevent.
+    """
+    ucits = load("ucits_universe.json")
+    idx = load("index_map.json")["indices"]
+    bad = []
+    for f in ucits["funds"]:
+        nm = (f.get("official_name") or "").upper()
+        if not nm:
+            continue
+        provider = idx[f["index_key"]]["provider"]
+        expected = PROVIDER_TOKENS.get(provider)
+        if not expected:          # "multiple", "LBMA" etc -- nothing to assert
+            continue
+        present = {p for p, toks in PROVIDER_TOKENS.items() if any(tk in nm for tk in toks)}
+        if present and provider not in present:
+            bad.append(f"{f['ticker']}: mapped to {provider} ({f['index_key']}) "
+                       f"but official name names {sorted(present)} -- {nm!r}")
+    assert not bad, "index provider contradicts official fund name:\n  " + "\n  ".join(bad)
+
+
 # --------------------------------------------------------------------------
 # 4. Cost and withholding: conservative when unverified
 # --------------------------------------------------------------------------
+def test_every_domicile_is_isin_derived(ucits):
+    """The house rule. A fund-family string is an inference; an ISIN prefix is
+    the fund's own registered identifier. Any line falling back to the string
+    heuristic is a gap, not a result."""
+    weak = [f["ticker"] for f in ucits["funds"]
+            if f["wht_domicile_conf"] != "isin_prefix"]
+    assert not weak, f"domicile not ISIN-derived: {weak}"
+
+
+def test_treaty_rate_follows_irish_isin(ucits):
+    for f in ucits["funds"]:
+        if f["wht_domicile"] == "IE":
+            assert f["us_div_wht_rate"] == 0.15, f["ticker"]
+        else:
+            assert f["us_div_wht_rate"] == 0.30, f"{f['ticker']}: {f['wht_domicile']}"
+
+
+
 def test_unverified_domicile_never_gets_the_treaty_rate(ucits):
     """15 per cent is the Irish treaty rate. Handing it to a line we did not
     verify overstates the swap's benefit -- the direction that misleads

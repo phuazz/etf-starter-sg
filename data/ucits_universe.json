@@ -11,12 +11,12 @@
   "situs_basis": "UCITS status, read from the fund's legal name. A fund cannot be both UCITS-authorised and US-domiciled, so this settles the estate-tax verdict structurally. ETCs are not UCITS funds and are marked situs=unresolved.",
   "withholding_basis": "Irish domicile from the fund-family string only. Unverified lines carry 30 per cent, the conservative direction, and MUST be rendered with a verify flag rather than asserted.",
   "counts": {
-   "candidates": 101,
-   "validated": 96,
+   "candidates": 100,
+   "validated": 95,
    "dropped": 5,
-   "indices_covered": 38,
-   "ter_missing": 17,
-   "domicile_unverified": 29,
+   "indices_covered": 42,
+   "ter_missing": 5,
+   "domicile_unverified": 0,
    "situs_unresolved": 4
   }
  },
@@ -35,18 +35,21 @@
    "exchange": "LSE",
    "ccy": "USD",
    "ccy_is_pence": false,
-   "ter": 0.22,
-   "ter_src": "curated.json 2026-07-09, >=2 issuer sources",
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-accumulating",
    "aum_usd": 75682906112,
    "yield": 0.0,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00PQQHQK0",
-   "figi_name": "VANG FTSE AW USDA"
+   "figi_name": "VANG FTSE AW USDA",
+   "isin": "IE00BK5BQT80",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE ALL-WORLD UCITS ETF"
   },
   {
    "ticker": "VWRL",
@@ -62,18 +65,21 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-distributing",
    "aum_usd": 75682906112,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0032423T2",
-   "figi_name": "VANG FTSE AW USDD"
+   "figi_name": "VANG FTSE AW USDD",
+   "isin": "IE00B3RBWM25",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE ALL-WORLD UCITS ETF"
   },
   {
    "ticker": "VWRP",
@@ -89,18 +95,51 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.14,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-all-world-ucits-etf-usd-accumulating",
    "aum_usd": 75682906112,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00PQQJ258",
-   "figi_name": "VANG FTSE AW USDA"
+   "figi_name": "VANG FTSE AW USDA",
+   "isin": "IE00BK5BQT80",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE ALL-WORLD UCITS ETF"
+  },
+  {
+   "ticker": "VEUR",
+   "yahoo": "VEUR.L",
+   "name": "Vanguard FTSE Developed Europe UCITS ETF",
+   "index_key": "ftse_dev_europe",
+   "index_label": "FTSE Developed Europe",
+   "index_family": "europe",
+   "issuer_hint": "Vanguard",
+   "fund_family": "Vanguard Group (Ireland) Limited",
+   "structure": "ucits_etf",
+   "income": "Distributing",
+   "exchange": "LSE",
+   "ccy": "GBP",
+   "ccy_is_pence": false,
+   "ter": 0.1,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-europe-ucits-etf-eur-distributing",
+   "aum_usd": 7402345984,
+   "yield": null,
+   "is_ucits": true,
+   "situs": "non_us",
+   "estate_tax_exposed": false,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
+   "figi": "BBG004LT5543",
+   "figi_name": "VANG FTSE EUR EURD",
+   "isin": "IE00B945VV12",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE DEVELOPED EUROPE UCITS ETF"
   },
   {
    "ticker": "VEVE",
@@ -116,18 +155,21 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-distributing",
    "aum_usd": 11079917568,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0077NQ4R0",
-   "figi_name": "VANG FTSE DW USDD"
+   "figi_name": "VANG FTSE DW USDD",
+   "isin": "IE00BKX55T58",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF"
   },
   {
    "ticker": "VHVE",
@@ -143,18 +185,21 @@
    "exchange": "LSE",
    "ccy": "USD",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-accumulating",
    "aum_usd": 11079917568,
    "yield": 0.0,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00QB6WFB5",
-   "figi_name": "VANG FTSE DW USDA"
+   "figi_name": "VANG FTSE DW USDA",
+   "isin": "IE00BK5BQV03",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF"
   },
   {
    "ticker": "VHVG",
@@ -170,18 +215,111 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.12,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-developed-world-ucits-etf-usd-accumulating",
    "aum_usd": 11079917568,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00QB6WSV5",
-   "figi_name": "VANG FTSE DW USDA"
+   "figi_name": "VANG FTSE DW USDA",
+   "isin": "IE00BK5BQV03",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE DEVELOPED WORLD UCITS ETF"
+  },
+  {
+   "ticker": "VFEG",
+   "yahoo": "VFEG.L",
+   "name": "Vanguard FTSE Emerging Markets UCITS ETF USD Accumulation",
+   "index_key": "ftse_emerging",
+   "index_label": "FTSE Emerging Markets",
+   "index_family": "emerging",
+   "issuer_hint": "Vanguard",
+   "fund_family": "Vanguard Group (Ireland) Limited",
+   "structure": "ucits_etf",
+   "income": "Accumulating",
+   "exchange": "LSE",
+   "ccy": "GBP",
+   "ccy_is_pence": false,
+   "ter": 0.17,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-emerging-markets-ucits-etf-usd-accumulating",
+   "aum_usd": 5711052800,
+   "yield": null,
+   "is_ucits": true,
+   "situs": "non_us",
+   "estate_tax_exposed": false,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
+   "figi": "BBG00QB6YDP3",
+   "figi_name": "VANG FTSE EM USDA",
+   "isin": "IE00BK5BR733",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE EMERGING MARKETS UCITS ETF"
+  },
+  {
+   "ticker": "VFEM",
+   "yahoo": "VFEM.L",
+   "name": "Vanguard FTSE Emerging Markets UCITS ETF USD Distributing",
+   "index_key": "ftse_emerging",
+   "index_label": "FTSE Emerging Markets",
+   "index_family": "emerging",
+   "issuer_hint": "Vanguard",
+   "fund_family": "Vanguard Group (Ireland) Limited",
+   "structure": "ucits_etf",
+   "income": "Distributing",
+   "exchange": "LSE",
+   "ccy": "GBP",
+   "ccy_is_pence": false,
+   "ter": 0.17,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-emerging-markets-ucits-etf-usd-distributing",
+   "aum_usd": 5711052800,
+   "yield": null,
+   "is_ucits": true,
+   "situs": "non_us",
+   "estate_tax_exposed": false,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
+   "figi": "BBG003246BW6",
+   "figi_name": "VANG FTSE EM USDD",
+   "isin": "IE00B3VVMM84",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE EMERGING MARKETS UCITS ETF"
+  },
+  {
+   "ticker": "VJPN",
+   "yahoo": "VJPN.L",
+   "name": "Vanguard FTSE Japan UCITS ETF USD Distributing",
+   "index_key": "ftse_japan",
+   "index_label": "FTSE Japan",
+   "index_family": "japan",
+   "issuer_hint": "Vanguard",
+   "fund_family": "Vanguard Group (Ireland) Limited",
+   "structure": "ucits_etf",
+   "income": "Distributing",
+   "exchange": "LSE",
+   "ccy": "GBP",
+   "ccy_is_pence": false,
+   "ter": 0.1,
+   "ter_src": "Vanguard UK product API, vanguard-ftse-japan-ucits-etf-usd-distributing",
+   "aum_usd": null,
+   "yield": null,
+   "is_ucits": true,
+   "situs": "non_us",
+   "estate_tax_exposed": false,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
+   "figi": "BBG004LT8L27",
+   "figi_name": "VANG FTSE JPN USDD",
+   "isin": "IE00B95PGT31",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD FTSE JAPAN UCITS ETF"
   },
   {
    "ticker": "AGGG",
@@ -205,10 +343,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00J5HFCH4",
-   "figi_name": "ISHARES CORE GLB AGG BOND"
+   "figi_name": "ISHARES CORE GLB AGG BOND",
+   "isin": "IE00B3F81409",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISH GLOBAL AGG BOND ETF USD DIST"
   },
   {
    "ticker": "AGGU",
@@ -232,10 +373,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00J5HKP43",
-   "figi_name": "ISHARES CORE GLB AGG USD-H A"
+   "figi_name": "ISHARES CORE GLB AGG USD-H A",
+   "isin": "IE00BZ043R46",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISH GLOBAL AGG BOND ETF USD HEDGED ACC"
   },
   {
    "ticker": "VAGP",
@@ -251,18 +395,21 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.08,
+   "ter_src": "Vanguard UK product API, vanguard-global-aggregate-bond-ucits-etf-gbp-hedged-accumulating",
    "aum_usd": null,
    "yield": 0.0358,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00PG1Q6C9",
-   "figi_name": "VANGUARD GL AGG BD-GBP H DIS"
+   "figi_name": "VANGUARD GL AGG BD-GBP H DIS",
+   "isin": "IE00BG47KG48",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD GLOBAL AGGREGATE BD UCITS ETF"
   },
   {
    "ticker": "VAGU",
@@ -286,10 +433,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00PG1QFF6",
-   "figi_name": "VANG GLBAGG ETF USD H ACC"
+   "figi_name": "VANG GLBAGG ETF USD H ACC",
+   "isin": "IE00BG47KJ78",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD GLOBAL AGGREGATE BD UCITS ETF"
   },
   {
    "ticker": "GBS",
@@ -312,11 +462,14 @@
    "is_ucits": false,
    "situs": "unresolved",
    "estate_tax_exposed": null,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
+   "wht_domicile": "GB",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.3,
    "figi": "BBG000N5LSG0",
-   "figi_name": "GOLD BULLION SECURITIES LTD"
+   "figi_name": "GOLD BULLION SECURITIES LTD",
+   "isin": "GB00B00FHZ82",
+   "isin_src": "LSE instrument API",
+   "official_name": "GOLD BULLION SECURITIES"
   },
   {
    "ticker": "IGLN",
@@ -339,11 +492,14 @@
    "is_ucits": false,
    "situs": "unresolved",
    "estate_tax_exposed": null,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG001M8D7W0",
-   "figi_name": "ISHARES PHYSICAL GOLD ETC"
+   "figi_name": "ISHARES PHYSICAL GOLD ETC",
+   "isin": "IE00B4ND3602",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES PHYSICAL GOLD ETC"
   },
   {
    "ticker": "PHAU",
@@ -366,11 +522,14 @@
    "is_ucits": false,
    "situs": "unresolved",
    "estate_tax_exposed": null,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
+   "wht_domicile": "JE",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.3,
    "figi": "BBG000PWVQP2",
-   "figi_name": "WISDOMTREE PHYSICAL GOLD"
+   "figi_name": "WISDOMTREE PHYSICAL GOLD",
+   "isin": "JE00B1VS3770",
+   "isin_src": "LSE instrument API",
+   "official_name": "WISDOMTREE PHYSICAL GOLD"
   },
   {
    "ticker": "SGLN",
@@ -393,11 +552,14 @@
    "is_ucits": false,
    "situs": "unresolved",
    "estate_tax_exposed": null,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG001M8F366",
-   "figi_name": "ISHARES PHYSICAL GOLD ETC"
+   "figi_name": "ISHARES PHYSICAL GOLD ETC",
+   "isin": "IE00B4ND3602",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES PHYSICAL GOLD ETC"
   },
   {
    "ticker": "ISAC",
@@ -421,10 +583,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00265DDD0",
-   "figi_name": "ISHARES MSCI ACWI"
+   "figi_name": "ISHARES MSCI ACWI",
+   "isin": "IE00B6R52259",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS MSCI ACWI UCITS ETF USD (ACC)"
   },
   {
    "ticker": "SSAC",
@@ -448,10 +613,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00265DDW9",
-   "figi_name": "ISHARES MSCI ACWI"
+   "figi_name": "ISHARES MSCI ACWI",
+   "isin": "IE00B6R52259",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS MSCI ACWI UCITS ETF USD (ACC)"
   },
   {
    "ticker": "IEEM",
@@ -475,64 +643,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000K76SV9",
-   "figi_name": "ISHARES MSCI EM"
-  },
-  {
-   "ticker": "VFEG",
-   "yahoo": "VFEG.L",
-   "name": "Vanguard FTSE Emerging Markets UCITS ETF USD Accumulation",
-   "index_key": "msci_em",
-   "index_label": "MSCI Emerging Markets",
-   "index_family": "emerging",
-   "issuer_hint": "Vanguard",
-   "fund_family": "Vanguard Group (Ireland) Limited",
-   "structure": "ucits_etf",
-   "income": "Accumulating",
-   "exchange": "LSE",
-   "ccy": "GBP",
-   "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
-   "aum_usd": 5711052800,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.15,
-   "figi": "BBG00QB6YDP3",
-   "figi_name": "VANG FTSE EM USDA"
-  },
-  {
-   "ticker": "VFEM",
-   "yahoo": "VFEM.L",
-   "name": "Vanguard FTSE Emerging Markets UCITS ETF USD Distributing",
-   "index_key": "msci_em",
-   "index_label": "MSCI Emerging Markets",
-   "index_family": "emerging",
-   "issuer_hint": "Vanguard",
-   "fund_family": "Vanguard Group (Ireland) Limited",
-   "structure": "ucits_etf",
-   "income": "Distributing",
-   "exchange": "LSE",
-   "ccy": "GBP",
-   "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
-   "aum_usd": 5711052800,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.15,
-   "figi": "BBG003246BW6",
-   "figi_name": "VANG FTSE EM USDD"
+   "figi_name": "ISHARES MSCI EM",
+   "isin": "IE00B0M63177",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES MSCI EM UCITS ETF USD (DIST)"
   },
   {
    "ticker": "XMME",
@@ -555,11 +672,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG00GXWKT47",
-   "figi_name": "X MSCI EM 1C"
+   "figi_name": "X MSCI EM 1C",
+   "isin": "IE00BTJRMP35",
+   "isin_src": "LSE instrument API",
+   "official_name": "X MSCI EMERGING MARKETS"
   },
   {
    "ticker": "EIMI",
@@ -583,10 +703,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG006B8QQL7",
-   "figi_name": "ISHARES CORE EM IMI ACC"
+   "figi_name": "ISHARES CORE EM IMI ACC",
+   "isin": "IE00BKM4GZ66",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES CORE EM IMI UCITS ETF USD (ACC)"
   },
   {
    "ticker": "EMIM",
@@ -610,10 +733,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG006B70NW2",
-   "figi_name": "ISHARES CORE EM IMI ACC"
+   "figi_name": "ISHARES CORE EM IMI ACC",
+   "isin": "IE00BKM4GZ66",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES CORE EM IMI UCITS ETF USD (ACC)"
   },
   {
    "ticker": "IMEU",
@@ -637,37 +763,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000RK2N93",
-   "figi_name": "ISHARES CORE MSCI EUROPE"
-  },
-  {
-   "ticker": "VEUR",
-   "yahoo": "VEUR.L",
-   "name": "Vanguard FTSE Developed Europe UCITS ETF",
-   "index_key": "msci_europe",
-   "index_label": "MSCI Europe",
-   "index_family": "europe",
-   "issuer_hint": "Vanguard",
-   "fund_family": "Vanguard Group (Ireland) Limited",
-   "structure": "ucits_etf",
-   "income": "Distributing",
-   "exchange": "LSE",
-   "ccy": "GBP",
-   "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
-   "aum_usd": 7402345984,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.15,
-   "figi": "BBG004LT5543",
-   "figi_name": "VANG FTSE EUR EURD"
+   "figi_name": "ISHARES CORE MSCI EUROPE",
+   "isin": "IE00B1YZSC51",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES MSCI EUROPE UCITS ETF EUR (DIST)"
   },
   {
    "ticker": "IJPA",
@@ -691,10 +793,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000PHBPG9",
-   "figi_name": "ISHARES CORE MSCI JAPAN"
+   "figi_name": "ISHARES CORE MSCI JAPAN",
+   "isin": "IE00B4L5YX21",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE MSCI JAPAN IMI ETF USD (ACC)"
   },
   {
    "ticker": "SJPA",
@@ -718,64 +823,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000PHBN01",
-   "figi_name": "ISHARES CORE MSCI JAPAN"
-  },
-  {
-   "ticker": "VJPN",
-   "yahoo": "VJPN.L",
-   "name": "Vanguard FTSE Japan UCITS ETF USD Distributing",
-   "index_key": "msci_japan",
-   "index_label": "MSCI Japan",
-   "index_family": "japan",
-   "issuer_hint": "Vanguard",
-   "fund_family": "Vanguard Group (Ireland) Limited",
-   "structure": "ucits_etf",
-   "income": "Distributing",
-   "exchange": "LSE",
-   "ccy": "GBP",
-   "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
-   "aum_usd": null,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.15,
-   "figi": "BBG004LT8L27",
-   "figi_name": "VANG FTSE JPN USDD"
-  },
-  {
-   "ticker": "XDJP",
-   "yahoo": "XDJP.L",
-   "name": "Xtrackers Nikkei 225 UCITS ETF 1D",
-   "index_key": "msci_japan",
-   "index_label": "MSCI Japan",
-   "index_family": "japan",
-   "issuer_hint": "Xtrackers",
-   "fund_family": "DWS Investment S.A. (ETF)",
-   "structure": "ucits_etf",
-   "income": "Accumulating",
-   "exchange": "LSE",
-   "ccy": "GBp",
-   "ccy_is_pence": true,
-   "ter": 0.09,
-   "ter_src": "yahoo",
-   "aum_usd": null,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
-   "figi": "BBG0043QB7T1",
-   "figi_name": "X NIKKEI 225 1D"
+   "figi_name": "ISHARES CORE MSCI JAPAN",
+   "isin": "IE00B4L5YX21",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE MSCI JAPAN IMI ETF USD (ACC)"
   },
   {
    "ticker": "CSUS",
@@ -799,10 +853,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0015XG868",
-   "figi_name": "ISHARES MSCI USA USD ACC"
+   "figi_name": "ISHARES MSCI USA USD ACC",
+   "isin": "IE00B52SFT06",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS MSCI USA UCITS ETF USD (ACC)"
   },
   {
    "ticker": "XDUS",
@@ -825,11 +882,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG006NBDWR2",
-   "figi_name": "X MSCI USA UCITS ETF"
+   "figi_name": "X MSCI USA UCITS ETF",
+   "isin": "IE00BJ0KDR00",
+   "isin_src": "LSE instrument API",
+   "official_name": "X MSCI USA"
   },
   {
    "ticker": "XMUS",
@@ -852,11 +912,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
+   "wht_domicile": "LU",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.3,
    "figi": "BBG000TBM5V3",
-   "figi_name": "X MSCI USA SWAP 1C"
+   "figi_name": "X MSCI USA SWAP 1C",
+   "isin": "LU0274210672",
+   "isin_src": "LSE instrument API",
+   "official_name": "X MSCI USA SWAP"
   },
   {
    "ticker": "HMWO",
@@ -879,11 +942,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "LU",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG001B1T965",
-   "figi_name": "HSBC MSCI WORLD UCITS ETF"
+   "figi_name": "HSBC MSCI WORLD UCITS ETF",
+   "isin": "IE00B4X9L533",
+   "isin_src": "LSE instrument API",
+   "official_name": "HSBC MSCI WORLD UCITS ETF"
   },
   {
    "ticker": "IWDA",
@@ -907,10 +973,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000PH9DS6",
-   "figi_name": "ISHARES CORE MSCI WORLD"
+   "figi_name": "ISHARES CORE MSCI WORLD",
+   "isin": "IE00B4L5Y983",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE MSCI WORLD ETF USD (ACC)"
   },
   {
    "ticker": "IWRD",
@@ -934,10 +1003,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000K6MQQ3",
-   "figi_name": "ISHARES MSCI WORLD"
+   "figi_name": "ISHARES MSCI WORLD",
+   "isin": "IE00B0M62Q58",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES MSCI WORLD UCITS ETF USD (DIST)"
   },
   {
    "ticker": "SWDA",
@@ -961,10 +1033,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000PH98P0",
-   "figi_name": "ISHARES CORE MSCI WORLD"
+   "figi_name": "ISHARES CORE MSCI WORLD",
+   "isin": "IE00B4L5Y983",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE MSCI WORLD ETF USD (ACC)"
   },
   {
    "ticker": "XDWD",
@@ -987,11 +1062,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG006S9WQ03",
-   "figi_name": "X MSCI WORLD 1C"
+   "figi_name": "X MSCI WORLD 1C",
+   "isin": "IE00BJ0KDQ92",
+   "isin_src": "LSE instrument API",
+   "official_name": "X MSCI WORLD 1C"
   },
   {
    "ticker": "CNDX",
@@ -1015,10 +1093,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0015VS3F0",
-   "figi_name": "ISHARES NASDAQ 100 USD ACC"
+   "figi_name": "ISHARES NASDAQ 100 USD ACC",
+   "isin": "IE00B53SZB19",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS NASDAQ 100 UCITS ETF USD (ACC)"
   },
   {
    "ticker": "CNX1",
@@ -1042,10 +1123,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0015VS4D0",
-   "figi_name": "ISHARES NASDAQ 100 USD ACC"
+   "figi_name": "ISHARES NASDAQ 100 USD ACC",
+   "isin": "IE00B53SZB19",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS NASDAQ 100 UCITS ETF USD (ACC)"
   },
   {
    "ticker": "EQQQ",
@@ -1068,11 +1152,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG000QYQVV5",
-   "figi_name": "INVESCO NASDAQ-100 DIST"
+   "figi_name": "INVESCO NASDAQ-100 DIST",
+   "isin": "IE0032077012",
+   "isin_src": "LSE instrument API",
+   "official_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF"
   },
   {
    "ticker": "EQQU",
@@ -1095,11 +1182,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG008741SH5",
-   "figi_name": "INVESCO NASDAQ-100 DIST"
+   "figi_name": "INVESCO NASDAQ-100 DIST",
+   "isin": "IE0032077012",
+   "isin_src": "LSE instrument API",
+   "official_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF"
   },
   {
    "ticker": "XNAS",
@@ -1122,11 +1212,44 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG00Z0Z1PQ9",
-   "figi_name": "X NASDAQ 100 1C"
+   "figi_name": "X NASDAQ 100 1C",
+   "isin": "IE00BMFKG444",
+   "isin_src": "LSE instrument API",
+   "official_name": "X NASDAQ 100 ETF 1C"
+  },
+  {
+   "ticker": "XDJP",
+   "yahoo": "XDJP.L",
+   "name": "Xtrackers Nikkei 225 UCITS ETF 1D",
+   "index_key": "nikkei225",
+   "index_label": "Nikkei 225",
+   "index_family": "japan_price_weighted",
+   "issuer_hint": "Xtrackers",
+   "fund_family": "DWS Investment S.A. (ETF)",
+   "structure": "ucits_etf",
+   "income": "Accumulating",
+   "exchange": "LSE",
+   "ccy": "GBp",
+   "ccy_is_pence": true,
+   "ter": 0.09,
+   "ter_src": "yahoo",
+   "aum_usd": null,
+   "yield": null,
+   "is_ucits": true,
+   "situs": "non_us",
+   "estate_tax_exposed": false,
+   "wht_domicile": "LU",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.3,
+   "figi": "BBG0043QB7T1",
+   "figi_name": "X NIKKEI 225 1D",
+   "isin": "LU0839027447",
+   "isin_src": "LSE instrument API",
+   "official_name": "X NIKKEI 225"
   },
   {
    "ticker": "SEMI",
@@ -1150,10 +1273,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG01KS0CKX9",
-   "figi_name": "ISHARES MSCI GLB SEMICNDCT A"
+   "figi_name": "ISHARES MSCI GLB SEMICNDCT A",
+   "isin": "IE000I8KRLL9",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES MSCI GLOBAL SEMIC UCITS USD ACC"
   },
   {
    "ticker": "SMGB",
@@ -1176,11 +1302,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG00YCY4JP4",
-   "figi_name": "VANECK SEMICONDUCTOR ETF"
+   "figi_name": "VANECK SEMICONDUCTOR ETF",
+   "isin": "IE00BMC38736",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANECK SEMICONDUCTOR UCITS ETF"
   },
   {
    "ticker": "SMH",
@@ -1203,11 +1332,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG00YCY2LS8",
-   "figi_name": "VANECK SEMICONDUCTOR ETF"
+   "figi_name": "VANECK SEMICONDUCTOR ETF",
+   "isin": "IE00BMC38736",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANECK SEMICONDUCTOR UCITS ETF"
   },
   {
    "ticker": "CSP1",
@@ -1231,10 +1363,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0015VQL53",
-   "figi_name": "ISHARES CORE S&P 500"
+   "figi_name": "ISHARES CORE S&P 500",
+   "isin": "IE00B5BMR087",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE S&P 500 UCITS ETF USD (ACC)"
   },
   {
    "ticker": "CSPX",
@@ -1258,10 +1393,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0015VQKM6",
-   "figi_name": "ISHARES CORE S&P 500"
+   "figi_name": "ISHARES CORE S&P 500",
+   "isin": "IE00B5BMR087",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS CORE S&P 500 UCITS ETF USD (ACC)"
   },
   {
    "ticker": "IDUS",
@@ -1285,10 +1423,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000QF2DN1",
-   "figi_name": "ISHARES CORE S&P 500"
+   "figi_name": "ISHARES CORE S&P 500",
+   "isin": "IE0031442068",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES S&P 500 UCITS ETF USD (DIST)"
   },
   {
    "ticker": "IUSA",
@@ -1312,10 +1453,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000BMVZK4",
-   "figi_name": "ISHARES CORE S&P 500"
+   "figi_name": "ISHARES CORE S&P 500",
+   "isin": "IE0031442068",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES S&P 500 UCITS ETF USD (DIST)"
   },
   {
    "ticker": "SPXP",
@@ -1338,11 +1482,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG006Q843R0",
-   "figi_name": "INVESCO S&P 500 ACC"
+   "figi_name": "INVESCO S&P 500 ACC",
+   "isin": "IE00B3YCGJ38",
+   "isin_src": "LSE instrument API",
+   "official_name": "INVESCO S&P 500 UCITS ETF"
   },
   {
    "ticker": "SPXS",
@@ -1365,11 +1512,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG000QXQZL9",
-   "figi_name": "INVESCO S&P 500 ACC"
+   "figi_name": "INVESCO S&P 500 ACC",
+   "isin": "IE00B3YCGJ38",
+   "isin_src": "LSE instrument API",
+   "official_name": "INVESCO S&P 500 UCITS ETF"
   },
   {
    "ticker": "SPY5",
@@ -1392,11 +1542,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG002RRB3Z9",
-   "figi_name": "SS SPDR S&P 500 UCIT ETF-UHG"
+   "figi_name": "SS SPDR S&P 500 UCIT ETF-UHG",
+   "isin": "IE00B6YX5C33",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P 500 UCITS ETF"
   },
   {
    "ticker": "VUAA",
@@ -1413,17 +1566,20 @@
    "ccy": "USD",
    "ccy_is_pence": false,
    "ter": 0.07,
-   "ter_src": "curated.json 2026-07-09, >=2 issuer sources",
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
    "aum_usd": 85348843520,
    "yield": 0.0042,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00P4FTPJ9",
-   "figi_name": "VANG S&P500 USDA"
+   "figi_name": "VANG S&P500 USDA",
+   "isin": "IE00BFMXXD54",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD S&P 500 UCITS ETF"
   },
   {
    "ticker": "VUAG",
@@ -1439,18 +1595,21 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.07,
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
    "aum_usd": 85348843520,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00P4FVQM0",
-   "figi_name": "VANG S&P500 USDA"
+   "figi_name": "VANG S&P500 USDA",
+   "isin": "IE00BFMXXD54",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD S&P 500 UCITS ETF"
   },
   {
    "ticker": "VUSA",
@@ -1466,45 +1625,21 @@
    "exchange": "LSE",
    "ccy": "GBP",
    "ccy_is_pence": false,
-   "ter": null,
-   "ter_src": null,
+   "ter": 0.07,
+   "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
    "aum_usd": 85348843520,
    "yield": null,
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG003241JV5",
-   "figi_name": "VANG S&P500 USDD"
-  },
-  {
-   "ticker": "CUS1",
-   "yahoo": "CUS1.L",
-   "name": "iShares MSCI USA Small Cap CTB Enhanced ESG UCITS ETF USD Acc",
-   "index_key": "sp_smallcap600",
-   "index_label": "S&P SmallCap 600",
-   "index_family": "us_small",
-   "issuer_hint": "iShares",
-   "fund_family": "BlackRock Asset Management Ireland - ETF",
-   "structure": "ucits_etf",
-   "income": "Accumulating",
-   "exchange": "LSE",
-   "ccy": "GBp",
-   "ccy_is_pence": true,
-   "ter": 0.43,
-   "ter_src": "yahoo",
-   "aum_usd": 3216845312,
-   "yield": null,
-   "is_ucits": true,
-   "situs": "non_us",
-   "estate_tax_exposed": false,
-   "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
-   "us_div_wht_rate": 0.15,
-   "figi": "BBG0015RZC43",
-   "figi_name": "ISH MS USA SCCE ESG UCITS-US"
+   "figi_name": "VANG S&P500 USDD",
+   "isin": "IE00B3XXRP09",
+   "isin_src": "LSE instrument API",
+   "official_name": "VANGUARD S&P 500 UCITS ETF"
   },
   {
    "ticker": "IDP6",
@@ -1528,10 +1663,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000FQNSQ0",
-   "figi_name": "ISHARES S&P SMALL CAP 600"
+   "figi_name": "ISHARES S&P SMALL CAP 600",
+   "isin": "IE00B2QWCY14",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P SMLL CAP 600 ETF USD (DIST)"
   },
   {
    "ticker": "MEUD",
@@ -1555,10 +1693,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "LU",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.3,
    "figi": "BBG01LF0GZT9",
-   "figi_name": "AMUNDI CORE STOXX EUROPE 600"
+   "figi_name": "AMUNDI CORE STOXX EUROPE 600",
+   "isin": "LU0908500753",
+   "isin_src": "LSE instrument API",
+   "official_name": "AMUNDI CORE STOXX EUROPE 600 ETF ACC"
   },
   {
    "ticker": "IUAG",
@@ -1582,10 +1723,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0022FFLR7",
-   "figi_name": "ISHARES US AGG BND USD DIST"
+   "figi_name": "ISHARES US AGG BND USD DIST",
+   "isin": "IE00B44CGS96",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS US AGG BOND UCITS ETF USD (DIST)"
   },
   {
    "ticker": "SUAG",
@@ -1609,10 +1753,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0022FFNW7",
-   "figi_name": "ISHARES US AGG BND USD DIST"
+   "figi_name": "ISHARES US AGG BND USD DIST",
+   "isin": "IE00B44CGS96",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS US AGG BOND UCITS ETF USD (DIST)"
   },
   {
    "ticker": "IUCM",
@@ -1636,10 +1783,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00M0GB306",
-   "figi_name": "ISHARES S&P500 COMMUNICATION"
+   "figi_name": "ISHARES S&P500 COMMUNICATION",
+   "isin": "IE00BDDRF478",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISH SP500 COMMS UCITS ETF"
   },
   {
    "ticker": "SXLC",
@@ -1662,11 +1812,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG00LPLPHP7",
-   "figi_name": "SS SPDR S&P US COM SSS UC-UA"
+   "figi_name": "SS SPDR S&P US COM SSS UC-UA",
+   "isin": "IE00BFWFPX50",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US COMM SERV UCITS ETF"
   },
   {
    "ticker": "IUCD",
@@ -1690,10 +1843,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00BDQV8J1",
-   "figi_name": "ISHARES S&P CONSUMER DSCRTN"
+   "figi_name": "ISHARES S&P CONSUMER DSCRTN",
+   "isin": "IE00B4MCHD36",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P 500 CON DISC SECT ETF USD ACC"
   },
   {
    "ticker": "SXLY",
@@ -1716,11 +1872,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXSTF9",
-   "figi_name": "SS SPDR S&P US CONS DI SS UC"
+   "figi_name": "SS SPDR S&P US CONS DI SS UC",
+   "isin": "IE00BWBXM278",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US CONSUMER DIS UCITS ETF"
   },
   {
    "ticker": "IUCS",
@@ -1744,10 +1903,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00G5JQJM3",
-   "figi_name": "ISH S&P500 CONSUMER STAPLES"
+   "figi_name": "ISH S&P500 CONSUMER STAPLES",
+   "isin": "IE00B40B8R38",
+   "isin_src": "LSE instrument API",
+   "official_name": "IS SP500 CON STPL SCTR UCITS ETF USD ACC"
   },
   {
    "ticker": "SXLP",
@@ -1770,11 +1932,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXSZT0",
-   "figi_name": "SS SPDR S&P US CSSS UCITS ET"
+   "figi_name": "SS SPDR S&P US CSSS UCITS ET",
+   "isin": "IE00BWBXM385",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US CONSUMER STAPLES UCITSETF"
   },
   {
    "ticker": "UDVD",
@@ -1797,11 +1962,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG0025WP822",
-   "figi_name": "SS SP US DVD ARS UCT ETF-UUD"
+   "figi_name": "SS SP US DVD ARS UCT ETF-UUD",
+   "isin": "IE00B6YX5D40",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US DIVID ARISTOCRATS ETF $"
   },
   {
    "ticker": "USDV",
@@ -1824,11 +1992,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG0025X0WT5",
-   "figi_name": "SS SP US DVD ARS UCT ETF-UUD"
+   "figi_name": "SS SP US DVD ARS UCT ETF-UUD",
+   "isin": "IE00B6YX5D40",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US DIVID ARISTOCRATS UCITETF"
   },
   {
    "ticker": "IUES",
@@ -1852,10 +2023,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00BDQV2V0",
-   "figi_name": "ISHARES S&P 500 ENERGY"
+   "figi_name": "ISHARES S&P 500 ENERGY",
+   "isin": "IE00B42NKQ00",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P 500 ENERGY SECT ETF USD (ACC)"
   },
   {
    "ticker": "SXLE",
@@ -1878,11 +2052,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXTBX7",
-   "figi_name": "SS SPDR S&P US ESS UCITS-USA"
+   "figi_name": "SS SPDR S&P US ESS UCITS-USA",
+   "isin": "IE00BWBXM492",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US ENERGY UCITS ETF"
   },
   {
    "ticker": "IUFS",
@@ -1906,10 +2083,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00BDQVDQ2",
-   "figi_name": "ISHARES S&P 500 FINANCIALS"
+   "figi_name": "ISHARES S&P 500 FINANCIALS",
+   "isin": "IE00B4JNQZ49",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P 500 FIN SECT ETF USD (ACC)"
   },
   {
    "ticker": "SXLF",
@@ -1932,11 +2112,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXTGR3",
-   "figi_name": "SS SP U.S. FINAC SEC UTS ETF"
+   "figi_name": "SS SP U.S. FINAC SEC UTS ETF",
+   "isin": "IE00BWBXM500",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US FINANCIALS UCITS ETF"
   },
   {
    "ticker": "IUHC",
@@ -1960,10 +2143,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00BDQV9P2",
-   "figi_name": "ISHARES S&P HEALTH CARE"
+   "figi_name": "ISHARES S&P HEALTH CARE",
+   "isin": "IE00B43HR379",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P 500 HEALTH CR SECT ETF USD ACC"
   },
   {
    "ticker": "SXLV",
@@ -1986,11 +2172,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXTKW8",
-   "figi_name": "SS SR SP U.S. HT CR ST SR UE"
+   "figi_name": "SS SR SP U.S. HT CR ST SR UE",
+   "isin": "IE00BWBXM617",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US HEALTH CARE UCITS ETF"
   },
   {
    "ticker": "IUIS",
@@ -2014,10 +2203,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00G5JRF31",
-   "figi_name": "ISH S&P500 INDUSTRIALS"
+   "figi_name": "ISH S&P500 INDUSTRIALS",
+   "isin": "IE00B4LN9N13",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS SP500 INDUS SCTR UCITS ETF USD ACC"
   },
   {
    "ticker": "SXLI",
@@ -2040,11 +2232,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXTPY5",
-   "figi_name": "SS SP US IND SEL SECT UCITS"
+   "figi_name": "SS SP US IND SEL SECT UCITS",
+   "isin": "IE00BWBXM724",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US INDUSTRIALS UCITS ETF"
   },
   {
    "ticker": "IUMS",
@@ -2068,10 +2263,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00G5JR436",
-   "figi_name": "ISH S&P500 MATERIALS"
+   "figi_name": "ISH S&P500 MATERIALS",
+   "isin": "IE00B4MKCJ84",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS SP500 MAT SCTR UCITS ETF USD ACC"
   },
   {
    "ticker": "SXLB",
@@ -2094,11 +2292,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXTVS9",
-   "figi_name": "SS SPDR S&P US MATERIALS SEL"
+   "figi_name": "SS SPDR S&P US MATERIALS SEL",
+   "isin": "IE00BWBXM831",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US MATERIALS UCITS ETF"
   },
   {
    "ticker": "IUSP",
@@ -2122,10 +2323,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000CZVW30",
-   "figi_name": "ISHARES US PROPERTY YIELD"
+   "figi_name": "ISHARES US PROPERTY YIELD",
+   "isin": "IE00B1FZSF77",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS US PROP YIELD UCITS ETF USD (DIST)"
   },
   {
    "ticker": "IUIT",
@@ -2149,10 +2353,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00BDQVD28",
-   "figi_name": "ISHARES S&P 500 IT SECTOR"
+   "figi_name": "ISHARES S&P 500 IT SECTOR",
+   "isin": "IE00B3WJKG14",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS S&P 500 INF TECH SECT ETF USD ACC"
   },
   {
    "ticker": "SXLK",
@@ -2175,11 +2382,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXV1W7",
-   "figi_name": "SS SPDR S&P US TECHNOLOGY SE"
+   "figi_name": "SS SPDR S&P US TECHNOLOGY SE",
+   "isin": "IE00BWBXM948",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US TECHNOLOGY UCITS ETF"
   },
   {
    "ticker": "IDTP",
@@ -2203,10 +2413,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000D1F853",
-   "figi_name": "ISHARES USD TIPS"
+   "figi_name": "ISHARES USD TIPS",
+   "isin": "IE00B1FZSC47",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES USD TIPS UCITS ETF USD (ACC)"
   },
   {
    "ticker": "ITPS",
@@ -2230,10 +2443,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000CZTL19",
-   "figi_name": "ISHARES USD TIPS"
+   "figi_name": "ISHARES USD TIPS",
+   "isin": "IE00B1FZSC47",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES USD TIPS UCITS ETF USD (ACC)"
   },
   {
    "ticker": "IBTS",
@@ -2257,10 +2473,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000J13Q69",
-   "figi_name": "ISHARES USD TRSRY 1-3Y USD D"
+   "figi_name": "ISHARES USD TRSRY 1-3Y USD D",
+   "isin": "IE00B14X4S71",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES $TRES.BD1-3YR UCITS ETF USD DIST"
   },
   {
    "ticker": "IBTM",
@@ -2284,10 +2503,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000CZP6W2",
-   "figi_name": "ISHARES USD TREASURY 7-10Y"
+   "figi_name": "ISHARES USD TREASURY 7-10Y",
+   "isin": "IE00B1FZS798",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS $ TREAS BOND 7-10YR ETF USD (DIST)"
   },
   {
    "ticker": "IDTM",
@@ -2311,10 +2533,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000D1D114",
-   "figi_name": "ISHARES USD TREASURY 7-10Y"
+   "figi_name": "ISHARES USD TREASURY 7-10Y",
+   "isin": "IE00B1FZS798",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS $ TREAS BOND 7-10YR ETF USD (DIST)"
   },
   {
    "ticker": "DTLA",
@@ -2338,10 +2563,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00KSMR0T5",
-   "figi_name": "ISH USD TRES 20PLUS YR USD A"
+   "figi_name": "ISH USD TRES 20PLUS YR USD A",
+   "isin": "IE00BFM6TC58",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISH $ T BND 20+YR ETF USD ACC"
   },
   {
    "ticker": "IDTL",
@@ -2365,10 +2593,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG007X82JZ8",
-   "figi_name": "ISHARES USD TRES 20PLUS YR"
+   "figi_name": "ISHARES USD TRES 20PLUS YR",
+   "isin": "IE00BSKRJZ44",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHS $ TRSRY BD 20+YR UCITS ETF USD DIST"
   },
   {
    "ticker": "IUUS",
@@ -2392,10 +2623,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00G5JSB84",
-   "figi_name": "ISH S&P500 UT SEC UCIT ETF"
+   "figi_name": "ISH S&P500 UT SEC UCIT ETF",
+   "isin": "IE00B4KBBD01",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISH SP500 UTILIT SCTR UCITS ETF USD ACC"
   },
   {
    "ticker": "SXLU",
@@ -2418,11 +2652,14 @@
    "is_ucits": true,
    "situs": "non_us",
    "estate_tax_exposed": false,
-   "wht_domicile": "unverified",
-   "wht_domicile_conf": "none",
-   "us_div_wht_rate": 0.3,
+   "wht_domicile": "IE",
+   "wht_domicile_conf": "isin_prefix",
+   "us_div_wht_rate": 0.15,
    "figi": "BBG009HXV5B1",
-   "figi_name": "SS SPDR S&P US UTILITIES SEL"
+   "figi_name": "SS SPDR S&P US UTILITIES SEL",
+   "isin": "IE00BWBXMB69",
+   "isin_src": "LSE instrument API",
+   "official_name": "SS SPDR S&P US UTILITIES UCITS ETF"
   },
   {
    "ticker": "IHYU",
@@ -2446,10 +2683,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0022FR5K6",
-   "figi_name": "ISHARES USD HY CORP USD DIST"
+   "figi_name": "ISHARES USD HY CORP USD DIST",
+   "isin": "IE00B4PY7Y77",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS $ HIGH YIELD CRP BND ETF USD DIST"
   },
   {
    "ticker": "SHYU",
@@ -2473,10 +2713,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0022FR5Z0",
-   "figi_name": "ISHARES USD HY CORP USD DIST"
+   "figi_name": "ISHARES USD HY CORP USD DIST",
+   "isin": "IE00B4PY7Y77",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHRS $ HIGH YIELD CRP BND ETF USD DIST"
   },
   {
    "ticker": "LQDA",
@@ -2500,10 +2743,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG00GFB00N7",
-   "figi_name": "ISHARES USD CORP BOND USD A"
+   "figi_name": "ISHARES USD CORP BOND USD A",
+   "isin": "IE00BYXYYJ35",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES $ CORP BOND UCITS ETF USD (ACC)"
   },
   {
    "ticker": "LQDE",
@@ -2527,10 +2773,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG000PQKX18",
-   "figi_name": "ISHARES USD CORP BOND USD D"
+   "figi_name": "ISHARES USD CORP BOND USD D",
+   "isin": "IE0032895942",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHARES $ CORP.BOND UCITS ETF USD (DIST)"
   },
   {
    "ticker": "IWMO",
@@ -2554,10 +2803,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0078NSF47",
-   "figi_name": "ISHR EDGE MSCI WRLD MOMENTUM"
+   "figi_name": "ISHR EDGE MSCI WRLD MOMENTUM",
+   "isin": "IE00BP3QZ825",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHS EDGE MSCI WLD MMNT FACT ETF USD ACC"
   },
   {
    "ticker": "IWQU",
@@ -2581,10 +2833,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0078NQ9K5",
-   "figi_name": "ISHR EDGE MSCI WRLD QLY FCTR"
+   "figi_name": "ISHR EDGE MSCI WRLD QLY FCTR",
+   "isin": "IE00BP3QZ601",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHS EDGE MSCI WRLD QLTY FAC ETF USD ACC"
   },
   {
    "ticker": "IWVL",
@@ -2608,10 +2863,13 @@
    "situs": "non_us",
    "estate_tax_exposed": false,
    "wht_domicile": "IE",
-   "wht_domicile_conf": "name_string",
+   "wht_domicile_conf": "isin_prefix",
    "us_div_wht_rate": 0.15,
    "figi": "BBG0078NTR86",
-   "figi_name": "ISHARES EDGE MSCI WRLD VALUE"
+   "figi_name": "ISHARES EDGE MSCI WRLD VALUE",
+   "isin": "IE00BP3QZB59",
+   "isin_src": "LSE instrument API",
+   "official_name": "ISHS EDGE MSCI WRL VAL FCT UCITS ETF ACC"
   }
  ],
  "by_index": {
@@ -2640,8 +2898,7 @@
    "XNAS"
   ],
   "sp_smallcap600": [
-   "IDP6",
-   "CUS1"
+   "IDP6"
   ],
   "msci_world": [
    "IWDA",
@@ -2666,7 +2923,9 @@
   ],
   "msci_em": [
    "IEEM",
-   "XMME",
+   "XMME"
+  ],
+  "ftse_emerging": [
    "VFEM",
    "VFEG"
   ],
@@ -2675,7 +2934,9 @@
    "EMIM"
   ],
   "msci_europe": [
-   "IMEU",
+   "IMEU"
+  ],
+  "ftse_dev_europe": [
    "VEUR"
   ],
   "stoxx_europe_600": [
@@ -2683,8 +2944,12 @@
   ],
   "msci_japan": [
    "IJPA",
-   "SJPA",
-   "VJPN",
+   "SJPA"
+  ],
+  "ftse_japan": [
+   "VJPN"
+  ],
+  "nikkei225": [
    "XDJP"
   ],
   "us_tech_sector": [
@@ -2790,48 +3055,8 @@
  },
  "warnings": [
   {
-   "ticker": "VUAG",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VUSA",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "SPY5",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SPXS",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SPXP",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "XMUS",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "XDUS",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
    "ticker": "UIMI",
    "drop": "not listed on LN per OpenFIGI"
-  },
-  {
-   "ticker": "EQQQ",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "EQQU",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "XNAS",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
   },
   {
    "ticker": "XRS2",
@@ -2846,115 +3071,11 @@
    "drop": "not listed on LN per OpenFIGI"
   },
   {
-   "ticker": "XDWD",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "VEVE",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VHVG",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VHVE",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VWRL",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VWRP",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "XMME",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "VFEM",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VFEG",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VEUR",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VJPN",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "XDJP",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLK",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLV",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLF",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLE",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLY",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLP",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLI",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLU",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLC",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SXLB",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SMGB",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "SMH",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "UDVD",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
-   "ticker": "USDV",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
+   "ticker": "VWRA",
+   "flag": "TER disagreement: curated.json 0.22 vs issuer 0.14 -- issuer used; the curated figure is stale"
   },
   {
    "ticker": "VAGU",
-   "flag": "no TER from Yahoo -- needs issuer verification"
-  },
-  {
-   "ticker": "VAGP",
    "flag": "no TER from Yahoo -- needs issuer verification"
   },
   {
@@ -2970,20 +3091,12 @@
    "flag": "ETC, not a UCITS fund -- situs unresolved, do not present as safe"
   },
   {
-   "ticker": "SGLN",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
    "ticker": "IGLN",
    "flag": "no TER from Yahoo -- needs issuer verification"
   },
   {
    "ticker": "IGLN",
    "flag": "ETC, not a UCITS fund -- situs unresolved, do not present as safe"
-  },
-  {
-   "ticker": "IGLN",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
   },
   {
    "ticker": "PHAU",
@@ -2994,20 +3107,12 @@
    "flag": "ETC, not a UCITS fund -- situs unresolved, do not present as safe"
   },
   {
-   "ticker": "PHAU",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
-  },
-  {
    "ticker": "GBS",
    "flag": "no TER from Yahoo -- needs issuer verification"
   },
   {
    "ticker": "GBS",
    "flag": "ETC, not a UCITS fund -- situs unresolved, do not present as safe"
-  },
-  {
-   "ticker": "GBS",
-   "flag": "Irish domicile unverified -- using conservative 30% withholding"
   }
  ]
 }

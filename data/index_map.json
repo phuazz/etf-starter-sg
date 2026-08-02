@@ -22,6 +22,11 @@
         "a": "us_small",
         "b": "us_total",
         "caveat": "A US small-cap holding swapped into a total-market or large-cap line is not a substitute -- it removes the small-cap tilt that was the point of the position."
+      },
+      {
+        "a": "japan",
+        "b": "japan_price_weighted",
+        "caveat": "The Nikkei 225 is PRICE-weighted, not capitalisation-weighted. A handful of high-priced shares dominate it in a way they do not dominate a capitalisation-weighted Japan index, so this is a different portfolio rather than a cheaper wrapper around the same one."
       }
     ]
   },
@@ -102,6 +107,34 @@
       "exposure": "Global equity, developed plus emerging",
       "n_holdings": 2600,
       "family": "global_all_cap"
+    },
+    "ftse_emerging": {
+      "label": "FTSE Emerging Markets",
+      "provider": "FTSE Russell",
+      "exposure": "Emerging-market equity. Classifies South Korea as developed, so it holds no Korean exposure where the MSCI series does.",
+      "n_holdings": 1900,
+      "family": "emerging"
+    },
+    "ftse_dev_europe": {
+      "label": "FTSE Developed Europe",
+      "provider": "FTSE Russell",
+      "exposure": "European developed equity",
+      "n_holdings": 550,
+      "family": "europe"
+    },
+    "ftse_japan": {
+      "label": "FTSE Japan",
+      "provider": "FTSE Russell",
+      "exposure": "Japanese equity",
+      "n_holdings": 500,
+      "family": "japan"
+    },
+    "nikkei225": {
+      "label": "Nikkei 225",
+      "provider": "Nikkei",
+      "exposure": "225 Japanese companies, PRICE-weighted rather than capitalisation-weighted",
+      "n_holdings": 225,
+      "family": "japan_price_weighted"
     },
     "msci_em": {
       "label": "MSCI Emerging Markets",

@@ -44,7 +44,6 @@
     {"t": "XRS2", "idx": "russell2000", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
     {"t": "RS2K", "idx": "russell2000", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
     {"t": "IDP6", "idx": "sp_smallcap600", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "CUS1", "idx": "sp_smallcap600", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "ZPRV", "idx": "sp_smallcap600", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
 
     {"t": "IWDA", "idx": "msci_world", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
@@ -64,18 +63,18 @@
 
     {"t": "IEEM", "idx": "msci_em", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
     {"t": "XMME", "idx": "msci_em", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VFEM", "idx": "msci_em", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VFEG", "idx": "msci_em", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
+    {"t": "VFEM", "idx": "ftse_emerging", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
+    {"t": "VFEG", "idx": "ftse_emerging", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
     {"t": "EIMI", "idx": "msci_em_imi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "EMIM", "idx": "msci_em_imi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
 
     {"t": "IMEU", "idx": "msci_europe", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VEUR", "idx": "msci_europe", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
+    {"t": "VEUR", "idx": "ftse_dev_europe", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
     {"t": "MEUD", "idx": "stoxx_europe_600", "iss": "Amundi", "structure": "ucits_etf", "dist": "acc"},
     {"t": "IJPA", "idx": "msci_japan", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "SJPA", "idx": "msci_japan", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VJPN", "idx": "msci_japan", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "XDJP", "idx": "msci_japan", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
+    {"t": "VJPN", "idx": "ftse_japan", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
+    {"t": "XDJP", "idx": "nikkei225", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
 
     {"t": "IUIT", "idx": "us_tech_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "SXLK", "idx": "us_tech_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
