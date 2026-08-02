@@ -1,5 +1,8 @@
 __pycache__/
 *.pyc
+.pytest_cache/
+data/.ucits_cache.json
+data/.us_situs_cache.json
 node_modules/
 .DS_Store
 *.log
