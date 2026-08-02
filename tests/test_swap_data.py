@@ -288,3 +288,113 @@ def test_distribution_policy_recorded_on_every_line(ucits):
     drift exactly equal to the dividend yield."""
     for f in ucits["funds"]:
         assert f["income"] in ("Accumulating", "Distributing"), f["ticker"]
+
+
+# --------------------------------------------------------------------------
+# 7. The swap map and its refusal floor
+# --------------------------------------------------------------------------
+@pytest.fixture(scope="module")
+def swap():
+    return load("swap_map.json")
+
+
+def test_swap_index_keys_resolve(swap, idx):
+    known = set(idx["indices"])
+    for e in swap["etfs"]:
+        assert e["index_key"] in known, e["ticker"]
+        for a in e["alternatives"]:
+            assert a["index_key"] in known, a["ticker"]
+
+
+def test_every_alternative_carries_a_recommendation_decision(swap):
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            assert "recommended" in a, f"{e['ticker']}->{a['ticker']}"
+            if not a["recommended"]:
+                assert a.get("not_recommended_because"), (
+                    f"{e['ticker']}->{a['ticker']}: set aside with no reason given")
+
+
+def test_contradicted_pairs_are_never_recommended(swap):
+    """A pair whose realised returns contradict its claimed index must not be
+    offered. XNAS diverges from QQQ by 7.5pp a year while both are labelled
+    Nasdaq-100; whatever the cause, it is not a verified swap."""
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            if a.get("verification", {}).get("contradiction"):
+                assert a["recommended"] is False, f"{e['ticker']}->{a['ticker']}"
+
+
+def test_failed_grades_are_never_recommended(swap):
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            if a.get("verification", {}).get("grade") in ("fail", "no_data", "insufficient"):
+                assert a["recommended"] is False, f"{e['ticker']}->{a['ticker']}"
+
+
+def test_tier2_matches_always_carry_a_caveat(swap):
+    """An unexplained tier-2 match is the failure where someone swaps a
+    total-market holding for a large-cap one and is never told."""
+    for e in swap["etfs"]:
+        if e["tier"] == 2:
+            assert e.get("caveat"), f"{e['ticker']}: tier-2 with no caveat"
+
+
+def test_tier3_states_no_equivalent_rather_than_reaching(swap):
+    for e in swap["etfs"]:
+        if e["tier"] == 3:
+            assert e.get("verdict") == "no_close_equivalent", e["ticker"]
+            assert not e["alternatives"], f"{e['ticker']}: tier-3 yet offering alternatives"
+
+
+def test_gold_is_offered_only_as_unresolved(swap):
+    """Gold ETCs are the only London route to bullion but are debt securities
+    whose situs does not follow from UCITS status. They may be listed, never
+    as a resolved-safe swap."""
+    for e in swap["etfs"]:
+        if e["index_key"] == "gold_spot":
+            assert not e["alternatives"], f"{e['ticker']}: ETC offered as a safe match"
+            for u in e["unresolved_alternatives"]:
+                assert u["situs"] == "unresolved", u["ticker"]
+
+
+def test_no_alternative_is_itself_us_situs(swap):
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            assert a["estate_tax_exposed"] is False, f"{e['ticker']}->{a['ticker']}"
+
+
+def test_single_name_proxies_are_never_labelled_equivalent(swap):
+    for n in swap["single_names"]:
+        for p in n["sector_proxies"]:
+            assert p["is_equivalent"] is False, f"{n['ticker']}->{p['ticker']}"
+
+
+def test_verification_is_on_a_singapore_holder_basis(swap):
+    """Yahoo reinvests distributions gross. Comparing raw would flatter the US
+    line by roughly 30 per cent of its yield and report the UCITS lagging on
+    exactly the holdings where it wins after tax."""
+    meta = swap["_meta"]["return_verification"]
+    assert "Singapore-holder basis" in meta["tax_basis"]
+    seen = False
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            v = a.get("verification", {})
+            if v.get("gap_pp") is not None:
+                assert "us_holder_wht_drag_pp" in v, f"{e['ticker']}->{a['ticker']}"
+                seen = True
+    assert seen, "no graded pairs -- the verification pass did not run"
+
+
+def test_tracking_error_is_not_used_as_the_metric(swap):
+    """Regression guard. Volatility of return differences measured 6.03pp for
+    SPY against VUAA purely because London closes before New York, while two
+    US lines on the same index measured 0.31pp. Grading on it would fail every
+    cross-venue match, which is every match this tool makes."""
+    meta = swap["_meta"]["return_verification"]
+    assert "annualised" in meta["metric"].lower()
+    assert meta.get("why_not_tracking_error")
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            assert "te_pp" not in a.get("verification", {}), (
+                f"{e['ticker']}->{a['ticker']}: tracking error reintroduced")

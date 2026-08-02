@@ -7,3 +7,4 @@ node_modules/
 .DS_Store
 *.log
 data/.lse_cache.json
+data/.swap_prices.pkl

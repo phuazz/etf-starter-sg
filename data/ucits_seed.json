@@ -97,17 +97,17 @@
     {"t": "IUMS", "idx": "us_materials_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "SXLB", "idx": "us_materials_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
 
-    {"t": "SMGB", "idx": "semiconductors", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SMH", "idx": "semiconductors", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SEMI", "idx": "semiconductors", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
+    {"t": "SMGB", "idx": "mvis_us_semis", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
+    {"t": "SMH", "idx": "mvis_us_semis", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
+    {"t": "SEMI", "idx": "msci_global_semis", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
 
     {"t": "IUSP", "idx": "us_reits", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
 
     {"t": "IWQU", "idx": "world_quality", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "IWMO", "idx": "world_momentum", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "IWVL", "idx": "world_value", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "UDVD", "idx": "us_dividend_growers", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "USDV", "idx": "us_dividend_growers", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
+    {"t": "UDVD", "idx": "sp_us_dividend_aristocrats", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
+    {"t": "USDV", "idx": "sp_us_dividend_aristocrats", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
 
     {"t": "AGGU", "idx": "global_aggregate_bond", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
     {"t": "AGGG", "idx": "global_aggregate_bond", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
