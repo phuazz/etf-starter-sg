@@ -92,7 +92,12 @@ a{color:var(--b-text);text-decoration:none}
 .setaside{margin-top:12px;padding-top:10px;border-top:1px dashed var(--bd)}
 .setaside li{font-size:12px;color:var(--t3);margin-bottom:3px}
 .rk-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
-@media(max-width:620px){.rk-two{grid-template-columns:1fr}}
+.rk-three{grid-template-columns:repeat(3,1fr)}
+.rk-four{grid-template-columns:repeat(4,1fr)}
+/* inline grid-template-columns would beat this media query, so the column
+   counts live in classes and collapse properly on a narrow screen */
+@media(max-width:820px){.rk-four{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.rk-two,.rk-three,.rk-four{grid-template-columns:1fr}}
 .rk-box{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
 .rk-box .k{font-size:11.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em}
 .rk-box .v{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
@@ -752,13 +757,20 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       </div>
       <div id="swapSug" class="swap-sug"></div>
       <p class="footlet" style="margin-top:2px">Covers <span id="swapCov"></span>. Not an exhaustive list of what exists — a validated set. If your holding is missing, the mechanism on the <a onclick="switchTab('learn')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn tab</a> still applies.</p>
+      <div class="calcgrid" style="margin-top:6px">
+        <div class="ctl"><label>Value of this holding (US$)</label><input id="swVal" type="text" inputmode="numeric" value="100,000"></div>
+        <div class="ctl"><label>Years you expect to hold</label><input id="swYrs" type="text" inputmode="numeric" value="20"></div>
+        <div class="ctl"><label>One-off cost to switch (%)</label><input id="swCost" type="text" inputmode="decimal" value="0.50"></div>
+      </div>
+      <p class="footlet" style="margin-top:0">The switching cost is <strong>your assumption, not a quoted figure</strong> — it covers the sell, the buy, the bid-offer spread on both, and any SGD/USD/GBP conversion. 0.5% round trip is a plausible retail default; your broker's actual numbers are the ones that matter, and a low-cost broker may be well under half of it. Nothing here is a quote.</p>
     </div>
 
     <div id="swapOut"></div>
+    <div id="swapHorizon"></div>
 
     <div class="card" id="swapRiskCard" style="margin-top:20px">
       <h3>How big is this risk, really?</h3>
-      <p style="font-size:14px;color:var(--t2);margin-bottom:14px">The liability is what you owe <em>if</em> it happens. Both halves of the question belong on the page, so this puts the size next to the likelihood. Neither number is a reason to act or not act on its own.</p>
+      <p style="font-size:14px;color:var(--t2);margin-bottom:14px">The liability is what you owe <em>if</em> it happens. Both halves of the question belong on the page, so this puts the size next to the likelihood — over one year, and over the holding period you set above, which is the horizon that actually makes it comparable to a running cost.</p>
       <div class="calcgrid">
         <div class="ctl"><label>US-situs value (US$)</label><input id="rkAmt" type="text" inputmode="numeric" value="250,000"></div>
         <div class="ctl"><label>Age</label><input id="rkAge" type="text" inputmode="numeric" value="45"></div>
@@ -1793,6 +1805,85 @@ function renderSwap(){
   if(f) f.innerHTML='Matched on <strong>index identity</strong>, not correlation — every US large-cap ETF correlates above 0.98 with every other one, so correlation cannot tell one index from another. Matches are then checked against realised returns and any pair the record contradicts is set aside rather than shown. Fund data verified '+SWAP._meta.built+'; realised comparison over '+(SWAP._meta.return_verification?SWAP._meta.return_verification.window_years:5)+' years. <strong>Educational only — not tax, legal or investment advice.</strong> Confirm situs and eligibility with a qualified cross-border adviser before acting.';
 }
 
+// ---------- Swap: horizon economics -----------------------------------------
+// A recurring basis-point saving and a one-off contingent liability are not
+// comparable until a holding period is fixed. Setting one makes three
+// different things commensurable: the running saving accumulates, the
+// switching cost amortises, and the estate risk stops being a one-year
+// probability and becomes a cumulative one over the horizon.
+//
+// Deliberately NOT compounded on a growing position. Doing that needs a return
+// assumption, and inventing one to make a cost comparison look precise is the
+// wrong trade. Everything below is on today's value; a position that grows
+// makes the recurring saving larger, not smaller, so this is the conservative
+// direction.
+function bandRate(bands, age){
+  const keys=Object.keys(bands).map(Number).sort((a,b)=>a-b);
+  let k=keys[0]; for(const x of keys){ if(age>=x) k=x; }
+  return bands[String(k)];
+}
+// Probability of dying within `yrs` from `age`: one minus the product of the
+// annual survival rates. Stepping single years through five-year bands, so it
+// is an approximation of the band data, not a life table.
+function cumDeathProb(bands, age, yrs){
+  let surv=1;
+  for(let i=0;i<yrs;i++){
+    const r=bandRate(bands, age+i);
+    if(!r) break;
+    surv *= (1 - r.rate_per_1000/1000);
+  }
+  return 1-surv;
+}
+
+function renderHorizon(){
+  const box=document.getElementById('swapHorizon'); if(!box) return;
+  box.innerHTML='';
+  if(!SWAP) return;
+  const hit=swapLookup(document.getElementById('swapQ').value);
+  if(!hit || hit.kind!=='etf') return;
+  const best=(hit.alternatives||[]).find(a=>a.recommended);
+  if(!best) return;
+
+  const val=amtVal('swVal'), yrs=Math.max(1,Math.min(60,amtVal('swYrs')));
+  const swPct=parseFloat((document.getElementById('swCost').value||'0').replace(/[^\d.]/g,''))||0;
+  const net=(best.cost||{}).net_annual_delta_pp;      // pp per year, + = alt cheaper
+  if(val<=0) return;
+
+  const oneOff=val*swPct/100;
+  const perYear=net==null?null:val*net/100;
+  const running=perYear==null?null:perYear*yrs;
+  const be=(perYear!=null&&perYear>0)?oneOff/perYear:null;
+
+  // Estate leg: the liability only lands if you die holding it, so it enters
+  // the horizon weighted by the cumulative probability over that horizon.
+  let estate=null, pDeath=null;
+  if(MORT){
+    const sex=document.getElementById('rkSex').value;
+    const age=amtVal('rkAge');
+    const bands=MORT.rates[sex]||MORT.rates.total;
+    if(age>0){ pDeath=cumDeathProb(bands, age, yrs); estate=estateTax(val)*pDeath; }
+  }
+  const total=(running==null?0:running)+(estate==null?0:estate)-oneOff;
+
+  const money=v=>(v<0?'−':'')+'US$'+Math.abs(Math.round(v)).toLocaleString();
+  const col=v=>v>=0?'var(--g-text)':'var(--r-text)';
+
+  box.innerHTML='<div class="card" style="margin-top:16px">'+
+    '<h3>Over '+yrs+' years, swapping '+hit.ticker+' → '+best.ticker+'</h3>'+
+    '<div class="rk-two rk-four">'+
+      '<div class="rk-box"><div class="k">Running saving</div><div class="v" style="color:'+(running==null?'var(--t3)':col(running))+'">'+
+        (running==null?'n/a':money(running))+'</div><div class="s">'+(net==null?'no yield data':pp(net)+'pp a year on '+money(val))+'</div></div>'+
+      '<div class="rk-box"><div class="k">Cost to switch</div><div class="v" style="color:var(--r-text)">−'+money(oneOff).replace('US$','US$')+'</div><div class="s">'+swPct.toFixed(2)+'% of the position, once — your assumption</div></div>'+
+      '<div class="rk-box"><div class="k">Estate risk removed</div><div class="v" style="color:'+(estate==null?'var(--t3)':'var(--g-text)')+'">'+
+        (estate==null?'n/a':money(estate))+'</div><div class="s">'+(pDeath==null?'set an age below':(pDeath*100).toFixed(1)+'% chance of dying within '+yrs+'y × '+money(estateTax(val))+' due')+'</div></div>'+
+      '<div class="rk-box" style="background:var(--bg3)"><div class="k">Net over '+yrs+' years</div><div class="v" style="color:'+col(total)+'">'+money(total)+'</div>'+
+        '<div class="s">'+(be==null?(perYear!=null&&perYear<=0?'running costs never repay the switch on their own':'break-even not computable'):'switch repaid in '+be.toFixed(1)+' years on running costs alone')+'</div></div>'+
+    '</div>'+
+    '<p class="footlet" style="margin-top:12px">On <strong>today’s value, not compounded</strong> — projecting growth would need a return assumption, and inventing one to make a cost comparison look precise is the wrong trade. A position that grows makes the running saving larger, so this understates rather than flatters. '+
+    (estate==null?'':'The estate figure is <strong>probability-weighted, not a prediction</strong>: it is what the exposure is worth in expectation across the horizon, and the actual outcome is either nothing or the whole liability. That is the shape of risk people insure against rather than average away, so do not read a small number here as "ignore it". ')+
+    'The estate figure prices this holding <strong>as if it were your only US-situs asset</strong>. The schedule is progressive, so if you hold other US-situs assets the tax attributable to this one is <em>higher</em> than shown — use the total-exposure panel below for the whole picture. Excludes anything your broker charges annually, and assumes you hold throughout. <strong>Illustration, not advice.</strong></p></div>';
+}
+
 // ---------- Swap: scale of the risk (SingStat age-specific death rates) -----
 function renderRisk(){
   const out=document.getElementById('rkOut'); if(!out) return;
@@ -1800,21 +1891,24 @@ function renderRisk(){
   const src=document.getElementById('rkSrc');
   if(src) src.textContent='SingStat '+MORT._meta.year;
   const usd=amtVal('rkAmt'), age=amtVal('rkAge'), sex=document.getElementById('rkSex').value;
+  const yrs=Math.max(1,Math.min(60,amtVal('swYrs')));
   const tax=estateTax(usd);
   const bands=MORT.rates[sex]||MORT.rates.total;
   // five-year bands are kept as bands; picking the band the age falls into
   // rather than interpolating, which would invent precision the source lacks
-  const keys=Object.keys(bands).map(Number).sort((a,b)=>a-b);
-  let k=keys[0]; for(const x of keys){ if(age>=x) k=x; }
-  const band=bands[String(k)];
+  const band=bandRate(bands, age);
+  if(!band){out.innerHTML='';return;}
   const q=band.rate_per_1000/1000;
-  const expected=tax*q;
-  out.innerHTML='<div class="rk-two">'+
+  const pCum=cumDeathProb(bands, age, yrs);
+  out.innerHTML='<div class="rk-two rk-three">'+
     '<div class="rk-box"><div class="k">If it happens</div><div class="v" style="color:var(--r-text)">US$'+Math.round(tax).toLocaleString()+'</div>'+
       '<div class="s">estate tax on US$'+usd.toLocaleString()+' &middot; '+(usd>0?(tax/usd*100).toFixed(1):'0.0')+'% effective</div></div>'+
-    '<div class="rk-box"><div class="k">Expected cost per year</div><div class="v">US$'+Math.round(expected).toLocaleString()+'</div>'+
+    '<div class="rk-box"><div class="k">Expected cost, one year</div><div class="v">US$'+Math.round(tax*q).toLocaleString()+'</div>'+
       '<div class="s">'+band.rate_per_1000.toFixed(1)+' per 1,000 a year at age '+band.band.replace(' Years','')+'</div></div>'+
-    '</div>';
+    '<div class="rk-box" style="background:var(--bg3)"><div class="k">Expected cost over '+yrs+' years</div><div class="v">US$'+Math.round(tax*pCum).toLocaleString()+'</div>'+
+      '<div class="s">'+(pCum*100).toFixed(1)+'% cumulative chance across ages '+age+'–'+(age+yrs)+'</div></div>'+
+    '</div>'+
+    '<p class="footlet" style="margin-top:10px">The one-year figure is the one that invites a shrug; the horizon figure is the one that belongs beside a running cost. Cumulative probability is one minus the product of annual survival rates, stepped through five-year bands — an approximation of the published data, not a life table. It also holds today’s mortality rates flat across the whole horizon, and mortality has generally improved over time, so it likely <em>overstates</em> the risk somewhat.</p>';
 }
 
 // ---------- Start: goal-based front door (illustrative, not advice) ----------
@@ -1986,7 +2080,7 @@ function switchTab(p){
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
-  if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderRisk();}
+  if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderHorizon();renderRisk();}
   if(p==='learn') renderLearn();
 }
 
@@ -2052,10 +2146,14 @@ async function init(){
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));
   document.getElementById('bAmt').addEventListener('input',()=>{reformatAmt('bAmt');renderEstate();});
   document.getElementById('eAmt').addEventListener('input',()=>{reformatAmt('eAmt');renderEstateCalc();});
-  document.getElementById('swapQ').addEventListener('input',()=>{renderSwapSug();renderSwap();});
+  document.getElementById('swapQ').addEventListener('input',()=>{renderSwapSug();renderSwap();renderHorizon();});
+  // horizon drives both the swap economics and the cumulative mortality view
+  document.getElementById('swVal').addEventListener('input',()=>{reformatAmt('swVal');renderHorizon();});
+  document.getElementById('swYrs').addEventListener('input',()=>{renderHorizon();renderRisk();});
+  document.getElementById('swCost').addEventListener('input',renderHorizon);
   document.getElementById('rkAmt').addEventListener('input',()=>{reformatAmt('rkAmt');renderRisk();});
-  document.getElementById('rkAge').addEventListener('input',renderRisk);
-  document.getElementById('rkSex').addEventListener('change',renderRisk);
+  document.getElementById('rkAge').addEventListener('input',()=>{renderRisk();renderHorizon();});
+  document.getElementById('rkSex').addEventListener('change',()=>{renderRisk();renderHorizon();});
   initTipPop();
   applyHash();
 }
