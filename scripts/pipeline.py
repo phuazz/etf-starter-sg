@@ -259,12 +259,14 @@ def slim_swap(d):
     }
     keep_alt = ("ticker", "name", "domicile", "isin", "index_label", "ccy",
                 "ccy_is_pence", "income", "ter", "aum_usd", "tier", "caveat",
-                "recommended", "not_recommended_because", "estate_tax_exposed")
+                "recommended", "not_recommended_because", "estate_tax_exposed",
+                "venue", "venue_note", "srs_eligible", "verification_pending")
     keep_ver = ("grade", "gap_pp", "years", "monthly_corr", "contradiction")
     keep_cost = ("ter_delta_pp", "wht_saving_pp", "net_annual_delta_pp")
     for e in d["etfs"]:
         r = {k: e[k] for k in ("ticker", "name", "index_label", "tier", "caveat",
-                               "verdict", "verdict_note", "ter", "yield") if k in e}
+                               "verdict", "verdict_note", "ter", "yield",
+                               "aum_usd") if k in e}
         r["kind"] = "etf"
         r["alternatives"] = []
         for a in e["alternatives"]:

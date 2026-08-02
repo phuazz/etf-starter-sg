@@ -60,6 +60,72 @@ def load(n):
         return json.load(fh)
 
 
+# SGX-listed, NON-US-domiciled lines that track an index a US-domiciled holding
+# in this map also tracks. Mapped explicitly by ticker rather than by matching
+# benchmark strings, so a mis-mapping is visible in review.
+#
+# The list is short by nature. SGX offers no S&P 500, no Nasdaq-100, no US total
+# market and no US sector funds that are not themselves US-domiciled -- the SGX
+# US-equity lines (S27, D07, GSD/O87) are the PROBLEM this tool exists to flag,
+# not the solution. Where SGX does help is gold, and it helps a lot: a
+# Singapore-domiciled FUND holding allocated bullion is a cleaner situs answer
+# than either a US grantor trust or an Irish ETC, because it is neither a US
+# vehicle nor a debt security.
+#
+# The other direction matters too: SGX lines are SRS-eligible, which no
+# London-listed UCITS is. For an investor funding from SRS that can outweigh a
+# fee difference, so it is surfaced rather than left implicit.
+SGX_ALTERNATIVES = {
+    "GLS": {"index_key": "gold_spot",
+            "why": "Singapore-domiciled fund holding allocated physical gold vaulted in Singapore. Not a US vehicle and not a debt security, so the situs question that clouds both the US trust and the Irish ETCs does not arise.",
+            "srs": True},
+    "H1N": {"index_key": "msci_em",
+            "why": "Tracks the same MSCI Emerging Markets index, listed on SGX.",
+            "srs": True},
+}
+
+
+def sgx_pool(index_map):
+    """Non-US-situs SGX lines, shaped like the UCITS records so they can be
+    ranked and rendered alongside them."""
+    p = os.path.join(DATA, "etf_universe.json")
+    if not os.path.exists(p):
+        return []
+    with open(p, encoding="utf-8") as fh:
+        funds = {f["ticker"]: f for f in json.load(fh)["funds"]}
+    out = []
+    for tk, cfg in SGX_ALTERNATIVES.items():
+        f = funds.get(tk)
+        if not f:
+            continue
+        dom = f.get("domicile")
+        if dom == "US":          # never offer a US-domiciled line as the fix
+            continue
+        idx = index_map["indices"][cfg["index_key"]]
+        out.append({
+            "ticker": tk, "yahoo": None,
+            "name": f["name"], "official_name": f["name"],
+            "isin": f.get("isin"),
+            "index_key": cfg["index_key"], "index_label": idx["label"],
+            "index_family": idx["family"],
+            "issuer_hint": f.get("fund_manager"), "fund_family": f.get("fund_manager"),
+            "structure": "sgx_fund", "income": f.get("income") or "Accumulating",
+            "exchange": "SGX", "ccy": f.get("ccy"), "ccy_is_pence": False,
+            "ter": f.get("ter"), "ter_src": f.get("ter_basis"),
+            "aum_usd": None, "yield": f.get("yield"),
+            "is_ucits": False,
+            # Situs here rests on fund domicile, not UCITS status: a
+            # Singapore-domiciled fund is not US-situs.
+            "situs": "non_us" if dom and dom != "US" else "unresolved",
+            "estate_tax_exposed": False,
+            "wht_domicile": dom, "wht_domicile_conf": "curated_universe",
+            "us_div_wht_rate": 0.15 if dom == "IE" else 0.30,
+            "venue_note": cfg["why"],
+            "srs_eligible": cfg.get("srs", False),
+        })
+    return out
+
+
 def near_family_map(index_map):
     """family -> [(other_family, caveat)] , symmetric."""
     out = {}
@@ -142,8 +208,11 @@ def main():
     us_map = load("us_situs_map.json")
 
     nf = near_family_map(index_map)
-    safe = [f for f in ucits["funds"] if f["situs"] == "non_us"]
-    unresolved = [f for f in ucits["funds"] if f["situs"] != "non_us"]
+    sgx = sgx_pool(index_map)
+    pool = ucits["funds"] + sgx
+    safe = [f for f in pool if f["situs"] == "non_us"]
+    unresolved = [f for f in pool if f["situs"] != "non_us"]
+    print(f"alternatives pool: {len(ucits['funds'])} UCITS + {len(sgx)} SGX")
 
     by_index, by_family = {}, {}
     for f in safe:
@@ -164,6 +233,9 @@ def main():
             "income": a["income"], "ter": a.get("ter"), "ter_src": a.get("ter_src"),
             "aum_usd": a.get("aum_usd"),
             "estate_tax_exposed": False,
+            "venue": a.get("exchange", "LSE"),
+            "venue_note": a.get("venue_note"),
+            "srs_eligible": a.get("srs_eligible", False),
             "tier": tier, "caveat": caveat,
             "cost": c,
         }
@@ -196,6 +268,10 @@ def main():
             "ticker": us["ticker"], "name": us["name"], "kind": "etf",
             "index_key": k, "index_label": us["index_label"],
             "ter": us.get("ter"), "yield": us.get("yield"),
+            # Fund size stands in for "how widely held". It is the only
+            # defensible ordering available -- the tool has no holdings data --
+            # and it is what the summary table ranks by.
+            "aum_usd": us.get("aum_usd"),
             "estate_tax_exposed": True,
             "tier": tier,
             "caveat": caveat,

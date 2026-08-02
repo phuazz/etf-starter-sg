@@ -37,7 +37,7 @@
     "JJJ": {"ter": 0.50, "ter_conf": "est", "yield": 0.0, "asset_class": "dev_equity", "segment": "Japan", "domicile_override": "SG"},
     "GSD": {"ter": 0.40, "ter_conf": "high", "yield": 0.0, "asset_class": "gold", "segment": "Gold"},
     "O87": {"ter": 0.40, "ter_conf": "high", "yield": 0.0, "asset_class": "gold", "segment": "Gold"},
-    "GLS": {"ter": 0.35, "ter_conf": "est", "yield": 0.0, "asset_class": "gold", "segment": "Gold", "domicile_override": "SG"},
+    "GLS": {"ter": 0.39, "ter_conf": "med", "ter_src": "Issuer page 2026-08-02: management fee currently 0.39% p.a. (max 2%), with a stated intention to cap the total expense ratio at 0.39%. Was 0.35 'est' — a peer-informed placeholder set on 2026-07-09 before the fund listed (26 Mar 2026) and had any published figure. Still 'med' not 'high': the cap is an intention and there is no audited annual report yet.", "yield": 0.0, "asset_class": "gold", "segment": "Gold", "domicile_override": "SG"},
     "TID": {"ter": 0.65, "ter_conf": "high", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "China"},
     "H1N": {"ter": 0.55, "ter_conf": "high", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "Emerging Markets", "ter_note": "Amundi MSCI EM Swap II USD Acc (FR0010435297)."},
     "G1N": {"ter": 0.85, "ter_conf": "high", "yield": 0.0, "asset_class": "em_asia_equity", "segment": "India"},

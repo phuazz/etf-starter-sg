@@ -103,6 +103,16 @@ def fetch(symbols, years, refresh):
 
 
 def to_usd(s, ccy, fx):
+    """Convert a quoted series to USD, or return None if the currency is not
+    handled.
+
+    An unhandled currency returns None, the series never reaches the
+    comparison, and the pair grades "no_data" -- which reads as a legitimate
+    refusal rather than as the bug it is. That happened: adding SGX lines
+    introduced SGD, which had no branch here, and the Singapore gold fund
+    dropped out looking unverifiable. Any currency added to the alternatives
+    pool must be added here too, and main() now asserts that.
+    """
     if ccy == "USD":
         return s
     if ccy in ("GBP", "GBp"):
@@ -110,7 +120,13 @@ def to_usd(s, ccy, fx):
         return v * fx["GBPUSD=X"].reindex(v.index).ffill()
     if ccy == "EUR":
         return s * fx["EURUSD=X"].reindex(s.index).ffill()
+    if ccy == "SGD":
+        return s * fx["SGDUSD=X"].reindex(s.index).ffill()
     return None
+
+
+HANDLED_CCY = {"USD", "GBP", "GBp", "EUR", "SGD"}
+FX_SYMBOLS = ["GBPUSD=X", "EURUSD=X", "SGDUSD=X"]
 
 
 def ann(series):
@@ -176,20 +192,37 @@ def main():
         open(os.path.join(DATA, "us_situs_map.json"), encoding="utf-8"))["etfs"]}
 
     us_t = sorted({e["ticker"] for e in swap["etfs"]})
-    alt_t = sorted({a["ticker"] for e in swap["etfs"] for a in e["alternatives"]})
-    px = fetch(us_t + [f"{t}.L" for t in alt_t] + ["GBPUSD=X", "EURUSD=X"],
+    # Venue decides the Yahoo suffix: London lines are .L, Singapore lines .SI.
+    # Getting this wrong returns no history at all, which the refusal floor
+    # would read as "unverifiable" rather than as a bug.
+    suffix = {}
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            suffix[a["ticker"]] = ".SI" if a.get("venue") == "SGX" else ".L"
+    alt_t = sorted(suffix)
+
+    # Fail loudly on an unhandled quote currency rather than letting it become
+    # a silent "no_data" that reads like an honest refusal.
+    seen_ccy = {a["ccy"] for e in swap["etfs"] for a in e["alternatives"] if a.get("ccy")}
+    unhandled = sorted(seen_ccy - HANDLED_CCY)
+    if unhandled:
+        raise SystemExit(f"FATAL: no USD conversion for {unhandled} — add a branch "
+                         f"to to_usd() and the rate to FX_SYMBOLS")
+
+    px = fetch(us_t + [t + suffix[t] for t in alt_t] + FX_SYMBOLS,
                args.years, args.refresh)
     print(f"  cache holds {px.shape[1]} series")
 
-    fx = px[[c for c in ("GBPUSD=X", "EURUSD=X") if c in px]]
+    fx = px[[c for c in FX_SYMBOLS if c in px]]
     usd = {}
     for t in us_t:
         if t in px:
             usd[t] = px[t].dropna()
+    alt_ccy = {a["ticker"]: a["ccy"] for e in swap["etfs"] for a in e["alternatives"]}
     for t in alt_t:
-        c = f"{t}.L"
+        c = t + suffix[t]
         if c in px:
-            s = to_usd(px[c].dropna(), ucits[t]["ccy"], fx)
+            s = to_usd(px[c].dropna(), alt_ccy.get(t) or ucits.get(t, {}).get("ccy"), fx)
             if s is not None and len(s.dropna()):
                 usd[t] = s.dropna()
 
@@ -236,9 +269,22 @@ def main():
                 a["not_recommended_because"] = (
                     f"compounded outcome differs by {v.get('gap_pp'):+.2f}pp a year, "
                     f"beyond the {GRADE_C}pp floor")
-            elif v.get("grade") in ("no_data", "insufficient"):
+            elif v.get("grade") == "no_data":
                 a["recommended"] = False
                 a["not_recommended_because"] = f"not verifiable: {v.get('basis')}"
+            elif v.get("grade") == "insufficient":
+                # Absence of evidence is not evidence against. A fund listed
+                # months ago cannot have a multi-year record, and demoting it
+                # on that basis would bury the best available answer -- the
+                # Singapore-domiciled gold fund is exactly this case. It is
+                # shown, clearly marked unverified, with the track-record risk
+                # named rather than hidden behind a silent omission.
+                a["recommended"] = True
+                a["verification_pending"] = (
+                    "Too new to check against a meaningful record — "
+                    f"{v.get('basis')}. The domicile and cost figures stand; how "
+                    "closely it tracks is simply not yet knowable, and a young "
+                    "fund also carries the usual small-size and closure risks.")
             else:
                 a["recommended"] = True
 

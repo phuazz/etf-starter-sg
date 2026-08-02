@@ -740,6 +740,12 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <h2 class="sec">Swap a US holding for one outside US situs</h2>
     <div class="lead">Enter something you hold. If a fund outside US situs tracks the same index, this shows it, prices the difference, and says how well the two have actually kept pace. If nothing does, it says that instead of offering the nearest thing. <strong>Educational only — not tax, legal or investment advice.</strong></div>
 
+    <div class="card" id="swapTopCard" style="margin-bottom:16px">
+      <h3>The ten most likely swaps</h3>
+      <p style="font-size:13.5px;color:var(--t2);margin-bottom:4px">The largest US-domiciled funds a Singapore investor is likely to hold, each with its cleanest verified alternative. Ordered by fund size, which stands in for how widely held — this tool has no holdings data and will not pretend otherwise.</p>
+      <div id="swapTop"></div>
+    </div>
+
     <div class="card" id="swapPickCard">
       <div class="calcgrid">
         <div class="ctl"><label>Ticker you hold (US-listed ETF or share)</label><input id="swapQ" type="text" autocomplete="off" spellcheck="false" placeholder="SPY, QQQ, VTI, NVDA…" value="SPY"></div>
@@ -1659,9 +1665,12 @@ function altRow(a){
     :'<strong style="color:'+(net>=0?'var(--g-text)':'var(--r-text)')+'">'+pp(net)+'pp</strong>';
   const gap=v.gap_pp==null?'—':pp(v.gap_pp);
   const ccy=a.ccy_is_pence?'GBp':a.ccy;
+  const flags=(a.srs_eligible?'<span class="tierb tier1" style="margin-left:5px">SRS</span>':'')+
+    (a.verification_pending?'<span class="tierb tier2" style="margin-left:5px" title="'+a.verification_pending+'">UNVERIFIED</span>':'');
   return '<tr>'+
-    '<td><strong>'+a.ticker+'</strong><div style="font-size:11px;color:var(--t3)">'+a.name+'</div></td>'+
-    '<td>'+a.domicile+'</td>'+
+    '<td><strong>'+a.ticker+'</strong>'+flags+'<div style="font-size:11px;color:var(--t3)">'+a.name+
+      (a.venue_note?'<br><em>'+a.venue_note+'</em>':'')+'</div></td>'+
+    '<td>'+a.domicile+'<div style="font-size:10.5px;color:var(--t3)">'+(a.venue||'LSE')+'</div></td>'+
     '<td class="r">'+(a.ter==null?'—':a.ter.toFixed(2)+'%')+'</td>'+
     '<td class="r">'+netTxt+'</td>'+
     '<td class="r">'+gap+'</td>'+
@@ -1733,6 +1742,40 @@ function renderSwapName(n){
     h+='<div class="notice"><strong>Verify before relying on this.</strong> Situs turns on where the company is <em>incorporated</em>, not where it lists or trades. This screen uses the incorporation country reported for the security, which is an indicator and not a legal opinion. Confirm with a qualified cross-border adviser.</div>';
   }
   return h+'</div>';
+}
+
+function renderSwapTop(){
+  const box=document.getElementById('swapTop'); if(!box||!SWAP) return;
+  // Ranked by the US fund's size, filtered to holdings that actually have a
+  // verified alternative. A fund with no verified swap is not "easy" and does
+  // not belong in a list headed "most likely swaps" — GLD's Irish ETCs are the
+  // case in point, and they stay out.
+  const rows=SWAP.etfs
+    .map(e=>({e, best:(e.alternatives||[]).find(a=>a.recommended)}))
+    .filter(x=>x.best && x.e.aum_usd)
+    .sort((a,b)=>b.e.aum_usd-a.e.aum_usd)
+    .slice(0,10);
+  if(!rows.length){box.innerHTML='';return;}
+  box.innerHTML='<div class="tw" style="margin-top:10px"><table class="cmp"><thead><tr>'+
+    '<th>You hold</th><th>Tracks</th><th>Cleanest alternative</th><th>Dom.</th>'+
+    '<th class="r" title="Fee difference plus the US dividend withholding you stop paying, per year. The estate exposure is removed outright and is not in this number.">Annual gain</th>'+
+    '<th class="r">Fit</th></tr></thead><tbody>'+
+    rows.map(({e,best})=>{
+      const c=best.cost||{}, v=best.verification||{};
+      const net=c.net_annual_delta_pp;
+      const t=e.tier===2?'<span class="tierb tier2" style="margin-left:5px" title="'+(e.caveat||'')+'">RELATED</span>':'';
+      const u=best.verification_pending?'<span class="tierb tier2" style="margin-left:5px" title="'+best.verification_pending+'">UNVERIFIED</span>':'';
+      const s=best.srs_eligible?'<span class="tierb tier1" style="margin-left:5px">SRS</span>':'';
+      return '<tr><td><strong>'+e.ticker+'</strong>'+t+'<div style="font-size:11px;color:var(--t3)">'+e.name+'</div></td>'+
+        '<td style="font-size:11.5px">'+e.index_label+'</td>'+
+        '<td><strong>'+best.ticker+'</strong>'+s+u+'<div style="font-size:11px;color:var(--t3)">'+best.name+'</div></td>'+
+        '<td>'+best.domicile+'<div style="font-size:10.5px;color:var(--t3)">'+(best.venue||'LSE')+'</div></td>'+
+        '<td class="r">'+(net==null?'<span style="color:var(--t3)">n/a</span>'
+          :'<strong style="color:'+(net>=0?'var(--g-text)':'var(--r-text)')+'">'+pp(net)+'pp</strong>')+'</td>'+
+        '<td class="r"><span class="gradep '+gradeCls(v.grade)+'">'+(v.grade&&v.grade.length===1?v.grade:'?')+'</span></td>'+
+        '</tr>';
+    }).join('')+'</tbody></table></div>'+
+    '<p class="footlet"><strong>Annual gain excludes the estate saving</strong>, which is the whole point and is not an annual number — it is the removal of a one-off liability that only lands once. For index exposure the swap is therefore usually better than free: you stop paying withholding <em>and</em> the exposure disappears. Where the gain is negative you are paying something for that removal; decide whether it is worth it. Holdings with no verified alternative are absent by design — see the lookup below for those.</p>';
 }
 
 function renderSwap(){
@@ -1943,7 +1986,7 @@ function switchTab(p){
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
-  if(p==='swap'){renderSwapSug();renderSwap();renderRisk();}
+  if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderRisk();}
   if(p==='learn') renderLearn();
 }
 

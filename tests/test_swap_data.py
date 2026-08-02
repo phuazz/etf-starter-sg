@@ -326,10 +326,39 @@ def test_contradicted_pairs_are_never_recommended(swap):
 
 
 def test_failed_grades_are_never_recommended(swap):
+    """Evidence AGAINST a match demotes it. Absence of evidence does not --
+    see the next test."""
     for e in swap["etfs"]:
         for a in e["alternatives"]:
-            if a.get("verification", {}).get("grade") in ("fail", "no_data", "insufficient"):
+            if a.get("verification", {}).get("grade") in ("fail", "no_data"):
                 assert a["recommended"] is False, f"{e['ticker']}->{a['ticker']}"
+
+
+def test_unverifiable_is_shown_but_labelled_not_hidden(swap):
+    """A fund listed months ago cannot have a multi-year record. Demoting it
+    for that would have buried the Singapore-domiciled gold fund, which is the
+    cleanest situs answer available for bullion -- neither a US vehicle nor a
+    debt security. It is shown, with the gap in evidence named."""
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            if a.get("verification", {}).get("grade") == "insufficient":
+                assert a["recommended"] is True, f"{e['ticker']}->{a['ticker']}"
+                assert a.get("verification_pending"), (
+                    f"{e['ticker']}->{a['ticker']}: unverified but not labelled")
+                assert "not yet knowable" in a["verification_pending"]
+
+
+def test_sgx_alternatives_are_non_us_and_carry_their_venue(swap):
+    """SGX lines enter the pool on fund domicile, not UCITS status. The venue
+    must travel with them: it drives the Yahoo suffix, and it is the reason
+    they can be SRS-eligible when no London-listed UCITS is."""
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            assert a.get("venue") in ("LSE", "SGX"), f"{a['ticker']}: venue {a.get('venue')!r}"
+            assert a["estate_tax_exposed"] is False, a["ticker"]
+            if a["venue"] == "SGX":
+                assert a["domicile"] != "US", f"{a['ticker']}: US-domiciled offered as the fix"
+                assert a.get("venue_note"), f"{a['ticker']}: SGX line with no explanation"
 
 
 def test_tier2_matches_always_carry_a_caveat(swap):
@@ -347,15 +376,40 @@ def test_tier3_states_no_equivalent_rather_than_reaching(swap):
             assert not e["alternatives"], f"{e['ticker']}: tier-3 yet offering alternatives"
 
 
-def test_gold_is_offered_only_as_unresolved(swap):
-    """Gold ETCs are the only London route to bullion but are debt securities
-    whose situs does not follow from UCITS status. They may be listed, never
-    as a resolved-safe swap."""
+def test_gold_etcs_are_never_offered_as_a_safe_swap(swap):
+    """Gold ETCs are debt securities issued by a special-purpose vehicle, and
+    their situs does not follow from UCITS status. They may be listed for
+    completeness, never as a resolved-safe swap.
+
+    This is narrower than it first looks. Gold DOES now have a real answer --
+    the Singapore-domiciled physical gold fund, which is a fund rather than a
+    debt security and so carries no unresolved situs. The invariant is about
+    STRUCTURE, not about the asset: anything offered as a swap must have
+    resolved non-US situs, and every ETC must stay on the unresolved list."""
+    etc_tickers = set()
     for e in swap["etfs"]:
-        if e["index_key"] == "gold_spot":
-            assert not e["alternatives"], f"{e['ticker']}: ETC offered as a safe match"
-            for u in e["unresolved_alternatives"]:
-                assert u["situs"] == "unresolved", u["ticker"]
+        for u in e.get("unresolved_alternatives", []):
+            etc_tickers.add(u["ticker"])
+            assert u["situs"] == "unresolved", u["ticker"]
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            assert a["ticker"] not in etc_tickers, (
+                f"{e['ticker']}->{a['ticker']}: a security listed elsewhere as "
+                f"situs-unresolved is being offered as a swap")
+            assert a["estate_tax_exposed"] is False, a["ticker"]
+
+
+def test_gold_has_a_fund_answer_not_only_etcs(swap):
+    """Regression on the reason the SGX pool was added: bullion previously
+    returned tier-3 'no equivalent' while a Singapore-domiciled physical gold
+    FUND existed in the repo's own universe and was never considered."""
+    gold = [e for e in swap["etfs"] if e["index_key"] == "gold_spot"]
+    assert gold, "no gold holdings in the map"
+    for e in gold:
+        offered = [a for a in e["alternatives"] if a["recommended"]]
+        assert offered, f"{e['ticker']}: no fund alternative offered for bullion"
+        for a in offered:
+            assert a["domicile"] != "US", a["ticker"]
 
 
 def test_no_alternative_is_itself_us_situs(swap):
