@@ -1710,6 +1710,19 @@ function swapLookup(q){
   return SWAP.etfs.find(e=>e.ticker===t) || SWAP.single_names.find(n=>n.ticker===t) || null;
 }
 function gradeCls(g){return g==='A'?'gA':g==='B'?'gB':g==='C'?'gC':'gX';}
+// One set-aside line, used everywhere a rejected pair is listed. The short
+// reason says WHAT was wrong; the contradiction string carries the measurement
+// that settled it -- XNAS diverges from QQQ by 7.54pp a year while both are
+// labelled Nasdaq-100. That figure was built, shipped and never shown, which
+// left the strongest evidence for the refusal sitting in the payload unread.
+function setAsideLine(a){
+  const c=(a.verification||{}).contradiction;
+  const r=pfEsc(a.not_recommended_because||'');
+  // the short reasons are written as fragments, so supply the stop the
+  // contradiction sentence needs to read as a separate sentence after it
+  return '<strong>'+a.ticker+'</strong> — '+r+
+    (c?(/[.!?]$/.test(r)?' ':'. ')+'<span style="color:var(--t3)">'+pfEsc(c)+'</span>':'');
+}
 // Boilerplate the build strips before inlining, because it is identical across
 // every record. Falls back to the per-record copy when the full file is loaded
 // (source-mode dev via fetch), so both paths render the same words.
@@ -1841,7 +1854,7 @@ function renderSwapEtf(e){
   }
   if(set.length){
     h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Considered and set aside</div><ul class="lst">'+
-      set.map(a=>'<li><strong>'+a.ticker+'</strong> — '+a.not_recommended_because+'</li>').join('')+'</ul></div>';
+      set.map(a=>'<li>'+setAsideLine(a)+'</li>').join('')+'</ul></div>';
   }
   return h+'</div>';
 }
@@ -2283,7 +2296,7 @@ function pfRender(){
       } else {
         const setAside=(rec.alternatives||[]).filter(a=>!a.recommended);
         why=rec.tier===3?'Nothing outside US situs tracks this index, and this tool will not offer the nearest thing instead. '+pfEsc(rec.verdict_note||'')
-          :'Candidates were found and every one was set aside'+(setAside.length?': '+setAside.map(a=>'<strong>'+a.ticker+'</strong> — '+pfEsc(a.not_recommended_because||'')).join('; '):'')+'.';
+          :'Candidates were found and every one was set aside'+(setAside.length?': '+setAside.map(setAsideLine).join('; '):'')+'.';
       }
       return pfRow(h2,'','<span class="tierb tier3">NO FIX</span>',why);
     }).join('');
