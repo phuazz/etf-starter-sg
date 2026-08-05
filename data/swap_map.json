@@ -33,9 +33,59 @@
     "B": 42,
     "C": 10,
     "insufficient": 7,
-    "fail": 9
+    "break": 3,
+    "fail": 6
    },
-   "tier1_contradictions": 2
+   "tier1_contradictions": 0,
+   "price_breaks": {
+    "detector": "a STEP is a single-period move past 8 sigma in the pair ratio whose LEVEL, measured as the median of the 8 periods either side, then differs by at least 5%. A TICK is one observation more than 10% off a centred rolling median that comes straight back. Sigma is taken from the median absolute deviation, since an outlier this large inflates a standard deviation enough to hide inside it.",
+    "why": "An endpoint-to-endpoint gap assumes one continuous series. A step means it is two, and the gap then measures the join rather than the funds. A reverting tick leaves the gap alone but corrupts the correlation, so it is dropped. The size floors matter more than the sigma: two bond funds on one index track closely enough that a 0.1% wobble measures 50 sigma, and without a floor the detector called six such wobbles breaks.",
+    "steps_found": [
+     {
+      "us": "QQQ",
+      "alt": "XNAS",
+      "date": "2023-01-23",
+      "shift_pct": 21.63,
+      "sigma": 24.0,
+      "before": 1.1354,
+      "after": 1.381
+     },
+     {
+      "us": "QQQM",
+      "alt": "XNAS",
+      "date": "2023-01-23",
+      "shift_pct": 21.62,
+      "sigma": 23.8,
+      "before": 1.1344,
+      "after": 1.3796
+     },
+     {
+      "us": "SOXX",
+      "alt": "SEMI",
+      "date": "2024-01-08",
+      "shift_pct": -20.79,
+      "sigma": 16.0,
+      "before": 0.8932,
+      "after": 0.7075
+     }
+    ],
+    "ticks_dropped": [
+     {
+      "us": "URTH",
+      "alt": "HMWO",
+      "dates": [
+       "2025-10-20"
+      ]
+     },
+     {
+      "us": "URTH",
+      "alt": "SWDA",
+      "dates": [
+       "2025-10-20"
+      ]
+     }
+    ]
+   }
   },
   "single_name_decomposition": {
    "run": "2026-08-02",
@@ -2071,20 +2121,20 @@
       "basis": "US line's trailing gross distribution 0.41%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "fail",
+      "grade": "break",
       "months": 60,
-      "years": 4.98,
-      "us_ann_gross_pp": 14.06,
-      "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 13.937,
-      "alt_ann_pp": 21.474,
-      "gap_pp": 7.537,
-      "monthly_corr": 0.8458,
-      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead.",
-      "contradiction": "Claimed as the same index yet the compounded outcomes differ by +7.54pp a year. Either the index mapping is wrong or the funds replicate differently. Treat as unverified."
+      "gap_pp": null,
+      "price_break": {
+       "date": "2023-01-23",
+       "shift_pct": 21.63,
+       "sigma": 24.0,
+       "before": 1.1354,
+       "after": 1.381
+      },
+      "basis": "price history steps +21.6% on 2023-01-23 (24.0 sigma) and holds the new level, so the record cannot be read as one continuous series. Not a statement about how the fund tracks."
      },
      "recommended": false,
-     "not_recommended_because": "index mapping contradicted by realised returns"
+     "not_recommended_because": "not verifiable: the price history steps +21.6% on 2023-01-23 and stays there, so the record before and after that date cannot be compared as one series. This says nothing about how the fund tracks its index."
     },
     {
      "ticker": "CNDX",
@@ -2324,20 +2374,20 @@
       "basis": "US line's trailing gross distribution 0.43%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "fail",
+      "grade": "break",
       "months": 60,
-      "years": 4.98,
-      "us_ann_gross_pp": 14.141,
-      "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 14.012,
-      "alt_ann_pp": 21.474,
-      "gap_pp": 7.462,
-      "monthly_corr": 0.8464,
-      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead.",
-      "contradiction": "Claimed as the same index yet the compounded outcomes differ by +7.46pp a year. Either the index mapping is wrong or the funds replicate differently. Treat as unverified."
+      "gap_pp": null,
+      "price_break": {
+       "date": "2023-01-23",
+       "shift_pct": 21.62,
+       "sigma": 23.8,
+       "before": 1.1344,
+       "after": 1.3796
+      },
+      "basis": "price history steps +21.6% on 2023-01-23 (23.8 sigma) and holds the new level, so the record cannot be read as one continuous series. Not a statement about how the fund tracks."
      },
      "recommended": false,
-     "not_recommended_because": "index mapping contradicted by realised returns"
+     "not_recommended_because": "not verifiable: the price history steps +21.6% on 2023-01-23 and stays there, so the record before and after that date cannot be compared as one series. This says nothing about how the fund tracks its index."
     },
     {
      "ticker": "CNDX",
@@ -2923,19 +2973,20 @@
       "basis": "US line's trailing gross distribution 0.23%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 75% US-source slice"
      },
      "verification": {
-      "grade": "fail",
+      "grade": "break",
       "months": 60,
-      "years": 4.98,
-      "us_ann_gross_pp": 27.716,
-      "us_holder_wht_drag_pp": 0.069,
-      "us_ann_after_wht_pp": 27.647,
-      "alt_ann_pp": 21.511,
-      "gap_pp": -6.137,
-      "monthly_corr": 0.9396,
-      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.07pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead."
+      "gap_pp": null,
+      "price_break": {
+       "date": "2024-01-08",
+       "shift_pct": -20.79,
+       "sigma": 16.0,
+       "before": 0.8932,
+       "after": 0.7075
+      },
+      "basis": "price history steps -20.8% on 2024-01-08 (16.0 sigma) and holds the new level, so the record cannot be read as one continuous series. Not a statement about how the fund tracks."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -6.14pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "not verifiable: the price history steps -20.8% on 2024-01-08 and stays there, so the record before and after that date cannot be compared as one series. This says nothing about how the fund tracks its index."
     },
     {
      "ticker": "SMGB",
@@ -3838,7 +3889,10 @@
       "alt_ann_pp": 9.334,
       "gap_pp": -1.378,
       "monthly_corr": 0.974,
-      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead."
+      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
+      "outliers_dropped": [
+       "2025-10-20"
+      ]
      },
      "recommended": true
     },
@@ -3932,7 +3986,10 @@
       "alt_ann_pp": 10.964,
       "gap_pp": 0.253,
       "monthly_corr": 0.9773,
-      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead."
+      "basis": "annualised total return over 5.0y of overlap, USD; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
+      "outliers_dropped": [
+       "2025-10-20"
+      ]
      },
      "recommended": true
     },

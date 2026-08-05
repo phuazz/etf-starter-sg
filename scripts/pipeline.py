@@ -292,8 +292,18 @@ def slim_swap(d):
     The repo file is not modified, so every guard in tests/ reads exactly the
     bytes it read before.
     """
-    out = {"_meta": d["_meta"], "etfs": [], "single_names": []}
+    out = {"_meta": json.loads(json.dumps(d["_meta"])), "etfs": [], "single_names": []}
     m = out["_meta"]
+    # The break detector's own description and its per-pair findings are audit
+    # trail: the repo file keeps them in full, and the page never reads them --
+    # each affected pair already states its own date and step size in the
+    # reason the reader sees. Only the counts survive the projection.
+    pb = (m.get("return_verification") or {}).get("price_breaks")
+    if pb:
+        m["return_verification"]["price_breaks"] = {
+            "steps": len(pb.get("steps_found") or []),
+            "ticks": len(pb.get("ticks_dropped") or []),
+        }
     # 260 weeks on every record; asserted rather than assumed, because the
     # sentence below hard-codes the window it describes.
     weeks = {(n.get("decomposition") or {}).get("weeks") for n in d["single_names"]}
