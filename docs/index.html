@@ -1710,18 +1710,20 @@ function swapLookup(q){
   return SWAP.etfs.find(e=>e.ticker===t) || SWAP.single_names.find(n=>n.ticker===t) || null;
 }
 function gradeCls(g){return g==='A'?'gA':g==='B'?'gB':g==='C'?'gC':'gX';}
-// One set-aside line, used everywhere a rejected pair is listed. The short
-// reason says WHAT was wrong; the contradiction string carries the measurement
-// that settled it -- XNAS diverges from QQQ by 7.54pp a year while both are
-// labelled Nasdaq-100. That figure was built, shipped and never shown, which
-// left the strongest evidence for the refusal sitting in the payload unread.
+// One set-aside line, used everywhere a rejected pair is listed.
+//
+// Where a pair was rejected for contradicting its own index, the contradiction
+// string REPLACES the short reason rather than following it. It carries the
+// measurement that settled the case -- XNAS diverges from QQQ by 7.54pp a year
+// while both are labelled Nasdaq-100 -- and it subsumes the short reason
+// entirely. Printing both ran them together to no purpose, and did something
+// worse than repeat: "index mapping contradicted by realised returns" asserts a
+// cause that the sentence after it explicitly refuses to pick ("either the
+// index mapping is wrong or the funds replicate differently"). The label was
+// more confident than the evidence behind it, so the evidence wins.
 function setAsideLine(a){
   const c=(a.verification||{}).contradiction;
-  const r=pfEsc(a.not_recommended_because||'');
-  // the short reasons are written as fragments, so supply the stop the
-  // contradiction sentence needs to read as a separate sentence after it
-  return '<strong>'+a.ticker+'</strong> — '+r+
-    (c?(/[.!?]$/.test(r)?' ':'. ')+'<span style="color:var(--t3)">'+pfEsc(c)+'</span>':'');
+  return '<strong>'+a.ticker+'</strong> — '+pfEsc(c||a.not_recommended_because||'');
 }
 // Boilerplate the build strips before inlining, because it is identical across
 // every record. Falls back to the per-record copy when the full file is loaded
