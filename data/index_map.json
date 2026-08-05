@@ -19,7 +19,7 @@
       {
         "a": "us_total",
         "b": "us_large",
-        "caveat": "No UCITS fund tracks CRSP US Total Market. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,600. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
+        "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,600. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
       },
       {
         "a": "us_small",
@@ -305,6 +305,38 @@
       "n_holdings": 400,
       "family": "factor_value",
       "us_content": 0.6
+    },
+    "usa_quality": {
+      "label": "MSCI USA Quality",
+      "provider": "MSCI",
+      "exposure": "US large- and mid-cap equity screened on quality factors. US-only; the World series of the same factor adds non-US developed markets.",
+      "n_holdings": null,
+      "family": "factor_quality",
+      "us_content": 1.0
+    },
+    "usa_momentum": {
+      "label": "MSCI USA Momentum",
+      "provider": "MSCI",
+      "exposure": "US large- and mid-cap equity screened on price momentum. US-only; the World series of the same factor adds non-US developed markets.",
+      "n_holdings": null,
+      "family": "factor_momentum",
+      "us_content": 1.0
+    },
+    "usa_value": {
+      "label": "MSCI USA Value",
+      "provider": "MSCI",
+      "exposure": "US large- and mid-cap equity screened on valuation. US-only; the World series of the same factor adds non-US developed markets.",
+      "n_holdings": null,
+      "family": "factor_value",
+      "us_content": 1.0
+    },
+    "sp_total_market": {
+      "label": "S&P Total Market",
+      "provider": "S&P Dow Jones",
+      "exposure": "US investable market, large/mid/small. The S&P series, not the MSCI or CRSP one.",
+      "n_holdings": null,
+      "family": "us_total",
+      "us_content": 1.0
     },
     "global_aggregate_bond": {
       "label": "Bloomberg Global Aggregate",

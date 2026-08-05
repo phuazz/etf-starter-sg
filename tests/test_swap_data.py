@@ -198,6 +198,80 @@ def test_index_provider_matches_the_official_fund_name():
     assert not bad, "index provider contradicts official fund name:\n  " + "\n  ".join(bad)
 
 
+def test_index_provider_matches_the_us_fund_name():
+    """The same check, on the other side of every pair.
+
+    It only ever ran on the UCITS side. Running it on the US side found ITOT --
+    iShares Core S&P Total U.S. Stock Market, mapped to MSCI USA IMI -- which
+    had been sitting there through every previous pass. A guard that covers one
+    side of a comparison is half a guard: the pair is only as sound as the
+    weaker attribution, and this tool's whole claim is that the two sides track
+    the same index.
+    """
+    us = load("us_situs_map.json")
+    idx = load("index_map.json")["indices"]
+    bad = []
+    for e in us["etfs"]:
+        nm = (e.get("name") or "").upper()
+        if not nm:
+            continue
+        provider = idx[e["index_key"]]["provider"]
+        if not PROVIDER_TOKENS.get(provider):
+            continue
+        present = {p for p, toks in PROVIDER_TOKENS.items() if any(tk in nm for tk in toks)}
+        if present and provider not in present:
+            bad.append(f"{e['ticker']}: mapped to {provider} ({e['index_key']}) "
+                       f"but its name names {sorted(present)} -- {nm!r}")
+    assert not bad, "US-side index provider contradicts fund name:\n  " + "\n  ".join(bad)
+
+
+# A fund's name states the universe it covers. Two indices from the same
+# provider, measuring the same factor over different universes, are not the
+# same index -- and the provider check cannot tell them apart.
+SCOPE_TOKENS = {
+    "usa": ("USA", "U.S.", " US ", "US "),
+    "world": ("WORLD",),
+    "emerging": ("EMERGING", "EM "),
+    "eafe": ("EAFE",),
+}
+
+
+def _scope(text):
+    t = (text or "").upper()
+    return {s for s, toks in SCOPE_TOKENS.items() if any(k in t for k in toks)}
+
+
+def test_index_scope_matches_the_fund_name():
+    """MSCI USA Momentum is not MSCI World Momentum.
+
+    MTUM, QUAL and VLUE are iShares MSCI *USA* factor funds and were each mapped
+    to the *World* index of the same factor, then badged tier-1 "EXACT INDEX"
+    against a fund holding roughly 30 per cent non-US. Two were recommended.
+    Same provider throughout, so the provider guard passed them; nothing looked
+    at the universe. A five-year window averaged the divergence below the
+    failure floor, and a three-year one did not -- which is how they surfaced.
+
+    Only fires when the name and the label BOTH state a scope and the two
+    disagree, so a fund whose name is silent about its universe is not guessed
+    at. VWO is exactly that case: its stored name says only "Emerging Markets",
+    which is true of both the FTSE and MSCI series, so this guard cannot see it
+    and the realised-return evidence had to.
+    """
+    idx = load("index_map.json")["indices"]
+    bad = []
+    for fname, key in (("us_situs_map.json", "etfs"), ("ucits_universe.json", "funds")):
+        d = load(fname)
+        for f in d[key]:
+            for field in ("name", "official_name"):
+                s_name = _scope(f.get(field))
+                s_index = _scope(idx[f["index_key"]]["label"])
+                if s_name and s_index and not (s_name & s_index):
+                    bad.append(f"{f['ticker']} ({fname}): {field} implies {sorted(s_name)} "
+                               f"but index {f['index_key']} is {sorted(s_index)}")
+                    break
+    assert not bad, "index universe contradicts fund name:\n  " + "\n  ".join(bad)
+
+
 # --------------------------------------------------------------------------
 # 4. Cost and withholding: conservative when unverified
 # --------------------------------------------------------------------------

@@ -64,9 +64,20 @@ SECTOR_TO_INDEX = {
 US_ETFS = [
     ("SPY", "sp500"), ("VOO", "sp500"), ("IVV", "sp500"), ("SPLG", "sp500"),
     ("QQQ", "nasdaq100"), ("QQQM", "nasdaq100"),
-    ("VTI", "crsp_us_total"), ("ITOT", "msci_usa_imi"),
+    # ITOT is the S&P total-market fund, not the MSCI one. Its own name says so,
+    # and the provider check that would have caught it ran on the UCITS side only.
+    ("VTI", "crsp_us_total"), ("ITOT", "sp_total_market"),
     ("VT", "ftse_all_world"), ("ACWI", "msci_acwi"),
-    ("VEA", "ftse_dev_exus"), ("VWO", "msci_em"), ("IEMG", "msci_em_imi"),
+    # VWO tracks the FTSE emerging series, not the MSCI one, so it was being
+    # matched to MSCI EM trackers while Vanguard's own FTSE EM UCITS funds
+    # (VFEG, VFEM) sat unoffered in the universe. Three separate MSCI EM lines
+    # diverge from it by +4.7 to +6.1pp a year over three years and agree with
+    # each other, which is the pattern of VWO being the odd one out rather than
+    # the three of them; index_map already records why (FTSE calls South Korea
+    # developed and holds none of it, MSCI does not). Its sibling VEA is already
+    # mapped to FTSE here. CONFIRM AGAINST THE ISSUER FACTSHEET: the Yahoo name
+    # this file stores is generic and does not name the index provider.
+    ("VEA", "ftse_dev_exus"), ("VWO", "ftse_emerging"), ("IEMG", "msci_em_imi"),
     ("EFA", "msci_eafe"), ("URTH", "msci_world"),
     ("IWM", "russell2000"), ("IJR", "sp_smallcap600"),
     ("SCHD", "dj_us_dividend_100"), ("VYM", "ftse_high_div_yield"),
@@ -84,7 +95,12 @@ US_ETFS = [
     ("TLT", "us_treasury_long"), ("IEF", "us_treasury_7_10"),
     ("SHY", "us_treasury_1_3"), ("TIP", "us_tips"),
     ("LQD", "usd_corporate_ig"), ("HYG", "usd_corporate_hy"),
-    ("MTUM", "world_momentum"), ("QUAL", "world_quality"), ("VLUE", "world_value"),
+    # All three are iShares MSCI *USA* factor funds and were mapped to the
+    # *World* index of the same factor -- a tier-1 "exact index match" against a
+    # fund holding roughly 30% non-US. Same provider, so the provider check
+    # could not see it; nothing checked the universe. It also fed the wrong
+    # us_content (0.6-0.7 instead of 1.0) into the withholding figure.
+    ("MTUM", "usa_momentum"), ("QUAL", "usa_quality"), ("VLUE", "usa_value"),
 ]
 
 # Widely held US-incorporated single names. Sector comes from Yahoo, not from

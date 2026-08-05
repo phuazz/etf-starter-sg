@@ -252,8 +252,15 @@ def main():
             same_fam = [f for f in by_family.get(fam, []) if f["index_key"] != k]
             if same_fam:
                 tier, cands = 2, same_fam
+                # Name the index you would be moving TO. Saying only "a
+                # different index" is the whole substance of the demotion left
+                # out: MSCI USA Momentum against MSCI World Momentum is a
+                # change of universe, and the reader can see that at once from
+                # the two names but not from the generic wording.
+                alt_labels = sorted({f["index_label"] for f in same_fam})
                 caveat = (f"No UCITS fund tracks {us['index_label']}. The alternatives below "
-                          f"cover the same broad exposure through a different index.")
+                          f"track {' or '.join(alt_labels)} instead — a related index in the "
+                          f"same family, not the same index.")
             else:
                 for other_fam, cav in nf.get(fam, []):
                     if by_family.get(other_fam):

@@ -298,12 +298,19 @@ def slim_swap(d):
     # trail: the repo file keeps them in full, and the page never reads them --
     # each affected pair already states its own date and step size in the
     # reason the reader sees. Only the counts survive the projection.
-    pb = (m.get("return_verification") or {}).get("price_breaks")
-    if pb:
-        m["return_verification"]["price_breaks"] = {
-            "steps": len(pb.get("steps_found") or []),
-            "ticks": len(pb.get("ticks_dropped") or []),
-        }
+    rvf = m.get("return_verification")
+    if rvf:
+        pb = rvf.get("price_breaks")
+        if pb:
+            rvf["price_breaks"] = {"steps": len(pb.get("steps_found") or []),
+                                   "ticks": len(pb.get("ticks_dropped") or [])}
+        # The method write-ups -- why tracking error is not the metric, the
+        # Singapore-holder tax basis, the grade bands -- are the record of HOW
+        # the numbers were made, and the guards read them from the repo file.
+        # The page renders none of them; it reads window_years and nothing else.
+        m["return_verification"] = {k: v for k, v in rvf.items()
+                                    if k not in ("why_not_tracking_error", "tax_basis",
+                                                 "grade_bands_abs_pp", "metric")}
     # 260 weeks on every record; asserted rather than assumed, because the
     # sentence below hard-codes the window it describes.
     weeks = {(n.get("decomposition") or {}).get("weeks") for n in d["single_names"]}
