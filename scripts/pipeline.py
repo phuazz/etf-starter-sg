@@ -159,7 +159,7 @@ def load_or_fetch_prices(funds):
     out = {}
     last_ts = 0   # newest real bar timestamp seen (for an accurate, non-reconstructed "as of")
     for f in funds:
-        sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"] + ".SI")
+        sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"].zfill(4) + ".HK" if f.get("exchange") == "HKEX" else f["ticker"] + ".SI")
         url = ("https://query1.finance.yahoo.com/v8/finance/chart/" + sym
                + "?range=6y&interval=1wk&events=div")
         try:
@@ -391,7 +391,7 @@ def main():
         # 0.351 against a true 0.54. The error ran AGAINST this dashboard's own
         # argument: it understated the cost of the US-domiciled route, making
         # the Irish-UCITS core look less advantageous than it is.
-        eff_us_content = 1.0 if dom == "US" else us_content.get(ac, 0)
+        eff_us_content = 1.0 if dom == "US" else (rec["us_content_override"] if rec.get("us_content_override") is not None else us_content.get(ac, 0))
         drag = round(yld_by_class.get(ac, 0) * eff_us_content * wr, 3)
         rec["est_wht_drag_pct"] = drag
         rec["gross_expected_return_pct"] = acinfo["ret"]
@@ -474,6 +474,26 @@ def main():
             "yield": c["yield"], "val_m": None, "liquidity_tier": "high",
             "tr_1m": None, "tr_3m": None, "tr_1y": None, "ann_3y": None,
             "is_core": True, "share_classes": [{"ticker": c["ticker"], "ccy": c["ccy"], "val_m": None}],
+        }
+        funds.append(enrich(rec))
+
+    # ---- add HK-listed satellites (HKEX; verified curated block) --------
+    # HK-domiciled trackers: no US estate-tax exposure, no HK withholding on
+    # distributions; ~10% China WHT already inside the funds (net indices).
+    # Not SRS/CPFIS-eligible (SGX-only rule). us_content_override=0: their
+    # income is China/HK-source, so the class-level US-content map must not apply.
+    for c in curated.get("hk_listings", []):
+        rec = {
+            "ticker": c["ticker"], "name": c["name"], "ccy": c["ccy"], "exchange": "HKEX",
+            "isin": c.get("isin"), "domicile": c["domicile"], "domicile_conf": "curated",
+            "asset_class": c["asset_class"], "segment": c["segment"], "benchmark": c.get("benchmark"),
+            "geo": c["segment"], "fund_manager": c["name"].split(" ")[0], "income": c["income"],
+            "mgmt_style": "PASSIVE", "cpf": "No", "ter": c["ter"], "ter_conf": c.get("ter_conf"),
+            "mgmt_fee": c.get("mgmt_fee"), "yield": c.get("yield"), "val_m": None,
+            "liquidity_tier": c.get("liquidity_tier", "medium"), "lot": c.get("lot"),
+            "tr_1m": None, "tr_3m": None, "tr_1y": None, "ann_3y": None,
+            "us_content_override": 0,
+            "is_core": False, "share_classes": [{"ticker": c["ticker"], "ccy": c["ccy"], "val_m": None}],
         }
         funds.append(enrich(rec))
 

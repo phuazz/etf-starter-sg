@@ -273,6 +273,7 @@ td.r{text-align:right;font-family:var(--mono)}
 .bdg-sg{background:var(--bg3);color:var(--t2);border-color:var(--bd2)}
 .bdg-ie{background:var(--b-bg);color:var(--b-text);border-color:var(--b-bg2)}
 .bdg-lu,.bdg-fr{background:var(--c-bg);color:var(--c-text);border-color:rgba(8,145,178,0.2)}
+.bdg-hk{background:var(--g-bg);color:var(--g-text,var(--g));border-color:var(--g-bg2)}
 .bdg-us{background:var(--r-bg);color:var(--r-text);border-color:var(--r-bg2)}
 .bdg-verify{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.25)}
 .bdg-core{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
@@ -613,6 +614,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
           <button data-v="safe">Estate-tax safe</button>
           <button data-v="core">Irish UCITS core</button>
           <button data-v="sgx">SGX-listed</button>
+          <button data-v="hk">HK-listed</button>
         </div>
       </div>
       <div class="ctl"><label>View</label>
@@ -936,6 +938,7 @@ const CORE_ISIN={CSPX:'IE00B5BMR087',VUAA:'IE00BFMXXD54',VWRA:'IE00BK5BQT80',IWD
 function infoUrl(f){
   if(f.is_core) return 'https://www.justetf.com/en/etf-profile.html?isin='+(CORE_ISIN[f.ticker]||'');
   if((f.domicile==='LU'||f.domicile==='FR')&&f.isin) return 'https://www.justetf.com/en/etf-profile.html?isin='+f.isin;
+  if(f.exchange==='HKEX') return 'https://finance.yahoo.com/quote/'+f.ticker.padStart(4,'0')+'.HK';
   return 'https://finance.yahoo.com/quote/'+f.ticker+'.SI';  // SGX-listed
 }
 // Trailing price-return stats from the weekly series (1M/3M/YTD/1Y/3Y p.a.)
@@ -1109,7 +1112,9 @@ function cpfLine(f){
 // Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
 function buyBlock(f){
   if(!f) return '';
-  const body=f.is_core
+  const body=f.exchange==='HKEX'
+    ? 'Listed in <strong>Hong Kong (HKEX)</strong>. Buy with cash through a broker with HK access (Interactive Brokers, moomoo, Saxo; Tiger also advertises HK &mdash; check its current schedule); convert to <strong>HKD</strong> inside the broker first, with the same care over conversion costs as the guide describes. Trading hours are <strong>Singapore hours</strong> (9:30am&ndash;4pm, lunch break 12&ndash;1pm). HK shares trade in <strong>board lots</strong>'+(f.lot?' &mdash; '+f.lot+' units minimum for this fund':'')+', so check the minimum outlay before ordering. <strong>No stamp duty</strong> on HK-listed ETFs, and distributions arrive with <strong>no HK withholding</strong> (China&rsquo;s ~10% dividend tax is already inside the fund). <strong>Cash only</strong> &mdash; not SRS or CPFIS eligible.'
+    : f.is_core
     ? 'Listed in <strong>London (LSE)</strong>. Buy through any broker with LSE access &mdash; Interactive Brokers, Tiger, moomoo or Saxo &mdash; cheapest commission first; several offer fractional shares. Generally <strong>cash only</strong> (not CPF); SRS only via specific platforms. No SGX / CDP account needed.'
     : 'Listed on <strong>SGX</strong>. Buy with cash through any Singapore broker (moomoo, Tiger, Interactive Brokers, POEMS, DBS Vickers); held in <strong>CDP</strong> or a custodian depending on the broker. <strong>SRS</strong>: via an SRS-linked broker. '+cpfLine(f);
   return '<div class="buy">'+
@@ -1266,7 +1271,7 @@ function toggleChart(btn){
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
 function domBadge(f){
-  const d=f.domicile, cls='bdg-'+(['SG','IE','LU','FR','US'].includes(d)?d.toLowerCase():'verify');
+  const d=f.domicile, cls='bdg-'+(['SG','IE','LU','FR','US','HK'].includes(d)?d.toLowerCase():'verify');
   let h='<span class="bdg '+cls+'">'+(DOM_LABEL[d]||d)+'</span>';
   if(f.domicile_conf==='inferred'||f.domicile_conf==='none') h+=' <span class="bdg bdg-verify" title="Domicile not confirmed from ISIN">verify</span>';
   if(f.is_core) h=' <span class="bdg bdg-core">Core</span> '+h;
@@ -1346,6 +1351,7 @@ function passRoute(f){
   if(routeFilter==='safe') return !f.estate_tax_exposed;
   if(routeFilter==='core') return f.is_core;
   if(routeFilter==='sgx') return f.exchange==='SGX';
+  if(routeFilter==='hk') return f.exchange==='HKEX';
   return true;
 }
 function renderTable(){
