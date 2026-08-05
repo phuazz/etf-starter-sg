@@ -91,6 +91,42 @@ a{color:var(--b-text);text-decoration:none}
 .declegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
 .setaside{margin-top:12px;padding-top:10px;border-top:1px dashed var(--bd)}
 .setaside li{font-size:12px;color:var(--t3);margin-bottom:3px}
+/* ---- portfolio entry + ranked action list ---- */
+.pf-entry{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
+.pf-entry textarea{font-family:var(--mono);font-size:13px;line-height:1.55;color:var(--t1);background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--radius);padding:9px 11px;width:100%;resize:vertical}
+.pf-entry textarea:focus{outline:none;border-color:var(--b)}
+.pf-parse{flex:1 1 300px;min-width:0;font-size:12px;color:var(--t2);align-self:flex-end;padding-bottom:2px}
+.pf-parse .row{display:flex;gap:7px;align-items:baseline;padding:2.5px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.pf-parse .row:last-child{border-bottom:none}
+.pf-parse .ok{color:var(--g-text);font-weight:700}
+.pf-parse .no{color:var(--a-text);font-weight:700}
+.pf-parse .nm{color:var(--t3);font-size:11.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1 1 90px}
+.pf-parse .amt{font-family:var(--mono);margin-left:auto;white-space:nowrap}
+.pf-parse button{font:inherit;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--bd2);background:var(--bg2);color:var(--b-text);cursor:pointer}
+.pf-parse button:hover{border-color:var(--b)}
+.pf-btn{font-family:var(--sans);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:var(--radius);border:1px solid var(--bd2);background:var(--bg2);color:var(--t2);cursor:pointer}
+.pf-btn:hover{background:var(--bg-hover);color:var(--t1)}
+.pf-grp{margin-top:18px}
+.pf-grp>h3{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px}
+.pf-grp .cnt{font-size:12px;font-weight:600;color:var(--t3)}
+.pf-lead{font-size:13px;color:var(--t2);margin-bottom:10px}
+.pf-act{border-left:3px solid var(--g)}
+.pf-hold{border-left:3px solid var(--a)}
+.pf-none{border-left:3px solid var(--bd2)}
+.pf-row{border-bottom:1px solid var(--bd)}
+.pf-row:last-child{border-bottom:none}
+.pf-row .why{font-size:12px;color:var(--t2);margin-top:3px;line-height:1.5}
+.pf-ev{background:var(--bg3);padding:2px 14px 12px}
+.pf-ev .card{box-shadow:none;margin-top:10px !important}
+.pf-more{font:inherit;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--bd2);background:var(--bg2);color:var(--b-text);cursor:pointer;white-space:nowrap}
+.pf-more:hover{border-color:var(--b)}
+.pf-bad{background:var(--r-bg);border:1px solid rgba(190,40,40,.3);border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--r-text);margin-top:14px}
+.pf-lad{width:100%;font-size:12.5px;border-collapse:collapse;margin-top:8px}
+.pf-lad td,.pf-lad th{padding:7px 9px;border-bottom:1px solid var(--bd);text-align:left}
+.pf-lad th{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3-text);font-weight:600}
+.pf-lad td.r,.pf-lad th.r{text-align:right;font-family:var(--mono)}
+.pf-lad tr.floor td{background:var(--bg3);font-weight:600}
+.gloss{border-bottom:1px dotted var(--t3);cursor:help}
 .rk-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
 .rk-three{grid-template-columns:repeat(3,1fr)}
 .rk-four{grid-template-columns:repeat(4,1fr)}
@@ -747,12 +783,35 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <h2 class="sec">Swap a US holding for one outside US situs</h2>
     <div class="lead">Enter something you hold. If a fund outside US situs tracks the same index, this shows it, prices the difference, and says how well the two have actually kept pace. If nothing does, it says that instead of offering the nearest thing. <strong>Educational only — not tax, legal or investment advice.</strong></div>
 
+    <div class="card" id="pfCard" style="margin-bottom:16px">
+      <h3>Start with what you own</h3>
+      <p style="font-size:13.5px;color:var(--t2);margin-bottom:10px">One holding per line — a ticker or part of a fund's name, then roughly what it is worth. Paste a list straight from your broker if that is easier. Values in <strong>US dollars</strong>, and rough is fine: this is about which holdings to deal with first, not about your exact balance.</p>
+      <div class="pf-entry">
+        <div class="ctl" style="flex:1 1 320px">
+          <label for="pfIn">Your holdings</label>
+          <textarea id="pfIn" rows="5" spellcheck="false" placeholder="VOO 200000&#10;Apple 50000&#10;QQQ 120,000"></textarea>
+        </div>
+        <div id="pfParse" class="pf-parse"></div>
+      </div>
+      <div class="calcgrid" style="margin-top:12px;margin-bottom:8px">
+        <div class="ctl"><label>Years you expect to hold</label><input id="pfYrs" type="text" inputmode="numeric" value="20"></div>
+        <div class="ctl"><label>Your age</label><input id="pfAge" type="text" inputmode="numeric" value="45"></div>
+        <div class="ctl"><label>One-off cost to switch (%)</label><input id="pfCost" type="text" inputmode="decimal" value="0.50"></div>
+        <div class="ctl" style="justify-content:flex-end"><button class="pf-btn" id="pfClear" type="button">Clear</button></div>
+      </div>
+      <p class="footlet" style="margin-top:0">Kept in this browser only — nothing is sent anywhere, and there is no account behind this page. <strong>Clear</strong> removes it. The switching cost is <strong>your assumption, not a quoted figure</strong>: it covers the sell, the buy, the spread on both, and any currency conversion. 0.5% round trip is a plausible retail default and a low-cost broker may be well under half of it.</p>
+    </div>
+
+    <div id="pfOut"></div>
+
     <div class="card" id="swapTopCard" style="margin-bottom:16px">
       <h3>The ten most likely swaps</h3>
       <p style="font-size:13.5px;color:var(--t2);margin-bottom:4px">The largest US-domiciled funds a Singapore investor is likely to hold, each with its cleanest verified alternative. Ordered by fund size, which stands in for how widely held — this tool has no holdings data and will not pretend otherwise.</p>
       <div id="swapTop"></div>
     </div>
 
+    <h2 class="sec" style="margin-top:30px">Look up a single holding</h2>
+    <div class="lead" style="margin-bottom:14px">The full record for one ticker: every alternative considered, the ones set aside and why, how closely the two have actually kept pace, and the holding-period arithmetic. This is the same evidence the list above opens up, reachable on its own.</div>
     <div class="card" id="swapPickCard">
       <div class="calcgrid">
         <div class="ctl"><label>Ticker you hold (US-listed ETF or share)</label><input id="swapQ" type="text" autocomplete="off" spellcheck="false" placeholder="SPY, QQQ, VTI, NVDA…" value="SPY"></div>
@@ -1661,6 +1720,33 @@ function pp(v,dp){return (v>0?'+':'')+v.toFixed(dp==null?2:dp);}
 // situs-unresolved securities, and the decomposition sentence. These put them
 // back. Each checks for a per-record copy FIRST, so a full swap_map.json loaded
 // in source-mode dev renders the identical words with no branch in the callers.
+// The same Irish line answers several US funds (VUAA appears six times), so the
+// build ships each alternative's invariant fields once in _meta.alts. This puts
+// them back ONCE at load rather than at every render, which keeps every
+// downstream renderer working on whole objects and unaware the projection
+// happened. `kind` and a single name's `verdict` are restored the same way:
+// both are implied by where the record already sits.
+function swapHydrate(){
+  if(!SWAP||SWAP._hydrated) return;
+  const dict=(SWAP._meta&&SWAP._meta.alts)||{};
+  SWAP.etfs.forEach(e=>{
+    e.kind='etf';
+    (e.alternatives||[]).forEach(a=>{
+      const base=dict[a.ticker];
+      // Record fields win: `tier` and `verification_pending` are per-pair and
+      // are never in the dictionary, but this ordering is what makes that safe.
+      if(base) for(const k in base){ if(a[k]===undefined) a[k]=base[k]; }
+      if(a.tier===undefined) a.tier=e.tier;
+      if(a.estate_tax_exposed===undefined) a.estate_tax_exposed=SWAPBP().alt_estate_tax_exposed===undefined?false:SWAPBP().alt_estate_tax_exposed;
+      if(a.caveat===undefined && e.caveat) a.caveat=e.caveat;
+    });
+  });
+  SWAP.single_names.forEach(n=>{
+    n.kind='single_name';
+    if(n.verdict===undefined) n.verdict=n.situs==='us'?'no_ucits_equivalent_possible':'may_already_be_outside_us_situs';
+  });
+  SWAP._hydrated=true;
+}
 function swapProxies(n){
   if(n.sector_proxies) return n.sector_proxies;               // full file
   const dict=(SWAP&&SWAP._meta&&SWAP._meta.proxies)||{};
@@ -1700,7 +1786,7 @@ function altRow(a){
   // Tooltip is rebuilt from the numbers rather than shipped as prose on every
   // pair — the wording is identical across 112 pairs, only the figures differ.
   const tip=v.gap_pp==null?'Not verifiable from the available history.'
-    :('Compounded outcomes over '+(v.years||5)+' years differed by '+pp(v.gap_pp)+
+    :('Compounded outcomes over '+(v.years||SWAPBP().ver_years||5)+' years differed by '+pp(v.gap_pp)+
       'pp a year, after putting the US line on a Singapore-holder tax basis'+
       (v.monthly_corr!=null?'; monthly correlation '+v.monthly_corr.toFixed(3):'')+'.');
   const g='<span class="gradep '+gradeCls(v.grade)+'" title="'+tip+'">'+(v.grade&&v.grade.length===1?v.grade:'?')+'</span>';
@@ -1945,6 +2031,344 @@ function renderRisk(){
     '<p class="footlet" style="margin-top:10px">The one-year figure is the one that invites a shrug; the horizon figure is the one that belongs beside a running cost. Cumulative probability is one minus the product of annual survival rates, stepped through five-year bands — an approximation of the published data, not a life table. It also holds today’s mortality rates flat across the whole horizon, and mortality has generally improved over time, so it likely <em>overstates</em> the risk somewhat.</p>';
 }
 
+// ---------- Swap: the whole portfolio, ranked ------------------------------
+// The single-ticker panel above answers "is this one holding a problem". Most
+// people hold 5-15 lines and do not know WHICH one is. This takes the lot and
+// orders them.
+//
+// The estate arithmetic here is the reason this section exists. The per-holding
+// panel prices each line as if it were your only US-situs asset, which UNDER-
+// states the liability because the IRC 2001(c) schedule is progressive. The fix
+// is NOT to charge each holding its top marginal slice -- do that and the
+// per-holding figures sum to MORE than the true liability, which is the
+// direction that pushes someone into acting. There is no honest way to split a
+// progressive tax across holdings, so this does not try: it shows the total,
+// then a ladder of what is STILL owed after each swap. That is exact, needs no
+// attribution, and makes the progressivity visible as a curve that flattens.
+//
+// Ordering is by US-situs value removed, largest first -- not by the running
+// saving. The running saving is a rate that scales with the horizon; the estate
+// exposure is a one-off liability that does not, and it is the larger number
+// for almost every holder. The running figure is shown on every row and is
+// deliberately NOT in the sort key.
+//
+// Everything below runs in the browser, where the 43 guards in tests/ cannot
+// reach. pfCheck() is the substitute: it re-derives the totals independently
+// and the panel refuses to render numbers if they disagree.
+const PF_KEY='etfsg.swap.pf.v1';
+let PF=[], PF_OPEN={};
+function pfEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function usd(v){return (v<0?'−':'')+'US$'+Math.abs(Math.round(v)).toLocaleString();}
+// Plain gloss on an expert term. title="" is picked up by initTipPop(), so it
+// is tappable on a phone rather than hover-only.
+function gl(term,plain){return '<span class="gloss" title="'+pfEsc(plain)+'">'+term+'</span>';}
+
+// One holding per line. The LAST number on the line is the value; everything
+// before it is the query. Handles a pasted broker list as readily as typing.
+function pfParseLine(line){
+  const raw=line.trim(); if(!raw) return null;
+  const m=raw.match(/([\d][\d,.]*)\s*([kKmM])?\s*$/);
+  let val=0, q=raw;
+  if(m){
+    const n=parseFloat(m[1].replace(/,/g,''));
+    if(!isNaN(n)){ val=Math.round(n*(m[2]?(m[2].toLowerCase()==='k'?1e3:1e6):1)); q=raw.slice(0,m.index); }
+  }
+  return {raw:raw, q:q.replace(/[$,]/g,'').replace(/\s*[-–:,]\s*$/,'').trim(), val:val};
+}
+// Ticker first, then a name substring. Ambiguity returns candidates rather than
+// guessing -- picking the wrong fund silently is exactly the failure mode the
+// build-side guards exist to stop.
+function pfResolve(q){
+  if(!SWAP||!q) return {hit:null,cands:[]};
+  const Q=q.trim().toUpperCase(), all=SWAP.etfs.concat(SWAP.single_names);
+  const exact=all.find(r=>r.ticker===Q); if(exact) return {hit:exact,cands:[]};
+  const starts=all.filter(r=>r.ticker.indexOf(Q)===0);
+  if(starts.length===1) return {hit:starts[0],cands:[]};
+  const named=all.filter(r=>(r.name||'').toUpperCase().indexOf(Q)>=0 && starts.indexOf(r)<0);
+  const pool=starts.concat(named);
+  if(pool.length===1) return {hit:pool[0],cands:[]};
+  return {hit:null,cands:pool.slice(0,4)};
+}
+function pfRead(){
+  const el=document.getElementById('pfIn'); if(!el) return [];
+  return el.value.split('\n').map(pfParseLine).filter(Boolean).map(h=>{
+    const r=pfResolve(h.q); h.rec=r.hit; h.cands=r.cands; return h;
+  });
+}
+function pfNum(id,dflt,lo,hi){
+  const el=document.getElementById(id); if(!el) return dflt;
+  const n=parseFloat((el.value||'').replace(/[^\d.]/g,''));
+  return isNaN(n)?dflt:Math.max(lo,Math.min(hi,n));
+}
+
+// Classify, cost, and order. Returns null when the numbers do not reconcile.
+function pfCompute(){
+  const yrs=Math.round(pfNum('pfYrs',20,1,60)), swPct=pfNum('pfCost',0.5,0,10);
+  const held=PF.filter(h=>h.rec && h.val>0);
+  const act=[], hold=[], nofix=[], clean=[];
+  let exposed=0;
+  held.forEach(h=>{
+    const r=h.rec;
+    h.isExposed = r.kind==='etf' || r.situs==='us';
+    if(h.isExposed) exposed+=h.val;
+    if(r.kind==='single_name'){ (r.situs==='us'?nofix:clean).push(h); return; }
+    const best=(r.alternatives||[]).find(a=>a.recommended);
+    if(!best){ nofix.push(h); return; }
+    h.best=best;
+    const net=(best.cost||{}).net_annual_delta_pp;
+    h.net=net==null?null:net;
+    h.oneOff=h.val*swPct/100;
+    h.running=net==null?null:h.val*net/100*yrs;
+    // The split is on the RUNNING economics alone, which is the only part that
+    // can honestly be attributed to a single holding. The estate case is stated
+    // beside it and left to the reader.
+    (h.running!=null && h.running-h.oneOff<0 ? hold : act).push(h);
+  });
+  const byVal=(a,b)=>b.val-a.val;
+  act.sort(byVal); hold.sort(byVal); nofix.sort(byVal); clean.sort(byVal);
+  // Ladder: walk the swappable holdings in the order shown, subtracting each
+  // from the running US-situs total. Exact by construction -- no attribution.
+  const swappable=act.concat(hold);
+  let rem=exposed; const ladder=[];
+  swappable.forEach(h=>{ rem-=h.val; ladder.push({h:h, after:rem, tax:estateTax(rem)}); });
+  const floor=rem;
+  const res={yrs:yrs, swPct:swPct, held:held, act:act, hold:hold, nofix:nofix, clean:clean,
+             exposed:exposed, tax0:estateTax(exposed), ladder:ladder, floor:floor,
+             floorTax:estateTax(floor), swappableVal:exposed-floor};
+  pfCheck(res);            // sets res.err; the renderer refuses to draw if set
+  return res;
+}
+// The in-page guard. Re-derives each total by a different route than the walk
+// above; any disagreement means the panel shows an error instead of a number.
+function pfCheck(r){
+  const sumAll=r.held.reduce((s,h)=>s+(h.isExposed?h.val:0),0);
+  const sumParts=r.act.concat(r.hold,r.nofix).reduce((s,h)=>s+(h.isExposed?h.val:0),0);
+  const sumSwappable=r.act.concat(r.hold).reduce((s,h)=>s+h.val,0);
+  r.err=null;
+  if(Math.abs(sumAll-r.exposed)>1) r.err='exposed total does not match the sum of exposed holdings';
+  else if(Math.abs(sumParts-r.exposed)>1) r.err='a holding was classified into no group, or into two';
+  else if(Math.abs((r.exposed-sumSwappable)-r.floor)>1) r.err='the ladder does not land on the unswappable remainder';
+  else if(r.ladder.length && Math.abs(r.ladder[r.ladder.length-1].tax-r.floorTax)>1) r.err='the last ladder step disagrees with the floor';
+  else {
+    // Sequencing, checked without calling estateTax again: each rung sits
+    // exactly one holding below the one above, tax falls as exposure falls,
+    // nothing exceeds the top marginal rate. This constrains the portfolio
+    // plumbing — the layer with no pytest guard behind it.
+    // It does NOT verify estateTax() itself; a second call to the same function
+    // is not an independent check. The first version here tried to, by summing
+    // the step savings — that telescopes to tax0 − tax_last, so given the floor
+    // check above it reduced to tax0 == tax0 and could never fail. The schedule
+    // is guarded instead by being ONE function shared with the Learn tab and
+    // the build tab, where a bracket error shows up in three places at once.
+    let prevAfter=r.exposed, prevTax=r.tax0;
+    for(let i=0;i<r.ladder.length && !r.err;i++){
+      const s=r.ladder[i];
+      if(Math.abs((prevAfter-s.h.val)-s.after)>1) r.err='ladder step '+(i+1)+' does not remove exactly that holding';
+      else if(s.after<-1) r.err='ladder step '+(i+1)+' removes more than was exposed';
+      else if(s.tax-prevTax>1) r.err='ladder step '+(i+1)+' increases the tax while removing exposure';
+      else if(s.after>0 && s.tax/s.after>0.4001) r.err='ladder step '+(i+1)+' exceeds the top marginal rate';
+      // Convexity: each rung's slice sits strictly below the last, and the
+      // schedule is convex, so the average rate paid on a slice must FALL as
+      // the ladder descends. This is a property of the output, not a second
+      // call to the function, so it catches a wrong figure on a middle rung —
+      // which none of the checks above can see.
+      if(!r.err && s.h.val>0){
+        const rate=(prevTax-s.tax)/s.h.val;
+        if(i && rate>r.ladder[i-1]._rate+1e-9) r.err='ladder step '+(i+1)+' pays a higher average rate than the step above it';
+        s._rate=rate;
+      }
+      prevAfter=s.after; prevTax=s.tax;
+    }
+    if(!r.err && r.exposed>0 && r.tax0/r.exposed>0.4001) r.err='the total exceeds the top marginal rate';
+  }
+  return !r.err;
+}
+
+function pfRenderParse(){
+  const box=document.getElementById('pfParse'); if(!box) return;
+  if(!PF.length){ box.innerHTML='<div style="color:var(--t3)">Nothing entered yet. The ten most likely swaps are below if you are not sure what you hold.</div>'; return; }
+  box.innerHTML=PF.map((h,i)=>{
+    if(h.rec) return '<div class="row"><span class="ok">✓</span><strong>'+h.rec.ticker+'</strong>'+
+      '<span class="nm">'+pfEsc(h.rec.name)+'</span>'+
+      '<span class="amt">'+(h.val>0?usd(h.val):'<span class="no">add a value</span>')+'</span></div>';
+    if(h.cands.length) return '<div class="row"><span class="no">?</span><span class="nm">'+pfEsc(h.raw)+'</span>'+
+      h.cands.map(c=>'<button type="button" onclick="pfPick('+i+',\''+c.ticker+'\')">'+c.ticker+'</button>').join('')+'</div>';
+    return '<div class="row"><span class="no">–</span><span class="nm">'+pfEsc(h.raw)+'</span>'+
+      '<span style="font-size:11px;color:var(--t3)">not in the checked set</span></div>';
+  }).join('');
+}
+function pfPick(i,tk){
+  const el=document.getElementById('pfIn'); if(!el) return;
+  const lines=el.value.split('\n'); let n=-1;
+  for(let j=0;j<lines.length;j++){ if(lines[j].trim()){ n++; if(n===i){ lines[j]=tk+' '+(PF[i].val||''); break; } } }
+  el.value=lines.join('\n'); pfSync();
+}
+
+function pfRow(h,cls,verdict,why){
+  const tk=h.rec.ticker, open=!!PF_OPEN[tk];
+  return '<tr class="pf-row"><td style="vertical-align:top">'+
+      '<strong>'+tk+'</strong><div style="font-size:11px;color:var(--t3)">'+pfEsc(h.rec.name)+'</div>'+
+      '<div class="why">'+why+'</div></td>'+
+    '<td class="r" style="vertical-align:top;white-space:nowrap">'+usd(h.val)+'</td>'+
+    '<td style="vertical-align:top;white-space:nowrap">'+verdict+'</td>'+
+    '<td class="r" style="vertical-align:top"><button class="pf-more" type="button" onclick="pfToggle(\''+tk+'\')">'+(open?'Hide':'Evidence')+'</button></td></tr>'+
+    (open?'<tr><td colspan="4" class="pf-ev">'+(h.rec.kind==='etf'?renderSwapEtf(h.rec):renderSwapName(h.rec))+'</td></tr>':'');
+}
+function pfToggle(tk){ PF_OPEN[tk]=!PF_OPEN[tk]; pfRender(); }
+function pfGroup(cls,title,count,lead,rowsHtml){
+  return '<div class="card pf-grp '+cls+'"><h3>'+title+' <span class="cnt">'+count+'</span></h3>'+
+    '<div class="pf-lead">'+lead+'</div>'+
+    (rowsHtml?'<div class="tw"><table class="cmp"><tbody>'+rowsHtml+'</tbody></table></div>':'')+'</div>';
+}
+
+function pfRender(){
+  const out=document.getElementById('pfOut'), top=document.getElementById('swapTopCard');
+  if(!out) return;
+  PF=pfRead(); pfRenderParse(); pfSave();
+  const any=PF.some(h=>h.rec && h.val>0);
+  if(top) top.style.display=any?'none':'';       // the ten-swap table is the empty state
+  if(!any){ out.innerHTML=''; return; }
+  if(!SWAP){ out.innerHTML='<div class="notice">Swap data is not loaded in this build.</div>'; return; }
+  const r=pfCompute();
+  if(!r || r.err){
+    out.innerHTML='<div class="pf-bad"><strong>Not showing a number here.</strong> The portfolio totals did not reconcile, so anything displayed could be wrong in a way you could not see. Please report this. ('+pfEsc((r&&r.err)||'no result')+')</div>';
+    return;
+  }
+  const yrs=r.yrs;
+  let h='';
+
+  // --- layer one: the verdict, in plain words -------------------------------
+  const nSwap=r.act.length+r.hold.length;
+  h+='<div class="card" style="margin-top:16px"><h3>What this says</h3>'+
+    '<div class="rk-two rk-three">'+
+      '<div class="rk-box"><div class="k">Counts as American</div><div class="v" style="color:'+(r.exposed>60000?'var(--r-text)':'var(--t1)')+'">'+usd(r.exposed)+'</div>'+
+        '<div class="s">of what you entered is '+gl('US-situs','Counts as American for inheritance-tax purposes. It follows where the security itself is registered, not where your broker is.')+'</div></div>'+
+      '<div class="rk-box"><div class="k">US inheritance tax if you died today</div><div class="v" style="color:var(--r-text)">'+usd(r.tax0)+'</div>'+
+        '<div class="s">'+(r.exposed>0?(r.tax0/r.exposed*100).toFixed(1)+'% of the exposed value':'nothing exposed')+'</div></div>'+
+      '<div class="rk-box" style="background:var(--bg3)"><div class="k">Removable by swapping</div><div class="v" style="color:var(--g-text)">'+usd(r.tax0-r.floorTax)+'</div>'+
+        '<div class="s">'+(nSwap?nSwap+' holding'+(nSwap===1?'':'s')+' have a checked alternative':'no holding here has a checked alternative')+'</div></div>'+
+    '</div>'+
+    '<p class="footlet">Your US$60,000 allowance is already inside these figures. The rate rises in steps as the total grows, so the tax is worked out on <strong>everything you hold together</strong> — which is why one holding cannot be priced on its own, and why the list below is ordered by size. <strong>An illustration of the published schedule, not advice, and not personalised.</strong> Anyone acting on this should confirm it with a cross-border tax adviser first.</p></div>';
+
+  // --- act ------------------------------------------------------------------
+  if(r.act.length){
+    const rows=r.act.map(h2=>{
+      const net=h2.net, gain=h2.running==null?null:h2.running-h2.oneOff;
+      const why='Swap into <strong>'+h2.best.ticker+'</strong> ('+pfEsc(h2.best.name)+'). '+
+        (net==null?'No fee-and-withholding comparison is available for this pair, so the case rests on removing the exposure.'
+          :'Costs about '+usd(Math.abs(h2.running))+' '+(net>=0?'less':'more')+' to hold over '+yrs+' years than what you hold now, against roughly '+usd(h2.oneOff)+' to make the switch — '+
+            (gain>=0?'ahead by '+usd(gain)+' on running costs alone, before the inheritance-tax saving.':'behind on running costs.'));
+      return pfRow(h2,'','<span class="tierb tier1">SWAP</span>',why);
+    }).join('');
+    h+=pfGroup('pf-act','Deal with these first',r.act.length+' holding'+(r.act.length===1?'':'s'),
+      'Each has a fund outside '+gl('US situs','Counts as American for inheritance-tax purposes.')+' tracking the same index, checked against what both actually returned. Ordered by how much exposure each one removes — largest first, because the tax rate steps up with the total. The running saving is shown on every row and does <em>not</em> drive the order.',rows);
+  }
+
+  // --- worth doing only for the estate removal ------------------------------
+  if(r.hold.length){
+    const rows=r.hold.map(h2=>pfRow(h2,'','<span class="tierb tier2">YOUR CALL</span>',
+      'A checked alternative exists (<strong>'+h2.best.ticker+'</strong>), but it costs about '+usd(Math.abs(h2.running))+' more to hold over '+yrs+' years, plus roughly '+usd(h2.oneOff)+' to switch. It would still take '+usd(h2.val)+' out of your US-situs total. Worth doing only if removing that exposure is what you are after.')).join('');
+    h+=pfGroup('pf-hold','Worth it only for the inheritance-tax removal',r.hold.length+' holding'+(r.hold.length===1?'':'s'),
+      'The fees and withholding do not repay the cost of switching over '+yrs+' years. That does not make the swap wrong — it makes the reason for it narrower. You would be paying something to remove a tail risk rather than getting the removal for free.',rows);
+  }
+
+  // --- no fix exists --------------------------------------------------------
+  if(r.nofix.length){
+    const rows=r.nofix.map(h2=>{
+      const rec=h2.rec;
+      let why;
+      if(rec.kind==='single_name'){
+        why='No fund outside US situs can hold a single company. '+gl('UCITS','The European fund rulebook the Irish and Luxembourg funds are built under.')+' diversification limits make a single-stock fund structurally impossible, so this is a fact about the rules, not a gap in the market.'+
+          (rec.replicable_share!=null?' About '+Math.round(rec.replicable_share*100)+'% of how this share moves could be bought through a market or sector fund; the other '+(100-Math.round(rec.replicable_share*100))+'% is the company itself and cannot be bought at any price.':'');
+      } else {
+        const setAside=(rec.alternatives||[]).filter(a=>!a.recommended);
+        why=rec.tier===3?'Nothing outside US situs tracks this index, and this tool will not offer the nearest thing instead. '+pfEsc(rec.verdict_note||'')
+          :'Candidates were found and every one was set aside'+(setAside.length?': '+setAside.map(a=>'<strong>'+a.ticker+'</strong> — '+pfEsc(a.not_recommended_because||'')).join('; '):'')+'.';
+      }
+      return pfRow(h2,'','<span class="tierb tier3">NO FIX</span>',why);
+    }).join('');
+    h+=pfGroup('pf-none','No alternative exists — and that is the answer',r.nofix.length+' holding'+(r.nofix.length===1?'':'s'),
+      'These stay '+gl('US-situs','Counts as American for inheritance-tax purposes.')+'. Nothing outside US situs matches them closely enough to offer, so nothing is offered. They are the reason the ladder below stops where it does rather than at zero — and the honest options for them are holding less, giving during your lifetime, or insurance to fund the bill, all of which are on the <a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn tab</a>.',rows);
+  }
+
+  // --- already fine ---------------------------------------------------------
+  if(r.clean.length){
+    const rows=r.clean.map(h2=>pfRow(h2,'','<span class="tierb tier1">NOTHING TO DO</span>',
+      'Screened as incorporated outside the United States, so it is probably not US-situs and probably carries no US inheritance-tax exposure. Situs follows where the company is <em>incorporated</em>, not where it is listed or traded — this is an indicator drawn from reported incorporation, not a legal opinion, so confirm it before relying on it.')).join('');
+    h+=pfGroup('pf-none','Leave these alone',r.clean.length+' holding'+(r.clean.length===1?'':'s'),
+      'Already outside US situs on the evidence available. No swap needed.',rows);
+  }
+
+  // --- unrecognised ---------------------------------------------------------
+  const unk=PF.filter(x=>!x.rec && x.raw);
+  if(unk.length){
+    h+='<div class="card pf-grp pf-none"><h3>Not checked by this tool <span class="cnt">'+unk.length+' line'+(unk.length===1?'':'s')+'</span></h3>'+
+      '<div class="pf-lead">'+unk.map(x=>'<strong>'+pfEsc(x.raw)+'</strong>').join(', ')+
+      ' — this is not a verdict on those holdings, only that they are outside the set this tool has checked. They are excluded from every figure above. The mechanism on the <a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">Learn tab</a> still applies: exposure follows the security, not your broker.</div></div>';
+  }
+
+  // --- the ladder -----------------------------------------------------------
+  if(r.ladder.length){
+    h+='<div class="card" style="margin-top:18px"><h3>What is still owed as you work down the list</h3>'+
+      '<p style="font-size:13px;color:var(--t2)">Each row assumes you have done every row above it, so the saving shown is the one that applies <em>at that point in the sequence</em> — the same holding saves more when it is dealt with earlier, because the top slice of your total is taxed at the highest rate. These are steps in one sequence, not separate figures to add up, and no row is a property of that holding on its own.</p>'+
+      '<div class="tw" style="margin-top:8px"><table class="pf-lad"><thead><tr><th>After swapping</th><th class="r">Removes</th><th class="r">US-situs left</th><th class="r">Tax still owed</th><th class="r">Saved by this step</th></tr></thead><tbody>'+
+      '<tr><td><em>Nothing yet — as you are today</em></td><td class="r">—</td><td class="r">'+usd(r.exposed)+'</td><td class="r"><strong>'+usd(r.tax0)+'</strong></td><td class="r">—</td></tr>'+
+      r.ladder.map((s,i)=>{
+        const prev=i?r.ladder[i-1].tax:r.tax0;
+        return '<tr><td><strong>'+s.h.rec.ticker+'</strong> → '+s.h.best.ticker+'</td>'+
+          '<td class="r">'+usd(s.h.val)+'</td><td class="r">'+usd(s.after)+'</td>'+
+          '<td class="r"><strong>'+usd(s.tax)+'</strong></td>'+
+          '<td class="r" style="color:var(--g-text)">'+usd(prev-s.tax)+'</td></tr>';
+      }).join('')+
+      (r.floor>0?'<tr class="floor"><td>Everything available, done</td><td class="r">—</td><td class="r">'+usd(r.floor)+'</td><td class="r">'+usd(r.floorTax)+'</td><td class="r">—</td></tr>':'')+
+      '</tbody></table></div>'+
+      (r.floor>0?'<div class="notice"><strong>It does not reach zero.</strong> '+usd(r.floor)+' stays US-situs because no alternative outside US situs exists for those holdings, leaving '+usd(r.floorTax)+' still owed. That is a real limit of the swap route, not an oversight in this list.'
+        :'<div class="notice"><strong>This reaches zero.</strong> Every exposed holding you entered has a checked alternative outside US situs.')+'</div></div>';
+  }
+
+  // --- share ----------------------------------------------------------------
+  h+='<div class="card" style="margin-top:16px"><h3>Keep or share this</h3>'+
+    '<p style="font-size:13px;color:var(--t2);margin-bottom:10px">Your entries stay in this browser and are restored next time you open the page. A link carries the tickers and values in the address itself, so anyone you send it to can read them — treat it like the list of holdings it is.</p>'+
+    '<button class="pf-btn" type="button" onclick="pfShare(this)">Copy a link to this result</button></div>';
+
+  out.innerHTML=h;
+  // The risk panel below shares the same exposure; keep it in step rather than
+  // letting two different US-situs totals sit on one page.
+  const rk=document.getElementById('rkAmt');
+  if(rk && r.exposed>0){ rk.value=Math.round(r.exposed).toLocaleString('en-US'); renderRisk(); }
+  const ag=document.getElementById('rkAge'), pa=document.getElementById('pfAge');
+  if(ag && pa && pa.value && ag.value!==pa.value){ ag.value=pa.value; renderRisk(); }
+}
+function pfShare(btn){
+  const s=PF.filter(x=>x.rec&&x.val>0).map(x=>x.rec.ticker+':'+x.val).join(',');
+  copyLink('pf='+s,btn);
+}
+function pfSave(){
+  // Nothing entered means nothing stored. The card promises that Clear removes
+  // it, and leaving an empty record behind would make that not quite true.
+  try{
+    if(!(document.getElementById('pfIn').value||'').trim()){ localStorage.removeItem(PF_KEY); return; }
+    localStorage.setItem(PF_KEY,JSON.stringify({t:document.getElementById('pfIn').value,
+      y:document.getElementById('pfYrs').value, a:document.getElementById('pfAge').value,
+      c:document.getElementById('pfCost').value}));
+  }catch(e){}
+}
+function pfLoad(){
+  try{
+    const s=JSON.parse(localStorage.getItem(PF_KEY)||'null'); if(!s) return;
+    if(s.t) document.getElementById('pfIn').value=s.t;
+    if(s.y) document.getElementById('pfYrs').value=s.y;
+    if(s.a) document.getElementById('pfAge').value=s.a;
+    if(s.c) document.getElementById('pfCost').value=s.c;
+  }catch(e){}
+}
+function pfSync(){ pfRender(); }
+function pfClear(){
+  document.getElementById('pfIn').value=''; PF_OPEN={};
+  try{ localStorage.removeItem(PF_KEY); }catch(e){}
+  pfRender();
+}
+
 // ---------- Start: goal-based front door (illustrative, not advice) ----------
 const GOAL_PLANS={
   grow:{name:'A simple growth starter',blurb:'Mostly global shares for long-term growth, with bonds and a little gold as ballast.',mix:[['VWRA',65,'Global shares (all-world)'],['EIMI',10,'Emerging markets'],['AGGU',15,'Global bonds'],['SGLN',10,'Gold']]},
@@ -2114,14 +2538,14 @@ function switchTab(p){
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
-  if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderHorizon();renderRisk();}
+  if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderHorizon();renderRisk();pfRender();}
   if(p==='learn') renderLearn();
 }
 
 async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
-  SWAP=DATA.swap||null; MORT=DATA.mortality||null;
+  SWAP=DATA.swap||null; MORT=DATA.mortality||null; swapHydrate();
   // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
   FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;
     // ≈ total return for the Expected-returns tab: price return + trailing yield for distributing funds
@@ -2188,14 +2612,29 @@ async function init(){
   document.getElementById('rkAmt').addEventListener('input',()=>{reformatAmt('rkAmt');renderRisk();});
   document.getElementById('rkAge').addEventListener('input',()=>{renderRisk();renderHorizon();});
   document.getElementById('rkSex').addEventListener('change',()=>{renderRisk();renderHorizon();});
+  // portfolio entry: restore before the first render so a returning reader
+  // lands on their own list rather than an empty box
+  pfLoad();
+  document.getElementById('pfIn').addEventListener('input',pfSync);
+  ['pfYrs','pfAge','pfCost'].forEach(id=>document.getElementById(id).addEventListener('input',pfSync));
+  document.getElementById('pfClear').addEventListener('click',pfClear);
   initTipPop();
   applyHash();
 }
 // Deep links: a shared URL lands the recipient on the exact view — #fund=CSPX, #cmp=ES3,G3B, #tab=learn
 function applyHash(){
   const h=decodeURIComponent(location.hash.slice(1)); if(!h) return;
-  const m=h.match(/^(fund|cmp|tab|swap)=(.+)$/); if(!m) return;
+  const m=h.match(/^(fund|cmp|tab|swap|pf)=(.+)$/); if(!m) return;
   if(m[1]==='tab'){switchTab(m[2]);return;}
+  // #pf=VOO:200000,AAPL:50000 — the holdings are readable in the URL on purpose.
+  // A shared link IS a list of what someone owns, and obscuring that in base64
+  // would only hide it from the person deciding whether to send it.
+  if(m[1]==='pf'){
+    const lines=m[2].split(',').map(s=>{const p=s.split(':');return p[0]?p[0].toUpperCase()+' '+(p[1]||''):'';}).filter(Boolean);
+    const el=document.getElementById('pfIn');
+    if(el && lines.length){ el.value=lines.join('\n'); }
+    switchTab('swap'); return;
+  }
   // #swap=SPY lands the reader on a pre-filled answer, so an article can link
   // straight to the holding it just discussed
   if(m[1]==='swap'){const q=document.getElementById('swapQ'); if(q) q.value=m[2].toUpperCase(); switchTab('swap'); return;}

@@ -278,6 +278,16 @@ def slim_swap(d):
       * alternative.estate_tax_exposed -- False on all 115, and enforced by
         test_no_alternative_is_itself_us_situs. Stated once in _meta.
       * unresolved_alternatives -- 4 distinct securities behind 8 references.
+      * the alternatives themselves -- 115 records over 72 distinct securities,
+        because the same Irish line is the answer for several US funds (VUAA
+        appears six times). Twelve fields are identical at every appearance and
+        move to a _meta.alts dictionary; `tier` and `verification_pending` DO
+        vary by which fund is being swapped out of, so they stay on the record.
+        Which fields are invariant is measured per build, not assumed.
+      * kind, and single_name.verdict -- both reconstructable from where the
+        record already sits: `kind` from which array it is in, and `verdict`
+        from `situs`, exactly as test_single_names_never_claim_an_equivalent
+        asserts. The UI puts both back at load.
 
     The repo file is not modified, so every guard in tests/ reads exactly the
     bytes it read before.
@@ -310,17 +320,53 @@ def slim_swap(d):
     }
     m["proxies"] = {}
     m["unresolved"] = {}
-    keep_alt = ("ticker", "name", "domicile", "isin", "index_label", "ccy",
-                "ccy_is_pence", "income", "ter", "aum_usd", "tier",
-                "recommended", "not_recommended_because",
-                "venue", "venue_note", "srs_eligible", "verification_pending")
-    keep_ver = ("grade", "gap_pp", "years", "monthly_corr", "contradiction")
+    # Which alternative fields are the same everywhere that security appears.
+    # Measured, because a field that starts invariant can stop being one and a
+    # dictionary would then silently ship whichever copy it saw last.
+    # aum_usd is deliberately absent: it is shipped on every alternative today
+    # and rendered nowhere. The PARENT's aum_usd stays -- renderSwapTop orders
+    # the ten-swap table by it.
+    hoist_candidates = ("name", "domicile", "isin", "index_label", "ccy",
+                        "ccy_is_pence", "income", "ter", "venue",
+                        "venue_note", "srs_eligible")
+    seen_alt = {}
+    varies = set()
+    for e in d["etfs"]:
+        for a in e["alternatives"]:
+            prev = seen_alt.setdefault(a["ticker"], a)
+            for f in hoist_candidates:
+                if prev.get(f) != a.get(f):
+                    varies.add(f)
+    hoist = tuple(f for f in hoist_candidates if f not in varies)
+    if varies:
+        print(f"  swap: not hoisting {sorted(varies)} — differs between parents")
+    m["alts"] = {t: {f: a[f] for f in hoist if f in a} for t, a in seen_alt.items()}
+    # An alternative's own `tier` equals its parent's on all 115 pairs, so the
+    # UI takes it from the parent. Asserted, because a pair that genuinely
+    # matched at a different tier than its parent would be real evidence.
+    mixed = [e["ticker"] for e in d["etfs"]
+             if any(a.get("tier") != e["tier"] for a in e["alternatives"])]
+    keep_alt = ("ticker", "recommended", "not_recommended_because",
+                "verification_pending") + tuple(
+                    f for f in hoist_candidates if f in varies)
+    if mixed:
+        keep_alt = keep_alt + ("tier",)
+        print(f"  swap: {len(mixed)} parents have alternatives at a different tier — kept per pair")
+    # The overlap window is the same 4.98 years on every graded pair, so it is
+    # stated once. Only hoisted if it really is single-valued this build.
+    yrs_seen = {a["verification"]["years"] for e in d["etfs"] for a in e["alternatives"]
+                if (a.get("verification") or {}).get("years") is not None}
+    keep_ver = ("grade", "gap_pp", "monthly_corr", "contradiction")
+    if len(yrs_seen) == 1:
+        m["boilerplate"]["ver_years"] = yrs_seen.pop()
+    else:
+        keep_ver = keep_ver + ("years",)
+        print(f"  swap: overlap windows differ {sorted(yrs_seen)} — kept per pair")
     keep_cost = ("ter_delta_pp", "wht_saving_pp", "net_annual_delta_pp")
     for e in d["etfs"]:
         r = {k: e[k] for k in ("ticker", "name", "index_label", "tier", "caveat",
                                "verdict", "verdict_note", "ter", "yield",
                                "aum_usd") if k in e}
-        r["kind"] = "etf"
         r["alternatives"] = []
         for a in e["alternatives"]:
             # An alternative's caveat is dropped only where it repeats the
@@ -344,9 +390,8 @@ def slim_swap(d):
 
     rebuilt = kept_prose = 0
     for n in d["single_names"]:
-        r = {k: n[k] for k in ("ticker", "name", "sector", "situs", "verdict",
+        r = {k: n[k] for k in ("ticker", "name", "sector", "situs",
                                "replicable_share") if k in n}
-        r["kind"] = "single_name"
         dec = n.get("decomposition") or {}
         vol = dec.get("idio_ann_vol_pp")
         detail = n.get("verdict_detail")
