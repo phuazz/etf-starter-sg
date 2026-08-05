@@ -1656,6 +1656,32 @@ function gradeCls(g){return g==='A'?'gA':g==='B'?'gB':g==='C'?'gC':'gX';}
 // (source-mode dev via fetch), so both paths render the same words.
 function SWAPBP(){return (SWAP&&SWAP._meta&&SWAP._meta.boilerplate)||{};}
 function pp(v,dp){return (v>0?'+':'')+v.toFixed(dp==null?2:dp);}
+// The build also projects three repeated structures into _meta and leaves only
+// the varying numbers on each record: the sector-proxy dictionary, the four
+// situs-unresolved securities, and the decomposition sentence. These put them
+// back. Each checks for a per-record copy FIRST, so a full swap_map.json loaded
+// in source-mode dev renders the identical words with no branch in the callers.
+function swapProxies(n){
+  if(n.sector_proxies) return n.sector_proxies;               // full file
+  const dict=(SWAP&&SWAP._meta&&SWAP._meta.proxies)||{};
+  const eq=SWAPBP().proxy_is_equivalent;                      // False, guard-enforced
+  return (n.proxies||[]).map(t=>Object.assign({ticker:t,is_equivalent:eq===undefined?false:eq},dict[t]||{}));
+}
+function swapUnresolved(e){
+  const dict=(SWAP&&SWAP._meta&&SWAP._meta.unresolved)||{};
+  return (e.unresolved_alternatives||[]).map(u=>typeof u==='string'?Object.assign({ticker:u},dict[u]||{}):u);
+}
+// Rebuilt from the record's own numbers against the template the build verified
+// reproduces the original prose exactly. If either number is missing the
+// sentence is omitted rather than half-written.
+function swapDetail(n){
+  if(n.verdict_detail) return n.verdict_detail;               // full file
+  const bp=SWAPBP(), t=bp.single_name_detail;
+  if(!t||n.replicable_share==null||n.idio_vol_pp==null) return '';
+  const rep=Math.round(n.replicable_share*100);
+  return t.replace('{rep}',rep).replace('{idio}',100-rep)
+          .replace('{yrs}',bp.decomp_years).replace('{vol}',Math.round(n.idio_vol_pp));
+}
 
 function renderSwapSug(){
   const box=document.getElementById('swapSug'); if(!box||!SWAP) return;
@@ -1722,9 +1748,10 @@ function renderSwapEtf(e){
     h+='<div class="notice" style="margin-top:14px;background:var(--r-bg);border-color:rgba(190,40,40,.25)"><strong>No verified alternative.</strong> '+(e.verdict_note||'')+'</div>';
   }
 
-  if(e.unresolved_alternatives && e.unresolved_alternatives.length){
+  const unres=swapUnresolved(e);
+  if(unres.length){
     h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Listed, but situs unresolved — not offered as a swap</div><ul class="lst">'+
-      e.unresolved_alternatives.map(u=>'<li><strong>'+u.ticker+'</strong> — '+u.name+'. '+(u.why||SWAPBP().etc_why)+'</li>').join('')+'</ul></div>';
+      unres.map(u=>'<li><strong>'+u.ticker+'</strong> — '+u.name+'. '+(u.why||SWAPBP().etc_why)+'</li>').join('')+'</ul></div>';
   }
   if(set.length){
     h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Considered and set aside</div><ul class="lst">'+
@@ -1750,10 +1777,11 @@ function renderSwapName(n){
         '<span class="dec-idio" style="width:'+ip+'%">'+(ip>=14?ip+'% company-specific':'')+'</span></div>'+
       '<div class="declegend"><span><i class="dec-rep" style="background:var(--b)"></i>Market &amp; sector — a UCITS basket can buy this</span>'+
         '<span><i class="dec-idio" style="background:var(--r)"></i>Specific to '+n.ticker+' — cannot be bought outside US situs at any price</span></div>'+
-      '<p class="footlet" style="margin-top:10px">'+n.verdict_detail+'</p>';
-    if(n.sector_proxies&&n.sector_proxies.length){
+      '<p class="footlet" style="margin-top:10px">'+swapDetail(n)+'</p>';
+    const prox=swapProxies(n);
+    if(prox.length){
       h+='<div class="setaside"><div style="font-size:12px;font-weight:700;margin-bottom:5px">Closest sector exposure — a partial proxy, <em>not</em> an equivalent</div><ul class="lst">'+
-        n.sector_proxies.map(p=>'<li><strong>'+p.ticker+'</strong> — '+p.name+' ('+p.index_label+(p.ter==null?'':', '+p.ter.toFixed(2)+'% fee')+'). Buys the sector, not the company.</li>').join('')+'</ul></div>';
+        prox.map(p=>'<li><strong>'+p.ticker+'</strong> — '+p.name+' ('+p.index_label+(p.ter==null?'':', '+p.ter.toFixed(2)+'% fee')+'). Buys the sector, not the company.</li>').join('')+'</ul></div>';
     }
     h+='<div class="notice"><strong>Why there is no equivalent.</strong> UCITS diversification rules cap how much of a fund one holding may be — 5/10/40, relaxed to 20/35 for index trackers. A single-stock UCITS fund is therefore not permitted to exist, so this is a structural fact rather than a gap in the market. Swapping means accepting a different portfolio, and the '+Math.round((1-r)*100)+'% above is what you would be giving up.</div>';
   } else if(foreign){

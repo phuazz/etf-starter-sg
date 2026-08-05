@@ -235,6 +235,20 @@ def apply_yahoo_yields(funds, prices):
     print(f"  yields: {filled} filled + {replaced} refreshed from Yahoo trailing-12m distributions")
 
 
+def _decomp_sentence(tpl, rep_share, idio_vol_pp, years):
+    """Rebuild a single name's decomposition sentence from its own numbers.
+
+    Kept beside slim_swap because the reconstruction and the check that it is
+    lossless have to move together -- a template that silently drifts from the
+    prose it replaces is the whole risk of doing this at all.
+    """
+    rep = int(round(rep_share * 100))
+    return (tpl.replace("{rep}", str(rep))
+               .replace("{idio}", str(100 - rep))
+               .replace("{yrs}", str(years))
+               .replace("{vol}", str(int(round(idio_vol_pp)))))
+
+
 def slim_swap(d):
     """Project swap_map.json down to what the page actually renders.
 
@@ -245,10 +259,42 @@ def slim_swap(d):
     beside it. Boilerplate moves into _meta once and the UI supplies it.
 
     Nothing that VARIES per record is dropped, and nothing is rounded here --
-    this removes repetition, never evidence.
+    this removes repetition, never evidence. Five further projections, each
+    measured against the built file before being trusted:
+
+      * verdict_detail  -- ONE template across all 50 names with three numbers
+        varying. The template moves to _meta and the record keeps the numbers
+        (replicable_share, idio_vol_pp; the 5-year window is constant at 260
+        weeks). Reconstructed and compared string-for-string below: any name
+        that does not rebuild byte-identically keeps its original prose.
+      * sector_proxies  -- 16 distinct funds behind 100 references, and their
+        attributes are identical at every reference. Becomes a _meta dictionary
+        plus a ticker list. is_equivalent is False on all 100 and guarded by
+        test_single_name_proxies_are_never_labelled_equivalent, so it is stated
+        once rather than repeated.
+      * alternative.caveat -- byte-identical to the parent ETF's caveat on all
+        20 pairs that carry one, and the UI has always rendered the parent's.
+        Pure duplication of a string that is still on screen.
+      * alternative.estate_tax_exposed -- False on all 115, and enforced by
+        test_no_alternative_is_itself_us_situs. Stated once in _meta.
+      * unresolved_alternatives -- 4 distinct securities behind 8 references.
+
+    The repo file is not modified, so every guard in tests/ reads exactly the
+    bytes it read before.
     """
     out = {"_meta": d["_meta"], "etfs": [], "single_names": []}
     m = out["_meta"]
+    # 260 weeks on every record; asserted rather than assumed, because the
+    # sentence below hard-codes the window it describes.
+    weeks = {(n.get("decomposition") or {}).get("weeks") for n in d["single_names"]}
+    assert len(weeks) == 1, f"decomposition windows differ: {weeks}"
+    years = int(round(weeks.pop() / 52))
+    detail_tpl = (
+        "About {rep} per cent of this position's return variance over the past "
+        "{yrs} years came from the broad US market and its sector, which UCITS "
+        "funds can buy. The other {idio} per cent was specific to the company "
+        "and cannot be bought outside US situs at any price -- that residual, "
+        "{vol} points of annualised volatility, is what a swap actually gives up.")
     m["boilerplate"] = {
         "single_name_verdict": next(
             (n["verdict_note"] for n in d["single_names"] if n["situs"] == "us"), ""),
@@ -256,10 +302,17 @@ def slim_swap(d):
             (n["verdict_note"] for n in d["single_names"] if n["situs"] != "us"), ""),
         "etc_why": next((u["why"] for e in d["etfs"]
                          for u in e["unresolved_alternatives"]), ""),
+        "single_name_detail": detail_tpl,
+        "decomp_years": years,
+        # constants the UI re-applies per record; both are guard-enforced
+        "proxy_is_equivalent": False,
+        "alt_estate_tax_exposed": False,
     }
+    m["proxies"] = {}
+    m["unresolved"] = {}
     keep_alt = ("ticker", "name", "domicile", "isin", "index_label", "ccy",
-                "ccy_is_pence", "income", "ter", "aum_usd", "tier", "caveat",
-                "recommended", "not_recommended_because", "estate_tax_exposed",
+                "ccy_is_pence", "income", "ter", "aum_usd", "tier",
+                "recommended", "not_recommended_because",
                 "venue", "venue_note", "srs_eligible", "verification_pending")
     keep_ver = ("grade", "gap_pp", "years", "monthly_corr", "contradiction")
     keep_cost = ("ter_delta_pp", "wht_saving_pp", "net_annual_delta_pp")
@@ -270,25 +323,60 @@ def slim_swap(d):
         r["kind"] = "etf"
         r["alternatives"] = []
         for a in e["alternatives"]:
-            b = {k: a[k] for k in keep_alt if k in a}
+            # An alternative's caveat is dropped only where it repeats the
+            # parent's word for word, which is every case in the current build.
+            # If one ever diverges it is carried, because then it is evidence.
+            if a.get("caveat") and a["caveat"] != e.get("caveat"):
+                keep = keep_alt + ("caveat",)
+            else:
+                keep = keep_alt
+            b = {k: a[k] for k in keep if k in a}
             v, c = a.get("verification", {}), a.get("cost", {})
             b["verification"] = {k: v[k] for k in keep_ver if v.get(k) is not None}
             b["cost"] = {k: c[k] for k in keep_cost if c.get(k) is not None}
             r["alternatives"].append(b)
-        r["unresolved_alternatives"] = [
-            {"ticker": u["ticker"], "name": u["name"]}
-            for u in e.get("unresolved_alternatives", [])]
+        r["unresolved_alternatives"] = []
+        for u in e.get("unresolved_alternatives", []):
+            m["unresolved"].setdefault(
+                u["ticker"], {"name": u["name"], "why": u.get("why")})
+            r["unresolved_alternatives"].append(u["ticker"])
         out["etfs"].append(r)
+
+    rebuilt = kept_prose = 0
     for n in d["single_names"]:
         r = {k: n[k] for k in ("ticker", "name", "sector", "situs", "verdict",
-                               "verdict_detail", "replicable_share") if k in n}
+                               "replicable_share") if k in n}
         r["kind"] = "single_name"
-        r["sector_proxies"] = [
-            {"ticker": p["ticker"], "name": p["name"],
-             "index_label": p["index_label"], "ter": p.get("ter"),
-             "is_equivalent": False}
-            for p in n.get("sector_proxies", [])]
+        dec = n.get("decomposition") or {}
+        vol = dec.get("idio_ann_vol_pp")
+        detail = n.get("verdict_detail")
+        # Reconstruct, then compare against the prose actually built. The
+        # template only replaces the sentence when it reproduces it exactly.
+        if detail and vol is not None and n.get("replicable_share") is not None:
+            if _decomp_sentence(detail_tpl, n["replicable_share"], vol, years) == detail:
+                r["idio_vol_pp"] = vol
+                rebuilt += 1
+            else:
+                r["verdict_detail"] = detail
+                kept_prose += 1
+        elif detail:
+            r["verdict_detail"] = detail
+            kept_prose += 1
+        r["proxies"] = []
+        for p in n.get("sector_proxies", []):
+            prev = m["proxies"].get(p["ticker"])
+            cur = {"name": p["name"], "index_label": p["index_label"],
+                   "ter": p.get("ter")}
+            # A dictionary is only lossless if every reference agrees. If two
+            # ever disagree the projection would silently pick one, so stop.
+            assert prev is None or prev == cur, (
+                f"sector proxy {p['ticker']} differs between references")
+            m["proxies"][p["ticker"]] = cur
+            r["proxies"].append(p["ticker"])
         out["single_names"].append(r)
+    print(f"  swap: {rebuilt} decomposition sentences templated"
+          + (f", {kept_prose} kept verbatim (did not rebuild exactly)"
+             if kept_prose else ", all rebuilt exactly"))
     return out
 
 
