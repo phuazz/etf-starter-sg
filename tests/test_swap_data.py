@@ -251,7 +251,12 @@ INDEX_STOPWORDS = {
 # The count of US mappings resting on nothing but assertion. It may fall. It may
 # NOT rise: a new holding arrives unverified, and this makes someone say so out
 # loud rather than adding it quietly to a pile nobody is counting.
-MAX_UNVERIFIED_INDEX_MAPPINGS = 22
+#
+# It started at 22 and every one has since been checked against the issuer, so
+# it is zero. That is not a state to defend at any cost -- adding a holding and
+# verifying it later is fine -- but the ceiling has to be raised deliberately,
+# in a commit that says which mapping is unverified and why.
+MAX_UNVERIFIED_INDEX_MAPPINGS = 0
 
 
 def _idx_tokens(text):

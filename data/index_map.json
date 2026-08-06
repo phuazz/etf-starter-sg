@@ -22,6 +22,11 @@
         "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
       },
       {
+        "a": "global_all_cap_incl_small",
+        "b": "global_all_cap",
+        "caveat": "No UCITS fund tracks the FTSE Global All Cap index. The nearest available exposure is the FTSE All-World series, which holds roughly 4,300 large and mid-cap companies against the all-cap index's 8,000 -- the same countries and the same provider, without the small-cap tail."
+      },
+      {
         "a": "emerging_all_cap",
         "b": "emerging",
         "caveat": "No UCITS fund tracks the FTSE all-cap emerging series. The nearest available exposure is the large/mid FTSE Emerging Index, which holds about 2,289 companies against the all-cap index's 4,852 -- the same countries and the same provider, without the small-cap tail. Both exclude South Korea, which FTSE classifies as developed."
@@ -311,6 +316,15 @@
       "n_holdings": 400,
       "family": "factor_value",
       "us_content": 0.6
+    },
+    "ftse_global_all_cap": {
+      "label": "FTSE Global All Cap",
+      "provider": "FTSE Russell",
+      "exposure": "Global equity across large, mid AND small cap, developed plus emerging. The FTSE All-World series covers the same markets without the small-cap tail.",
+      "n_holdings": 8000,
+      "n_holdings_src": "Vanguard VT product page, approximate holdings, retrieved 2026-08-06",
+      "family": "global_all_cap_incl_small",
+      "us_content": 0.62
     },
     "morningstar_us_total": {
       "label": "Morningstar US Total Market",

@@ -78,7 +78,7 @@ SECTOR_TO_INDEX = {
 # list and is meant to stay visible rather than be quietly filled in.
 US_ETFS = [
     ("SPY", "sp500"), ("VOO", "sp500"), ("IVV", "sp500"), ("SPLG", "sp500"),
-    ("QQQ", "nasdaq100"), ("QQQM", "nasdaq100"),
+    ("QQQ", "nasdaq100", "Invesco 2026-08-06: NASDAQ-100 Index"), ("QQQM", "nasdaq100"),
     # VTI -- VERIFIED 2026-08-06. Vanguard moved it off CRSP US Total Market to
     # the Morningstar US Total Market Index and renamed the fund to match; the
     # mapping here still said CRSP. Found by the name-versus-label check that
@@ -87,7 +87,15 @@ US_ETFS = [
     # ITOT is the S&P total-market fund, not the MSCI one. Its own name says so,
     # and the provider check that would have caught it ran on the UCITS side only.
     ("ITOT", "sp_total_market"),
-    ("VT", "ftse_all_world"), ("ACWI", "msci_acwi"),
+    # VT -- VERIFIED 2026-08-06. It tracks FTSE GLOBAL ALL CAP (~8,000 holdings),
+    # not FTSE All-World. Vanguard's own UCITS line VWRA/VWRL/VWRP tracks the
+    # All-World index, described in its factsheet as "large and mid-sized company
+    # stocks". Pointing both at one key badged the most widely held global fund
+    # here as an EXACT INDEX match across the entire small-cap tail -- the third
+    # time this same all-cap-versus-large/mid confusion has appeared, after VWO
+    # and VTI. Separate keys in near families now.
+    ("VT", "ftse_global_all_cap", "Vanguard fund profile, retrieved 2026-08-06"),
+    ("ACWI", "msci_acwi"),
     # VWO -- VERIFIED against Vanguard's own fund profile, 2026-08-06. It tracks
     # the FTSE Emerging Markets All Cap China A Inclusion Index (4,852
     # constituents), not the MSCI series it carried here for years. The issuer's
@@ -102,26 +110,47 @@ US_ETFS = [
     # instead of the geography one, and introduced while fixing the provider.
     # They are separate keys in near families now, so the swap is still offered
     # and the difference is named.
-    ("VEA", "ftse_dev_exus"),
+    ("VEA", "ftse_dev_exus", "Vanguard 2026-08-06: FTSE Developed All Cap ex US Index"),
     ("VWO", "ftse_emerging_all_cap", "Vanguard fund profile, retrieved 2026-08-06"),
-    ("IEMG", "msci_em_imi"),
+    ("IEMG", "msci_em_imi", "iShares 2026-08-06: MSCI Emerging Markets Investable Market Index"),
     ("EFA", "msci_eafe"), ("URTH", "msci_world"),
-    ("IWM", "russell2000"), ("IJR", "sp_smallcap600"),
-    ("SCHD", "dj_us_dividend_100"), ("VYM", "ftse_high_div_yield"),
-    ("VIG", "sp_us_dividend_growers"), ("NOBL", "sp_us_dividend_aristocrats"),
-    ("XLK", "us_tech_sector"), ("VGT", "us_tech_sector"),
-    ("XLV", "us_healthcare_sector"), ("XLF", "us_financials_sector"),
+    ("IWM", "russell2000"),
+    ("IJR", "sp_smallcap600", "iShares 2026-08-06: S&P SmallCap 600 Index"),
+    ("SCHD", "dj_us_dividend_100", "Schwab Asset Management product page 2026-08-06: Dow Jones U.S. Dividend 100"),
+    ("VYM", "ftse_high_div_yield", "Vanguard product page 2026-08-06: FTSE High Dividend Yield Index"),
+    ("VIG", "sp_us_dividend_growers", "Vanguard product page 2026-08-06: S&P U.S. Dividend Growers Index"),
+    ("NOBL", "sp_us_dividend_aristocrats"),
+    # The Select Sector SPDRs track S&P Select Sector indices drawn from the
+    # S&P 500 universe; VGT tracks an MSCI IMI sector index covering all cap
+    # sizes. The sector KEYS here are deliberately descriptive buckets rather
+    # than named indices, so two funds on one key are not asserting the same
+    # index -- see the note in this file's docstring about what that costs.
+    ("XLK", "us_tech_sector", "SSGA 2026-08-06: Technology Select Sector Index (S&P 500 universe)"),
+    ("VGT", "us_tech_sector"),
+    ("XLV", "us_healthcare_sector"),
+    ("XLF", "us_financials_sector", "SSGA 2026-08-06: Financial Select Sector Index (S&P 500 universe)"),
     ("XLE", "us_energy_sector"), ("XLY", "us_consumer_disc_sector"),
-    ("XLP", "us_consumer_staples_sector"), ("XLI", "us_industrials_sector"),
+    ("XLP", "us_consumer_staples_sector"),
+    ("XLI", "us_industrials_sector", "SSGA 2026-08-06: Industrial Select Sector Index (S&P 500 universe)"),
     ("XLU", "us_utilities_sector"), ("XLB", "us_materials_sector"),
-    ("SOXX", "ice_semiconductor"), ("SMH", "mvis_us_semis"),
-    ("VNQ", "us_reits"),
-    ("GLD", "gold_spot"), ("IAU", "gold_spot"),
-    ("AGG", "us_aggregate_bond"), ("BND", "us_aggregate_bond"),
-    ("BNDW", "global_aggregate_bond"),
+    ("SOXX", "ice_semiconductor", "iShares 2026-08-06: ICE Semiconductor Index, replaced PHLX 21 June 2021"),
+    ("SMH", "mvis_us_semis", "VanEck 2026-08-06: MVIS US Listed Semiconductor 25 Index"),
+    ("VNQ", "us_reits", "Vanguard 2026-08-06: MSCI US Investable Market Real Estate 25/50 Index"),
+    ("GLD", "gold_spot", "SSGA: LBMA Gold Price PM, physically backed"),
+    ("IAU", "gold_spot", "iShares: LBMA Gold Price PM, physically backed"),
+    ("AGG", "us_aggregate_bond", "iShares 2026-08-06: Bloomberg U.S. Aggregate Bond Index"),
+    # BND tracks the FLOAT ADJUSTED variant, AGG the standard one. Kept on one
+    # key: the two differ by a few basis points a year, and splitting them would
+    # raise a tier-2 caveat implying more difference than exists.
+    ("BND", "us_aggregate_bond", "Vanguard 2026-08-06: Bloomberg U.S. Aggregate Float Adjusted Index"),
+    # BNDW's benchmark is roughly half USD-hedged by construction, which is why
+    # the USD-hedged UCITS lines match it and the unhedged one does not.
+    ("BNDW", "global_aggregate_bond", "Vanguard 2026-08-06: Bloomberg Global Aggregate Float Adjusted Composite Index"),
     ("TLT", "us_treasury_long"), ("IEF", "us_treasury_7_10"),
-    ("SHY", "us_treasury_1_3"), ("TIP", "us_tips"),
-    ("LQD", "usd_corporate_ig"), ("HYG", "usd_corporate_hy"),
+    ("SHY", "us_treasury_1_3"),
+    ("TIP", "us_tips", "iShares 2026-08-06: Bloomberg U.S. TIPS Index (Series-L)"),
+    ("LQD", "usd_corporate_ig", "iShares 2026-08-06: iBoxx USD Liquid Investment Grade Index"),
+    ("HYG", "usd_corporate_hy", "iShares 2026-08-06: iBoxx USD Liquid High Yield Index"),
     # All three are iShares MSCI *USA* factor funds and were mapped to the
     # *World* index of the same factor -- a tier-1 "exact index match" against a
     # fund holding roughly 30% non-US. Same provider, so the provider check
