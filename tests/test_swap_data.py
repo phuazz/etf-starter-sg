@@ -472,6 +472,62 @@ def test_failed_grades_are_never_recommended(swap):
                 assert a["recommended"] is False, f"{e['ticker']}->{a['ticker']}"
 
 
+def test_price_break_pairs_are_never_recommended(swap):
+    """A stepped price series is not a graded pair.
+
+    Where the record steps and holds -- XNAS +21.6% in a week in January 2023,
+    SEMI -20.8% in January 2024, which is what an unadjusted 5:4 split looks
+    like -- there are two records, and any gap taken across the join measures
+    the join. The pair is listed with the step named and never offered.
+
+    The reason must carry the date, because "not verifiable" on its own invites
+    the reader to assume the fund is at fault. It is not: XNAS grades A on the
+    side of its break that is intact.
+    """
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            v = a.get("verification", {})
+            if v.get("grade") != "break" and not v.get("price_break"):
+                continue
+            tag = f"{e['ticker']}->{a['ticker']}"
+            assert v.get("grade") == "break", f"{tag}: price_break without the break grade"
+            assert v.get("gap_pp") is None, f"{tag}: a gap was measured across a break"
+            b = v.get("price_break") or {}
+            assert b.get("date") and b.get("shift_pct"), f"{tag}: break with no date or size"
+            assert a["recommended"] is False, f"{tag}: stepped series offered as a swap"
+            assert b["date"] in (a.get("not_recommended_because") or ""), (
+                f"{tag}: set aside without naming when the series breaks")
+
+
+# Grades that MAY be offered. Anything else is refused by default.
+RECOMMENDABLE_GRADES = {"A", "B", "C", "insufficient"}
+
+
+def test_only_known_good_grades_can_be_recommended(swap):
+    """The backstop, and the reason this test exists rather than another
+    grade-specific one.
+
+    Every refusal grade needed its own guard, and each was written after the
+    grade was: `break` and `not_comparable` were both added to the refusal floor
+    and shipped before anything stopped a later edit from recommending them.
+    That ordering is the bug. This inverts the default -- a grade may be offered
+    only if it appears above -- so the next grade added is refused until someone
+    deliberately says otherwise, instead of being offered until someone notices.
+    """
+    seen = set()
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            g = a.get("verification", {}).get("grade")
+            seen.add(g)
+            if a["recommended"]:
+                assert g in RECOMMENDABLE_GRADES, (
+                    f"{e['ticker']}->{a['ticker']}: grade {g!r} is offered but is not on "
+                    f"the recommendable list. If that is intended, add it there and say "
+                    f"why; do not widen it to make this pass.")
+    unknown = seen - RECOMMENDABLE_GRADES - {"fail", "no_data", "break", "not_comparable"}
+    assert not unknown, f"grades nothing in this file has an opinion about: {sorted(unknown)}"
+
+
 def test_unverifiable_is_shown_but_labelled_not_hidden(swap):
     """A fund listed months ago cannot have a multi-year record. Demoting it
     for that would have buried the Singapore-domiciled gold fund, which is the
