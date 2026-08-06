@@ -310,7 +310,8 @@ def slim_swap(d):
         # The page renders none of them; it reads window_years and nothing else.
         m["return_verification"] = {k: v for k, v in rvf.items()
                                     if k not in ("why_not_tracking_error", "tax_basis",
-                                                 "grade_bands_abs_pp", "metric")}
+                                                 "grade_bands_abs_pp", "metric",
+                                                 "why_this_window", "endpoint_rule")}
     # 260 weeks on every record; asserted rather than assumed, because the
     # sentence below hard-codes the window it describes.
     weeks = {(n.get("decomposition") or {}).get("weeks") for n in d["single_names"]}
@@ -340,10 +341,14 @@ def slim_swap(d):
     # Which alternative fields are the same everywhere that security appears.
     # Measured, because a field that starts invariant can stop being one and a
     # dictionary would then silently ship whichever copy it saw last.
-    # aum_usd is deliberately absent: it is shipped on every alternative today
-    # and rendered nowhere. The PARENT's aum_usd stays -- renderSwapTop orders
-    # the ten-swap table by it.
-    hoist_candidates = ("name", "domicile", "isin", "index_label", "ccy",
+    # aum_usd, isin and index_label are deliberately absent: all three are
+    # shipped on every alternative today and rendered nowhere. The repo file
+    # keeps them -- the ISIN in particular is what test_every_domicile_is_isin_
+    # derived checks the domicile against -- but the page displays the domicile,
+    # not the identifier behind it, and an alternative's index is now named in
+    # the tier-2 caveat. The PARENT's aum_usd and index_label both stay: they
+    # order the ten-swap table and print under "Tracks".
+    hoist_candidates = ("name", "domicile", "ccy",
                         "ccy_is_pence", "income", "ter", "venue",
                         "venue_note", "srs_eligible")
     seen_alt = {}
@@ -373,7 +378,12 @@ def slim_swap(d):
     # stated once. Only hoisted if it really is single-valued this build.
     yrs_seen = {a["verification"]["years"] for e in d["etfs"] for a in e["alternatives"]
                 if (a.get("verification") or {}).get("years") is not None}
-    keep_ver = ("grade", "gap_pp", "monthly_corr", "contradiction")
+    # The five-year figure ships only where it DISAGREES with the graded window.
+    # Where the two agree it adds a number per pair and tells the reader nothing
+    # the grade has not; where they diverge it is the whole point, so drift_pp
+    # gates its own context.
+    keep_ver = ("grade", "gap_pp", "monthly_corr", "contradiction",
+                "drift_pp", "long_history_unusable")
     if len(yrs_seen) == 1:
         m["boilerplate"]["ver_years"] = yrs_seen.pop()
     else:
@@ -396,6 +406,8 @@ def slim_swap(d):
             b = {k: a[k] for k in keep if k in a}
             v, c = a.get("verification", {}), a.get("cost", {})
             b["verification"] = {k: v[k] for k in keep_ver if v.get(k) is not None}
+            if v.get("drift_pp") is not None and v.get("gap_5y_pp") is not None:
+                b["verification"]["gap_5y_pp"] = v["gap_5y_pp"]
             b["cost"] = {k: c[k] for k in keep_cost if c.get(k) is not None}
             r["alternatives"].append(b)
         r["unresolved_alternatives"] = []

@@ -1801,10 +1801,16 @@ function altRow(a){
   // Tooltip is rebuilt from the numbers rather than shipped as prose on every
   // pair — the wording is identical across 112 pairs, only the figures differ.
   const tip=v.gap_pp==null?'Not verifiable from the available history.'
-    :('Compounded outcomes over '+(v.years||SWAPBP().ver_years||5)+' years differed by '+pp(v.gap_pp)+
+    :('Compounded outcomes over '+(v.years||SWAPBP().ver_years||3)+' years differed by '+pp(v.gap_pp)+
       'pp a year, after putting the US line on a Singapore-holder tax basis'+
-      (v.monthly_corr!=null?'; monthly correlation '+v.monthly_corr.toFixed(3):'')+'.');
-  const g='<span class="gradep '+gradeCls(v.grade)+'" title="'+tip+'">'+(v.grade&&v.grade.length===1?v.grade:'?')+'</span>';
+      (v.monthly_corr!=null?'; monthly correlation '+v.monthly_corr.toFixed(3):'')+'.'+
+      // Graded on recent history, so where the longer record disagrees the
+      // reader is told rather than left with a number whose window they cannot see.
+      (v.gap_5y_pp!=null?' Over five years it was '+pp(v.gap_5y_pp)+'pp, so this pair has changed: fees, replication method or the indices themselves have moved apart. The grade follows the recent record.':'')+
+      (v.long_history_unusable?' '+v.long_history_unusable:''));
+  const g='<span class="gradep '+gradeCls(v.grade)+'" title="'+tip+'">'+(v.grade&&v.grade.length===1?v.grade:'?')+'</span>'+
+    (v.gap_5y_pp!=null?'<span class="tierb tier2" style="margin-left:4px;padding:1px 5px" title="'+pfEsc(tip)+'">5y≠</span>':'')+
+    (v.long_history_unusable?'<span class="tierb tier2" style="margin-left:4px;padding:1px 5px" title="'+pfEsc(v.long_history_unusable)+'">3y ONLY</span>':'');
   const net=c.net_annual_delta_pp;
   const netTxt=net==null?'<span style="color:var(--t3)">n/a</span>'
     :'<strong style="color:'+(net>=0?'var(--g-text)':'var(--r-text)')+'">'+pp(net)+'pp</strong>';

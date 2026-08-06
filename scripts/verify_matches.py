@@ -54,6 +54,36 @@ CACHE = os.path.join(DATA, ".swap_prices.pkl")
 MIN_MONTHS = 36          # three years of overlap before a gap is reported
 US_HOLDER_RATE = 0.30
 
+# --- Which window, and how its ends are measured ---------------------------
+#
+# The gap is ANNUALISED, so an error at either endpoint is divided by the window
+# length. That makes short windows expensive: measured across this universe, the
+# same pair regraded with the window ending one to four weeks earlier moves by
+#
+#     1y  0.90pp     avg(1y,3y)  0.55pp     2y  0.45pp     3y  0.31pp   5y 0.13pp
+#
+# against an A band only 0.50pp wide. A one-year window mostly measures which
+# week the data happened to stop on, and averaging a 1y leg with a 3y one does
+# not rescue it: the two windows SHARE their end date, so the noise is common
+# rather than independent. Measured, not assumed -- the two move the same
+# direction on 75% of end-date shifts, and the 1y leg moves 2.9x as far as the
+# 3y leg, which is the 3x that dividing by a third of the time predicts.
+#
+# Three years is the shortest window that resolves inside the A band, and it is
+# a better instrument than five, not merely a shorter one: it grades MORE pairs
+# A (56 against 47) and MORE pairs fail (10 against 4) at the same time. Both
+# at once is what a sharper measurement looks like. Fees get cut and replication
+# changes; a five-year record blends a fund's present construction with its old
+# one and hides both improvements and drift.
+#
+# Five years is still measured and travels with the result as context. Where the
+# two disagree materially, that disagreement IS the signal -- something about
+# the pair changed -- and it is surfaced rather than averaged away.
+GRADE_YEARS = 3
+CONTEXT_YEARS = 5
+ENDPOINT_K = 8           # median of this many observations at each end
+DRIFT_FLAG_PP = 1.5      # |3y - 5y| past this and the pair is flagged as changed
+
 # Absolute annualised gap, after putting both sides on a Singapore-holder basis.
 GRADE_A, GRADE_B, GRADE_C = 0.50, 1.50, 3.00
 
@@ -247,11 +277,57 @@ HANDLED_CCY = {"USD", "GBP", "GBp", "EUR", "SGD"}
 FX_SYMBOLS = ["GBPUSD=X", "EURUSD=X", "SGDUSD=X"]
 
 
-def ann(series):
-    yrs = (series.index[-1] - series.index[0]).days / 365.25
-    if yrs <= 0:
+def ann(series, k=ENDPOINT_K):
+    """Annualised return, taking each end as the median of k observations.
+
+    A single closing price at each end hands the whole result to two particular
+    days. That matters more here than usual: London and New York keep different
+    holiday calendars, so a week where one venue is shut moves only one side of
+    the pair. Taking a median at each end, and measuring the time base between
+    the two MIDPOINTS so the span stays honest, cuts the endpoint sensitivity by
+    roughly two thirds at every window length tested.
+    """
+    if len(series) < 2 * k + 8:
+        k = 1                       # too short to trim; fall back to the closes
+    if k == 1:
+        v0, v1 = series.iloc[0], series.iloc[-1]
+        t0, t1 = series.index[0], series.index[-1]
+    else:
+        v0, v1 = series.iloc[:k].median(), series.iloc[-k:].median()
+        t0, t1 = series.index[:k][k // 2], series.index[-k:][k // 2]
+    yrs = (t1 - t0).days / 365.25
+    if yrs <= 0 or v0 <= 0:
         return None, 0.0
-    return (series.iloc[-1] / series.iloc[0]) ** (1 / yrs) - 1, yrs
+    return (v1 / v0) ** (1 / yrs) - 1, yrs
+
+
+def tail(j, years):
+    """The most recent `years` of a joined pair."""
+    return j[j.index >= j.index[-1] - pd.Timedelta(days=int(365.25 * years))]
+
+
+def _window_gap(seg, us_gross_yield):
+    """Annualised gap over one window, or None if that window is unusable.
+
+    Returns (gap_pp, detail, step). A step INSIDE the window makes it unusable:
+    the series is two series there and any gap across it measures the join.
+    """
+    step = find_step(_ratio(seg)) if len(seg) > 3 * BREAK_WIN else None
+    if step:
+        return None, {}, step
+    a_us, yrs = ann(seg["us"])
+    a_alt, _ = ann(seg["alt"])
+    if a_us is None or a_alt is None:
+        return None, {}, None
+    drag = (us_gross_yield or 0.0) * US_HOLDER_RATE
+    a_us_net = a_us - drag
+    return (a_alt - a_us_net) * 100, {
+        "years": round(yrs, 2),
+        "us_ann_gross_pp": round(a_us * 100, 3),
+        "us_holder_wht_drag_pp": round(drag * 100, 3),
+        "us_ann_after_wht_pp": round(a_us_net * 100, 3),
+        "alt_ann_pp": round(a_alt * 100, 3),
+    }, None
 
 
 def compare(s_us, s_alt, us_gross_yield):
@@ -262,65 +338,64 @@ def compare(s_us, s_alt, us_gross_yield):
         return {"grade": "insufficient", "months": months, "gap_pp": None,
                 "basis": f"only {months} overlapping months, need {MIN_MONTHS}"}
 
-    transient, step = find_breaks(j)
-    if step:
-        # No gap is reported. A step means the record is two records, and any
-        # number taken across it measures the join rather than the funds. This
-        # is deliberately NOT graded on the clean segment either: that would
-        # promote a pair on a shortened window, which is a decision about what
-        # to offer rather than a repair to a measurement.
-        return {"grade": "break", "months": months, "gap_pp": None,
-                "price_break": step,
-                "basis": (f"price history steps {step['shift_pct']:+.1f}% on "
-                          f"{step['date']} ({step['sigma']} sigma) and holds the new "
-                          f"level, so the record cannot be read as one continuous "
-                          f"series. Not a statement about how the fund tracks.")}
+    # Reverting ticks are dropped before anything is measured. A spike landing
+    # on a window edge would otherwise walk straight into an endpoint median.
+    transient, _ = find_breaks(j)
     dropped = []
     if transient:
-        # A tick that reverts. Dropping it repairs the correlation and protects
-        # the gap in the one case that would corrupt it -- a bad print sitting
-        # on an endpoint.
         dropped = sorted(str(t.date()) for t in transient)
         j = j.drop(index=transient)
 
-    a_us, yrs = ann(j["us"])
-    a_alt, _ = ann(j["alt"])
-    if a_us is None:
+    grade_seg = tail(j, GRADE_YEARS)
+    gap, detail, step = _window_gap(grade_seg, us_gross_yield)
+    if step:
+        # The step falls inside the window being graded, so there is no usable
+        # record. Where a step sits only in the LONGER history the pair is still
+        # graded, on the recent window, and the long context is withheld.
+        return {"grade": "break", "months": months, "gap_pp": None,
+                "price_break": step,
+                "basis": (f"price history steps {step['shift_pct']:+.1f}% on "
+                          f"{step['date']} ({step['sigma']} sigma) within the "
+                          f"{GRADE_YEARS}-year window and holds the new level, so the "
+                          f"record cannot be read as one continuous series. Not a "
+                          f"statement about how the fund tracks.")}
+    if gap is None:
         return {"grade": "insufficient", "months": months, "gap_pp": None,
                 "basis": "degenerate window"}
 
-    # Put the US line on a Singapore-holder basis: Yahoo reinvests its
-    # distributions gross, but a Singapore resident never receives them gross.
-    drag = (us_gross_yield or 0.0) * US_HOLDER_RATE
-    a_us_net = a_us - drag
-
-    gap = (a_alt - a_us_net) * 100
-    m = j.resample("ME").last().pct_change().dropna()
+    m = grade_seg.resample("ME").last().pct_change().dropna()
     corr = float(np.corrcoef(m["us"], m["alt"])[0, 1]) if len(m) > 2 else None
-
     g = abs(gap)
     grade = ("A" if g <= GRADE_A else "B" if g <= GRADE_B
              else "C" if g <= GRADE_C else "fail")
-    out = {
-        "grade": grade,
-        "months": months,
-        "years": round(yrs, 2),
-        "us_ann_gross_pp": round(a_us * 100, 3),
-        "us_holder_wht_drag_pp": round(drag * 100, 3),
-        "us_ann_after_wht_pp": round(a_us_net * 100, 3),
-        "alt_ann_pp": round(a_alt * 100, 3),
-        "gap_pp": round(gap, 3),
-        "monthly_corr": None if corr is None else round(corr, 4),
-        "basis": (f"annualised total return over {yrs:.1f}y of overlap, USD; US line "
-                  f"reduced by {drag * 100:.2f}pp for the 30% a Singapore holder "
-                  f"suffers on distributions. Positive gap = alternative ahead."),
-    }
+    out = {"grade": grade, "months": months, "gap_pp": round(gap, 3),
+           "monthly_corr": None if corr is None else round(corr, 4), **detail}
+
+    # The longer window as context, never as the grade.
+    ctx, _, ctx_step = _window_gap(tail(j, CONTEXT_YEARS), us_gross_yield)
+    if ctx is not None:
+        out["gap_5y_pp"] = round(ctx, 3)
+        drift = gap - ctx
+        if abs(drift) > DRIFT_FLAG_PP:
+            out["drift_pp"] = round(drift, 3)
+    elif ctx_step:
+        out["long_history_unusable"] = (
+            f"Graded on {GRADE_YEARS} years. The longer record is not usable: it steps "
+            f"{ctx_step['shift_pct']:+.1f}% on {ctx_step['date']} and holds the new "
+            f"level, which is a break in the price series rather than anything the "
+            f"fund did.")
+    out["basis"] = (
+        f"annualised total return over the most recent {detail['years']:.1f}y, USD, with "
+        f"each end taken as the median of {ENDPOINT_K} weeks; US line reduced by "
+        f"{detail['us_holder_wht_drag_pp']:.2f}pp for the 30% a Singapore holder suffers "
+        f"on distributions. Positive gap = alternative ahead."
+        + (f" Over {CONTEXT_YEARS} years the gap was {out['gap_5y_pp']:+.2f}pp."
+           if "gap_5y_pp" in out else "")
+        + (f" {len(dropped)} reverting price spike(s) removed ({', '.join(dropped)}); each "
+           f"moved the pair ratio past {BREAK_SIGMA:.0f} sigma and came back, so it is a "
+           f"bad print rather than a move either fund made." if dropped else ""))
     if dropped:
         out["outliers_dropped"] = dropped
-        out["basis"] += (f" {len(dropped)} reverting price spike(s) removed "
-                         f"({', '.join(dropped)}); each moved the pair ratio past "
-                         f"{BREAK_SIGMA:.0f} sigma and came back, so it is a bad print "
-                         f"rather than a move either fund made.")
     return out
 
 
@@ -459,8 +534,26 @@ def main():
 
     swap["_meta"]["return_verification"] = {
         "run": "2026-08-02",
-        "window_years": args.years,
-        "metric": "cumulative annualised total-return gap over the overlap window",
+        "window_years": GRADE_YEARS,
+        "context_years": CONTEXT_YEARS,
+        "why_this_window": (
+            f"Graded on the most recent {GRADE_YEARS} years, not the full history. Fees get "
+            f"cut and replication methods change, so a five-year record blends a fund's "
+            f"present construction with its old one. Three years is also the shortest "
+            f"window that resolves inside the 0.50pp A band: regrading with the window "
+            f"ending one to four weeks earlier moves a pair by 0.90pp at one year and "
+            f"0.31pp at three. Averaging a one-year leg into it does not help, because "
+            f"both windows share an end date and the noise is common rather than "
+            f"independent -- the two move together on 75% of end-date shifts. Three years "
+            f"grades more pairs A than five does (56 against 47) AND fails more (10 "
+            f"against 4), which is a sharper instrument rather than a noisier one."),
+        "endpoint_rule": (
+            f"each end is the median of {ENDPOINT_K} weekly observations, with the time "
+            f"base measured between the midpoints. US and London holiday calendars differ, "
+            f"so a single closing price at each end hands the result to two particular "
+            f"days; this cuts endpoint sensitivity by roughly two thirds."),
+        "drift_flag_pp": DRIFT_FLAG_PP,
+        "metric": "cumulative annualised total-return gap over the graded window",
         "why_not_tracking_error": (
             "Volatility of return differences is unusable across venues. Measured: "
             "SPY vs IVV (both US) 0.31pp, VUAA vs SPXS (both London) 0.99pp, but SPY vs "
