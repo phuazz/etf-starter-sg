@@ -241,6 +241,72 @@ def _scope(text):
     return {s for s, toks in SCOPE_TOKENS.items() if any(k in t for k in toks)}
 
 
+INDEX_STOPWORDS = {
+    "ETF", "FUND", "INDEX", "SHARES", "TRUST", "CORE", "THE", "OF", "AND",
+    "US", "USA", "U", "S", "STOCK", "MARKET", "TOTAL", "SELECT", "SECTOR",
+    "VANGUARD", "ISHARES", "SPDR", "INVESCO", "SCHWAB", "PROSHARES", "VANECK",
+    "STATE", "STREET", "PORTFOLIO", "BOND", "YEAR", "IV", "INC",
+}
+
+# The count of US mappings resting on nothing but assertion. It may fall. It may
+# NOT rise: a new holding arrives unverified, and this makes someone say so out
+# loud rather than adding it quietly to a pile nobody is counting.
+MAX_UNVERIFIED_INDEX_MAPPINGS = 22
+
+
+def _idx_tokens(text):
+    up = (text or "").upper().replace("&", "AND")
+    return {w for w in re.split(r"[^A-Z0-9]+", up) if w and w not in INDEX_STOPWORDS}
+
+
+def test_every_index_mapping_records_where_it_came_from():
+    """Four of these mappings were wrong and none of them said what it rested on.
+
+    ITOT, MTUM, QUAL and VLUE each named a different index than they track. VWO
+    sat on MSCI for thirteen years after moving to FTSE. VTI still said CRSP
+    after Vanguard moved it to Morningstar and renamed the fund. Three surfaced
+    through realised returns rather than any check, and the fourth only because
+    someone asked for it to be verified.
+
+    What they had in common is that nothing recorded their provenance, so a
+    mapping verified against a factsheet and one typed from memory were
+    indistinguishable. This does not require every mapping to be verified --
+    most are not -- only that each states which it is.
+    """
+    us = load("us_situs_map.json")
+    missing = [e["ticker"] for e in us["etfs"] if not (e.get("index_src") or "").strip()]
+    assert not missing, f"index mapping with no recorded source: {missing}"
+
+
+def test_a_fund_name_attribution_is_actually_evidenced_by_the_name():
+    """"fund name" is a claim about the name, so it is re-checkable -- and it is
+    re-checked here rather than trusted, because the builder that writes it and
+    the label it points at can drift apart independently."""
+    us = load("us_situs_map.json")
+    idx = load("index_map.json")["indices"]
+    bad = []
+    for e in us["etfs"]:
+        if e.get("index_src") != "fund name":
+            continue
+        want = _idx_tokens(idx[e["index_key"]]["label"])
+        if not want or not want <= _idx_tokens(e.get("name")):
+            bad.append(f"{e['ticker']}: claims the name evidences {e['index_key']} but "
+                       f"{sorted(want - _idx_tokens(e.get('name')))} is absent from {e.get('name')!r}")
+    assert not bad, "attribution claims the name and the name does not say it:\n  " + "\n  ".join(bad)
+
+
+def test_unverified_index_mappings_do_not_multiply():
+    """A ratchet, not a target. Lowering it means verifying one against the
+    issuer and editing the number down; it must never be raised to make a new
+    holding fit."""
+    us = load("us_situs_map.json")
+    unver = sorted(e["ticker"] for e in us["etfs"] if e.get("index_src") == "unverified")
+    assert len(unver) <= MAX_UNVERIFIED_INDEX_MAPPINGS, (
+        f"{len(unver)} unverified index mappings, ceiling is "
+        f"{MAX_UNVERIFIED_INDEX_MAPPINGS}: {unver}. Verify the new one against the "
+        f"issuer rather than raising the ceiling.")
+
+
 def test_index_scope_matches_the_fund_name():
     """MSCI USA Momentum is not MSCI World Momentum.
 

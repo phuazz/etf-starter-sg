@@ -61,12 +61,32 @@ SECTOR_TO_INDEX = {
 }
 
 # US-domiciled ETFs commonly held from Singapore, with the index each tracks.
+#
+# Entries are (ticker, index_key) or (ticker, index_key, source). Every mapping
+# here began as a hand-written assertion with nothing recording where it came
+# from, and four of them were wrong: ITOT, MTUM, QUAL and VLUE named a different
+# index than they track, VWO had been on MSCI since before it moved to FTSE in
+# January 2013, and VTI still said CRSP after Vanguard moved it to Morningstar.
+# Three were caught by realised returns rather than by any check, and one only
+# because someone asked.
+#
+# So provenance is recorded per mapping rather than assumed. It is DERIVED, not
+# asserted: the builder checks the fund's own name against the index label and
+# writes "fund name" only where the name really does evidence it. A third
+# element overrides that with a document consulted directly. Anything with
+# neither is written "unverified", which is the honest label for most of this
+# list and is meant to stay visible rather than be quietly filled in.
 US_ETFS = [
     ("SPY", "sp500"), ("VOO", "sp500"), ("IVV", "sp500"), ("SPLG", "sp500"),
     ("QQQ", "nasdaq100"), ("QQQM", "nasdaq100"),
+    # VTI -- VERIFIED 2026-08-06. Vanguard moved it off CRSP US Total Market to
+    # the Morningstar US Total Market Index and renamed the fund to match; the
+    # mapping here still said CRSP. Found by the name-versus-label check that
+    # produces index_src below, which is the point of having it.
+    ("VTI", "morningstar_us_total", "Vanguard fund profile, retrieved 2026-08-06"),
     # ITOT is the S&P total-market fund, not the MSCI one. Its own name says so,
     # and the provider check that would have caught it ran on the UCITS side only.
-    ("VTI", "crsp_us_total"), ("ITOT", "sp_total_market"),
+    ("ITOT", "sp_total_market"),
     ("VT", "ftse_all_world"), ("ACWI", "msci_acwi"),
     # VWO -- VERIFIED against Vanguard's own fund profile, 2026-08-06. It tracks
     # the FTSE Emerging Markets All Cap China A Inclusion Index (4,852
@@ -82,7 +102,9 @@ US_ETFS = [
     # instead of the geography one, and introduced while fixing the provider.
     # They are separate keys in near families now, so the swap is still offered
     # and the difference is named.
-    ("VEA", "ftse_dev_exus"), ("VWO", "ftse_emerging_all_cap"), ("IEMG", "msci_em_imi"),
+    ("VEA", "ftse_dev_exus"),
+    ("VWO", "ftse_emerging_all_cap", "Vanguard fund profile, retrieved 2026-08-06"),
+    ("IEMG", "msci_em_imi"),
     ("EFA", "msci_eafe"), ("URTH", "msci_world"),
     ("IWM", "russell2000"), ("IJR", "sp_smallcap600"),
     ("SCHD", "dj_us_dividend_100"), ("VYM", "ftse_high_div_yield"),
@@ -117,6 +139,36 @@ US_NAMES = [
     "ACN", "MCD", "ABT", "INTC", "QCOM", "DIS", "TXN", "PFE", "PM", "IBM",
     "GE", "CAT", "BA", "NKE", "UBER", "PLTR", "MU", "INTU", "NOW", "GS",
 ]
+
+
+# Words that carry no attribution weight: they appear in nearly every fund name
+# or index label and matching on them would make almost anything look evidenced.
+INDEX_STOPWORDS = {
+    "ETF", "FUND", "INDEX", "SHARES", "TRUST", "CORE", "THE", "OF", "AND",
+    "US", "USA", "U", "S", "STOCK", "MARKET", "TOTAL", "SELECT", "SECTOR",
+    "VANGUARD", "ISHARES", "SPDR", "INVESCO", "SCHWAB", "PROSHARES", "VANECK",
+    "STATE", "STREET", "PORTFOLIO", "BOND", "YEAR", "IV", "INC",
+}
+
+
+def _index_tokens(text):
+    up = (text or "").upper().replace("&", "AND")
+    return {w for w in re.split(r"[^A-Z0-9]+", up) if w and w not in INDEX_STOPWORDS}
+
+
+def index_attribution(fund_name, index_label, override):
+    """Where this ticker's index mapping came from.
+
+    Never asserted. A mapping may only claim the fund's own name as evidence if
+    every distinctive word of the index label actually appears in that name --
+    checked here, so the claim cannot drift away from the thing it claims. An
+    override names a document someone read. Everything else is "unverified",
+    and that is the honest state of most of this list.
+    """
+    if override:
+        return override
+    lt = _index_tokens(index_label)
+    return "fund name" if lt and lt <= _index_tokens(fund_name) else "unverified"
 
 
 def fetch(tickers, cache, refresh):
@@ -167,7 +219,7 @@ def main():
         index_map = json.load(fh)
     known = set(index_map["indices"])
 
-    bad = sorted({k for _, k in US_ETFS} - known)
+    bad = sorted({e[1] for e in US_ETFS} - known)
     if bad:
         sys.exit(f"FATAL: US ETF list references unknown index keys: {bad}")
 
@@ -189,13 +241,15 @@ def main():
         with open(CACHE, encoding="utf-8") as fh:
             cache = json.load(fh)
 
-    all_t = [t for t, _ in US_ETFS] + US_NAMES
+    all_t = [e[0] for e in US_ETFS] + US_NAMES
     print(f"fetching {len(all_t)} US lines ...")
     cache = fetch(all_t, cache, args.refresh)
 
     etfs, names, warnings = [], [], []
 
-    for t, idx in US_ETFS:
+    for entry in US_ETFS:
+        t, idx = entry[0], entry[1]
+        src_override = entry[2] if len(entry) > 2 else None
         y = cache.get(t, {})
         nm = y.get("longName")
         if not nm or y.get("quoteType") != "ETF":
@@ -216,6 +270,8 @@ def main():
             "ticker": t, "name": nm, "kind": "etf", "index_key": idx,
             "index_label": index_map["indices"][idx]["label"],
             "index_family": index_map["indices"][idx]["family"],
+            "index_src": index_attribution(
+                nm, index_map["indices"][idx]["label"], src_override),
             "ccy": y.get("currency"), "ter": y.get("netExpenseRatio"),
             "aum_usd": y.get("totalAssets"), "yield": y.get("yield"),
             "isin": isin, "situs": "us", "situs_basis": basis,
@@ -322,6 +378,17 @@ def main():
     print(f"\nETFs {m['etfs']}  single names {m['single_names']}  dropped {m['dropped']}")
     print(f"  situs inferred (no ISIN): {m['etfs_situs_inferred']}")
     print(f"  names with no sector proxy: {m['names_without_sector_proxy']}")
+    # Printed every build so the unverified pile stays in view. It is the pile
+    # the last four mapping errors came out of.
+    by_src = {}
+    for e in etfs:
+        key = "unverified" if e["index_src"] == "unverified" else (
+            "fund name" if e["index_src"] == "fund name" else "issuer document")
+        by_src[key] = by_src.get(key, 0) + 1
+    print(f"  index attribution: {by_src}")
+    unver = sorted(e["ticker"] for e in etfs if e["index_src"] == "unverified")
+    if unver:
+        print(f"  unverified index mappings ({len(unver)}): {', '.join(unver)}")
     print(f"-> {path}")
 
 
