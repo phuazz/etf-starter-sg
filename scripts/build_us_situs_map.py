@@ -68,16 +68,21 @@ US_ETFS = [
     # and the provider check that would have caught it ran on the UCITS side only.
     ("VTI", "crsp_us_total"), ("ITOT", "sp_total_market"),
     ("VT", "ftse_all_world"), ("ACWI", "msci_acwi"),
-    # VWO tracks the FTSE emerging series, not the MSCI one, so it was being
-    # matched to MSCI EM trackers while Vanguard's own FTSE EM UCITS funds
-    # (VFEG, VFEM) sat unoffered in the universe. Three separate MSCI EM lines
-    # diverge from it by +4.7 to +6.1pp a year over three years and agree with
-    # each other, which is the pattern of VWO being the odd one out rather than
-    # the three of them; index_map already records why (FTSE calls South Korea
-    # developed and holds none of it, MSCI does not). Its sibling VEA is already
-    # mapped to FTSE here. CONFIRM AGAINST THE ISSUER FACTSHEET: the Yahoo name
-    # this file stores is generic and does not name the index provider.
-    ("VEA", "ftse_dev_exus"), ("VWO", "ftse_emerging"), ("IEMG", "msci_em_imi"),
+    # VWO -- VERIFIED against Vanguard's own fund profile, 2026-08-06. It tracks
+    # the FTSE Emerging Markets All Cap China A Inclusion Index (4,852
+    # constituents), not the MSCI series it carried here for years. The issuer's
+    # benchmark history also explains how that survived so long: VWO really did
+    # track MSCI Emerging Markets, until 9 January 2013.
+    #
+    # The all-cap key is not pedantry. Vanguard's UCITS line (VFEG/VFEM) tracks
+    # the FTSE Emerging INDEX -- "large and mid-sized company stocks", 2,289
+    # constituents, per the factsheet for IE00B3VVMM84 dated 30 June 2026.
+    # Pointing both at one key produced a tier-1 EXACT INDEX badge across a
+    # ~2,500-company small-cap gap: the same failure as MTUM, on the size axis
+    # instead of the geography one, and introduced while fixing the provider.
+    # They are separate keys in near families now, so the swap is still offered
+    # and the difference is named.
+    ("VEA", "ftse_dev_exus"), ("VWO", "ftse_emerging_all_cap"), ("IEMG", "msci_em_imi"),
     ("EFA", "msci_eafe"), ("URTH", "msci_world"),
     ("IWM", "russell2000"), ("IJR", "sp_smallcap600"),
     ("SCHD", "dj_us_dividend_100"), ("VYM", "ftse_high_div_yield"),

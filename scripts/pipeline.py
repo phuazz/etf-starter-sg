@@ -389,7 +389,11 @@ def slim_swap(d):
     else:
         keep_ver = keep_ver + ("years",)
         print(f"  swap: overlap windows differ {sorted(yrs_seen)} — kept per pair")
-    keep_cost = ("ter_delta_pp", "wht_saving_pp", "net_annual_delta_pp")
+    # Only the total is rendered; the fee and withholding components are shipped
+    # on all 116 pairs and displayed nowhere, and the footnote under the table
+    # already says the total is the one plus the other. The repo file keeps the
+    # split.
+    keep_cost = ("net_annual_delta_pp",)
     for e in d["etfs"]:
         r = {k: e[k] for k in ("ticker", "name", "index_label", "tier", "caveat",
                                "verdict", "verdict_note", "ter", "yield",

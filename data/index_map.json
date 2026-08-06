@@ -22,6 +22,11 @@
         "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,600. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
       },
       {
+        "a": "emerging_all_cap",
+        "b": "emerging",
+        "caveat": "No UCITS fund tracks the FTSE all-cap emerging series. The nearest available exposure is the large/mid FTSE Emerging Index, which holds about 2,289 companies against the all-cap index's 4,852 -- the same countries and the same provider, without the small-cap tail. Both exclude South Korea, which FTSE classifies as developed."
+      },
+      {
         "a": "us_small",
         "b": "us_total",
         "caveat": "A US small-cap holding swapped into a total-market or large-cap line is not a substitute -- it removes the small-cap tilt that was the point of the position."
@@ -125,8 +130,9 @@
     "ftse_emerging": {
       "label": "FTSE Emerging Markets",
       "provider": "FTSE Russell",
-      "exposure": "Emerging-market equity. Classifies South Korea as developed, so it holds no Korean exposure where the MSCI series does.",
-      "n_holdings": 1900,
+      "exposure": "Emerging-market equity, large and mid cap only. Classifies South Korea as developed, so it holds no Korean exposure where the MSCI series does.",
+      "n_holdings": 2289,
+      "n_holdings_src": "Vanguard factsheet 30 June 2026 (IE00B3VVMM84), benchmark column",
       "family": "emerging",
       "us_content": 0.0
     },
@@ -305,6 +311,15 @@
       "n_holdings": 400,
       "family": "factor_value",
       "us_content": 0.6
+    },
+    "ftse_emerging_all_cap": {
+      "label": "FTSE Emerging Markets All Cap China A Inclusion",
+      "provider": "FTSE Russell",
+      "exposure": "Emerging-market equity across large, mid AND small cap, including China A shares. Like the large/mid FTSE Emerging series it treats South Korea as developed and holds none of it.",
+      "n_holdings": 4852,
+      "n_holdings_src": "Vanguard VWO fund profile, benchmark column, retrieved 2026-08-06",
+      "family": "emerging_all_cap",
+      "us_content": 0.0
     },
     "usa_quality": {
       "label": "MSCI USA Quality",
