@@ -350,7 +350,7 @@ def slim_swap(d):
     # order the ten-swap table and print under "Tracks".
     hoist_candidates = ("name", "domicile", "ccy",
                         "ccy_is_pence", "income", "ter", "venue",
-                        "venue_note", "srs_eligible")
+                        "venue_note", "srs_eligible", "hedge_ccy")
     seen_alt = {}
     varies = set()
     for e in d["etfs"]:

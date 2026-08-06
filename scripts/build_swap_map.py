@@ -231,6 +231,10 @@ def main():
             "index_key": a["index_key"], "index_label": a["index_label"],
             "ccy": a["ccy"], "ccy_is_pence": a["ccy_is_pence"],
             "income": a["income"], "ter": a.get("ter"), "ter_src": a.get("ter_src"),
+            # Travels with the line because it changes what the fund IS, not
+            # merely what it costs: a GBP-hedged global bond fund gives a
+            # Singapore holder sterling rate exposure the US original never had.
+            "hedge_ccy": a.get("hedge_ccy"),
             "aum_usd": a.get("aum_usd"),
             "estate_tax_exposed": False,
             "venue": a.get("exchange", "LSE"),

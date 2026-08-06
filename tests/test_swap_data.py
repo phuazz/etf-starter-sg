@@ -356,6 +356,70 @@ def test_built_artefacts_are_dated_and_attributed(ucits, us):
         assert d["_meta"]["builder"]
 
 
+def test_income_policy_is_backed_by_the_legal_name(ucits):
+    """A hand-asserted distribution flag may not contradict the fund's own name.
+
+    ucits_seed.json asserts one per line, and seven of those assertions were
+    wrong: VAGP, IMEU, IDP6, IUAG, SUAG, IBTM and SHYU were all recorded
+    Accumulating while their registered names say (Dist) or Income. The tool
+    printed "Acc" against each of them.
+
+    This is the same failure as test_single_name_situs_never_rests_on_yahoo_isin
+    in a different field -- an asserted value allowed to outrank the security's
+    own identity -- and the same remedy as
+    test_ucits_status_is_backed_by_the_legal_name: where the name states a
+    policy, the name decides.
+    """
+    bad = []
+    for f in ucits["funds"]:
+        nm = f"{f.get('name') or ''} {f.get('official_name') or ''}".upper()
+        says_dist = re.search(r"\((?:DIST|INC)\)|\bDISTRIBUTING\b|\bINCOME\b|\bDIST\b", nm)
+        says_acc = re.search(r"\bACC(?:UMULATING|UMULATION)?\b|\(ACC\)", nm)
+        if says_dist and f["income"] != "Distributing":
+            bad.append(f"{f['ticker']}: recorded {f['income']} but name says distributing -- {nm.strip()!r}")
+        elif says_acc and not says_dist and f["income"] != "Accumulating":
+            bad.append(f"{f['ticker']}: recorded {f['income']} but name says accumulating -- {nm.strip()!r}")
+    assert not bad, "income policy contradicts the registered name:\n  " + "\n  ".join(bad)
+
+
+def test_currency_hedging_is_recorded_and_name_backed(ucits):
+    """A hedged share class is a different instrument, not a cheaper wrapper.
+
+    Nothing recorded hedging at all until VAGP -- Vanguard Global Aggregate GBP
+    Hedged -- was offered against BNDW and read as a 3.23pp tracking failure.
+    It was sterling: +4.37% a year in its native currency plus 2.22% of GBP/USD
+    strength. Its USD-hedged sibling VAGU sits 0.06pp from BNDW.
+
+    Recorded from the fund's own name, never asserted, and every line that says
+    "hedged" must yield a currency -- a hedge whose currency did not parse is a
+    gap, not a fund without a hedge.
+    """
+    for f in ucits["funds"]:
+        nm = f"{f.get('name') or ''} {f.get('official_name') or ''}".upper()
+        if "HEDG" in nm:
+            assert f.get("hedge_ccy"), f"{f['ticker']}: name says hedged, no hedge_ccy recorded"
+            assert f["hedge_ccy"] in nm, f"{f['ticker']}: hedge_ccy {f['hedge_ccy']} not in its own name"
+            assert f.get("hedge_src") == "legal name", f["ticker"]
+        else:
+            assert not f.get("hedge_ccy"), (
+                f"{f['ticker']}: hedge_ccy {f.get('hedge_ccy')} asserted but the name does not say hedged")
+
+
+def test_no_cross_currency_hedge_is_ever_recommended(swap):
+    """Every figure in this tool is on a USD basis. A share class hedged to
+    something else cannot be compared on that basis at all -- converting its
+    price into USD re-adds the exposure it exists to remove -- so it may be
+    listed and explained, never offered."""
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            h = a.get("hedge_ccy")
+            if h and h != "USD":
+                assert a["recommended"] is False, f"{e['ticker']}->{a['ticker']}: {h}-hedged and offered"
+                assert a.get("not_recommended_because"), f"{e['ticker']}->{a['ticker']}"
+                assert h in a["not_recommended_because"], (
+                    f"{e['ticker']}->{a['ticker']}: set aside without naming the hedge currency")
+
+
 def test_distribution_policy_recorded_on_every_line(ucits):
     """Needed before any tracking-error computation: comparing a distributing
     line against an accumulating one on price returns produces a spurious

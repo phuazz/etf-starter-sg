@@ -274,6 +274,33 @@ def main():
             ter, ter_src = y["netExpenseRatio"], "yahoo"
         else:
             ter, ter_src = None, None
+        # --- income policy and hedge, read off the fund's registered name ----
+        # The seed asserts a distribution flag by hand. Seven of those
+        # assertions contradicted the exchange name they sit beside: VAGP,
+        # IMEU, IDP6, IUAG, SUAG, IBTM and SHYU were all recorded Accumulating
+        # while their own names say (Dist) or Income. This repo has already
+        # learned this lesson once -- Yahoo's ISIN field was believed over the
+        # security's identity and dropped four of the largest US stocks in the
+        # world -- so the name wins here and the seed becomes the fallback.
+        _nm = f"{name or ''} {iv.get('lse_name') or ''}".upper()
+        if re.search(r"\((?:DIST|INC)\)|\bDISTRIBUTING\b|\bINCOME\b|\bDIST\b", _nm):
+            income, income_src = "Distributing", "legal name"
+        elif re.search(r"\bACC(?:UMULATING|UMULATION)?\b|\(ACC\)", _nm):
+            income, income_src = "Accumulating", "legal name"
+        else:
+            income = "Accumulating" if c["dist"] == "acc" else "Distributing"
+            income_src = "seed"
+        seed_income = "Accumulating" if c["dist"] == "acc" else "Distributing"
+        if income_src == "legal name" and income != seed_income:
+            warnings.append({"ticker": t, "flag": (
+                f"income policy: seed says {seed_income} but the registered name says "
+                f"{income} -- name used ({_nm.strip()!r})")})
+        _h = re.search(r"\b(USD|GBP|EUR|CHF|SGD|JPY)[\s-]*HEDGED\b", _nm)
+        hedge_ccy = _h.group(1) if _h else None
+        if hedge_ccy is None and "HEDG" in _nm:
+            warnings.append({"ticker": t, "flag": (
+                f"name says hedged but no currency parsed -- {_nm.strip()!r}")})
+
         rec = {
             "ticker": t,
             "yahoo": f"{t}.L",
@@ -284,7 +311,14 @@ def main():
             "issuer_hint": c["iss"],
             "fund_family": y.get("fundFamily"),
             "structure": c["structure"],
-            "income": "Accumulating" if c["dist"] == "acc" else "Distributing",
+            "income": income,
+            "income_src": income_src,
+            # A hedged share class is a different instrument from its unhedged
+            # sibling, and for a bond fund the hedge usually matters more than
+            # which aggregate index it tracks. Taken from the fund's own name,
+            # never asserted -- same standard as is_ucits.
+            "hedge_ccy": hedge_ccy,
+            "hedge_src": "legal name" if hedge_ccy else None,
             "exchange": "LSE",
             "ccy": ccy,
             # GBp lines quote in pence. Comparing a GBp line against a USD line

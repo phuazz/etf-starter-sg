@@ -447,7 +447,7 @@ def main():
             if s is not None and len(s.dropna()):
                 usd[t] = s.dropna()
 
-    graded, dist, flagged, broken, cleaned = 0, {}, [], [], []
+    graded, dist, flagged, broken, cleaned, hedged = 0, {}, [], [], [], []
     for e in swap["etfs"]:
         s_us = usd.get(e["ticker"])
         gy = (us_meta.get(e["ticker"], {}) or {}).get("yield")
@@ -457,6 +457,27 @@ def main():
                 a["verification"] = {"grade": "no_data",
                                      "basis": "price history unavailable for one side"}
                 dist["no_data"] = dist.get("no_data", 0) + 1
+                continue
+            # A share class hedged to something other than the comparison
+            # currency cannot be graded here at all. to_usd() converts the
+            # QUOTE currency, which is right for an unhedged fund -- same
+            # underlying, expressed in dollars -- but for a hedged class it
+            # re-adds the exact exposure the fund charges a fee to remove.
+            # Measured on VAGP: +4.37% a year in its native sterling, +2.22%
+            # of GBP/USD strength, and the tool read the +6.61% sum as a
+            # tracking failure against BNDW's +4.64%. Its USD-hedged sibling
+            # VAGU lands within 0.06pp. Nothing was wrong with the fund.
+            if a.get("hedge_ccy") and a["hedge_ccy"] != "USD":
+                a["verification"] = {
+                    "grade": "not_comparable",
+                    "hedge_ccy": a["hedge_ccy"],
+                    "basis": (f"hedged to {a['hedge_ccy']}, and every figure here is on a "
+                              f"USD basis. Converting its price into USD re-adds the "
+                              f"currency exposure the fund exists to remove, so any gap "
+                              f"measured that way is the {a['hedge_ccy']}/USD move rather "
+                              f"than a difference between the funds.")}
+                dist["not_comparable"] = dist.get("not_comparable", 0) + 1
+                hedged.append((e["ticker"], a["ticker"], a["hedge_ccy"]))
                 continue
             v = compare(s_us, s_alt, gy)
             # Threshold is the C floor, not the B floor. Sector indices from
@@ -490,7 +511,15 @@ def main():
         # is never presented as a swap.
         for a in e["alternatives"]:
             v = a.get("verification", {})
-            if v.get("price_break"):
+            if v.get("grade") == "not_comparable":
+                a["recommended"] = False
+                a["not_recommended_because"] = (
+                    f"hedged to {v['hedge_ccy']}, not USD. That is a different holding "
+                    f"rather than a worse one: it removes the currency risk of the "
+                    f"underlying bonds and replaces it with {v['hedge_ccy']} interest-rate "
+                    f"exposure, which is a decision to take deliberately and not a "
+                    f"like-for-like swap for a Singapore holder.")
+            elif v.get("price_break"):
                 b = v["price_break"]
                 a["recommended"] = False
                 a["not_recommended_because"] = (
@@ -606,6 +635,9 @@ def main():
     print(f"reverting ticks dropped: {len(cleaned)}")
     for u, a, d in cleaned:
         print(f"  ~~ {u} -> {a}: {', '.join(d)}")
+    print(f"cross-currency hedges, not graded: {len(hedged)}")
+    for u, a, h in hedged:
+        print(f"  ++ {u} -> {a}: hedged to {h}, not comparable on a USD basis")
 
 
 if __name__ == "__main__":

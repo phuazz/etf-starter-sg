@@ -1796,7 +1796,11 @@ function renderSwapSug(){
 }
 function pickSwap(t){document.getElementById('swapQ').value=t;renderSwapSug();renderSwap();}
 
-function altRow(a){
+// showHedge is set when ANY alternative for this holding is currency-hedged.
+// Then every line says which it is, because "unhedged" is only informative
+// beside a hedged sibling — and on a bond fund that choice usually matters
+// more than which aggregate index the thing tracks. Elsewhere it is noise.
+function altRow(a,showHedge){
   const v=a.verification||{}, c=a.cost||{};
   // Tooltip is rebuilt from the numbers rather than shipped as prose on every
   // pair — the wording is identical across 112 pairs, only the figures differ.
@@ -1826,7 +1830,11 @@ function altRow(a){
     '<td class="r">'+netTxt+'</td>'+
     '<td class="r">'+gap+'</td>'+
     '<td class="r">'+g+'</td>'+
-    '<td>'+ccy+' · '+(a.income==='Accumulating'?'Acc':'Dist')+'</td></tr>';
+    '<td>'+ccy+' · '+(a.income==='Accumulating'?'Acc':'Dist')+
+      (showHedge?'<div style="font-size:10.5px;color:'+(a.hedge_ccy?'var(--a-text)':'var(--t3)')+'" title="'+
+        (a.hedge_ccy?'Hedged to '+a.hedge_ccy+': the fund removes the currency movement of the bonds it holds and leaves you with '+a.hedge_ccy+' interest-rate exposure instead. A deliberate choice, not a free improvement.'
+                    :'Unhedged: you carry the currency movement of the underlying bonds as well as their yield.')+
+        '">'+(a.hedge_ccy?a.hedge_ccy+' hedged':'unhedged')+'</div>':'')+'</td></tr>';
 }
 
 function renderSwapEtf(e){
@@ -1849,7 +1857,7 @@ function renderSwapEtf(e){
       '<th class="r" title="Fee difference plus the withholding you stop paying. Positive means the alternative is cheaper to hold each year.">Annual gain</th>'+
       '<th class="r" title="Realised annualised return gap over the overlap window, after putting the US line on a Singapore-holder tax basis. Positive means the alternative came out ahead.">Realised gap</th>'+
       '<th class="r" title="How closely the compounded outcomes matched. A best, C weakest.">Fit</th><th>Line</th></tr></thead><tbody>'+
-      rec.map(altRow).join('')+'</tbody></table></div>'+
+      rec.map(a=>altRow(a,e.alternatives.some(x=>x.hedge_ccy))).join('')+'</tbody></table></div>'+
       '<p class="footlet"><strong>Annual gain</strong> is the fee difference plus the US dividend withholding you stop paying. A Singapore resident holding a US-domiciled fund is withheld 30% on the <em>whole</em> distribution with no treaty; an Irish UCITS bears 15% inside the fund on its US-source income only. <strong>Realised gap</strong> is what actually happened, with the US line put on the same after-tax basis. Fees and withholding are annual and recurring; the estate exposure is removed outright.</p>';
   } else if(e.verdict){
     h+='<div class="notice" style="margin-top:14px;background:var(--r-bg);border-color:rgba(190,40,40,.25)"><strong>No verified alternative.</strong> '+(e.verdict_note||'')+'</div>';
