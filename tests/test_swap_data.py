@@ -677,6 +677,29 @@ def test_gold_has_a_fund_answer_not_only_etcs(swap):
             assert a["domicile"] != "US", a["ticker"]
 
 
+def test_no_alternative_or_proxy_shares_a_ticker_with_a_us_situs_holding(swap):
+    """A ticker that means two things cannot be an instruction.
+
+    VanEck's semiconductor fund lists in London as both SMGB and SMH, and SMH is
+    also the US-domiciled semiconductor ETF this tool moves people out of. The
+    build offered "swap SMH for SMH" as a RECOMMENDED answer and put SMH on
+    seven semiconductor names as a non-US-situs proxy. A reader who types that
+    into a US broker buys the exposed fund -- the precise outcome the tool
+    exists to prevent, reached by following its own advice.
+    """
+    us_tickers = {e["ticker"] for e in swap["etfs"]} | {n["ticker"] for n in swap["single_names"]}
+    bad = []
+    for e in swap["etfs"]:
+        for a in e["alternatives"]:
+            if a["ticker"] in us_tickers:
+                bad.append(f"{e['ticker']} -> {a['ticker']}: offered a ticker that is also a US-situs holding")
+    for n in swap["single_names"]:
+        for p in n.get("sector_proxies", []):
+            if p["ticker"] in us_tickers:
+                bad.append(f"{n['ticker']} proxy {p['ticker']}: also a US-situs holding")
+    assert not bad, "ambiguous ticker offered as the fix:\n  " + "\n  ".join(bad)
+
+
 def test_no_alternative_is_itself_us_situs(swap):
     for e in swap["etfs"]:
         for a in e["alternatives"]:

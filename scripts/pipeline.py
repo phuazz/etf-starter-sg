@@ -312,11 +312,16 @@ def slim_swap(d):
                                     if k not in ("why_not_tracking_error", "tax_basis",
                                                  "grade_bands_abs_pp", "metric",
                                                  "why_this_window", "endpoint_rule")}
-    # 260 weeks on every record; asserted rather than assumed, because the
-    # sentence below hard-codes the window it describes.
-    weeks = {(n.get("decomposition") or {}).get("weeks") for n in d["single_names"]}
-    assert len(weeks) == 1, f"decomposition windows differ: {weeks}"
-    years = int(round(weeks.pop() / 52))
+    # The sentence below hard-codes the window it describes, so every record
+    # must agree on it. Asserted on the ROUNDED YEARS rather than the raw week
+    # count: names regressed on a narrower industry index overlap it by 259
+    # weeks where the broad sector gives 260, and both are "5 years" in the
+    # prose. The first version compared raw weeks and stopped the build over a
+    # difference the reader could never see.
+    yrs_seen = {int(round(((n.get("decomposition") or {}).get("weeks") or 0) / 52))
+                for n in d["single_names"]}
+    assert len(yrs_seen) == 1, f"decomposition windows round to different years: {yrs_seen}"
+    years = yrs_seen.pop()
     detail_tpl = (
         "About {rep} per cent of this position's return variance over the past "
         "{yrs} years came from the broad US market and its sector, which UCITS "

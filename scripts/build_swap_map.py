@@ -210,6 +210,39 @@ def main():
     nf = near_family_map(index_map)
     sgx = sgx_pool(index_map)
     pool = ucits["funds"] + sgx
+
+    # A ticker that means two different things cannot be an instruction.
+    #
+    # VanEck's semiconductor fund lists in London under both SMGB and SMH, and
+    # SMH is also the ticker of VanEck's US-domiciled semiconductor ETF -- the
+    # US-situs holding this tool exists to move someone OUT of. Unfiltered, the
+    # build offered "swap SMH for SMH" as a recommended answer, and put SMH on
+    # seven semiconductor single names as a non-US-situs proxy. Someone reads
+    # SMH, types it into a US broker and buys the exposed fund: the exact
+    # outcome the whole tool is built to prevent.
+    #
+    # Dropped only where another listing of the SAME ISIN survives, so nothing
+    # is lost -- SMGB is the identical fund. A colliding ticker with no twin
+    # would be kept and shouted about instead, because silently having no answer
+    # is worse than an awkward one.
+    us_tickers = {e["ticker"] for e in us_map["etfs"]} | {n["ticker"] for n in us_map["single_names"]}
+    by_isin = {}
+    for f in pool:
+        if f.get("isin"):
+            by_isin.setdefault(f["isin"], []).append(f["ticker"])
+    keep = []
+    for f in pool:
+        if f["ticker"] in us_tickers:
+            twins = [t for t in by_isin.get(f.get("isin"), []) if t != f["ticker"]]
+            if twins:
+                print(f"  ! {f['ticker']} collides with a US-situs ticker; dropped in "
+                      f"favour of {twins[0]} (same ISIN {f.get('isin')})")
+                continue
+            print(f"  !! {f['ticker']} collides with a US-situs ticker and has no other "
+                  f"listing -- KEPT, but it is ambiguous to a reader")
+        keep.append(f)
+    pool = keep
+
     safe = [f for f in pool if f["situs"] == "non_us"]
     unresolved = [f for f in pool if f["situs"] != "non_us"]
     print(f"alternatives pool: {len(ucits['funds'])} UCITS + {len(sgx)} SGX")
@@ -312,7 +345,8 @@ def main():
         proxies = rank(by_index.get(k, []), index_map, n) if k else []
         name_results.append({
             "ticker": n["ticker"], "name": n["name"], "kind": "single_name",
-            "sector": n["sector"], "situs": n["situs"],
+            "sector": n["sector"], "industry": n.get("industry"),
+            "situs": n["situs"],
             "estate_tax_exposed": n["estate_tax_exposed"],
             "verdict": n["verdict"],
             "verdict_note": (

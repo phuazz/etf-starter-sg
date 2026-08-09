@@ -41,6 +41,25 @@ DATA = os.path.join(ROOT, "data")
 CACHE = os.path.join(DATA, ".us_situs_cache.json")
 BUILD_DATE = "2026-08-02"
 
+# Yahoo INDUSTRY -> index key, consulted before the sector table below.
+#
+# Yahoo carries both a sector and an industry for every name, and only the
+# sector was ever used. So NVDA, AMD, INTC, MU, QCOM, TXN and AVGO -- industry
+# "Semiconductors" -- were offered a broad technology fund as their closest
+# exposure while three semiconductor UCITS funds sat in this repo's own universe,
+# reachable as swaps for SOXX and SMH but never as a proxy for a semiconductor
+# company. Same shape as the VWO finding: the closer fund was already here.
+#
+# Only industries whose index has a validated UCITS line belong here; the
+# builder drops any that does not, exactly as it does for the sector table.
+INDUSTRY_TO_INDEX = {
+    # The US-listed semiconductor index, not the global one: these are US
+    # companies, and mvis_us_semis is the index SMGB tracks, so the fund named
+    # as the proxy and the index behind it are the same thing.
+    "Semiconductors": "mvis_us_semis",
+    "Semiconductor Equipment & Materials": "mvis_us_semis",
+}
+
 # Yahoo sector -> canonical sector index key in data/index_map.json. A sector
 # only appears here if the validated UCITS universe actually contains a line
 # for it; the builder checks this and refuses to start otherwise. Names in an
@@ -180,6 +199,17 @@ INDEX_STOPWORDS = {
 }
 
 
+def proxy_index_key(y):
+    """Closest covered index for a single name: industry first, then sector.
+
+    Industry only wins where its index has a validated UCITS line, so a name
+    never loses its broad-sector proxy by being given a narrower one that
+    nothing can be bought against.
+    """
+    return (INDUSTRY_TO_INDEX.get(y.get("industry"))
+            or SECTOR_TO_INDEX.get(y.get("sector")))
+
+
 def _index_tokens(text):
     up = (text or "").upper().replace("&", "AND")
     return {w for w in re.split(r"[^A-Z0-9]+", up) if w and w not in INDEX_STOPWORDS}
@@ -264,6 +294,10 @@ def main():
         if idx not in covered:
             print(f"  ! sector {sector!r} -> {idx} has no validated UCITS line; no proxy will be offered")
             del SECTOR_TO_INDEX[sector]
+    for industry, idx in list(INDUSTRY_TO_INDEX.items()):
+        if idx not in covered:
+            print(f"  ! industry {industry!r} -> {idx} has no validated UCITS line; falling back to its sector")
+            del INDUSTRY_TO_INDEX[industry]
 
     cache = {}
     if os.path.exists(CACHE) and not args.refresh:
@@ -340,7 +374,7 @@ def main():
             names.append({
                 "ticker": t, "name": nm, "kind": "single_name",
                 "sector": y.get("sector"), "industry": y.get("industry"),
-                "sector_index_key": SECTOR_TO_INDEX.get(y.get("sector")),
+                "sector_index_key": proxy_index_key(y),
                 "sector_index_label": None,
                 "ccy": y.get("currency"),
                 "isin_yahoo_unverified": isin,
@@ -355,7 +389,7 @@ def main():
             continue
 
         sec = y.get("sector")
-        sidx = SECTOR_TO_INDEX.get(sec)
+        sidx = proxy_index_key(y)
         names.append({
             "ticker": t, "name": nm, "kind": "single_name",
             "sector": sec, "industry": y.get("industry"),
