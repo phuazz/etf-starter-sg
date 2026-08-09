@@ -22,6 +22,16 @@
         "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
       },
       {
+        "a": "sector_tech_all_cap",
+        "b": "sector_tech",
+        "caveat": "No UCITS fund tracks the MSCI all-cap US technology index. The alternatives below track the S&P 500's technology slice instead: roughly 70 large-cap companies against 321, from a different index provider. You keep the mega-caps that dominate both and lose the mid- and small-cap technology tail."
+      },
+      {
+        "a": "sector_reits_all_cap",
+        "b": "reits",
+        "caveat": "No UCITS fund tracks the broad US real-estate sector. The nearest available exposure is dividend-screened — it holds US property companies that also pass a yield test, which is a narrower and income-tilted selection rather than the sector itself."
+      },
+      {
         "a": "global_all_cap_incl_small",
         "b": "global_all_cap",
         "caveat": "No UCITS fund tracks the FTSE Global All Cap index. The nearest available exposure is the FTSE All-World series, which holds roughly 4,300 large and mid-cap companies against the all-cap index's 8,000 -- the same countries and the same provider, without the small-cap tail."
@@ -286,9 +296,9 @@
       "us_content": 1.0
     },
     "us_reits": {
-      "label": "US property / REITs",
-      "provider": "multiple",
-      "exposure": "US listed real-estate investment trusts",
+      "label": "US property, dividend-screened",
+      "provider": "FTSE Russell",
+      "exposure": "US listed real-estate companies and REITs that also meet a dividend-yield test — a screened subset of the sector, not the sector.",
       "n_holdings": 130,
       "family": "reits",
       "us_content": 1.0
@@ -316,6 +326,23 @@
       "n_holdings": 400,
       "family": "factor_value",
       "us_content": 0.6
+    },
+    "msci_us_imi_tech": {
+      "label": "MSCI US IMI Information Technology 25/50",
+      "provider": "MSCI",
+      "exposure": "US information technology across large, mid AND small cap — 321 holdings against roughly 70 in the S&P 500 sector slice, and a different index provider.",
+      "n_holdings": 321,
+      "n_holdings_src": "Vanguard VGT fund profile, 30 June 2026",
+      "family": "sector_tech_all_cap",
+      "us_content": 1.0
+    },
+    "msci_us_imi_real_estate": {
+      "label": "MSCI US IMI Real Estate 25/50",
+      "provider": "MSCI",
+      "exposure": "The whole US listed real-estate sector across all cap sizes, with no screen on dividend yield.",
+      "n_holdings": null,
+      "family": "sector_reits_all_cap",
+      "us_content": 1.0
     },
     "ftse_global_all_cap": {
       "label": "FTSE Global All Cap",

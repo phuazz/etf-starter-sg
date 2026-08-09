@@ -145,7 +145,14 @@ US_ETFS = [
     # than named indices, so two funds on one key are not asserting the same
     # index -- see the note in this file's docstring about what that costs.
     ("XLK", "us_tech_sector", "SSGA 2026-08-06: Technology Select Sector Index (S&P 500 universe)"),
-    ("VGT", "us_tech_sector"),
+    # VGT -- VERIFIED 2026-08-06. It tracks MSCI US Investable Market
+    # Information Technology 25/50, 321 holdings across all cap sizes, and was
+    # sharing a key with XLK's ~70-stock S&P 500 slice. Different provider AND
+    # different universe, badged EXACT INDEX. The descriptive sector labels are
+    # what hid it: "US information technology sector" is satisfied by any tech
+    # fund's name, so the index_src name check passed it without learning
+    # anything. Its own key now, near-family to the S&P one.
+    ("VGT", "msci_us_imi_tech", "Vanguard fund profile, retrieved 2026-08-06"),
     ("XLV", "us_healthcare_sector"),
     ("XLF", "us_financials_sector", "SSGA 2026-08-06: Financial Select Sector Index (S&P 500 universe)"),
     ("XLE", "us_energy_sector"), ("XLY", "us_consumer_disc_sector"),
@@ -154,7 +161,12 @@ US_ETFS = [
     ("XLU", "us_utilities_sector"), ("XLB", "us_materials_sector"),
     ("SOXX", "ice_semiconductor", "iShares 2026-08-06: ICE Semiconductor Index, replaced PHLX 21 June 2021"),
     ("SMH", "mvis_us_semis", "VanEck 2026-08-06: MVIS US Listed Semiconductor 25 Index"),
-    ("VNQ", "us_reits", "Vanguard 2026-08-06: MSCI US Investable Market Real Estate 25/50 Index"),
+    # VNQ tracks the whole US real-estate sector; the only UCITS line available
+    # (IUSP) tracks FTSE EPRA/Nareit United States DIVIDEND+, which screens on
+    # yield. Both were on one key, so a broad sector holding was matched to an
+    # income-tilted subset and called an exact index match. Separate keys now,
+    # and the swap is still offered with the screen named.
+    ("VNQ", "msci_us_imi_real_estate", "Vanguard 2026-08-06: MSCI US Investable Market Real Estate 25/50 Index"),
     ("GLD", "gold_spot", "SSGA: LBMA Gold Price PM, physically backed"),
     ("IAU", "gold_spot", "iShares: LBMA Gold Price PM, physically backed"),
     ("AGG", "us_aggregate_bond", "iShares 2026-08-06: Bloomberg U.S. Aggregate Bond Index"),
