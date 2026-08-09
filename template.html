@@ -1744,8 +1744,12 @@ function pp(v,dp){return (v>0?'+':'')+v.toFixed(dp==null?2:dp);}
 function swapHydrate(){
   if(!SWAP||SWAP._hydrated) return;
   const dict=(SWAP._meta&&SWAP._meta.alts)||{};
+  // Tier-2 caveats are interned by value: one UCITS-capping explanation serves
+  // all ten sector ETFs, one total-market explanation serves VTI and ITOT.
+  const cavs=(SWAP._meta&&SWAP._meta.caveats)||[];
   SWAP.etfs.forEach(e=>{
     e.kind='etf';
+    if(e.caveat===undefined && e.cav!=null) e.caveat=cavs[e.cav];
     (e.alternatives||[]).forEach(a=>{
       const base=dict[a.ticker];
       // Record fields win: `tier` and `verification_pending` are per-pair and

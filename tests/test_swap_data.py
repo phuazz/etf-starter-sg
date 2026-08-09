@@ -626,6 +626,23 @@ def test_sgx_alternatives_are_non_us_and_carry_their_venue(swap):
                 assert a.get("venue_note"), f"{a['ticker']}: SGX line with no explanation"
 
 
+def test_capped_variant_sectors_are_never_tier_one():
+    """A sector whose UCITS counterparts track capped variants is not an exact
+    index match.
+
+    The US Select Sector indices cap 25/50; the UCITS lines cap 35/20 -- iShares
+    as "S&P 500 Capped 35/20 <Sector>", SPDR as "S&P <Sector> Select Sector
+    Daily Capped 35/20", both verified against the issuers, and both changed
+    from 25/20 on 24 March 2025 inside the graded window. Ten sector keys were
+    badged EXACT INDEX against funds that cannot legally hold the same weights.
+    """
+    swap = load("swap_map.json")
+    idx = load("index_map.json")["indices"]
+    bad = [e["ticker"] for e in swap["etfs"]
+           if e["tier"] == 1 and idx[e["index_key"]].get("ucits_tracks_capped_variant")]
+    assert not bad, f"claimed an exact index match on a capped-variant sector: {bad}"
+
+
 def test_tier2_matches_always_carry_a_caveat(swap):
     """An unexplained tier-2 match is the failure where someone swaps a
     total-market holding for a large-cap one and is never told."""

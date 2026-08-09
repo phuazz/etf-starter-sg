@@ -1,551 +1,571 @@
 {
-  "_meta": {
-    "purpose": "Canonical index registry. This is the JOIN KEY between a US-domiciled holding and its non-US-situs alternative. Discovery happens here, on index identity; return statistics only VERIFY a match, never discover one. Correlation is deliberately not used as a matching mechanism -- every US large-cap equity ETF correlates above 0.98 with every other one, so correlation cannot distinguish an S&P 500 tracker from a Nasdaq-100 tracker and would return confident wrong answers.",
-    "built": "2026-08-02",
-    "field_notes": {
-      "label": "Display name of the index.",
-      "provider": "Index provider. Two indices from different providers over the same exposure (e.g. S&P 500 vs MSCI USA) are a tier-2 match, not tier-1.",
-      "exposure": "Plain-language description of what is actually owned.",
-      "n_holdings": "Approximate constituent count. A large gap in this number between two indices is the clearest signal that a swap changes the portfolio -- CRSP US Total Market holds roughly 3600 names, the S&P 500 holds 500.",
-      "family": "Indices sharing a family cover materially the same exposure and are eligible for tier-2 matching. Indices in different families are never matched."
-    },
-    "us_content_note": "us_content = fraction of the index's income that is US-source and subject to US DIVIDEND withholding. Structural, set once here so the swap engine never restates it. Bond indices are set to zero: US-source INTEREST paid to a foreign fund is largely exempt under the US portfolio-interest exemption, the same reasoning already applied in cma.json. Estimates, not measured holdings weights.",
-    "withholding_divergence_from_cma": "This feature does NOT use cma.json's tax.us_div_withholding.by_domicile table, which records LU at 0.15. Luxembourg UCITS generally do NOT obtain the treaty rate -- Limitation-on-Benefits clauses mean most pay the full 30 per cent, which is a principal reason Irish domicile dominates for US equity exposure. The swap engine derives the rate from the ISIN prefix instead: IE 0.15, everything else 0.30. The cma.json entry is latent rather than live (every LU fund in the deployed universe has zero US content, so the drag is zero either way) but it is wrong and is flagged for correction.",
-    "split_note": "The 'semiconductors' and 'us_dividend_growers' keys each covered several genuinely different indices and were producing false tier-1 matches -- SOXX (ICE) against SEMI (MSCI ACWI IMI) diverged 6.1pp a year, VYM (FTSE High Dividend Yield) against the S&P Dividend Aristocrats lines 4.4pp. Both are now split, so cross-index pairs surface as tier-2 with a caveat instead of as exact matches. Found by the return-verification pass, not by inspection."
+ "_meta": {
+  "purpose": "Canonical index registry. This is the JOIN KEY between a US-domiciled holding and its non-US-situs alternative. Discovery happens here, on index identity; return statistics only VERIFY a match, never discover one. Correlation is deliberately not used as a matching mechanism -- every US large-cap equity ETF correlates above 0.98 with every other one, so correlation cannot distinguish an S&P 500 tracker from a Nasdaq-100 tracker and would return confident wrong answers.",
+  "built": "2026-08-02",
+  "field_notes": {
+   "label": "Display name of the index.",
+   "provider": "Index provider. Two indices from different providers over the same exposure (e.g. S&P 500 vs MSCI USA) are a tier-2 match, not tier-1.",
+   "exposure": "Plain-language description of what is actually owned.",
+   "n_holdings": "Approximate constituent count. A large gap in this number between two indices is the clearest signal that a swap changes the portfolio -- CRSP US Total Market holds roughly 3600 names, the S&P 500 holds 500.",
+   "family": "Indices sharing a family cover materially the same exposure and are eligible for tier-2 matching. Indices in different families are never matched."
   },
-  "near_families": {
-    "_note": "Tier-2 matching across families. Same-family pairs are close substitutes; the pairs below are NOT, and each carries the reason the swap changes the portfolio. The match engine must surface the caveat verbatim alongside any tier-2 result -- an unexplained tier-2 match is the failure mode where someone swaps a total-market holding for a large-cap one and never learns they dropped 3,100 companies.",
-    "pairs": [
-      {
-        "a": "us_total",
-        "b": "us_large",
-        "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
-      },
-      {
-        "a": "sector_tech_all_cap",
-        "b": "sector_tech",
-        "caveat": "No UCITS fund tracks the MSCI all-cap US technology index. The alternatives below track the S&P 500's technology slice instead: roughly 70 large-cap companies against 321, from a different index provider. You keep the mega-caps that dominate both and lose the mid- and small-cap technology tail."
-      },
-      {
-        "a": "sector_reits_all_cap",
-        "b": "reits",
-        "caveat": "No UCITS fund tracks the broad US real-estate sector. The nearest available exposure is dividend-screened — it holds US property companies that also pass a yield test, which is a narrower and income-tilted selection rather than the sector itself."
-      },
-      {
-        "a": "global_all_cap_incl_small",
-        "b": "global_all_cap",
-        "caveat": "No UCITS fund tracks the FTSE Global All Cap index. The nearest available exposure is the FTSE All-World series, which holds roughly 4,300 large and mid-cap companies against the all-cap index's 8,000 -- the same countries and the same provider, without the small-cap tail."
-      },
-      {
-        "a": "emerging_all_cap",
-        "b": "emerging",
-        "caveat": "No UCITS fund tracks the FTSE all-cap emerging series. The nearest available exposure is the large/mid FTSE Emerging Index, which holds about 2,289 companies against the all-cap index's 4,852 -- the same countries and the same provider, without the small-cap tail. Both exclude South Korea, which FTSE classifies as developed."
-      },
-      {
-        "a": "us_small",
-        "b": "us_total",
-        "caveat": "A US small-cap holding swapped into a total-market or large-cap line is not a substitute -- it removes the small-cap tilt that was the point of the position."
-      },
-      {
-        "a": "japan",
-        "b": "japan_price_weighted",
-        "caveat": "The Nikkei 225 is PRICE-weighted, not capitalisation-weighted. A handful of high-priced shares dominate it in a way they do not dominate a capitalisation-weighted Japan index, so this is a different portfolio rather than a cheaper wrapper around the same one."
-      }
-    ]
+  "us_content_note": "us_content = fraction of the index's income that is US-source and subject to US DIVIDEND withholding. Structural, set once here so the swap engine never restates it. Bond indices are set to zero: US-source INTEREST paid to a foreign fund is largely exempt under the US portfolio-interest exemption, the same reasoning already applied in cma.json. Estimates, not measured holdings weights.",
+  "withholding_divergence_from_cma": "This feature does NOT use cma.json's tax.us_div_withholding.by_domicile table, which records LU at 0.15. Luxembourg UCITS generally do NOT obtain the treaty rate -- Limitation-on-Benefits clauses mean most pay the full 30 per cent, which is a principal reason Irish domicile dominates for US equity exposure. The swap engine derives the rate from the ISIN prefix instead: IE 0.15, everything else 0.30. The cma.json entry is latent rather than live (every LU fund in the deployed universe has zero US content, so the drag is zero either way) but it is wrong and is flagged for correction.",
+  "split_note": "The 'semiconductors' and 'us_dividend_growers' keys each covered several genuinely different indices and were producing false tier-1 matches -- SOXX (ICE) against SEMI (MSCI ACWI IMI) diverged 6.1pp a year, VYM (FTSE High Dividend Yield) against the S&P Dividend Aristocrats lines 4.4pp. Both are now split, so cross-index pairs surface as tier-2 with a caveat instead of as exact matches. Found by the return-verification pass, not by inspection."
+ },
+ "near_families": {
+  "_note": "Tier-2 matching across families. Same-family pairs are close substitutes; the pairs below are NOT, and each carries the reason the swap changes the portfolio. The match engine must surface the caveat verbatim alongside any tier-2 result -- an unexplained tier-2 match is the failure mode where someone swaps a total-market holding for a large-cap one and never learns they dropped 3,100 companies.",
+  "pairs": [
+   {
+    "a": "us_total",
+    "b": "us_large",
+    "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely."
+   },
+   {
+    "a": "sector_tech_all_cap",
+    "b": "sector_tech",
+    "caveat": "No UCITS fund tracks the MSCI all-cap US technology index. The alternatives below track the S&P 500's technology slice instead: roughly 70 large-cap companies against 321, from a different index provider. You keep the mega-caps that dominate both and lose the mid- and small-cap technology tail."
+   },
+   {
+    "a": "sector_reits_all_cap",
+    "b": "reits",
+    "caveat": "No UCITS fund tracks the broad US real-estate sector. The nearest available exposure is dividend-screened — it holds US property companies that also pass a yield test, which is a narrower and income-tilted selection rather than the sector itself."
+   },
+   {
+    "a": "global_all_cap_incl_small",
+    "b": "global_all_cap",
+    "caveat": "No UCITS fund tracks the FTSE Global All Cap index. The nearest available exposure is the FTSE All-World series, which holds roughly 4,300 large and mid-cap companies against the all-cap index's 8,000 -- the same countries and the same provider, without the small-cap tail."
+   },
+   {
+    "a": "emerging_all_cap",
+    "b": "emerging",
+    "caveat": "No UCITS fund tracks the FTSE all-cap emerging series. The nearest available exposure is the large/mid FTSE Emerging Index, which holds about 2,289 companies against the all-cap index's 4,852 -- the same countries and the same provider, without the small-cap tail. Both exclude South Korea, which FTSE classifies as developed."
+   },
+   {
+    "a": "us_small",
+    "b": "us_total",
+    "caveat": "A US small-cap holding swapped into a total-market or large-cap line is not a substitute -- it removes the small-cap tilt that was the point of the position."
+   },
+   {
+    "a": "japan",
+    "b": "japan_price_weighted",
+    "caveat": "The Nikkei 225 is PRICE-weighted, not capitalisation-weighted. A handful of high-priced shares dominate it in a way they do not dominate a capitalisation-weighted Japan index, so this is a different portfolio rather than a cheaper wrapper around the same one."
+   }
+  ]
+ },
+ "indices": {
+  "sp500": {
+   "label": "S&P 500",
+   "provider": "S&P Dow Jones",
+   "exposure": "US large-cap equity",
+   "n_holdings": 500,
+   "family": "us_large",
+   "us_content": 1.0
   },
-  "indices": {
-    "sp500": {
-      "label": "S&P 500",
-      "provider": "S&P Dow Jones",
-      "exposure": "US large-cap equity",
-      "n_holdings": 500,
-      "family": "us_large",
-      "us_content": 1.0
-    },
-    "msci_usa": {
-      "label": "MSCI USA",
-      "provider": "MSCI",
-      "exposure": "US large- and mid-cap equity",
-      "n_holdings": 600,
-      "family": "us_large",
-      "us_content": 1.0
-    },
-    "crsp_us_total": {
-      "label": "CRSP US Total Market",
-      "provider": "CRSP",
-      "exposure": "US total market, all capitalisations",
-      "n_holdings": 3600,
-      "family": "us_total",
-      "us_content": 1.0
-    },
-    "msci_usa_imi": {
-      "label": "MSCI USA IMI",
-      "provider": "MSCI",
-      "exposure": "US investable market, large/mid/small",
-      "n_holdings": 2300,
-      "family": "us_total",
-      "us_content": 1.0
-    },
-    "nasdaq100": {
-      "label": "Nasdaq-100",
-      "provider": "Nasdaq",
-      "exposure": "Largest 100 non-financial Nasdaq-listed companies",
-      "n_holdings": 100,
-      "family": "us_growth_concentrated",
-      "us_content": 1.0
-    },
-    "russell2000": {
-      "label": "Russell 2000",
-      "provider": "FTSE Russell",
-      "exposure": "US small-cap equity",
-      "n_holdings": 2000,
-      "family": "us_small",
-      "us_content": 1.0
-    },
-    "sp_smallcap600": {
-      "label": "S&P SmallCap 600",
-      "provider": "S&P Dow Jones",
-      "exposure": "US small-cap equity, profitability-screened",
-      "n_holdings": 600,
-      "family": "us_small",
-      "us_content": 1.0
-    },
-    "msci_world": {
-      "label": "MSCI World",
-      "provider": "MSCI",
-      "exposure": "Developed-market equity, roughly 70 per cent US",
-      "n_holdings": 1400,
-      "family": "developed_world",
-      "us_content": 0.7
-    },
-    "ftse_dev_world": {
-      "label": "FTSE Developed World",
-      "provider": "FTSE Russell",
-      "exposure": "Developed-market equity",
-      "n_holdings": 2100,
-      "family": "developed_world",
-      "us_content": 0.7
-    },
-    "ftse_all_world": {
-      "label": "FTSE All-World",
-      "provider": "FTSE Russell",
-      "exposure": "Global equity, developed plus emerging",
-      "n_holdings": 4300,
-      "family": "global_all_cap",
-      "us_content": 0.62
-    },
-    "msci_acwi": {
-      "label": "MSCI ACWI",
-      "provider": "MSCI",
-      "exposure": "Global equity, developed plus emerging",
-      "n_holdings": 2600,
-      "family": "global_all_cap",
-      "us_content": 0.63
-    },
-    "ftse_emerging": {
-      "label": "FTSE Emerging Markets",
-      "provider": "FTSE Russell",
-      "exposure": "Emerging-market equity, large and mid cap only. Classifies South Korea as developed, so it holds no Korean exposure where the MSCI series does.",
-      "n_holdings": 2289,
-      "n_holdings_src": "Vanguard factsheet 30 June 2026 (IE00B3VVMM84), benchmark column",
-      "family": "emerging",
-      "us_content": 0.0
-    },
-    "ftse_dev_europe": {
-      "label": "FTSE Developed Europe",
-      "provider": "FTSE Russell",
-      "exposure": "European developed equity",
-      "n_holdings": 550,
-      "family": "europe",
-      "us_content": 0.0
-    },
-    "ftse_japan": {
-      "label": "FTSE Japan",
-      "provider": "FTSE Russell",
-      "exposure": "Japanese equity",
-      "n_holdings": 500,
-      "family": "japan",
-      "us_content": 0.0
-    },
-    "nikkei225": {
-      "label": "Nikkei 225",
-      "provider": "Nikkei",
-      "exposure": "225 Japanese companies, PRICE-weighted rather than capitalisation-weighted",
-      "n_holdings": 225,
-      "family": "japan_price_weighted",
-      "us_content": 0.0
-    },
-    "msci_em": {
-      "label": "MSCI Emerging Markets",
-      "provider": "MSCI",
-      "exposure": "Emerging-market equity",
-      "n_holdings": 1200,
-      "family": "emerging",
-      "us_content": 0.0
-    },
-    "msci_em_imi": {
-      "label": "MSCI Emerging Markets IMI",
-      "provider": "MSCI",
-      "exposure": "Emerging-market equity including small caps",
-      "n_holdings": 3100,
-      "family": "emerging",
-      "us_content": 0.0
-    },
-    "msci_europe": {
-      "label": "MSCI Europe",
-      "provider": "MSCI",
-      "exposure": "European developed equity",
-      "n_holdings": 400,
-      "family": "europe",
-      "us_content": 0.0
-    },
-    "stoxx_europe_600": {
-      "label": "STOXX Europe 600",
-      "provider": "STOXX",
-      "exposure": "European developed equity",
-      "n_holdings": 600,
-      "family": "europe",
-      "us_content": 0.0
-    },
-    "msci_japan": {
-      "label": "MSCI Japan",
-      "provider": "MSCI",
-      "exposure": "Japanese equity",
-      "n_holdings": 200,
-      "family": "japan",
-      "us_content": 0.0
-    },
-    "us_tech_sector": {
-      "label": "US information technology sector",
-      "provider": "multiple",
-      "exposure": "US listed information-technology companies",
-      "n_holdings": 70,
-      "family": "sector_tech",
-      "us_content": 1.0
-    },
-    "us_healthcare_sector": {
-      "label": "US health care sector",
-      "provider": "multiple",
-      "exposure": "US listed health-care companies",
-      "n_holdings": 60,
-      "family": "sector_healthcare",
-      "us_content": 1.0
-    },
-    "us_financials_sector": {
-      "label": "US financials sector",
-      "provider": "multiple",
-      "exposure": "US listed financial companies",
-      "n_holdings": 70,
-      "family": "sector_financials",
-      "us_content": 1.0
-    },
-    "us_energy_sector": {
-      "label": "US energy sector",
-      "provider": "multiple",
-      "exposure": "US listed energy companies",
-      "n_holdings": 25,
-      "family": "sector_energy",
-      "us_content": 1.0
-    },
-    "us_consumer_disc_sector": {
-      "label": "US consumer discretionary sector",
-      "provider": "multiple",
-      "exposure": "US listed consumer-discretionary companies",
-      "n_holdings": 50,
-      "family": "sector_consumer_disc",
-      "us_content": 1.0
-    },
-    "us_consumer_staples_sector": {
-      "label": "US consumer staples sector",
-      "provider": "multiple",
-      "exposure": "US listed consumer-staples companies",
-      "n_holdings": 40,
-      "family": "sector_consumer_staples",
-      "us_content": 1.0
-    },
-    "us_industrials_sector": {
-      "label": "US industrials sector",
-      "provider": "multiple",
-      "exposure": "US listed industrial companies",
-      "n_holdings": 75,
-      "family": "sector_industrials",
-      "us_content": 1.0
-    },
-    "us_utilities_sector": {
-      "label": "US utilities sector",
-      "provider": "multiple",
-      "exposure": "US listed utility companies",
-      "n_holdings": 30,
-      "family": "sector_utilities",
-      "us_content": 1.0
-    },
-    "us_comm_services_sector": {
-      "label": "US communication services sector",
-      "provider": "multiple",
-      "exposure": "US listed communication-services companies",
-      "n_holdings": 25,
-      "family": "sector_comm_services",
-      "us_content": 1.0
-    },
-    "us_materials_sector": {
-      "label": "US materials sector",
-      "provider": "multiple",
-      "exposure": "US listed materials companies",
-      "n_holdings": 30,
-      "family": "sector_materials",
-      "us_content": 1.0
-    },
-    "us_reits": {
-      "label": "US property, dividend-screened",
-      "provider": "FTSE Russell",
-      "exposure": "US listed real-estate companies and REITs that also meet a dividend-yield test — a screened subset of the sector, not the sector.",
-      "n_holdings": 130,
-      "family": "reits",
-      "us_content": 1.0
-    },
-    "world_quality": {
-      "label": "MSCI World Quality",
-      "provider": "MSCI",
-      "exposure": "Developed-market equity screened on quality factors",
-      "n_holdings": 300,
-      "family": "factor_quality",
-      "us_content": 0.7
-    },
-    "world_momentum": {
-      "label": "MSCI World Momentum",
-      "provider": "MSCI",
-      "exposure": "Developed-market equity screened on price momentum",
-      "n_holdings": 350,
-      "family": "factor_momentum",
-      "us_content": 0.7
-    },
-    "world_value": {
-      "label": "MSCI World Value",
-      "provider": "MSCI",
-      "exposure": "Developed-market equity screened on valuation",
-      "n_holdings": 400,
-      "family": "factor_value",
-      "us_content": 0.6
-    },
-    "msci_us_imi_tech": {
-      "label": "MSCI US IMI Information Technology 25/50",
-      "provider": "MSCI",
-      "exposure": "US information technology across large, mid AND small cap — 321 holdings against roughly 70 in the S&P 500 sector slice, and a different index provider.",
-      "n_holdings": 321,
-      "n_holdings_src": "Vanguard VGT fund profile, 30 June 2026",
-      "family": "sector_tech_all_cap",
-      "us_content": 1.0
-    },
-    "msci_us_imi_real_estate": {
-      "label": "MSCI US IMI Real Estate 25/50",
-      "provider": "MSCI",
-      "exposure": "The whole US listed real-estate sector across all cap sizes, with no screen on dividend yield.",
-      "n_holdings": null,
-      "family": "sector_reits_all_cap",
-      "us_content": 1.0
-    },
-    "ftse_global_all_cap": {
-      "label": "FTSE Global All Cap",
-      "provider": "FTSE Russell",
-      "exposure": "Global equity across large, mid AND small cap, developed plus emerging. The FTSE All-World series covers the same markets without the small-cap tail.",
-      "n_holdings": 8000,
-      "n_holdings_src": "Vanguard VT product page, approximate holdings, retrieved 2026-08-06",
-      "family": "global_all_cap_incl_small",
-      "us_content": 0.62
-    },
-    "morningstar_us_total": {
-      "label": "Morningstar US Total Market",
-      "provider": "Morningstar",
-      "exposure": "US investable market, large/mid/small. VTI moved to this index from CRSP US Total Market and was renamed accordingly; the CRSP entry is kept because a stale mapping elsewhere should resolve to a real index rather than a missing key.",
-      "n_holdings": 3482,
-      "n_holdings_src": "Vanguard VTI fund profile, benchmark column, retrieved 2026-08-06",
-      "family": "us_total",
-      "us_content": 1.0
-    },
-    "ftse_emerging_all_cap": {
-      "label": "FTSE Emerging Markets All Cap China A Inclusion",
-      "provider": "FTSE Russell",
-      "exposure": "Emerging-market equity across large, mid AND small cap, including China A shares. Like the large/mid FTSE Emerging series it treats South Korea as developed and holds none of it.",
-      "n_holdings": 4852,
-      "n_holdings_src": "Vanguard VWO fund profile, benchmark column, retrieved 2026-08-06",
-      "family": "emerging_all_cap",
-      "us_content": 0.0
-    },
-    "usa_quality": {
-      "label": "MSCI USA Quality",
-      "provider": "MSCI",
-      "exposure": "US large- and mid-cap equity screened on quality factors. US-only; the World series of the same factor adds non-US developed markets.",
-      "n_holdings": null,
-      "family": "factor_quality",
-      "us_content": 1.0
-    },
-    "usa_momentum": {
-      "label": "MSCI USA Momentum",
-      "provider": "MSCI",
-      "exposure": "US large- and mid-cap equity screened on price momentum. US-only; the World series of the same factor adds non-US developed markets.",
-      "n_holdings": null,
-      "family": "factor_momentum",
-      "us_content": 1.0
-    },
-    "usa_value": {
-      "label": "MSCI USA Value",
-      "provider": "MSCI",
-      "exposure": "US large- and mid-cap equity screened on valuation. US-only; the World series of the same factor adds non-US developed markets.",
-      "n_holdings": null,
-      "family": "factor_value",
-      "us_content": 1.0
-    },
-    "sp_total_market": {
-      "label": "S&P Total Market",
-      "provider": "S&P Dow Jones",
-      "exposure": "US investable market, large/mid/small. The S&P series, not the MSCI or CRSP one.",
-      "n_holdings": null,
-      "family": "us_total",
-      "us_content": 1.0
-    },
-    "global_aggregate_bond": {
-      "label": "Bloomberg Global Aggregate",
-      "provider": "Bloomberg",
-      "exposure": "Global investment-grade bonds",
-      "n_holdings": 10000,
-      "family": "agg_bond",
-      "us_content": 0.0
-    },
-    "us_aggregate_bond": {
-      "label": "Bloomberg US Aggregate",
-      "provider": "Bloomberg",
-      "exposure": "US investment-grade bonds",
-      "n_holdings": 12000,
-      "family": "agg_bond",
-      "us_content": 0.0
-    },
-    "us_treasury_long": {
-      "label": "US Treasury 20+ year",
-      "provider": "ICE / Bloomberg",
-      "exposure": "Long-dated US government bonds",
-      "n_holdings": 45,
-      "family": "treasury_long",
-      "us_content": 0.0
-    },
-    "us_treasury_7_10": {
-      "label": "US Treasury 7-10 year",
-      "provider": "ICE / Bloomberg",
-      "exposure": "Intermediate US government bonds",
-      "n_holdings": 20,
-      "family": "treasury_intermediate",
-      "us_content": 0.0
-    },
-    "us_treasury_1_3": {
-      "label": "US Treasury 1-3 year",
-      "provider": "ICE / Bloomberg",
-      "exposure": "Short-dated US government bonds",
-      "n_holdings": 90,
-      "family": "treasury_short",
-      "us_content": 0.0
-    },
-    "us_tips": {
-      "label": "US Treasury inflation-linked",
-      "provider": "Bloomberg",
-      "exposure": "US inflation-protected government bonds",
-      "n_holdings": 50,
-      "family": "tips",
-      "us_content": 0.0
-    },
-    "usd_corporate_ig": {
-      "label": "USD corporate investment grade",
-      "provider": "Markit iBoxx",
-      "exposure": "USD-denominated investment-grade corporate bonds",
-      "n_holdings": 2500,
-      "family": "corporate_ig",
-      "us_content": 0.0
-    },
-    "usd_corporate_hy": {
-      "label": "USD corporate high yield",
-      "provider": "Markit iBoxx",
-      "exposure": "USD-denominated sub-investment-grade corporate bonds",
-      "n_holdings": 1200,
-      "family": "corporate_hy",
-      "us_content": 0.0
-    },
-    "gold_spot": {
-      "label": "Gold bullion",
-      "provider": "LBMA",
-      "exposure": "Physical gold",
-      "n_holdings": 1,
-      "family": "gold",
-      "us_content": 0.0
-    },
-    "msci_eafe": {
-      "label": "MSCI EAFE",
-      "provider": "MSCI",
-      "exposure": "Developed-market equity EXCLUDING the United States and Canada",
-      "n_holdings": 800,
-      "family": "developed_ex_us",
-      "us_content": 0.0
-    },
-    "ice_semiconductor": {
-      "label": "ICE Semiconductor",
-      "provider": "ICE",
-      "exposure": "US-listed semiconductor companies",
-      "n_holdings": 30,
-      "family": "sector_semis",
-      "us_content": 1.0
-    },
-    "mvis_us_semis": {
-      "label": "MVIS US Listed Semiconductor 25",
-      "provider": "MarketVector",
-      "exposure": "25 largest US-listed semiconductor companies",
-      "n_holdings": 25,
-      "family": "sector_semis",
-      "us_content": 1.0
-    },
-    "msci_global_semis": {
-      "label": "MSCI ACWI IMI Semiconductors",
-      "provider": "MSCI",
-      "exposure": "Global semiconductor companies, all capitalisations",
-      "n_holdings": 90,
-      "family": "sector_semis",
-      "us_content": 0.75
-    },
-    "dj_us_dividend_100": {
-      "label": "Dow Jones US Dividend 100",
-      "provider": "S&P Dow Jones",
-      "exposure": "US dividend payers screened on quality and yield",
-      "n_holdings": 100,
-      "family": "us_dividend",
-      "us_content": 1.0
-    },
-    "ftse_high_div_yield": {
-      "label": "FTSE High Dividend Yield",
-      "provider": "FTSE Russell",
-      "exposure": "US companies forecast to pay above-average dividends",
-      "n_holdings": 550,
-      "family": "us_dividend",
-      "us_content": 1.0
-    },
-    "sp_us_dividend_growers": {
-      "label": "S&P US Dividend Growers",
-      "provider": "S&P Dow Jones",
-      "exposure": "US companies with sustained dividend-growth records",
-      "n_holdings": 340,
-      "family": "us_dividend",
-      "us_content": 1.0
-    },
-    "sp_us_dividend_aristocrats": {
-      "label": "S&P US Dividend Aristocrats",
-      "provider": "S&P Dow Jones",
-      "exposure": "US companies raising dividends for 20 consecutive years",
-      "n_holdings": 130,
-      "family": "us_dividend",
-      "us_content": 1.0
-    },
-    "ftse_dev_exus": {
-      "label": "FTSE Developed All Cap ex US",
-      "provider": "FTSE Russell",
-      "exposure": "Developed-market equity EXCLUDING the United States",
-      "n_holdings": 3900,
-      "family": "developed_ex_us",
-      "us_content": 0.0
-    }
+  "msci_usa": {
+   "label": "MSCI USA",
+   "provider": "MSCI",
+   "exposure": "US large- and mid-cap equity",
+   "n_holdings": 600,
+   "family": "us_large",
+   "us_content": 1.0
+  },
+  "crsp_us_total": {
+   "label": "CRSP US Total Market",
+   "provider": "CRSP",
+   "exposure": "US total market, all capitalisations",
+   "n_holdings": 3600,
+   "family": "us_total",
+   "us_content": 1.0
+  },
+  "msci_usa_imi": {
+   "label": "MSCI USA IMI",
+   "provider": "MSCI",
+   "exposure": "US investable market, large/mid/small",
+   "n_holdings": 2300,
+   "family": "us_total",
+   "us_content": 1.0
+  },
+  "nasdaq100": {
+   "label": "Nasdaq-100",
+   "provider": "Nasdaq",
+   "exposure": "Largest 100 non-financial Nasdaq-listed companies",
+   "n_holdings": 100,
+   "family": "us_growth_concentrated",
+   "us_content": 1.0
+  },
+  "russell2000": {
+   "label": "Russell 2000",
+   "provider": "FTSE Russell",
+   "exposure": "US small-cap equity",
+   "n_holdings": 2000,
+   "family": "us_small",
+   "us_content": 1.0
+  },
+  "sp_smallcap600": {
+   "label": "S&P SmallCap 600",
+   "provider": "S&P Dow Jones",
+   "exposure": "US small-cap equity, profitability-screened",
+   "n_holdings": 600,
+   "family": "us_small",
+   "us_content": 1.0
+  },
+  "msci_world": {
+   "label": "MSCI World",
+   "provider": "MSCI",
+   "exposure": "Developed-market equity, roughly 70 per cent US",
+   "n_holdings": 1400,
+   "family": "developed_world",
+   "us_content": 0.7
+  },
+  "ftse_dev_world": {
+   "label": "FTSE Developed World",
+   "provider": "FTSE Russell",
+   "exposure": "Developed-market equity",
+   "n_holdings": 2100,
+   "family": "developed_world",
+   "us_content": 0.7
+  },
+  "ftse_all_world": {
+   "label": "FTSE All-World",
+   "provider": "FTSE Russell",
+   "exposure": "Global equity, developed plus emerging",
+   "n_holdings": 4300,
+   "family": "global_all_cap",
+   "us_content": 0.62
+  },
+  "msci_acwi": {
+   "label": "MSCI ACWI",
+   "provider": "MSCI",
+   "exposure": "Global equity, developed plus emerging",
+   "n_holdings": 2600,
+   "family": "global_all_cap",
+   "us_content": 0.63
+  },
+  "ftse_emerging": {
+   "label": "FTSE Emerging Markets",
+   "provider": "FTSE Russell",
+   "exposure": "Emerging-market equity, large and mid cap only. Classifies South Korea as developed, so it holds no Korean exposure where the MSCI series does.",
+   "n_holdings": 2289,
+   "n_holdings_src": "Vanguard factsheet 30 June 2026 (IE00B3VVMM84), benchmark column",
+   "family": "emerging",
+   "us_content": 0.0
+  },
+  "ftse_dev_europe": {
+   "label": "FTSE Developed Europe",
+   "provider": "FTSE Russell",
+   "exposure": "European developed equity",
+   "n_holdings": 550,
+   "family": "europe",
+   "us_content": 0.0
+  },
+  "ftse_japan": {
+   "label": "FTSE Japan",
+   "provider": "FTSE Russell",
+   "exposure": "Japanese equity",
+   "n_holdings": 500,
+   "family": "japan",
+   "us_content": 0.0
+  },
+  "nikkei225": {
+   "label": "Nikkei 225",
+   "provider": "Nikkei",
+   "exposure": "225 Japanese companies, PRICE-weighted rather than capitalisation-weighted",
+   "n_holdings": 225,
+   "family": "japan_price_weighted",
+   "us_content": 0.0
+  },
+  "msci_em": {
+   "label": "MSCI Emerging Markets",
+   "provider": "MSCI",
+   "exposure": "Emerging-market equity",
+   "n_holdings": 1200,
+   "family": "emerging",
+   "us_content": 0.0
+  },
+  "msci_em_imi": {
+   "label": "MSCI Emerging Markets IMI",
+   "provider": "MSCI",
+   "exposure": "Emerging-market equity including small caps",
+   "n_holdings": 3100,
+   "family": "emerging",
+   "us_content": 0.0
+  },
+  "msci_europe": {
+   "label": "MSCI Europe",
+   "provider": "MSCI",
+   "exposure": "European developed equity",
+   "n_holdings": 400,
+   "family": "europe",
+   "us_content": 0.0
+  },
+  "stoxx_europe_600": {
+   "label": "STOXX Europe 600",
+   "provider": "STOXX",
+   "exposure": "European developed equity",
+   "n_holdings": 600,
+   "family": "europe",
+   "us_content": 0.0
+  },
+  "msci_japan": {
+   "label": "MSCI Japan",
+   "provider": "MSCI",
+   "exposure": "Japanese equity",
+   "n_holdings": 200,
+   "family": "japan",
+   "us_content": 0.0
+  },
+  "us_tech_sector": {
+   "label": "US information technology sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed information-technology companies",
+   "n_holdings": 70,
+   "family": "sector_tech",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_healthcare_sector": {
+   "label": "US health care sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed health-care companies",
+   "n_holdings": 60,
+   "family": "sector_healthcare",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_financials_sector": {
+   "label": "US financials sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed financial companies",
+   "n_holdings": 70,
+   "family": "sector_financials",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_energy_sector": {
+   "label": "US energy sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed energy companies",
+   "n_holdings": 25,
+   "family": "sector_energy",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_consumer_disc_sector": {
+   "label": "US consumer discretionary sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed consumer-discretionary companies",
+   "n_holdings": 50,
+   "family": "sector_consumer_disc",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_consumer_staples_sector": {
+   "label": "US consumer staples sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed consumer-staples companies",
+   "n_holdings": 40,
+   "family": "sector_consumer_staples",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_industrials_sector": {
+   "label": "US industrials sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed industrial companies",
+   "n_holdings": 75,
+   "family": "sector_industrials",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_utilities_sector": {
+   "label": "US utilities sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed utility companies",
+   "n_holdings": 30,
+   "family": "sector_utilities",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_comm_services_sector": {
+   "label": "US communication services sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed communication-services companies",
+   "n_holdings": 25,
+   "family": "sector_comm_services",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_materials_sector": {
+   "label": "US materials sector",
+   "provider": "S&P Dow Jones",
+   "exposure": "US listed materials companies",
+   "n_holdings": 30,
+   "family": "sector_materials",
+   "us_content": 1.0,
+   "ucits_tracks_capped_variant": true,
+   "ucits_capping_note": "No UCITS fund tracks this index. UCITS concentration limits force the European lines onto 35/20-capped variants: iShares uses 'S&P 500 Capped 35/20 <Sector>' (verified for IUIT and IUHC) and SPDR uses 'S&P <Sector> Select Sector Daily Capped 35/20' (verified for SXLK and SXLU), where the US Select Sector indices cap 25/50. Both UCITS ranges changed their capping from 25/20 on 24 March 2025, inside the graded window."
+  },
+  "us_reits": {
+   "label": "US property, dividend-screened",
+   "provider": "FTSE Russell",
+   "exposure": "US listed real-estate companies and REITs that also meet a dividend-yield test — a screened subset of the sector, not the sector.",
+   "n_holdings": 130,
+   "family": "reits",
+   "us_content": 1.0
+  },
+  "world_quality": {
+   "label": "MSCI World Quality",
+   "provider": "MSCI",
+   "exposure": "Developed-market equity screened on quality factors",
+   "n_holdings": 300,
+   "family": "factor_quality",
+   "us_content": 0.7
+  },
+  "world_momentum": {
+   "label": "MSCI World Momentum",
+   "provider": "MSCI",
+   "exposure": "Developed-market equity screened on price momentum",
+   "n_holdings": 350,
+   "family": "factor_momentum",
+   "us_content": 0.7
+  },
+  "world_value": {
+   "label": "MSCI World Value",
+   "provider": "MSCI",
+   "exposure": "Developed-market equity screened on valuation",
+   "n_holdings": 400,
+   "family": "factor_value",
+   "us_content": 0.6
+  },
+  "msci_us_imi_tech": {
+   "label": "MSCI US IMI Information Technology 25/50",
+   "provider": "MSCI",
+   "exposure": "US information technology across large, mid AND small cap — 321 holdings against roughly 70 in the S&P 500 sector slice, and a different index provider.",
+   "n_holdings": 321,
+   "n_holdings_src": "Vanguard VGT fund profile, 30 June 2026",
+   "family": "sector_tech_all_cap",
+   "us_content": 1.0
+  },
+  "msci_us_imi_real_estate": {
+   "label": "MSCI US IMI Real Estate 25/50",
+   "provider": "MSCI",
+   "exposure": "The whole US listed real-estate sector across all cap sizes, with no screen on dividend yield.",
+   "n_holdings": null,
+   "family": "sector_reits_all_cap",
+   "us_content": 1.0
+  },
+  "ftse_global_all_cap": {
+   "label": "FTSE Global All Cap",
+   "provider": "FTSE Russell",
+   "exposure": "Global equity across large, mid AND small cap, developed plus emerging. The FTSE All-World series covers the same markets without the small-cap tail.",
+   "n_holdings": 8000,
+   "n_holdings_src": "Vanguard VT product page, approximate holdings, retrieved 2026-08-06",
+   "family": "global_all_cap_incl_small",
+   "us_content": 0.62
+  },
+  "morningstar_us_total": {
+   "label": "Morningstar US Total Market",
+   "provider": "Morningstar",
+   "exposure": "US investable market, large/mid/small. VTI moved to this index from CRSP US Total Market and was renamed accordingly; the CRSP entry is kept because a stale mapping elsewhere should resolve to a real index rather than a missing key.",
+   "n_holdings": 3482,
+   "n_holdings_src": "Vanguard VTI fund profile, benchmark column, retrieved 2026-08-06",
+   "family": "us_total",
+   "us_content": 1.0
+  },
+  "ftse_emerging_all_cap": {
+   "label": "FTSE Emerging Markets All Cap China A Inclusion",
+   "provider": "FTSE Russell",
+   "exposure": "Emerging-market equity across large, mid AND small cap, including China A shares. Like the large/mid FTSE Emerging series it treats South Korea as developed and holds none of it.",
+   "n_holdings": 4852,
+   "n_holdings_src": "Vanguard VWO fund profile, benchmark column, retrieved 2026-08-06",
+   "family": "emerging_all_cap",
+   "us_content": 0.0
+  },
+  "usa_quality": {
+   "label": "MSCI USA Quality",
+   "provider": "MSCI",
+   "exposure": "US large- and mid-cap equity screened on quality factors. US-only; the World series of the same factor adds non-US developed markets.",
+   "n_holdings": null,
+   "family": "factor_quality",
+   "us_content": 1.0
+  },
+  "usa_momentum": {
+   "label": "MSCI USA Momentum",
+   "provider": "MSCI",
+   "exposure": "US large- and mid-cap equity screened on price momentum. US-only; the World series of the same factor adds non-US developed markets.",
+   "n_holdings": null,
+   "family": "factor_momentum",
+   "us_content": 1.0
+  },
+  "usa_value": {
+   "label": "MSCI USA Value",
+   "provider": "MSCI",
+   "exposure": "US large- and mid-cap equity screened on valuation. US-only; the World series of the same factor adds non-US developed markets.",
+   "n_holdings": null,
+   "family": "factor_value",
+   "us_content": 1.0
+  },
+  "sp_total_market": {
+   "label": "S&P Total Market",
+   "provider": "S&P Dow Jones",
+   "exposure": "US investable market, large/mid/small. The S&P series, not the MSCI or CRSP one.",
+   "n_holdings": null,
+   "family": "us_total",
+   "us_content": 1.0
+  },
+  "global_aggregate_bond": {
+   "label": "Bloomberg Global Aggregate",
+   "provider": "Bloomberg",
+   "exposure": "Global investment-grade bonds",
+   "n_holdings": 10000,
+   "family": "agg_bond",
+   "us_content": 0.0
+  },
+  "us_aggregate_bond": {
+   "label": "Bloomberg US Aggregate",
+   "provider": "Bloomberg",
+   "exposure": "US investment-grade bonds",
+   "n_holdings": 12000,
+   "family": "agg_bond",
+   "us_content": 0.0
+  },
+  "us_treasury_long": {
+   "label": "US Treasury 20+ year",
+   "provider": "ICE / Bloomberg",
+   "exposure": "Long-dated US government bonds",
+   "n_holdings": 45,
+   "family": "treasury_long",
+   "us_content": 0.0
+  },
+  "us_treasury_7_10": {
+   "label": "US Treasury 7-10 year",
+   "provider": "ICE / Bloomberg",
+   "exposure": "Intermediate US government bonds",
+   "n_holdings": 20,
+   "family": "treasury_intermediate",
+   "us_content": 0.0
+  },
+  "us_treasury_1_3": {
+   "label": "US Treasury 1-3 year",
+   "provider": "ICE / Bloomberg",
+   "exposure": "Short-dated US government bonds",
+   "n_holdings": 90,
+   "family": "treasury_short",
+   "us_content": 0.0
+  },
+  "us_tips": {
+   "label": "US Treasury inflation-linked",
+   "provider": "Bloomberg",
+   "exposure": "US inflation-protected government bonds",
+   "n_holdings": 50,
+   "family": "tips",
+   "us_content": 0.0
+  },
+  "usd_corporate_ig": {
+   "label": "USD corporate investment grade",
+   "provider": "Markit iBoxx",
+   "exposure": "USD-denominated investment-grade corporate bonds",
+   "n_holdings": 2500,
+   "family": "corporate_ig",
+   "us_content": 0.0
+  },
+  "usd_corporate_hy": {
+   "label": "USD corporate high yield",
+   "provider": "Markit iBoxx",
+   "exposure": "USD-denominated sub-investment-grade corporate bonds",
+   "n_holdings": 1200,
+   "family": "corporate_hy",
+   "us_content": 0.0
+  },
+  "gold_spot": {
+   "label": "Gold bullion",
+   "provider": "LBMA",
+   "exposure": "Physical gold",
+   "n_holdings": 1,
+   "family": "gold",
+   "us_content": 0.0
+  },
+  "msci_eafe": {
+   "label": "MSCI EAFE",
+   "provider": "MSCI",
+   "exposure": "Developed-market equity EXCLUDING the United States and Canada",
+   "n_holdings": 800,
+   "family": "developed_ex_us",
+   "us_content": 0.0
+  },
+  "ice_semiconductor": {
+   "label": "ICE Semiconductor",
+   "provider": "ICE",
+   "exposure": "US-listed semiconductor companies",
+   "n_holdings": 30,
+   "family": "sector_semis",
+   "us_content": 1.0
+  },
+  "mvis_us_semis": {
+   "label": "MVIS US Listed Semiconductor 25",
+   "provider": "MarketVector",
+   "exposure": "25 largest US-listed semiconductor companies",
+   "n_holdings": 25,
+   "family": "sector_semis",
+   "us_content": 1.0
+  },
+  "msci_global_semis": {
+   "label": "MSCI ACWI IMI Semiconductors",
+   "provider": "MSCI",
+   "exposure": "Global semiconductor companies, all capitalisations",
+   "n_holdings": 90,
+   "family": "sector_semis",
+   "us_content": 0.75
+  },
+  "dj_us_dividend_100": {
+   "label": "Dow Jones US Dividend 100",
+   "provider": "S&P Dow Jones",
+   "exposure": "US dividend payers screened on quality and yield",
+   "n_holdings": 100,
+   "family": "us_dividend",
+   "us_content": 1.0
+  },
+  "ftse_high_div_yield": {
+   "label": "FTSE High Dividend Yield",
+   "provider": "FTSE Russell",
+   "exposure": "US companies forecast to pay above-average dividends",
+   "n_holdings": 550,
+   "family": "us_dividend",
+   "us_content": 1.0
+  },
+  "sp_us_dividend_growers": {
+   "label": "S&P US Dividend Growers",
+   "provider": "S&P Dow Jones",
+   "exposure": "US companies with sustained dividend-growth records",
+   "n_holdings": 340,
+   "family": "us_dividend",
+   "us_content": 1.0
+  },
+  "sp_us_dividend_aristocrats": {
+   "label": "S&P US Dividend Aristocrats",
+   "provider": "S&P Dow Jones",
+   "exposure": "US companies raising dividends for 20 consecutive years",
+   "n_holdings": 130,
+   "family": "us_dividend",
+   "us_content": 1.0
+  },
+  "ftse_dev_exus": {
+   "label": "FTSE Developed All Cap ex US",
+   "provider": "FTSE Russell",
+   "exposure": "Developed-market equity EXCLUDING the United States",
+   "n_holdings": 3900,
+   "family": "developed_ex_us",
+   "us_content": 0.0
   }
+ }
 }

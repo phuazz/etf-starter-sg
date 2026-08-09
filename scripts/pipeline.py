@@ -399,10 +399,27 @@ def slim_swap(d):
     # already says the total is the one plus the other. The repo file keeps the
     # split.
     keep_cost = ("net_annual_delta_pp",)
+    # Tier-2 caveats repeat verbatim across holdings that share a reason: one
+    # UCITS-capping explanation now sits on all ten sector ETFs, and the
+    # total-market one on both VTI and ITOT. Interned by value; the UI reads
+    # through an index the same way it does the proxy and unresolved tables.
+    m["caveats"] = []
+    cav_idx = {}
+
+    def intern_caveat(text):
+        if not text:
+            return None
+        if text not in cav_idx:
+            cav_idx[text] = len(m["caveats"])
+            m["caveats"].append(text)
+        return cav_idx[text]
+
     for e in d["etfs"]:
-        r = {k: e[k] for k in ("ticker", "name", "index_label", "tier", "caveat",
+        r = {k: e[k] for k in ("ticker", "name", "index_label", "tier",
                                "verdict", "verdict_note", "ter", "yield",
                                "aum_usd") if k in e}
+        if e.get("caveat"):
+            r["cav"] = intern_caveat(e["caveat"])
         r["alternatives"] = []
         for a in e["alternatives"]:
             # An alternative's caveat is dropped only where it repeats the

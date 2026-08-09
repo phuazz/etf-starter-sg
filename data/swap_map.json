@@ -8,8 +8,8 @@
   "cma_divergence": "Does not use cma.json tax.us_div_withholding.by_domicile (LU recorded at 0.15; Luxembourg UCITS generally pay 30 per cent because of Limitation-on-Benefits clauses). Rate comes from the ISIN prefix.",
   "counts": {
    "us_etfs": 48,
-   "tier1_exact_index": 32,
-   "tier2_related_index": 14,
+   "tier1_exact_index": 23,
+   "tier2_related_index": 23,
    "tier3_no_equivalent": 2,
    "single_names": 50,
    "safe_universe": 92,
@@ -5635,8 +5635,8 @@
    "yield": 0.0167,
    "aum_usd": 8166011392,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUMS",
@@ -5658,8 +5658,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5707,8 +5707,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5749,8 +5749,8 @@
    "yield": 0.028499998,
    "aum_usd": 35721338880,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUES",
@@ -5772,8 +5772,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5821,8 +5821,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5863,8 +5863,8 @@
    "yield": 0.0150999995,
    "aum_usd": 51353821184,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUFS",
@@ -5886,8 +5886,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5935,8 +5935,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5977,8 +5977,8 @@
    "yield": 0.0111,
    "aum_usd": 33963890688,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "SXLI",
@@ -6000,8 +6000,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6049,8 +6049,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6091,8 +6091,8 @@
    "yield": 0.0042,
    "aum_usd": 123912577024,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUIT",
@@ -6114,8 +6114,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6163,8 +6163,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6205,8 +6205,8 @@
    "yield": 0.026400002,
    "aum_usd": 13649293312,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUCS",
@@ -6228,8 +6228,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6277,8 +6277,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6319,8 +6319,8 @@
    "yield": 0.026400002,
    "aum_usd": 23111417856,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUUS",
@@ -6342,8 +6342,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6391,8 +6391,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6433,8 +6433,8 @@
    "yield": 0.016,
    "aum_usd": 40598945792,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "SXLV",
@@ -6456,8 +6456,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6505,8 +6505,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6547,8 +6547,8 @@
    "yield": 0.0077,
    "aum_usd": 22593435648,
    "estate_tax_exposed": true,
-   "tier": 1,
-   "caveat": null,
+   "tier": 2,
+   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUCD",
@@ -6570,8 +6570,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6619,8 +6619,8 @@
      "venue": "LSE",
      "venue_note": null,
      "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
+     "tier": 2,
+     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,

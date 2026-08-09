@@ -285,6 +285,32 @@ def main():
 
         if by_index.get(k):
             tier, cands = 1, list(by_index[k])
+            # A sector index whose UCITS counterparts track CAPPED VARIANTS is
+            # not a tier-1 match, however close the exposure. Verified: the US
+            # Select Sector indices cap 25/50; iShares tracks "S&P 500 Capped
+            # 35/20 <Sector>" and SPDR "S&P <Sector> Select Sector Daily Capped
+            # 35/20". Different indices, so tier 1 -- "same index, a lookup, not
+            # a judgement" -- would be a false claim.
+            #
+            # It is a structural constraint rather than an oversight, and the
+            # same one the tool already cites for single stocks: UCITS
+            # concentration limits do not permit a European fund to hold the US
+            # weights. The tool's own grades show exactly where it bites --
+            # utilities, health care, financials, industrials, energy and
+            # materials all land within 0.5pp a year, while technology,
+            # consumer discretionary and consumer staples reach 2-3pp, because
+            # capping only matters when one or two companies dominate a sector.
+            idx_meta = index_map["indices"][k]
+            if idx_meta.get("ucits_tracks_capped_variant"):
+                tier = 2
+                caveat = (
+                    "The funds below do not track the same index this one does. UCITS "
+                    "concentration limits do not permit a European fund to hold the US "
+                    "sector weights, so they follow 35/20-capped variants where the US "
+                    "Select Sector index caps 25/50. For most sectors that changes very "
+                    "little; where one or two companies dominate the sector it changes "
+                    "more, and the fit grade beside each line is what tells you which "
+                    "case this is.")
         else:
             same_fam = [f for f in by_family.get(fam, []) if f["index_key"] != k]
             if same_fam:
