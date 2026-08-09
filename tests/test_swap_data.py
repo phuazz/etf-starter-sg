@@ -137,14 +137,38 @@ def test_near_family_pairs_reference_real_families(idx):
         assert p["caveat"].strip(), f"tier-2 pair {p['a']}/{p['b']} has no caveat"
 
 
-def test_sector_proxies_point_at_covered_indices(us, ucits):
+def test_sector_proxies_point_at_covered_indices(us, ucits, idx):
     """A sector proxy promising an exposure with no validated line behind it
-    is a match the tool cannot honour."""
-    covered = set(ucits["by_index"])
+    is a match the tool cannot honour.
+
+    Checked at FAMILY level since the UCITS sector lines moved onto their own
+    capped-variant keys: the funds are still there, one key sideways, and a
+    key-level check declared 43 of 50 names proxy-less while every proxy was
+    still buyable. The invariant is unchanged -- something purchasable must sit
+    behind the promise -- only the level it is asked at.
+    """
+    covered_fams = {idx["indices"][k]["family"] for k in ucits["by_index"]
+                    if k in idx["indices"]}
     for n in us["single_names"]:
         k = n.get("sector_index_key")
         if k is not None:
-            assert k in covered, f"{n['ticker']}: sector proxy {k} has no validated UCITS line"
+            fam = idx["indices"][k]["family"]
+            assert fam in covered_fams, (
+                f"{n['ticker']}: sector proxy {k} (family {fam}) has no validated UCITS line")
+
+
+def test_every_name_with_a_sector_key_actually_gets_proxies(swap, us):
+    """The outcome, not the mechanism.
+
+    Splitting the UCITS sector lines onto separate keys silently emptied the
+    proxy list for 43 of 50 single names. The coverage guard above passed --
+    it was asking about the wrong level -- and only the builder's own printed
+    count caught it. This asserts the thing a reader would actually notice.
+    """
+    have_key = {n["ticker"] for n in us["single_names"] if n.get("sector_index_key")}
+    empty = [n["ticker"] for n in swap["single_names"]
+             if n["ticker"] in have_key and not n.get("sector_proxies")]
+    assert not empty, f"names with a sector index but no proxy offered: {empty}"
 
 
 def test_single_names_never_claim_an_equivalent(us):

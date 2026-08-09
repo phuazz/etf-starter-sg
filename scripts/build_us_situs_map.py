@@ -301,7 +301,14 @@ def main():
     if not os.path.exists(upath):
         sys.exit("FATAL: build the UCITS universe first (scripts/build_ucits_universe.py)")
     with open(upath, encoding="utf-8") as fh:
-        covered = set(json.load(fh)["by_index"])
+        covered_keys = set(json.load(fh)["by_index"])
+    # Coverage is a FAMILY question, not a key one. Splitting the UCITS sector
+    # lines onto their own capped-variant keys emptied every us_*_sector key,
+    # and a key-level check then declared 43 of 50 single names to have no
+    # sector proxy at all -- the funds were still there, one key sideways.
+    covered_fams = {index_map["indices"][k]["family"] for k in covered_keys
+                    if k in index_map["indices"]}
+    covered = {k for k, v in index_map["indices"].items() if v["family"] in covered_fams}
     for sector, idx in list(SECTOR_TO_INDEX.items()):
         if idx not in covered:
             print(f"  ! sector {sector!r} -> {idx} has no validated UCITS line; no proxy will be offered")

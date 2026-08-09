@@ -282,6 +282,7 @@ def main():
     for us in us_map["etfs"]:
         k, fam = us["index_key"], us["index_family"]
         tier, caveat, cands = None, None, []
+        caveat_note = None
 
         if by_index.get(k):
             tier, cands = 1, list(by_index[k])
@@ -324,6 +325,22 @@ def main():
                 caveat = (f"No UCITS fund tracks {us['index_label']}. The alternatives below "
                           f"track {' or '.join(alt_labels)} instead — a related index in the "
                           f"same family, not the same index.")
+                # For the sector keys, WHY no UCITS fund tracks it is the point:
+                # the capping is a legal constraint, not a choice, and the two
+                # UCITS ranges cap a different parent index from each other.
+                # Kept as its OWN field rather than concatenated: the sentence is
+                # identical on all ten sector holdings while the sentence above
+                # names each one's indices, so joining them defeats interning and
+                # ships the same paragraph ten times.
+                if index_map["indices"][k].get("ucits_tracks_capped_variant"):
+                    caveat_note = (
+                        "UCITS concentration limits do not permit a European fund to hold "
+                        "the US sector weights, so every available line is a 35/20-capped "
+                        "variant where the US index caps 25/50 — and the two providers cap "
+                        "different parent indices, which is why they do not match each "
+                        "other either. For most sectors this changes very little; where one "
+                        "or two companies dominate it changes more, and the fit grade "
+                        "beside each line is what tells you which case this is.")
             else:
                 for other_fam, cav in nf.get(fam, []):
                     if by_family.get(other_fam):
@@ -345,6 +362,10 @@ def main():
             "estate_tax_exposed": True,
             "tier": tier,
             "caveat": caveat,
+            # Stored apart from `caveat` because it is identical on all ten
+            # sector holdings while `caveat` names each one's own indices.
+            # Joined back together for display; kept separate on the wire.
+            "caveat_note": caveat_note,
             "alternatives": [brief(a, us, tier, caveat)
                              for a in rank(cands, index_map, us)[:5]],
             "unresolved_alternatives": [
@@ -367,8 +388,15 @@ def main():
     # ---- single names: there is no equivalent, and there cannot be ----------
     name_results = []
     for n in us_map["single_names"]:
+        # Resolved by FAMILY, not by key. A single name's proxy is "the closest
+        # sector exposure you can buy", and after the UCITS sector lines were
+        # split onto their own capped-variant keys the US sector key holds none
+        # of them. The family still does, and it holds BOTH providers' lines,
+        # which is what the reader wants to see.
         k = n.get("sector_index_key")
-        proxies = rank(by_index.get(k, []), index_map, n) if k else []
+        fam = index_map["indices"][k]["family"] if k else None
+        pool_for_name = by_index.get(k) or (by_family.get(fam, []) if fam else [])
+        proxies = rank(pool_for_name, index_map, n) if k else []
         name_results.append({
             "ticker": n["ticker"], "name": n["name"], "kind": "single_name",
             "sector": n["sector"], "industry": n.get("industry"),

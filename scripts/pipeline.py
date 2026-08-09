@@ -420,6 +420,8 @@ def slim_swap(d):
                                "aum_usd") if k in e}
         if e.get("caveat"):
             r["cav"] = intern_caveat(e["caveat"])
+        if e.get("caveat_note"):
+            r["cavn"] = intern_caveat(e["caveat_note"])
         r["alternatives"] = []
         for a in e["alternatives"]:
             # An alternative's caveat is dropped only where it repeats the

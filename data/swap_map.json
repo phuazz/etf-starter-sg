@@ -100,6 +100,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "ISAC",
@@ -214,6 +215,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IUAG",
@@ -328,6 +330,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IUAG",
@@ -442,6 +445,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "VAGP",
@@ -647,6 +651,7 @@
    "estate_tax_exposed": true,
    "tier": 3,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [],
    "unresolved_alternatives": [],
    "verdict": "no_close_equivalent",
@@ -664,6 +669,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "GLS",
@@ -756,6 +762,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IHYU",
@@ -870,6 +877,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "GLS",
@@ -962,6 +970,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IBTM",
@@ -1076,6 +1085,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "EIMI",
@@ -1190,6 +1200,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IDP6",
@@ -1255,6 +1266,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "CSUS",
@@ -1516,6 +1528,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SPXP",
@@ -1777,6 +1790,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks Russell 2000. The alternatives below track S&P SmallCap 600 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IDP6",
@@ -1846,6 +1860,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "LQDA",
@@ -1960,6 +1975,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks MSCI USA Momentum. The alternatives below track MSCI World Momentum instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IWMO",
@@ -2029,6 +2045,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "UDVD",
@@ -2143,6 +2160,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "XNAS",
@@ -2404,6 +2422,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "XNAS",
@@ -2665,6 +2684,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks MSCI USA Quality. The alternatives below track MSCI World Quality instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IWQU",
@@ -2730,6 +2750,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks Dow Jones US Dividend 100. The alternatives below track S&P US Dividend Aristocrats instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "UDVD",
@@ -2844,6 +2865,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IBTS",
@@ -2909,6 +2931,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SMGB",
@@ -2975,6 +2998,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks ICE Semiconductor. The alternatives below track MSCI ACWI IMI Semiconductors or MVIS US Listed Semiconductor 25 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SEMI",
@@ -3094,6 +3118,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SPXP",
@@ -3325,6 +3350,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SPXP",
@@ -3586,6 +3612,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IDTP",
@@ -3700,6 +3727,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "DTLA",
@@ -3814,6 +3842,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "XDWD",
@@ -4081,6 +4110,7 @@
    "estate_tax_exposed": true,
    "tier": 3,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [],
    "unresolved_alternatives": [],
    "verdict": "no_close_equivalent",
@@ -4098,6 +4128,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks the MSCI all-cap US technology index. The alternatives below track the S&P 500's technology slice instead: roughly 70 large-cap companies against 321, from a different index provider. You keep the mega-caps that dominate both and lose the mid- and small-cap technology tail.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IUIT",
@@ -4106,8 +4137,8 @@
      "official_name": "ISHRS S&P 500 INF TECH SECT ETF USD ACC",
      "isin": "IE00B3WJKG14",
      "domicile": "IE",
-     "index_key": "us_tech_sector",
-     "index_label": "US information technology sector",
+     "index_key": "sp500_capped_tech",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -4155,8 +4186,8 @@
      "official_name": "SS SPDR S&P US TECHNOLOGY UCITS ETF",
      "isin": "IE00BWBXM948",
      "domicile": "IE",
-     "index_key": "us_tech_sector",
-     "index_label": "US information technology sector",
+     "index_key": "select_capped_tech",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -4213,6 +4244,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks S&P US Dividend Growers. The alternatives below track S&P US Dividend Aristocrats instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "UDVD",
@@ -4333,6 +4365,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks MSCI USA Value. The alternatives below track MSCI World Value instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IWVL",
@@ -4402,6 +4435,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks the broad US real-estate sector. The nearest available exposure is dividend-screened \u2014 it holds US property companies that also pass a yield test, which is a narrower and income-tilted selection rather than the sector itself.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "IUSP",
@@ -4411,7 +4445,7 @@
      "isin": "IE00B1FZSF77",
      "domicile": "IE",
      "index_key": "us_reits",
-     "index_label": "US property / REITs",
+     "index_label": "US property, dividend-screened",
      "ccy": "GBp",
      "ccy_is_pence": true,
      "income": "Distributing",
@@ -4467,6 +4501,7 @@
    "estate_tax_exposed": true,
    "tier": 1,
    "caveat": null,
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "SPXP",
@@ -4728,6 +4763,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks the FTSE Global All Cap index. The nearest available exposure is the FTSE All-World series, which holds roughly 4,300 large and mid-cap companies against the all-cap index's 8,000 -- the same countries and the same provider, without the small-cap tail.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "VWRA",
@@ -4989,6 +5025,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "CSUS",
@@ -5250,6 +5287,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks the FTSE all-cap emerging series. The nearest available exposure is the large/mid FTSE Emerging Index, which holds about 2,289 companies against the all-cap index's 4,852 -- the same countries and the same provider, without the small-cap tail. Both exclude South Korea, which FTSE classifies as developed.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "VFEG",
@@ -5517,6 +5555,7 @@
    "estate_tax_exposed": true,
    "tier": 2,
    "caveat": "No UCITS fund tracks FTSE High Dividend Yield. The alternatives below track S&P US Dividend Aristocrats instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": null,
    "alternatives": [
     {
      "ticker": "UDVD",
@@ -5636,7 +5675,8 @@
    "aum_usd": 8166011392,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US materials sector. The alternatives below track S&P 500 Capped 35/20 Materials or S&P Materials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUMS",
@@ -5645,8 +5685,8 @@
      "official_name": "ISHRS SP500 MAT SCTR UCITS ETF USD ACC",
      "isin": "IE00B4MKCJ84",
      "domicile": "IE",
-     "index_key": "us_materials_sector",
-     "index_label": "US materials sector",
+     "index_key": "sp500_capped_materials",
+     "index_label": "S&P 500 Capped 35/20 Materials",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5659,7 +5699,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US materials sector. The alternatives below track S&P 500 Capped 35/20 Materials or S&P Materials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5694,8 +5734,8 @@
      "official_name": "SS SPDR S&P US MATERIALS UCITS ETF",
      "isin": "IE00BWBXM831",
      "domicile": "IE",
-     "index_key": "us_materials_sector",
-     "index_label": "US materials sector",
+     "index_key": "select_capped_materials",
+     "index_label": "S&P Materials Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5708,7 +5748,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US materials sector. The alternatives below track S&P 500 Capped 35/20 Materials or S&P Materials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5750,7 +5790,8 @@
    "aum_usd": 35721338880,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US energy sector. The alternatives below track S&P 500 Capped 35/20 Energy or S&P Energy Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUES",
@@ -5759,8 +5800,8 @@
      "official_name": "ISHRS S&P 500 ENERGY SECT ETF USD (ACC)",
      "isin": "IE00B42NKQ00",
      "domicile": "IE",
-     "index_key": "us_energy_sector",
-     "index_label": "US energy sector",
+     "index_key": "sp500_capped_energy",
+     "index_label": "S&P 500 Capped 35/20 Energy",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5773,7 +5814,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US energy sector. The alternatives below track S&P 500 Capped 35/20 Energy or S&P Energy Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5808,8 +5849,8 @@
      "official_name": "SS SPDR S&P US ENERGY UCITS ETF",
      "isin": "IE00BWBXM492",
      "domicile": "IE",
-     "index_key": "us_energy_sector",
-     "index_label": "US energy sector",
+     "index_key": "select_capped_energy",
+     "index_label": "S&P Energy Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5822,7 +5863,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US energy sector. The alternatives below track S&P 500 Capped 35/20 Energy or S&P Energy Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5864,7 +5905,8 @@
    "aum_usd": 51353821184,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US financials sector. The alternatives below track S&P 500 Capped 35/20 Financials or S&P Financials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUFS",
@@ -5873,8 +5915,8 @@
      "official_name": "ISHRS S&P 500 FIN SECT ETF USD (ACC)",
      "isin": "IE00B4JNQZ49",
      "domicile": "IE",
-     "index_key": "us_financials_sector",
-     "index_label": "US financials sector",
+     "index_key": "sp500_capped_financials",
+     "index_label": "S&P 500 Capped 35/20 Financials",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5887,7 +5929,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US financials sector. The alternatives below track S&P 500 Capped 35/20 Financials or S&P Financials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5922,8 +5964,8 @@
      "official_name": "SS SPDR S&P US FINANCIALS UCITS ETF",
      "isin": "IE00BWBXM500",
      "domicile": "IE",
-     "index_key": "us_financials_sector",
-     "index_label": "US financials sector",
+     "index_key": "select_capped_financials",
+     "index_label": "S&P Financials Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -5936,7 +5978,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US financials sector. The alternatives below track S&P 500 Capped 35/20 Financials or S&P Financials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -5978,7 +6020,8 @@
    "aum_usd": 33963890688,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US industrials sector. The alternatives below track S&P 500 Capped 35/20 Industrials or S&P Industrials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "SXLI",
@@ -5987,8 +6030,8 @@
      "official_name": "SS SPDR S&P US INDUSTRIALS UCITS ETF",
      "isin": "IE00BWBXM724",
      "domicile": "IE",
-     "index_key": "us_industrials_sector",
-     "index_label": "US industrials sector",
+     "index_key": "select_capped_industrials",
+     "index_label": "S&P Industrials Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6001,7 +6044,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US industrials sector. The alternatives below track S&P 500 Capped 35/20 Industrials or S&P Industrials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6036,8 +6079,8 @@
      "official_name": "ISHRS SP500 INDUS SCTR UCITS ETF USD ACC",
      "isin": "IE00B4LN9N13",
      "domicile": "IE",
-     "index_key": "us_industrials_sector",
-     "index_label": "US industrials sector",
+     "index_key": "sp500_capped_industrials",
+     "index_label": "S&P 500 Capped 35/20 Industrials",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6050,7 +6093,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US industrials sector. The alternatives below track S&P 500 Capped 35/20 Industrials or S&P Industrials Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6092,7 +6135,8 @@
    "aum_usd": 123912577024,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US information technology sector. The alternatives below track S&P 500 Capped 35/20 Information Technology or S&P Technology Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUIT",
@@ -6101,8 +6145,8 @@
      "official_name": "ISHRS S&P 500 INF TECH SECT ETF USD ACC",
      "isin": "IE00B3WJKG14",
      "domicile": "IE",
-     "index_key": "us_tech_sector",
-     "index_label": "US information technology sector",
+     "index_key": "sp500_capped_tech",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6115,7 +6159,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US information technology sector. The alternatives below track S&P 500 Capped 35/20 Information Technology or S&P Technology Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6150,8 +6194,8 @@
      "official_name": "SS SPDR S&P US TECHNOLOGY UCITS ETF",
      "isin": "IE00BWBXM948",
      "domicile": "IE",
-     "index_key": "us_tech_sector",
-     "index_label": "US information technology sector",
+     "index_key": "select_capped_tech",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6164,7 +6208,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US information technology sector. The alternatives below track S&P 500 Capped 35/20 Information Technology or S&P Technology Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6206,7 +6250,8 @@
    "aum_usd": 13649293312,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US consumer staples sector. The alternatives below track S&P 500 Capped 35/20 Consumer Staples or S&P Consumer Staples Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUCS",
@@ -6215,8 +6260,8 @@
      "official_name": "IS SP500 CON STPL SCTR UCITS ETF USD ACC",
      "isin": "IE00B40B8R38",
      "domicile": "IE",
-     "index_key": "us_consumer_staples_sector",
-     "index_label": "US consumer staples sector",
+     "index_key": "sp500_capped_consumer_staples",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6229,7 +6274,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US consumer staples sector. The alternatives below track S&P 500 Capped 35/20 Consumer Staples or S&P Consumer Staples Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6264,8 +6309,8 @@
      "official_name": "SS SPDR S&P US CONSUMER STAPLES UCITSETF",
      "isin": "IE00BWBXM385",
      "domicile": "IE",
-     "index_key": "us_consumer_staples_sector",
-     "index_label": "US consumer staples sector",
+     "index_key": "select_capped_consumer_staples",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6278,7 +6323,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US consumer staples sector. The alternatives below track S&P 500 Capped 35/20 Consumer Staples or S&P Consumer Staples Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6320,7 +6365,8 @@
    "aum_usd": 23111417856,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US utilities sector. The alternatives below track S&P 500 Capped 35/20 Utilities or S&P Utilities Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUUS",
@@ -6329,8 +6375,8 @@
      "official_name": "ISH SP500 UTILIT SCTR UCITS ETF USD ACC",
      "isin": "IE00B4KBBD01",
      "domicile": "IE",
-     "index_key": "us_utilities_sector",
-     "index_label": "US utilities sector",
+     "index_key": "sp500_capped_utilities",
+     "index_label": "S&P 500 Capped 35/20 Utilities",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6343,7 +6389,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US utilities sector. The alternatives below track S&P 500 Capped 35/20 Utilities or S&P Utilities Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6378,8 +6424,8 @@
      "official_name": "SS SPDR S&P US UTILITIES UCITS ETF",
      "isin": "IE00BWBXMB69",
      "domicile": "IE",
-     "index_key": "us_utilities_sector",
-     "index_label": "US utilities sector",
+     "index_key": "select_capped_utilities",
+     "index_label": "S&P Utilities Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6392,7 +6438,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US utilities sector. The alternatives below track S&P 500 Capped 35/20 Utilities or S&P Utilities Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6434,7 +6480,8 @@
    "aum_usd": 40598945792,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US health care sector. The alternatives below track S&P 500 Capped 35/20 Health Care or S&P Health Care Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "SXLV",
@@ -6443,8 +6490,8 @@
      "official_name": "SS SPDR S&P US HEALTH CARE UCITS ETF",
      "isin": "IE00BWBXM617",
      "domicile": "IE",
-     "index_key": "us_healthcare_sector",
-     "index_label": "US health care sector",
+     "index_key": "select_capped_healthcare",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6457,7 +6504,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US health care sector. The alternatives below track S&P 500 Capped 35/20 Health Care or S&P Health Care Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6492,8 +6539,8 @@
      "official_name": "ISHRS S&P 500 HEALTH CR SECT ETF USD ACC",
      "isin": "IE00B43HR379",
      "domicile": "IE",
-     "index_key": "us_healthcare_sector",
-     "index_label": "US health care sector",
+     "index_key": "sp500_capped_healthcare",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6506,7 +6553,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US health care sector. The alternatives below track S&P 500 Capped 35/20 Health Care or S&P Health Care Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6548,7 +6595,8 @@
    "aum_usd": 22593435648,
    "estate_tax_exposed": true,
    "tier": 2,
-   "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+   "caveat": "No UCITS fund tracks US consumer discretionary sector. The alternatives below track S&P 500 Capped 35/20 Consumer Discretionary or S&P Consumer Discretionary Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
+   "caveat_note": "UCITS concentration limits do not permit a European fund to hold the US sector weights, so every available line is a 35/20-capped variant where the US index caps 25/50 \u2014 and the two providers cap different parent indices, which is why they do not match each other either. For most sectors this changes very little; where one or two companies dominate it changes more, and the fit grade beside each line is what tells you which case this is.",
    "alternatives": [
     {
      "ticker": "IUCD",
@@ -6557,8 +6605,8 @@
      "official_name": "ISHRS S&P 500 CON DISC SECT ETF USD ACC",
      "isin": "IE00B4MCHD36",
      "domicile": "IE",
-     "index_key": "us_consumer_disc_sector",
-     "index_label": "US consumer discretionary sector",
+     "index_key": "sp500_capped_consumer_disc",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6571,7 +6619,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US consumer discretionary sector. The alternatives below track S&P 500 Capped 35/20 Consumer Discretionary or S&P Consumer Discretionary Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6606,8 +6654,8 @@
      "official_name": "SS SPDR S&P US CONSUMER DIS UCITS ETF",
      "isin": "IE00BWBXM278",
      "domicile": "IE",
-     "index_key": "us_consumer_disc_sector",
-     "index_label": "US consumer discretionary sector",
+     "index_key": "select_capped_consumer_disc",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ccy": "USD",
      "ccy_is_pence": false,
      "income": "Accumulating",
@@ -6620,7 +6668,7 @@
      "venue_note": null,
      "srs_eligible": false,
      "tier": 2,
-     "caveat": "The funds below do not track the same index this one does. UCITS concentration limits do not permit a European fund to hold the US sector weights, so they follow 35/20-capped variants where the US Select Sector index caps 25/50. For most sectors that changes very little; where one or two companies dominate the sector it changes more, and the fit grade beside each line is what tells you which case this is.",
+     "caveat": "No UCITS fund tracks US consumer discretionary sector. The alternatives below track S&P 500 Capped 35/20 Consumer Discretionary or S&P Consumer Discretionary Select Sector Daily Capped 35/20 instead \u2014 a related index in the same family, not the same index.",
      "cost": {
       "ter_us": 0.08,
       "ter_alt": 0.15,
@@ -6667,7 +6715,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6677,7 +6725,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6715,7 +6763,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6725,7 +6773,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6763,7 +6811,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6773,7 +6821,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6811,7 +6859,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6821,7 +6869,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6859,7 +6907,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6869,7 +6917,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6945,7 +6993,7 @@
     {
      "ticker": "IUCD",
      "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -6955,7 +7003,7 @@
     {
      "ticker": "SXLY",
      "name": "State Street SPDR S&P U.S. Consumer Discretionary Select Sector UCITS ETF",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7031,7 +7079,7 @@
     {
      "ticker": "SXLI",
      "name": "State Street SPDR S&P U.S. Industrials Select Sector UCITS ETF",
-     "index_label": "US industrials sector",
+     "index_label": "S&P Industrials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7041,7 +7089,7 @@
     {
      "ticker": "IUIS",
      "name": "iShares S&P 500 Industrials Sector UCITS ETF USD (Acc)",
-     "index_label": "US industrials sector",
+     "index_label": "S&P 500 Capped 35/20 Industrials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7079,7 +7127,7 @@
     {
      "ticker": "SXLI",
      "name": "State Street SPDR S&P U.S. Industrials Select Sector UCITS ETF",
-     "index_label": "US industrials sector",
+     "index_label": "S&P Industrials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7089,7 +7137,7 @@
     {
      "ticker": "IUIS",
      "name": "iShares S&P 500 Industrials Sector UCITS ETF USD (Acc)",
-     "index_label": "US industrials sector",
+     "index_label": "S&P 500 Capped 35/20 Industrials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7127,7 +7175,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7137,7 +7185,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7175,7 +7223,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7185,7 +7233,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7223,7 +7271,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7233,7 +7281,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7271,7 +7319,7 @@
     {
      "ticker": "IUCM",
      "name": "iShares S&P 500 Communication Sector UCITS ETF USD Acc",
-     "index_label": "US communication services sector",
+     "index_label": "S&P 500 Capped 35/20 Communication Services",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7281,7 +7329,7 @@
     {
      "ticker": "SXLC",
      "name": "State Street SPDR S&P U.S. Communication Services Select Sector UCITS ETF",
-     "index_label": "US communication services sector",
+     "index_label": "S&P Communication Services Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7319,7 +7367,7 @@
     {
      "ticker": "SXLI",
      "name": "State Street SPDR S&P U.S. Industrials Select Sector UCITS ETF",
-     "index_label": "US industrials sector",
+     "index_label": "S&P Industrials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7329,7 +7377,7 @@
     {
      "ticker": "IUIS",
      "name": "iShares S&P 500 Industrials Sector UCITS ETF USD (Acc)",
-     "index_label": "US industrials sector",
+     "index_label": "S&P 500 Capped 35/20 Industrials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7367,7 +7415,7 @@
     {
      "ticker": "IUCM",
      "name": "iShares S&P 500 Communication Sector UCITS ETF USD Acc",
-     "index_label": "US communication services sector",
+     "index_label": "S&P 500 Capped 35/20 Communication Services",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7377,7 +7425,7 @@
     {
      "ticker": "SXLC",
      "name": "State Street SPDR S&P U.S. Communication Services Select Sector UCITS ETF",
-     "index_label": "US communication services sector",
+     "index_label": "S&P Communication Services Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7415,7 +7463,7 @@
     {
      "ticker": "IUFS",
      "name": "iShares S&P 500 Financials Sector UCITS ETF USD (Acc)",
-     "index_label": "US financials sector",
+     "index_label": "S&P 500 Capped 35/20 Financials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7425,7 +7473,7 @@
     {
      "ticker": "SXLF",
      "name": "State Street SPDR S&P U.S. Financials Select Sector UCITS ETF",
-     "index_label": "US financials sector",
+     "index_label": "S&P Financials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7463,7 +7511,7 @@
     {
      "ticker": "IUCD",
      "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7473,7 +7521,7 @@
     {
      "ticker": "SXLY",
      "name": "State Street SPDR S&P U.S. Consumer Discretionary Select Sector UCITS ETF",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7511,7 +7559,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7521,7 +7569,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7597,7 +7645,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7607,7 +7655,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7645,7 +7693,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7655,7 +7703,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7693,7 +7741,7 @@
     {
      "ticker": "IUFS",
      "name": "iShares S&P 500 Financials Sector UCITS ETF USD (Acc)",
-     "index_label": "US financials sector",
+     "index_label": "S&P 500 Capped 35/20 Financials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7703,7 +7751,7 @@
     {
      "ticker": "SXLF",
      "name": "State Street SPDR S&P U.S. Financials Select Sector UCITS ETF",
-     "index_label": "US financials sector",
+     "index_label": "S&P Financials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7741,7 +7789,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7751,7 +7799,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7789,7 +7837,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7799,7 +7847,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7837,7 +7885,7 @@
     {
      "ticker": "IUFS",
      "name": "iShares S&P 500 Financials Sector UCITS ETF USD (Acc)",
-     "index_label": "US financials sector",
+     "index_label": "S&P 500 Capped 35/20 Financials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7847,7 +7895,7 @@
     {
      "ticker": "SXLF",
      "name": "State Street SPDR S&P U.S. Financials Select Sector UCITS ETF",
-     "index_label": "US financials sector",
+     "index_label": "S&P Financials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7885,7 +7933,7 @@
     {
      "ticker": "IUCD",
      "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7895,7 +7943,7 @@
     {
      "ticker": "SXLY",
      "name": "State Street SPDR S&P U.S. Consumer Discretionary Select Sector UCITS ETF",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7933,7 +7981,7 @@
     {
      "ticker": "IUCM",
      "name": "iShares S&P 500 Communication Sector UCITS ETF USD Acc",
-     "index_label": "US communication services sector",
+     "index_label": "S&P 500 Capped 35/20 Communication Services",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7943,7 +7991,7 @@
     {
      "ticker": "SXLC",
      "name": "State Street SPDR S&P U.S. Communication Services Select Sector UCITS ETF",
-     "index_label": "US communication services sector",
+     "index_label": "S&P Communication Services Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7981,7 +8029,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -7991,7 +8039,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8029,7 +8077,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8039,7 +8087,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8115,7 +8163,7 @@
     {
      "ticker": "IUCM",
      "name": "iShares S&P 500 Communication Sector UCITS ETF USD Acc",
-     "index_label": "US communication services sector",
+     "index_label": "S&P 500 Capped 35/20 Communication Services",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8125,7 +8173,7 @@
     {
      "ticker": "SXLC",
      "name": "State Street SPDR S&P U.S. Communication Services Select Sector UCITS ETF",
-     "index_label": "US communication services sector",
+     "index_label": "S&P Communication Services Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8163,7 +8211,7 @@
     {
      "ticker": "IUCD",
      "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8173,7 +8221,7 @@
     {
      "ticker": "SXLY",
      "name": "State Street SPDR S&P U.S. Consumer Discretionary Select Sector UCITS ETF",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8211,7 +8259,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8221,7 +8269,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8297,7 +8345,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8307,7 +8355,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8345,7 +8393,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8355,7 +8403,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8393,7 +8441,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8403,7 +8451,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8441,7 +8489,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8451,7 +8499,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8489,7 +8537,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8499,7 +8547,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8537,7 +8585,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8547,7 +8595,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8623,7 +8671,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8633,7 +8681,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8671,7 +8719,7 @@
     {
      "ticker": "IUCD",
      "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Discretionary",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8681,7 +8729,7 @@
     {
      "ticker": "SXLY",
      "name": "State Street SPDR S&P U.S. Consumer Discretionary Select Sector UCITS ETF",
-     "index_label": "US consumer discretionary sector",
+     "index_label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8757,7 +8805,7 @@
     {
      "ticker": "IUIT",
      "name": "iShares S&P 500 Information Technology Sector UCITS ETF USD (Acc)",
-     "index_label": "US information technology sector",
+     "index_label": "S&P 500 Capped 35/20 Information Technology",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8767,7 +8815,7 @@
     {
      "ticker": "SXLK",
      "name": "State Street SPDR S&P U.S. Technology Select Sector UCITS ETF",
-     "index_label": "US information technology sector",
+     "index_label": "S&P Technology Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8805,7 +8853,7 @@
     {
      "ticker": "SXLV",
      "name": "State Street SPDR S&P U.S. Health Care Select Sector UCITS ETF",
-     "index_label": "US health care sector",
+     "index_label": "S&P Health Care Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8815,7 +8863,7 @@
     {
      "ticker": "IUHC",
      "name": "iShares S&P 500 Health Care Sector UCITS ETF USD (Acc)",
-     "index_label": "US health care sector",
+     "index_label": "S&P 500 Capped 35/20 Health Care",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8853,7 +8901,7 @@
     {
      "ticker": "IUFS",
      "name": "iShares S&P 500 Financials Sector UCITS ETF USD (Acc)",
-     "index_label": "US financials sector",
+     "index_label": "S&P 500 Capped 35/20 Financials",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8863,7 +8911,7 @@
     {
      "ticker": "SXLF",
      "name": "State Street SPDR S&P U.S. Financials Select Sector UCITS ETF",
-     "index_label": "US financials sector",
+     "index_label": "S&P Financials Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8901,7 +8949,7 @@
     {
      "ticker": "IUCS",
      "name": "iShares S&P 500 Consumer Staples Sector UCITS ETF USD (Acc)",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P 500 Capped 35/20 Consumer Staples",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8911,7 +8959,7 @@
     {
      "ticker": "SXLP",
      "name": "State Street SPDR S&P U.S. Consumer Staples Select Sector UCITS ETF",
-     "index_label": "US consumer staples sector",
+     "index_label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8949,7 +8997,7 @@
     {
      "ticker": "IUES",
      "name": "iShares S&P 500 Energy Sector UCITS ETF USD (Acc)",
-     "index_label": "US energy sector",
+     "index_label": "S&P 500 Capped 35/20 Energy",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",
@@ -8959,7 +9007,7 @@
     {
      "ticker": "SXLE",
      "name": "State Street SPDR S&P U.S. Energy Select Sector UCITS ETF",
-     "index_label": "US energy sector",
+     "index_label": "S&P Energy Select Sector Daily Capped 35/20",
      "ter": 0.15,
      "domicile": "IE",
      "ccy": "USD",

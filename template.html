@@ -1750,6 +1750,9 @@ function swapHydrate(){
   SWAP.etfs.forEach(e=>{
     e.kind='etf';
     if(e.caveat===undefined && e.cav!=null) e.caveat=cavs[e.cav];
+    if(e.caveat_note===undefined && e.cavn!=null) e.caveat_note=cavs[e.cavn];
+    // the shared half is stored once and joined back on here
+    if(e.caveat && e.caveat_note) e.caveat=e.caveat+' '+e.caveat_note;
     (e.alternatives||[]).forEach(a=>{
       const base=dict[a.ticker];
       // Record fields win: `tier` and `verification_pending` are per-pair and

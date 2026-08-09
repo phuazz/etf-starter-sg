@@ -1,136 +1,729 @@
 {
-  "_meta": {
-    "purpose": "CURATED INPUT. Candidate non-US-situs lines, seeded index-first rather than by crawling an issuer product list. Every candidate here is only a CANDIDATE -- scripts/build_ucits_universe.py validates each one against two independent sources (OpenFIGI for listing existence on the London exchange, Yahoo Finance for legal name / currency / TER / fund size) and DROPS anything that fails. Nothing enters data/ucits_universe.json unvalidated.",
-    "why_not_scraped": "The iShares product list sits behind a terms-and-conditions acceptance gate, and no ungated source returns ISIN for London-listed lines. Rather than accept those terms or ship unverified domicile strings, the universe is seeded from the index side and validated. See structure_note for why this does not weaken the estate-tax verdict.",
-    "structure_note": "UCITS is an EU framework: a fund cannot simultaneously be UCITS-authorised and US-domiciled. So UCITS status settles the estate-tax (situs) question structurally, without needing a per-line ISIN lookup. Fund domicile within the EU (Ireland vs Luxembourg) does NOT change the situs answer but DOES change US dividend withholding -- 15 per cent for Irish funds under the US-Ireland treaty, 30 per cent otherwise. These are tracked as two separate fields with separate confidence levels.",
-    "etc_warning": "Entries marked structure=etc are exchange-traded COMMODITIES, not UCITS funds. They are debt securities issued by a special-purpose vehicle. Their situs treatment does not follow from UCITS status and must be resolved separately -- they are carried here but the builder marks their situs verdict as unresolved rather than safe.",
-    "seeded": "2026-08-02",
-    "fields": {
-      "t": "London ticker, without the .L suffix Yahoo requires.",
-      "idx": "Canonical index key, joins to data/index_map.json.",
-      "iss": "Issuer, as a hint only -- the validated legal name from Yahoo overrides it.",
-      "structure": "ucits_etf or etc.",
-      "dist": "acc (accumulating) or dist (distributing). Load-bearing: comparing a distributing line against an accumulating line on PRICE returns produces a spurious drift exactly equal to the dividend yield."
-    }
+ "_meta": {
+  "purpose": "CURATED INPUT. Candidate non-US-situs lines, seeded index-first rather than by crawling an issuer product list. Every candidate here is only a CANDIDATE -- scripts/build_ucits_universe.py validates each one against two independent sources (OpenFIGI for listing existence on the London exchange, Yahoo Finance for legal name / currency / TER / fund size) and DROPS anything that fails. Nothing enters data/ucits_universe.json unvalidated.",
+  "why_not_scraped": "The iShares product list sits behind a terms-and-conditions acceptance gate, and no ungated source returns ISIN for London-listed lines. Rather than accept those terms or ship unverified domicile strings, the universe is seeded from the index side and validated. See structure_note for why this does not weaken the estate-tax verdict.",
+  "structure_note": "UCITS is an EU framework: a fund cannot simultaneously be UCITS-authorised and US-domiciled. So UCITS status settles the estate-tax (situs) question structurally, without needing a per-line ISIN lookup. Fund domicile within the EU (Ireland vs Luxembourg) does NOT change the situs answer but DOES change US dividend withholding -- 15 per cent for Irish funds under the US-Ireland treaty, 30 per cent otherwise. These are tracked as two separate fields with separate confidence levels.",
+  "etc_warning": "Entries marked structure=etc are exchange-traded COMMODITIES, not UCITS funds. They are debt securities issued by a special-purpose vehicle. Their situs treatment does not follow from UCITS status and must be resolved separately -- they are carried here but the builder marks their situs verdict as unresolved rather than safe.",
+  "seeded": "2026-08-02",
+  "fields": {
+   "t": "London ticker, without the .L suffix Yahoo requires.",
+   "idx": "Canonical index key, joins to data/index_map.json.",
+   "iss": "Issuer, as a hint only -- the validated legal name from Yahoo overrides it.",
+   "structure": "ucits_etf or etc.",
+   "dist": "acc (accumulating) or dist (distributing). Load-bearing: comparing a distributing line against an accumulating line on PRICE returns produces a spurious drift exactly equal to the dividend yield."
+  }
+ },
+ "curated_overrides": {
+  "_note": "Fields Yahoo cannot supply, filled ONLY where a verified figure already exists in this repo or has been checked against the issuer. Yahoo returns no expense ratio for any Vanguard Ireland line -- a systematic gap, not a random one. The two figures below are carried over from the multi-source TER verification pass done for data/curated.json on 2026-07-09 (the pass that corrected five real errors). The remaining Vanguard lines are deliberately left blank rather than guessed: a wrong TER silently corrupts every cost comparison the tool makes. Fill them at the quarterly review against Vanguard's published KIID.",
+  "VUAA": {
+   "ter": 0.07,
+   "ter_src": "curated.json 2026-07-09, >=2 issuer sources"
   },
-  "curated_overrides": {
-    "_note": "Fields Yahoo cannot supply, filled ONLY where a verified figure already exists in this repo or has been checked against the issuer. Yahoo returns no expense ratio for any Vanguard Ireland line -- a systematic gap, not a random one. The two figures below are carried over from the multi-source TER verification pass done for data/curated.json on 2026-07-09 (the pass that corrected five real errors). The remaining Vanguard lines are deliberately left blank rather than guessed: a wrong TER silently corrupts every cost comparison the tool makes. Fill them at the quarterly review against Vanguard's published KIID.",
-    "VUAA": {"ter": 0.07, "ter_src": "curated.json 2026-07-09, >=2 issuer sources"},
-    "VWRA": {"ter": 0.22, "ter_src": "curated.json 2026-07-09, >=2 issuer sources"}
+  "VWRA": {
+   "ter": 0.22,
+   "ter_src": "curated.json 2026-07-09, >=2 issuer sources"
+  }
+ },
+ "candidates": [
+  {
+   "t": "CSPX",
+   "idx": "sp500",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
   },
-  "candidates": [
-    {"t": "CSPX", "idx": "sp500", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "CSP1", "idx": "sp500", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUSA", "idx": "sp500", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "IDUS", "idx": "sp500", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VUAA", "idx": "sp500", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VUAG", "idx": "sp500", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VUSA", "idx": "sp500", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "SPY5", "idx": "sp500", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "SPXS", "idx": "sp500", "iss": "Invesco", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SPXP", "idx": "sp500", "iss": "Invesco", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "CSUS", "idx": "msci_usa", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "XMUS", "idx": "msci_usa", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "XDUS", "idx": "msci_usa", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "UIMI", "idx": "msci_usa_imi", "iss": "UBS", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "CNDX", "idx": "nasdaq100", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "CNX1", "idx": "nasdaq100", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "EQQQ", "idx": "nasdaq100", "iss": "Invesco", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "EQQU", "idx": "nasdaq100", "iss": "Invesco", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "XNAS", "idx": "nasdaq100", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "XRS2", "idx": "russell2000", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "RS2K", "idx": "russell2000", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IDP6", "idx": "sp_smallcap600", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "ZPRV", "idx": "sp_smallcap600", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "IWDA", "idx": "msci_world", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SWDA", "idx": "msci_world", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IWRD", "idx": "msci_world", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "XDWD", "idx": "msci_world", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "HMWO", "idx": "msci_world", "iss": "HSBC", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VEVE", "idx": "ftse_dev_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VHVG", "idx": "ftse_dev_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VHVE", "idx": "ftse_dev_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "VWRL", "idx": "ftse_all_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VWRA", "idx": "ftse_all_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VWRP", "idx": "ftse_all_world", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SSAC", "idx": "msci_acwi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "ISAC", "idx": "msci_acwi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "IEEM", "idx": "msci_em", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "XMME", "idx": "msci_em", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VFEM", "idx": "ftse_emerging", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VFEG", "idx": "ftse_emerging", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "EIMI", "idx": "msci_em_imi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "EMIM", "idx": "msci_em_imi", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "IMEU", "idx": "msci_europe", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VEUR", "idx": "ftse_dev_europe", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "MEUD", "idx": "stoxx_europe_600", "iss": "Amundi", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IJPA", "idx": "msci_japan", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SJPA", "idx": "msci_japan", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VJPN", "idx": "ftse_japan", "iss": "Vanguard", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "XDJP", "idx": "nikkei225", "iss": "Xtrackers", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "IUIT", "idx": "us_tech_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLK", "idx": "us_tech_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUHC", "idx": "us_healthcare_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLV", "idx": "us_healthcare_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUFS", "idx": "us_financials_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLF", "idx": "us_financials_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUES", "idx": "us_energy_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLE", "idx": "us_energy_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUCD", "idx": "us_consumer_disc_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLY", "idx": "us_consumer_disc_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUCS", "idx": "us_consumer_staples_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLP", "idx": "us_consumer_staples_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUIS", "idx": "us_industrials_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLI", "idx": "us_industrials_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUUS", "idx": "us_utilities_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLU", "idx": "us_utilities_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUCM", "idx": "us_comm_services_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLC", "idx": "us_comm_services_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUMS", "idx": "us_materials_sector", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SXLB", "idx": "us_materials_sector", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "SMGB", "idx": "mvis_us_semis", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SMH", "idx": "mvis_us_semis", "iss": "VanEck", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SEMI", "idx": "msci_global_semis", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "IUSP", "idx": "us_reits", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-
-    {"t": "IWQU", "idx": "world_quality", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IWMO", "idx": "world_momentum", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IWVL", "idx": "world_value", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "UDVD", "idx": "sp_us_dividend_aristocrats", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "USDV", "idx": "sp_us_dividend_aristocrats", "iss": "SPDR", "structure": "ucits_etf", "dist": "dist"},
-
-    {"t": "AGGU", "idx": "global_aggregate_bond", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "AGGG", "idx": "global_aggregate_bond", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "VAGU", "idx": "global_aggregate_bond", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "VAGP", "idx": "global_aggregate_bond", "iss": "Vanguard", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IUAG", "idx": "us_aggregate_bond", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "SUAG", "idx": "us_aggregate_bond", "iss": "SPDR", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IDTL", "idx": "us_treasury_long", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "DTLA", "idx": "us_treasury_long", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IDTM", "idx": "us_treasury_7_10", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "IBTM", "idx": "us_treasury_7_10", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IBTS", "idx": "us_treasury_1_3", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "IDTS", "idx": "us_treasury_1_3", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "ITPS", "idx": "us_tips", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IDTP", "idx": "us_tips", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "LQDE", "idx": "usd_corporate_ig", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "LQDA", "idx": "usd_corporate_ig", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-    {"t": "IHYU", "idx": "usd_corporate_hy", "iss": "iShares", "structure": "ucits_etf", "dist": "dist"},
-    {"t": "SHYU", "idx": "usd_corporate_hy", "iss": "iShares", "structure": "ucits_etf", "dist": "acc"},
-
-    {"t": "SGLN", "idx": "gold_spot", "iss": "iShares", "structure": "etc", "dist": "acc"},
-    {"t": "IGLN", "idx": "gold_spot", "iss": "iShares", "structure": "etc", "dist": "acc"},
-    {"t": "PHAU", "idx": "gold_spot", "iss": "WisdomTree", "structure": "etc", "dist": "acc"},
-    {"t": "GBS", "idx": "gold_spot", "iss": "Gold Bullion Securities", "structure": "etc", "dist": "acc"}
-  ]
+  {
+   "t": "CSP1",
+   "idx": "sp500",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUSA",
+   "idx": "sp500",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "IDUS",
+   "idx": "sp500",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VUAA",
+   "idx": "sp500",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VUAG",
+   "idx": "sp500",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VUSA",
+   "idx": "sp500",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "SPY5",
+   "idx": "sp500",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "SPXS",
+   "idx": "sp500",
+   "iss": "Invesco",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SPXP",
+   "idx": "sp500",
+   "iss": "Invesco",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "CSUS",
+   "idx": "msci_usa",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "XMUS",
+   "idx": "msci_usa",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "XDUS",
+   "idx": "msci_usa",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "UIMI",
+   "idx": "msci_usa_imi",
+   "iss": "UBS",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "CNDX",
+   "idx": "nasdaq100",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "CNX1",
+   "idx": "nasdaq100",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "EQQQ",
+   "idx": "nasdaq100",
+   "iss": "Invesco",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "EQQU",
+   "idx": "nasdaq100",
+   "iss": "Invesco",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "XNAS",
+   "idx": "nasdaq100",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "XRS2",
+   "idx": "russell2000",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "RS2K",
+   "idx": "russell2000",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IDP6",
+   "idx": "sp_smallcap600",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "ZPRV",
+   "idx": "sp_smallcap600",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IWDA",
+   "idx": "msci_world",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SWDA",
+   "idx": "msci_world",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IWRD",
+   "idx": "msci_world",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "XDWD",
+   "idx": "msci_world",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "HMWO",
+   "idx": "msci_world",
+   "iss": "HSBC",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VEVE",
+   "idx": "ftse_dev_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VHVG",
+   "idx": "ftse_dev_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VHVE",
+   "idx": "ftse_dev_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VWRL",
+   "idx": "ftse_all_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VWRA",
+   "idx": "ftse_all_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VWRP",
+   "idx": "ftse_all_world",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SSAC",
+   "idx": "msci_acwi",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "ISAC",
+   "idx": "msci_acwi",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IEEM",
+   "idx": "msci_em",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "XMME",
+   "idx": "msci_em",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VFEM",
+   "idx": "ftse_emerging",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VFEG",
+   "idx": "ftse_emerging",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "EIMI",
+   "idx": "msci_em_imi",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "EMIM",
+   "idx": "msci_em_imi",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IMEU",
+   "idx": "msci_europe",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VEUR",
+   "idx": "ftse_dev_europe",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "MEUD",
+   "idx": "stoxx_europe_600",
+   "iss": "Amundi",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IJPA",
+   "idx": "msci_japan",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SJPA",
+   "idx": "msci_japan",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VJPN",
+   "idx": "ftse_japan",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "XDJP",
+   "idx": "nikkei225",
+   "iss": "Xtrackers",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUIT",
+   "idx": "sp500_capped_tech",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLK",
+   "idx": "select_capped_tech",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUHC",
+   "idx": "sp500_capped_healthcare",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLV",
+   "idx": "select_capped_healthcare",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUFS",
+   "idx": "sp500_capped_financials",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLF",
+   "idx": "select_capped_financials",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUES",
+   "idx": "sp500_capped_energy",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLE",
+   "idx": "select_capped_energy",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUCD",
+   "idx": "sp500_capped_consumer_disc",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLY",
+   "idx": "select_capped_consumer_disc",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUCS",
+   "idx": "sp500_capped_consumer_staples",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLP",
+   "idx": "select_capped_consumer_staples",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUIS",
+   "idx": "sp500_capped_industrials",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLI",
+   "idx": "select_capped_industrials",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUUS",
+   "idx": "sp500_capped_utilities",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLU",
+   "idx": "select_capped_utilities",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUCM",
+   "idx": "sp500_capped_comm_services",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLC",
+   "idx": "select_capped_comm_services",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUMS",
+   "idx": "sp500_capped_materials",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SXLB",
+   "idx": "select_capped_materials",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SMGB",
+   "idx": "mvis_us_semis",
+   "iss": "VanEck",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SMH",
+   "idx": "mvis_us_semis",
+   "iss": "VanEck",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SEMI",
+   "idx": "msci_global_semis",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUSP",
+   "idx": "us_reits",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "IWQU",
+   "idx": "world_quality",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IWMO",
+   "idx": "world_momentum",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IWVL",
+   "idx": "world_value",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "UDVD",
+   "idx": "sp_us_dividend_aristocrats",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "USDV",
+   "idx": "sp_us_dividend_aristocrats",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "AGGU",
+   "idx": "global_aggregate_bond",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "AGGG",
+   "idx": "global_aggregate_bond",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "VAGU",
+   "idx": "global_aggregate_bond",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "VAGP",
+   "idx": "global_aggregate_bond",
+   "iss": "Vanguard",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IUAG",
+   "idx": "us_aggregate_bond",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SUAG",
+   "idx": "us_aggregate_bond",
+   "iss": "SPDR",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IDTL",
+   "idx": "us_treasury_long",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "DTLA",
+   "idx": "us_treasury_long",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IDTM",
+   "idx": "us_treasury_7_10",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "IBTM",
+   "idx": "us_treasury_7_10",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IBTS",
+   "idx": "us_treasury_1_3",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "IDTS",
+   "idx": "us_treasury_1_3",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "ITPS",
+   "idx": "us_tips",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IDTP",
+   "idx": "us_tips",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "LQDE",
+   "idx": "usd_corporate_ig",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "LQDA",
+   "idx": "usd_corporate_ig",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "IHYU",
+   "idx": "usd_corporate_hy",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "dist"
+  },
+  {
+   "t": "SHYU",
+   "idx": "usd_corporate_hy",
+   "iss": "iShares",
+   "structure": "ucits_etf",
+   "dist": "acc"
+  },
+  {
+   "t": "SGLN",
+   "idx": "gold_spot",
+   "iss": "iShares",
+   "structure": "etc",
+   "dist": "acc"
+  },
+  {
+   "t": "IGLN",
+   "idx": "gold_spot",
+   "iss": "iShares",
+   "structure": "etc",
+   "dist": "acc"
+  },
+  {
+   "t": "PHAU",
+   "idx": "gold_spot",
+   "iss": "WisdomTree",
+   "structure": "etc",
+   "dist": "acc"
+  },
+  {
+   "t": "GBS",
+   "idx": "gold_spot",
+   "iss": "Gold Bullion Securities",
+   "structure": "etc",
+   "dist": "acc"
+  }
+ ]
 }
