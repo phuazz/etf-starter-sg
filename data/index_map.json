@@ -575,11 +575,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_tech",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_tech": {
    "label": "S&P Technology Select Sector Daily Capped 35/20",
@@ -591,8 +587,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_healthcare": {
@@ -603,11 +600,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_healthcare",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_healthcare": {
    "label": "S&P Health Care Select Sector Daily Capped 35/20",
@@ -619,8 +612,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_financials": {
@@ -631,11 +625,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_financials",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_financials": {
    "label": "S&P Financials Select Sector Daily Capped 35/20",
@@ -647,8 +637,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_consumer_disc": {
@@ -659,11 +650,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_disc",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_consumer_disc": {
    "label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
@@ -675,8 +662,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_consumer_staples": {
@@ -687,11 +675,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_staples",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_consumer_staples": {
    "label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
@@ -703,8 +687,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_energy": {
@@ -715,11 +700,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_energy",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_energy": {
    "label": "S&P Energy Select Sector Daily Capped 35/20",
@@ -731,8 +712,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_industrials": {
@@ -743,11 +725,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_industrials",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_industrials": {
    "label": "S&P Industrials Select Sector Daily Capped 35/20",
@@ -759,8 +737,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_utilities": {
@@ -771,11 +750,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_utilities",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_utilities": {
    "label": "S&P Utilities Select Sector Daily Capped 35/20",
@@ -787,8 +762,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_materials": {
@@ -799,11 +775,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_materials",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_materials": {
    "label": "S&P Materials Select Sector Daily Capped 35/20",
@@ -815,8 +787,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   },
   "sp500_capped_comm_services": {
@@ -827,11 +800,7 @@
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_comm_services",
    "us_content": 1.0,
-   "methodology_break": {
-    "date": "2025-03-24",
-    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
-    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
-   }
+   "capping_note": "Capped 35/20 for UCITS diversification -- S&P states these sector indices \"take into account the diversification rules under the UCITS directive in Europe\". No evidence found that this family was ever capped differently: no S&P 500 Capped 25/20 sector index appears in S&P's published list, so an earlier re-capping is NOT claimed. S&P's own methodology PDF and index pages return 403/Access Denied to automated retrieval, so this rests on their indexed index pages rather than the methodology document itself."
   },
   "select_capped_comm_services": {
    "label": "S&P Communication Services Select Sector Daily Capped 35/20",
@@ -843,8 +812,9 @@
    "us_content": 1.0,
    "methodology_break": {
     "date": "2025-03-24",
-    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
-    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+    "what": "the FUND switched benchmark from the Daily Capped 25/20 index to the Daily Capped 35/20 one",
+    "src": "SSGA EMEA factsheet states the prior index name. S&P publishes BOTH cappings as separate live indices (Financials, Industrials, Consumer Discretionary and Materials 25/20 pages all still exist), so this is a change of benchmark by the fund rather than a re-capping of one index.",
+    "note": "Recorded as a fact about the fund, NOT as an explanation of tracking divergence. The large technology divergence begins around 13 October 2025, seven months later, and this date does not account for it."
    }
   }
  }

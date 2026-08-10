@@ -559,12 +559,25 @@ def test_swap_index_keys_resolve(swap, idx):
 
 
 def test_every_alternative_carries_a_recommendation_decision(swap):
+    """Both directions, because only one was checked and the other one broke.
+
+    verify_matches.py annotates swap_map.json in place and writes the refusal
+    fields only on the branches that refuse. A pair that stopped being refused
+    therefore kept the reason it had been refused for: removing one demotion
+    rule left ten pairs marked recommended while still carrying "set aside
+    because...". Nothing caught it, because this test only ever asked whether
+    refused pairs HAVE a reason, never whether offered ones are free of it.
+    """
     for e in swap["etfs"]:
         for a in e["alternatives"]:
             assert "recommended" in a, f"{e['ticker']}->{a['ticker']}"
             if not a["recommended"]:
                 assert a.get("not_recommended_because"), (
                     f"{e['ticker']}->{a['ticker']}: set aside with no reason given")
+            else:
+                assert not a.get("not_recommended_because"), (
+                    f"{e['ticker']}->{a['ticker']}: offered, but still carries a stale "
+                    f"reason for setting it aside: {a['not_recommended_because'][:80]!r}")
 
 
 def test_contradicted_pairs_are_never_recommended(swap):
