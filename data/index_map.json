@@ -574,7 +574,12 @@
    "n_holdings": 70,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_tech",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_tech": {
    "label": "S&P Technology Select Sector Daily Capped 35/20",
@@ -583,7 +588,12 @@
    "n_holdings": 70,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_tech",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_healthcare": {
    "label": "S&P 500 Capped 35/20 Health Care",
@@ -592,7 +602,12 @@
    "n_holdings": 60,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_healthcare",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_healthcare": {
    "label": "S&P Health Care Select Sector Daily Capped 35/20",
@@ -601,7 +616,12 @@
    "n_holdings": 60,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_healthcare",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_financials": {
    "label": "S&P 500 Capped 35/20 Financials",
@@ -610,7 +630,12 @@
    "n_holdings": 70,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_financials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_financials": {
    "label": "S&P Financials Select Sector Daily Capped 35/20",
@@ -619,7 +644,12 @@
    "n_holdings": 70,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_financials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_consumer_disc": {
    "label": "S&P 500 Capped 35/20 Consumer Discretionary",
@@ -628,7 +658,12 @@
    "n_holdings": 50,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_disc",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_consumer_disc": {
    "label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
@@ -637,7 +672,12 @@
    "n_holdings": 50,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_consumer_disc",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_consumer_staples": {
    "label": "S&P 500 Capped 35/20 Consumer Staples",
@@ -646,7 +686,12 @@
    "n_holdings": 40,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_staples",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_consumer_staples": {
    "label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
@@ -655,7 +700,12 @@
    "n_holdings": 40,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_consumer_staples",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_energy": {
    "label": "S&P 500 Capped 35/20 Energy",
@@ -664,7 +714,12 @@
    "n_holdings": 25,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_energy",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_energy": {
    "label": "S&P Energy Select Sector Daily Capped 35/20",
@@ -673,7 +728,12 @@
    "n_holdings": 25,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_energy",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_industrials": {
    "label": "S&P 500 Capped 35/20 Industrials",
@@ -682,7 +742,12 @@
    "n_holdings": 75,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_industrials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_industrials": {
    "label": "S&P Industrials Select Sector Daily Capped 35/20",
@@ -691,7 +756,12 @@
    "n_holdings": 75,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_industrials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_utilities": {
    "label": "S&P 500 Capped 35/20 Utilities",
@@ -700,7 +770,12 @@
    "n_holdings": 30,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_utilities",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_utilities": {
    "label": "S&P Utilities Select Sector Daily Capped 35/20",
@@ -709,7 +784,12 @@
    "n_holdings": 30,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_utilities",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_materials": {
    "label": "S&P 500 Capped 35/20 Materials",
@@ -718,7 +798,12 @@
    "n_holdings": 30,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_materials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_materials": {
    "label": "S&P Materials Select Sector Daily Capped 35/20",
@@ -727,7 +812,12 @@
    "n_holdings": 30,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_materials",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   },
   "sp500_capped_comm_services": {
    "label": "S&P 500 Capped 35/20 Communication Services",
@@ -736,7 +826,12 @@
    "n_holdings": 25,
    "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_comm_services",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "tracking against the US line changes regime on this date, the same day S&P re-capped the Select Sector family",
+    "src": "OBSERVED, NOT DOCUMENTED: no iShares document consulted says this index was re-capped. The date is taken from the SPDR factsheets and corroborated by the iShares pairs shifting on it too — XLK/IUIT moves from +8.48pp to -7.33pp. Confirm against S&P index methodology before treating the cause as established."
+   }
   },
   "select_capped_comm_services": {
    "label": "S&P Communication Services Select Sector Daily Capped 35/20",
@@ -745,7 +840,12 @@
    "n_holdings": 25,
    "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_comm_services",
-   "us_content": 1.0
+   "us_content": 1.0,
+   "methodology_break": {
+    "date": "2025-03-24",
+    "what": "capping changed from Daily Capped 25/20 to Daily Capped 35/20",
+    "src": "SSGA EMEA factsheet, which states the prior index name explicitly"
+   }
   }
  }
 }

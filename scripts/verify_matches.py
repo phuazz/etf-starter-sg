@@ -330,7 +330,29 @@ def _window_gap(seg, us_gross_yield):
     }, None
 
 
-def compare(s_us, s_alt, us_gross_yield):
+# A DOCUMENTED index change is not the same thing as the price breaks found by
+# find_step(). Those are defects in the record; this is the record correctly
+# reporting that the index itself changed. The step detector cannot see one --
+# a re-capping re-weights gradually rather than jumping -- so it has to come
+# from the registry, where the date and its evidence are written down.
+#
+# S&P re-capped the sector indices every UCITS sector line here tracks on
+# 24 March 2025, inside the graded window. Mostly it changed little, but the
+# blended figure was describing neither regime where it mattered:
+#
+#   XLK -> IUIT   +8.48pp before, -7.33pp after, blended to +1.71pp and graded C
+#   XLK -> SXLK   -0.31pp before, -6.81pp after, blended to -2.99pp and graded C
+#
+# Grading now runs on the post-change segment, because that is the index a
+# reader would be buying. It is 1.34 years, whose endpoint jitter measures
+# 0.63pp -- above the 0.50pp A band, so the LETTER carries noise and is marked
+# short-window, but well inside the 3.00pp floor that decides whether a pair is
+# offered at all. The pre-change figure travels with the result rather than
+# being averaged into it.
+MIN_POST_BREAK_WEEKS = 52
+
+
+def compare(s_us, s_alt, us_gross_yield, break_date=None):
     j = pd.concat([s_us.rename("us"), s_alt.rename("alt")], axis=1,
                   join="inner").dropna()
     months = len(j.resample("ME").last().dropna())
@@ -347,6 +369,16 @@ def compare(s_us, s_alt, us_gross_yield):
         j = j.drop(index=transient)
 
     grade_seg = tail(j, GRADE_YEARS)
+    gap_before, short_window = None, False
+    if break_date is not None:
+        cut = pd.Timestamp(break_date)
+        after, before = grade_seg[grade_seg.index >= cut], grade_seg[grade_seg.index < cut]
+        # Only narrow if there is enough of the new index to say anything. Too
+        # little and the honest answer is the longer, blended record with the
+        # change disclosed, not a number built on four months.
+        if len(after) >= MIN_POST_BREAK_WEEKS:
+            gap_before = _window_gap(before, us_gross_yield)[0] if len(before) >= 20 else None
+            grade_seg, short_window = after, True
     gap, detail, step = _window_gap(grade_seg, us_gross_yield)
     if step:
         # The step falls inside the window being graded, so there is no usable
@@ -370,6 +402,21 @@ def compare(s_us, s_alt, us_gross_yield):
              else "C" if g <= GRADE_C else "fail")
     out = {"grade": grade, "months": months, "gap_pp": round(gap, 3),
            "monthly_corr": None if corr is None else round(corr, 4), **detail}
+
+    if short_window:
+        out["graded_since"] = str(pd.Timestamp(break_date).date())
+        if gap_before is not None:
+            out["gap_before_change_pp"] = round(gap_before, 3)
+        # The longer window is NOT reported for these: it spans the change and
+        # would reintroduce exactly the blend this is removing.
+        out["basis"] = (
+            f"annualised total return since {out['graded_since']}, when the index this "
+            f"fund tracks was re-capped, USD, each end the median of {ENDPOINT_K} weeks. "
+            f"Earlier data is of a different index and is excluded rather than averaged in"
+            + (f" (it measured {gap_before:+.2f}pp)." if gap_before is not None else ".")
+            + " A window this short resolves the pass/fail floor comfortably but not the "
+              "A-versus-B boundary, so read the letter as approximate.")
+        return out
 
     # The longer window as context, never as the grade.
     ctx, _, ctx_step = _window_gap(tail(j, CONTEXT_YEARS), us_gross_yield)
@@ -409,6 +456,8 @@ def main():
     swap = json.load(open(p, encoding="utf-8"))
     ucits = {f["ticker"]: f for f in json.load(
         open(os.path.join(DATA, "ucits_universe.json"), encoding="utf-8"))["funds"]}
+    index_map = json.load(
+        open(os.path.join(DATA, "index_map.json"), encoding="utf-8"))["indices"]
     us_meta = {e["ticker"]: e for e in json.load(
         open(os.path.join(DATA, "us_situs_map.json"), encoding="utf-8"))["etfs"]}
 
@@ -479,7 +528,10 @@ def main():
                 dist["not_comparable"] = dist.get("not_comparable", 0) + 1
                 hedged.append((e["ticker"], a["ticker"], a["hedge_ccy"]))
                 continue
-            v = compare(s_us, s_alt, gy)
+            # A documented change to the index the ALTERNATIVE tracks. The US
+            # side is not re-capped, so the break belongs to the alternative.
+            brk = (index_map.get(a["index_key"], {}).get("methodology_break") or {}).get("date")
+            v = compare(s_us, s_alt, gy, break_date=brk)
             # Threshold is the C floor, not the B floor. Sector indices from
             # different providers legitimately differ by one to two points a
             # year -- S&P 500 Information Technology is not MSCI US IMI

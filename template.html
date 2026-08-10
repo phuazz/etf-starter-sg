@@ -1750,6 +1750,8 @@ function swapHydrate(){
   SWAP.etfs.forEach(e=>{
     e.kind='etf';
     if(e.caveat===undefined && e.cav!=null) e.caveat=cavs[e.cav];
+    if(e.verdict_note===undefined && e.verdict==='no_verified_equivalent' && SWAPBP().no_verified_equivalent)
+      e.verdict_note=SWAPBP().no_verified_equivalent.replace('{label}',e.index_label);
     if(e.caveat_note===undefined && e.cavn!=null) e.caveat_note=cavs[e.cavn];
     // the shared half is stored once and joined back on here
     if(e.caveat && e.caveat_note) e.caveat=e.caveat+' '+e.caveat_note;
@@ -1759,6 +1761,8 @@ function swapHydrate(){
       // are never in the dictionary, but this ordering is what makes that safe.
       if(base) for(const k in base){ if(a[k]===undefined) a[k]=base[k]; }
       if(a.tier===undefined) a.tier=e.tier;
+      // offered unless a reason was recorded for setting it aside
+      if(a.recommended===undefined) a.recommended=!a.not_recommended_because;
       if(a.estate_tax_exposed===undefined) a.estate_tax_exposed=SWAPBP().alt_estate_tax_exposed===undefined?false:SWAPBP().alt_estate_tax_exposed;
       if(a.caveat===undefined && e.caveat) a.caveat=e.caveat;
     });

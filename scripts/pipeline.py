@@ -373,27 +373,41 @@ def slim_swap(d):
     # matched at a different tier than its parent would be real evidence.
     mixed = [e["ticker"] for e in d["etfs"]
              if any(a.get("tier") != e["tier"] for a in e["alternatives"])]
-    keep_alt = ("ticker", "recommended", "not_recommended_because",
-                "verification_pending") + tuple(
+    # `recommended` is not shipped: it is exactly the negation of "a reason was
+    # given for setting this aside" on all 117 pairs, which is not a coincidence
+    # -- the refusal floor writes one whenever it declines, and
+    # test_every_alternative_carries_a_recommendation_decision requires it.
+    # Checked here against the build rather than assumed, and carried if the
+    # equivalence ever breaks, because a pair silently flipping to recommended
+    # is the worst failure this file could cause.
+    rec_derivable = all(a["recommended"] == (not a.get("not_recommended_because"))
+                        for e in d["etfs"] for a in e["alternatives"])
+    keep_alt = ("ticker", "not_recommended_because",
+                "verification_pending") + (() if rec_derivable else ("recommended",)) + tuple(
                     f for f in hoist_candidates if f in varies)
     if mixed:
         keep_alt = keep_alt + ("tier",)
         print(f"  swap: {len(mixed)} parents have alternatives at a different tier — kept per pair")
     # The overlap window is the same 4.98 years on every graded pair, so it is
     # stated once. Only hoisted if it really is single-valued this build.
-    yrs_seen = {a["verification"]["years"] for e in d["etfs"] for a in e["alternatives"]
-                if (a.get("verification") or {}).get("years") is not None}
     # The five-year figure ships only where it DISAGREES with the graded window.
     # Where the two agree it adds a number per pair and tells the reader nothing
     # the grade has not; where they diverge it is the whole point, so drift_pp
     # gates its own context.
     keep_ver = ("grade", "gap_pp", "monthly_corr", "contradiction",
-                "drift_pp", "long_history_unusable")
-    if len(yrs_seen) == 1:
-        m["boilerplate"]["ver_years"] = yrs_seen.pop()
-    else:
-        keep_ver = keep_ver + ("years",)
-        print(f"  swap: overlap windows differ {sorted(yrs_seen)} — kept per pair")
+                "drift_pp", "long_history_unusable", "graded_since")
+    # Most pairs share one window; the sector pairs graded since the March 2025
+    # re-capping have a shorter one. The COMMON value is stated once and only
+    # the exceptions carry their own. The first version hoisted only when EVERY
+    # pair agreed, so a single short window put the field back on all 116.
+    yrs_all = [a["verification"]["years"] for e in d["etfs"] for a in e["alternatives"]
+               if (a.get("verification") or {}).get("years") is not None]
+    common_years = max(set(yrs_all), key=yrs_all.count) if yrs_all else None
+    if common_years is not None:
+        m["boilerplate"]["ver_years"] = common_years
+        if len(set(yrs_all)) > 1:
+            print(f"  swap: {yrs_all.count(common_years)}/{len(yrs_all)} pairs on the "
+                  f"{common_years}y window; the rest carry their own")
     # Only the total is rendered; the fee and withholding components are shipped
     # on all 116 pairs and displayed nowhere, and the footnote under the table
     # already says the total is the one plus the other. The repo file keeps the
@@ -414,10 +428,24 @@ def slim_swap(d):
             m["caveats"].append(text)
         return cav_idx[text]
 
+    # The no-verified-equivalent note is one sentence with the index label
+    # dropped into it, repeated on every holding that reaches that verdict.
+    # Templated and checked the same way the decomposition sentence is: rebuilt,
+    # compared, and left verbatim on any record that does not reproduce.
+    nv_tpl = ("Candidate funds tracking {label} were found, but none survived "
+              "verification against realised returns. Presenting one anyway would be "
+              "offering a match the evidence does not support.")
+    m["boilerplate"]["no_verified_equivalent"] = nv_tpl
+    nv_ok = nv_kept = 0
     for e in d["etfs"]:
         r = {k: e[k] for k in ("ticker", "name", "index_label", "tier",
                                "verdict", "verdict_note", "ter", "yield",
                                "aum_usd") if k in e}
+        if r.get("verdict_note") and nv_tpl.replace("{label}", e["index_label"]) == r["verdict_note"]:
+            del r["verdict_note"]
+            nv_ok += 1
+        elif r.get("verdict_note"):
+            nv_kept += 1
         if e.get("caveat"):
             r["cav"] = intern_caveat(e["caveat"])
         if e.get("caveat_note"):
@@ -434,8 +462,19 @@ def slim_swap(d):
             b = {k: a[k] for k in keep if k in a}
             v, c = a.get("verification", {}), a.get("cost", {})
             b["verification"] = {k: v[k] for k in keep_ver if v.get(k) is not None}
+            if v.get("years") is not None and v["years"] != common_years:
+                b["verification"]["years"] = v["years"]
             if v.get("drift_pp") is not None and v.get("gap_5y_pp") is not None:
                 b["verification"]["gap_5y_pp"] = v["gap_5y_pp"]
+            # The pre-change figure ships only where it says something the
+            # current one does not. XLK against IUIT went +8.48 to -7.33; XLI
+            # against SXLI went 0.15 to 0.26, and nobody needs to be told that.
+            gb = v.get("gap_before_change_pp")
+            # Same 1.5pp threshold verify_matches uses to flag a 3y/5y drift;
+            # kept as a literal here rather than imported, since this module
+            # does not otherwise depend on that one.
+            if gb is not None and v.get("gap_pp") is not None and abs(gb - v["gap_pp"]) > 1.5:
+                b["verification"]["gap_before_change_pp"] = gb
             b["cost"] = {k: c[k] for k in keep_cost if c.get(k) is not None}
             r["alternatives"].append(b)
         r["unresolved_alternatives"] = []
