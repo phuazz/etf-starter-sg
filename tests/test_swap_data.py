@@ -324,6 +324,25 @@ def test_a_fund_name_attribution_is_actually_evidenced_by_the_name():
     assert not bad, "attribution claims the name and the name does not say it:\n  " + "\n  ".join(bad)
 
 
+def test_capped_variant_index_keys_are_issuer_verified():
+    """The twenty UCITS sector keys each name a specific capped index, so each
+    one needs a document behind it.
+
+    They were created from a naming convention evidenced on eight funds, with
+    the other twelve marked as convention rather than checked -- the honest
+    state, but a state this repo has been burned by six times. All twenty are
+    now read off the issuer's own page or factsheet, and this stops a new key
+    joining them on a pattern.
+    """
+    idx = load("index_map.json")["indices"]
+    keys = [k for k in idx if k.startswith(("sp500_capped_", "select_capped_"))]
+    assert len(keys) == 20, f"expected 20 capped-variant sector keys, found {len(keys)}"
+    bad = [k for k in keys
+           if not (idx[k].get("index_src") or "").strip()
+           or "not individually checked" in idx[k]["index_src"]]
+    assert not bad, f"capped-variant index key without an issuer source: {bad}"
+
+
 def test_unverified_index_mappings_do_not_multiply():
     """A ratchet, not a target. Lowering it means verifying one against the
     issuer and editing the number down; it must never be raised to make a new

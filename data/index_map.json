@@ -572,16 +572,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Information Technology sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 70,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_tech",
    "us_content": 1.0
   },
   "select_capped_tech": {
    "label": "S&P Technology Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Technology Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Technology Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 70,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_tech",
    "us_content": 1.0
   },
@@ -590,16 +590,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Health Care sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 60,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_healthcare",
    "us_content": 1.0
   },
   "select_capped_healthcare": {
    "label": "S&P Health Care Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Health Care Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Health Care Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 60,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_healthcare",
    "us_content": 1.0
   },
@@ -608,16 +608,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Financials sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 70,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_financials",
    "us_content": 1.0
   },
   "select_capped_financials": {
    "label": "S&P Financials Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Financials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Financials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 70,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_financials",
    "us_content": 1.0
   },
@@ -626,16 +626,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Consumer Discretionary sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 50,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_disc",
    "us_content": 1.0
   },
   "select_capped_consumer_disc": {
    "label": "S&P Consumer Discretionary Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Consumer Discretionary Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Consumer Discretionary Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 50,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_consumer_disc",
    "us_content": 1.0
   },
@@ -644,16 +644,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Consumer Staples sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 40,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_consumer_staples",
    "us_content": 1.0
   },
   "select_capped_consumer_staples": {
    "label": "S&P Consumer Staples Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Consumer Staples Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Consumer Staples Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 40,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_consumer_staples",
    "us_content": 1.0
   },
@@ -662,16 +662,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Energy sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 25,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_energy",
    "us_content": 1.0
   },
   "select_capped_energy": {
    "label": "S&P Energy Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Energy Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Energy Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 25,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_energy",
    "us_content": 1.0
   },
@@ -680,16 +680,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Industrials sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 75,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_industrials",
    "us_content": 1.0
   },
   "select_capped_industrials": {
    "label": "S&P Industrials Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Industrials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Industrials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 75,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_industrials",
    "us_content": 1.0
   },
@@ -698,16 +698,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Utilities sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 30,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_utilities",
    "us_content": 1.0
   },
   "select_capped_utilities": {
    "label": "S&P Utilities Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Utilities Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Utilities Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 30,
-   "index_src": "issuer factsheet, retrieved 2026-08-06",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_utilities",
    "us_content": 1.0
   },
@@ -716,16 +716,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Materials sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 30,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_materials",
    "us_content": 1.0
   },
   "select_capped_materials": {
    "label": "S&P Materials Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Materials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Materials Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 30,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_materials",
    "us_content": 1.0
   },
@@ -734,16 +734,16 @@
    "provider": "S&P Dow Jones",
    "exposure": "The S&P 500 Communication Services sector, capped 35/20 so a UCITS fund may hold it. Not the US Select Sector index, which caps 25/50.",
    "n_holdings": 25,
-   "index_src": "iShares S&P 500 sector range naming convention, verified on IUIT, IUHC, IUFS and IUCD; this line not individually checked",
+   "index_src": "iShares product page, retrieved 2026-08-06",
    "family": "sector_comm_services",
    "us_content": 1.0
   },
   "select_capped_comm_services": {
    "label": "S&P Communication Services Select Sector Daily Capped 35/20",
    "provider": "S&P Dow Jones",
-   "exposure": "The US Communication Services Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019.",
+   "exposure": "The US Communication Services Select Sector index, capped 35/20 so a UCITS fund may hold it. Capping was 25/20 until 24 March 2025 and absent before 15 March 2019. Index history: uncapped Select Sector before 15 March 2019, Daily Capped 25/20 to 24 March 2025, Daily Capped 35/20 since — two methodology changes inside the record.",
    "n_holdings": 25,
-   "index_src": "SPDR UCITS Select Sector range naming convention, verified on SXLK, SXLU, SXLP and SXLE; this line not individually checked",
+   "index_src": "SSGA EMEA factsheet, retrieved 2026-08-06",
    "family": "sector_comm_services",
    "us_content": 1.0
   }
