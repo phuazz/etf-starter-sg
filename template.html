@@ -146,6 +146,25 @@ a{color:var(--b-text);text-decoration:none}
 .tab:hover{color:var(--t1)}
 .tab.active{color:var(--t1);font-weight:600}
 .tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--t1)}
+.t-short{display:none}
+/* sub-navigation inside a top-level panel. Funds holds three views: the fund
+   list, costs & tax, and expected returns. */
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 20px}
+.subtab{background:var(--bg3);border:1px solid var(--bd);border-radius:999px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--t3-text);padding:8px 14px;min-height:36px;cursor:pointer;white-space:nowrap}
+.subtab:hover{color:var(--t1);background:var(--bg-hover)}
+.subtab.active{background:var(--t1);border-color:var(--t1);color:var(--bg2);font-weight:600}
+/* Mobile: five equal columns cannot overflow at any width, so no tab can sit
+   off-screen the way the seven-tab scrolling bar did (802px of tabs in a 358px
+   track at 390px — four of them hidden, with no scroll affordance to say so).
+   Sticky because the Funds panel runs ~31 screens on a 390px phone once the
+   table becomes stacked cards, and the nav was otherwise unreachable from there. */
+@media(max-width:640px){
+  #tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:0;overflow:visible;position:sticky;top:0;z-index:30;background:var(--bg);margin:16px 0 18px}
+  #tabs .tab{font-size:13px;padding:12px 2px;text-align:center}
+  .t-long{display:none} .t-short{display:inline}
+  .subtabs{gap:5px}
+  .subtab{font-size:12.5px;padding:10px 11px;min-height:40px}
+}
 .panel{display:none}
 .panel.active{display:block;animation:fade .2s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -555,11 +574,9 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-p="start">Start</button>
-    <button class="tab" data-p="find">Find funds</button>
-    <button class="tab" data-p="cost">Costs &amp; tax</button>
-    <button class="tab" data-p="forward">Expected returns</button>
-    <button class="tab" data-p="build">Build a portfolio</button>
-    <button class="tab" data-p="swap">Swap a US holding</button>
+    <button class="tab" data-p="find"><span class="t-long">Find funds</span><span class="t-short">Funds</span></button>
+    <button class="tab" data-p="build"><span class="t-long">Build a portfolio</span><span class="t-short">Build</span></button>
+    <button class="tab" data-p="swap"><span class="t-long">Swap a US holding</span><span class="t-short">Swap</span></button>
     <button class="tab" data-p="learn">Learn</button>
   </div>
 
@@ -633,6 +650,11 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
   <!-- FIND -->
   <div class="panel" id="p-find">
+    <div class="subtabs">
+      <button class="subtab active" data-p="find">Fund list</button>
+      <button class="subtab" data-p="cost">Costs &amp; tax</button>
+      <button class="subtab" data-p="forward">Expected returns</button>
+    </div>
     <h2 class="sec">Recommended core building blocks</h2>
     <div class="lead">For global and US exposure, the domicile-clean route is an <strong>Irish-domiciled UCITS</strong> fund (listed in London): no US estate-tax exposure and 15% — not 30% — dividend withholding. For Singapore, Asia, income and thematics, SGX-listed funds are efficient. Start here, then explore the full list below.</div>
     <div class="corerow" id="coreRow"></div>
@@ -673,7 +695,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable" data-k="starter_score" title="0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Hover a cell for its breakdown.">Efficiency Score <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="mgmt_fee" title="Management fee — the manager's cut. It is a component of, and usually lower than, the all-in TER.">Mgmt fee % <span class="arw"></span></th>
         <th class="r sortable" data-k="effective_ter" title="The fund's all-in yearly cost — the Total Expense Ratio (TER): management fee + trustee + custody, taken from returns daily. Where a fund publishes only a management fee, this is estimated from it and marked 'est'.">Annual cost % <span class="arw"></span></th>
-        <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate, 10-15yr) minus TER minus dividend-withholding drag. An estimate, not a forecast — the Expected returns tab explains how the estimates are built.">Net exp. return <span class="arw"></span></th>
+        <th class="r sortable" data-k="net_expected_return_pct" title="Long-run expected return (synthesised house estimate, 10-15yr) minus TER minus dividend-withholding drag. An estimate, not a forecast — the Expected returns view, under Funds, explains how the estimates are built.">Net exp. return <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_1y" title="Trailing 1-year PRICE return (dividends extra), from the weekly series. Backward-looking — the tool defaults to forward-looking value, not this.">1Y <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_3y" title="Trailing 3-year annualised PRICE return (geometric, dividends extra). Backward-looking.">3Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_5y" title="Trailing 5-year annualised PRICE return (geometric, dividends extra). Backward-looking.">5Y p.a. <span class="arw"></span></th>
@@ -688,6 +710,11 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
   <!-- COST -->
   <div class="panel" id="p-cost">
+    <div class="subtabs">
+      <button class="subtab" data-p="find">Fund list</button>
+      <button class="subtab active" data-p="cost">Costs &amp; tax</button>
+      <button class="subtab" data-p="forward">Expected returns</button>
+    </div>
     <h2 class="sec">The three costs of owning an ETF</h2>
     <div class="lead">Two of these are invisible on any price chart. A cheap headline fee means little if the fund's domicile quietly taxes your dividends and your estate.</div>
     <div class="threecost">
@@ -723,6 +750,11 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
   <!-- FORWARD RETURN -->
   <div class="panel" id="p-forward">
+    <div class="subtabs">
+      <button class="subtab" data-p="find">Fund list</button>
+      <button class="subtab" data-p="cost">Costs &amp; tax</button>
+      <button class="subtab active" data-p="forward">Expected returns</button>
+    </div>
     <h2 class="sec">Forward-looking return, not last year's</h2>
     <div class="lead">Good choices rest on <strong>expected long-run return</strong>, not the trailing twelve months. Recent winners often carry the lowest forward return — a reason to diversify and rebalance, not to chase.</div>
     <div class="scoreinfo" id="cmaMethod"></div>
@@ -749,7 +781,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <h2 class="sec">Build a portfolio</h2>
     <div class="lead">Pick a risk profile, then nudge the mix. Everything recomputes live: expected return, volatility, income, and — crucially — the portfolio's US estate-tax exposure, which depends on <em>how</em> you implement it. A starting point for discussion, not advice.</div>
     <div class="lead" style="margin-top:-6px">This tool is the instrument layer — which funds, at what cost and domicile. For the allocation layer — <em>how much of each, and why, judged against a mandate</em> — see the companion tool <a href="https://phuazz.github.io/Long-Term-Portfolio-Construction/">Long-Term Portfolio Construction</a>.</div>
-    <div class="scoreinfo">Every figure here is <b>model output, not a promise</b>. The blended return uses the long-run asset-class estimates <a onclick="switchTab('forward')" style="color:var(--b-text);cursor:pointer;font-weight:600">explained on the Expected returns tab</a>; the portfolio volatility and the &ldquo;typical worst fall&rdquo; also depend on assumed <b>correlations</b> between asset classes — how much they tend to move together — which are themselves estimates from history and can rise sharply in a crisis, when diversification helps least. Treat the outputs as directional.</div>
+    <div class="scoreinfo">Every figure here is <b>model output, not a promise</b>. The blended return uses the long-run asset-class estimates <a onclick="switchTab('forward')" style="color:var(--b-text);cursor:pointer;font-weight:600">explained under Funds &rarr; Expected returns</a>; the portfolio volatility and the &ldquo;typical worst fall&rdquo; also depend on assumed <b>correlations</b> between asset classes — how much they tend to move together — which are themselves estimates from history and can rise sharply in a crisis, when diversification helps least. Treat the outputs as directional.</div>
     <div class="pcards" id="pcards"></div>
     <div class="grid2">
       <div class="card">
@@ -2548,7 +2580,7 @@ function selectGoal(g){
   document.getElementById('planOut').innerHTML=
     '<div class="plan card"><div class="plan-name">'+p.name+'</div><div class="plan-blurb">'+p.blurb+'</div>'+
     '<div class="plan-mix">'+mixHtml+'</div>'+
-    '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See the Expected returns tab for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
+    '<div class="plan-stats"><div title="Long-run (10-15yr) average estimate, net of fund costs and withholding drag — not a promise for any single year. See Funds &rarr; Expected returns for how it is built."><div class="ps-l">Est. return</div><div class="ps-v">'+ret.toFixed(1)+'%/yr</div></div>'+
     '<div><div class="ps-l">Annual cost</div><div class="ps-v">'+cost.toFixed(2)+'%</div></div>'+incomeStat+
     '<div><div class="ps-l">US estate tax</div><div class="ps-v" style="color:var(--g-text)">S$0</div></div></div>'+
     '<div class="plan-how"><strong>How to act:</strong> open a brokerage that lets you buy London-listed UCITS ETFs and SGX ETFs (e.g. Interactive Brokers, Tiger, moomoo, Saxo), buy these funds in roughly these proportions, and keep adding to them regularly. Every fund here is non-US-domiciled, so there is <strong>zero US estate-tax exposure</strong>. A step-by-step purchase walkthrough is just below <a onclick="var g=document.getElementById(\'fpGuide\');g.open=true;g.scrollIntoView({behavior:\'smooth\',block:\'start\'})" style="color:var(--b-text);cursor:pointer;font-weight:600">&darr; open the guide</a>.</div>'+
@@ -2572,14 +2604,24 @@ function initStart(){
   selectGoal('grow');
 }
 
+// The nav shows five destinations, not seven: cost and forward are views inside
+// Funds, reached by the sub-nav in each of those three panels. The panels stay
+// separate, so every existing switchTab('cost') call and #tab=forward deep link
+// still lands exactly where it did — only the highlighted top-level tab changes.
+const TAB_GROUP={start:'start',find:'find',cost:'find',forward:'find',build:'build',swap:'swap',learn:'learn'};
 function switchTab(p){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===p));
+  const g=TAB_GROUP[p]||p;
+  document.querySelectorAll('#tabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.p===g));
+  document.querySelectorAll('.subtab').forEach(t=>t.classList.toggle('active',t.dataset.p===p));
   document.querySelectorAll('.panel').forEach(pl=>pl.classList.toggle('active',pl.id==='p-'+p));
   if(p==='cost') renderCost();
   if(p==='forward') renderForward();
   if(p==='build') buildUI();
   if(p==='swap'){renderSwapTop();renderSwapSug();renderSwap();renderHorizon();renderRisk();pfRender();}
   if(p==='learn') renderLearn();
+  // Panels run to several screens on a phone (Funds is ~31), so an in-content
+  // jump used to drop the reader at the same scroll offset in a different panel.
+  window.scrollTo(0,0);
 }
 
 async function init(){
@@ -2639,6 +2681,7 @@ async function init(){
   document.getElementById('trailReset').addEventListener('click',()=>{sortKey='starter_score';sortDir=-1;trailBannerDismissed=true;renderTable();});
   document.getElementById('trailDismiss').addEventListener('click',()=>{trailBannerDismissed=true;document.getElementById('trailBanner').style.display='none';});
   document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
+  document.querySelectorAll('.subtab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.p)));
   document.getElementById('cAmt').addEventListener('input',()=>{reformatAmt('cAmt');renderCostSim();});
   ['cYrs','cFund'].forEach(id=>document.getElementById(id).addEventListener('input',renderCostSim));
   document.getElementById('resetBtn').addEventListener('click',()=>selectProfile(BPRESET));

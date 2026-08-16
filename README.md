@@ -25,6 +25,14 @@ Helps a first-time investor answer four questions about exchange-traded funds ac
    schedule*, not tax advice — the graduated brackets plus the US$13,000 unified credit are
    implemented once and shared by both the rate table and the calculator, so they cannot drift.
 
+**Navigation** — five top-level tabs (Start · Funds · Build · Swap · Learn). Costs & tax and
+Expected returns are views *inside* Funds, reached by the sub-nav at the top of that panel.
+The three panels remain separate `#p-` divs, so `switchTab('cost')` calls and `#tab=forward`
+deep links are unchanged; only the highlighted top-level tab is derived, via `TAB_GROUP`.
+Five is the count that fits a 390px phone as an equal-column grid with nothing off-screen —
+the previous seven-tab bar was 802px wide in a 358px track, hiding four tabs behind a
+horizontal scroll with no affordance to say they were there.
+
 Two smaller transparency features sit alongside these:
 
 - **Where & how to buy** — the expandable per-fund panel carries a venue-derived access note
