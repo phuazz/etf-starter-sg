@@ -4,8 +4,9 @@
     {
       "name": "docs",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "docs", "-l", "3111"],
-      "port": 3111
+      "runtimeArgs": ["serve", "docs"],
+      "port": 3111,
+      "autoPort": true
     }
   ]
 }
