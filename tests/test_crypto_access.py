@@ -222,6 +222,44 @@ def test_us_listed_rows_carry_an_explicit_yahoo_symbol(crypto):
             assert p.get("yahoo"), f"{p['ticker']} has no explicit yahoo symbol"
 
 
+def test_learn_tab_cost_range_matches_the_data(crypto):
+    """Pin the prose to the numbers it describes.
+
+    The Learn tab quotes a headline range for the Hong Kong route in two places.
+    It was written as 0.85-1.72% and went stale the moment a ChinaAMC ongoing
+    charges figure of 1.99% was read from the filing -- the page would have kept
+    asserting a ceiling nearly a third below the real one, in prose no build step
+    looks at. Only ongoing-charges figures count toward the range: a bare
+    management fee is a different measurement and must not set either bound.
+    """
+    ocf = [p["cost"] for p in crypto["products"]
+           if p["route"] == "hk" and p.get("cost") is not None
+           and (p.get("cost_basis") or "").startswith("ongoing charges")]
+    assert ocf, "no HK ongoing-charges figures to build a range from"
+    lo, hi = f"{min(ocf):.2f}", f"{max(ocf):.2f}"
+
+    tpl = os.path.join(ROOT, "template.html")
+    with open(tpl, encoding="utf-8") as fh:
+        html = fh.read()
+
+    for phrase in (f"{lo}&ndash;{hi}%", f"{lo}% to {hi}% a year"):
+        assert phrase in html, (
+            f"template.html does not carry the current HK cost range: expected "
+            f"{phrase!r}. The published ongoing-charges figures now span "
+            f"{lo}%-{hi}%; update the Learn tab prose to match.")
+
+
+def test_no_product_is_called_the_most_expensive_in_prose(crypto):
+    """A superlative is a claim about the whole set, so it breaks whenever the set
+    changes. Harvest was described as the most expensive HK crypto ETF here; the
+    ChinaAMC funds then came in above it. Rank claims belong in the rendered
+    table, which sorts itself, not in prose that cannot."""
+    for p in crypto["products"]:
+        w = (p.get("stale_source_warning") or "").lower()
+        assert "it is the most expensive" not in w, (
+            f"{p['ticker']} carries an unqualified 'most expensive' claim")
+
+
 def test_as_at_date_is_present(crypto):
     """Every figure here is a point-in-time reading of a document that gets
     reissued. Fees on this route have already moved once by 3x."""

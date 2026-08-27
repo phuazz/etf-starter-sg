@@ -149,7 +149,7 @@ python scripts/verify_matches.py           # realised-return check + refusal flo
 python scripts/decompose_single_names.py   # variance decomposition
 python scripts/fetch_mortality.py          # SingStat death rates
 python scripts/pipeline.py                 # inline everything -> docs/index.html
-python -m pytest tests/ -q                 # 72 guards (57 swap + 15 crypto access)
+python -m pytest tests/ -q                 # 74 guards (57 swap + 17 crypto access)
 ```
 
 The UCITS universe is near-static and deliberately **not** wired into the weekly
@@ -217,20 +217,43 @@ sponsor fee measure different things; each figure prints with its basis and name
 filing it came from. Where nothing could be verified (ChinaAMC Ether) the field is blank
 rather than filled with an aggregator's number.
 
-Two things this pass caught that the secondary sources have wrong:
+Three things this pass caught that the secondary sources have wrong. All three are
+cost errors in the same direction — the published all-in is roughly double the number
+in circulation — which is why every figure here names its filing:
 
 1. **Harvest Bitcoin Spot ETF is not the cheap one.** Its launch fee of 0.30% rose to
    0.90% on 24 Feb 2025 and its ongoing-charges cap was removed on 30 Apr 2025; the
    published OCF is **1.72%** (KFS, 30 Apr 2026). Much of the web still calls it the
    cheapest of the three.
-2. **A ticker collision, caught before it shipped.** An automated read of the Harvest
+2. **The ChinaAMC funds are quoted at half their cost.** The 0.99% repeated by every
+   aggregator as the TER is the *management fee* — confirmed at "currently 0.99% per
+   annum" in the ChinaAMC Select OFC prospectus of 22 Oct 2025. Their own Key Facts
+   Statements put **ongoing charges at 1.99%** for the bitcoin, ether and solana
+   sub-funds (HKEXnews 2025102200009 / 011 / 013). The issuer's website links were
+   dead and its product pages are a Vue SPA that serves a 745-byte shell to a plain
+   fetch; the filed copies on HKEXnews are the reachable primary source.
+3. **A ticker collision, caught before it shipped.** An automated read of the Harvest
    filing reported counters "3066/3067/3068" — breaking the HK convention (3xxx HKD /
    9xxx USD / 83xxx RMB) and colliding with 3067, already the iShares Hang Seng TECH
    ETF in `curated.json`. The real codes, read from the filing, are 3439 and 9439.
    `test_no_ticker_collides_with_the_rest_of_the_universe` now pins it.
 
+Two guards exist because of mistakes made while building this, not in anticipation of
+them. `test_learn_tab_cost_range_matches_the_data` pins the Learn tab's headline range
+to the figures it describes: it was written 0.85–1.72% and went stale the instant
+ChinaAMC's 1.99% was read, in prose no build step looks at.
+`test_no_product_is_called_the_most_expensive_in_prose` exists because Harvest was
+described as the most expensive of the set and then was not — a superlative is a claim
+about the whole set, so it belongs in the table that sorts itself, not in prose.
+
+**Vintages differ and the page says so.** Harvest's figure is an *actual* 12-month OCF
+to 31 Mar 2026; ChinaAMC's is an *estimate* from an Oct 2025 KFS; Bosera's bitcoin line
+is a bare management fee from a Mar 2026 prospectus, with no OCF published. These are
+four different measurements and the page never renders them as a single ranked column
+without the basis attached.
+
 Data lives in `data/crypto_access.json`, deliberately outside `curated.json` so the
-boundary is visible. Guards: `tests/test_crypto_access.py` (15 tests).
+boundary is visible. Guards: `tests/test_crypto_access.py` (17 tests).
 
 ## Status
 

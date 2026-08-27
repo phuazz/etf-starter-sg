@@ -2,6 +2,7 @@
   "_meta": {
     "purpose": "Crypto ETF ACCESS routes reachable from Singapore, and the domicile/situs consequence of each. Deliberately SEPARATE from curated.json and from the scored ETF universe: these products carry no forward return, no volatility, no Efficiency Score, and no place in cma.json or model_portfolios.json. The page states which route is structurally cleaner for a Singapore holder; it takes no view on whether to hold crypto at all.",
     "as_at": "2026-08-27",
+    "source_vintages": "Cost figures are point-in-time readings of documents that get reissued, and they are NOT all the same vintage: Harvest from a KFS of 30 Apr 2026 (an actual 12-month figure), ChinaAMC from a KFS of Oct 2025 (an estimate), Bosera from a prospectus of Mar 2026 and a KFS of Jun 2025. Each product states its own. A page carrying four vintages says so four times.",
     "not_advice": true,
     "why_no_forward_return": "The Expected returns tab is built on long-run capital market assumptions per asset class. No defensible long-run CMA exists for bitcoin or ether — published CMAs from major asset managers do not carry one, and inventing a number to fill the column would undermine every other figure on that tab. The columns are therefore left blank on purpose, not for want of data.",
     "cost_basis_warning": "Cost figures below are NOT all on the same basis. A management fee is not an ongoing charges figure, and an ongoing charges figure that is an ESTIMATE is not an actual one. Each record states its own basis in cost_basis and must be displayed with it. Comparing a 0.60% management fee against a 1.72% actual ongoing charges figure as though they were like-for-like would be wrong.",
@@ -21,7 +22,7 @@
       "wrapper": "Fund (SFC-authorised open-ended fund company sub-fund)",
       "situs": "outside_us",
       "verdict": "The only route that is both a fund and outside US situs.",
-      "cost_note": "You pay for the clean wrapper: roughly 0.6% to 1.7% a year against 0.25% on the US route."
+      "cost_note": "You pay for the clean wrapper: 0.85% to 1.99% a year on published ongoing charges, against 0.25% on the US route."
     },
     {
       "key": "us",
@@ -100,7 +101,7 @@
       "cost_basis": "ongoing charges (actual, 12m to 31 Mar 2026)",
       "ter_conf": "high",
       "src": "Product Key Facts, 30 April 2026 (HKEXnews 2026043003017): stock codes 3439/9439, lot 100 Shares, 'Ongoing charges over a year: 1.72%', tracking difference -1.52% for the calendar year ended 31 Dec 2025. The KFS records that the management fee rose from 0.3% to 0.9% per annum with effect from 24 February 2025, and that the 1.00% cap on ongoing charges was removed on 30 April 2025.",
-      "stale_source_warning": "Secondary sources widely still quote 0.30% for this fund and describe it as the cheapest of the three. That was the launch promotional fee and it has not applied since February 2025. On the published ongoing charges figure it is the most expensive HK crypto ETF listed here.",
+      "stale_source_warning": "Secondary sources widely still quote 0.30% for this fund and describe it as the cheapest of the three. That was the launch promotional fee and it has not applied since February 2025. The published ongoing charges figure is 1.72% — close to six times the number still in circulation. It is not, however, the most expensive Hong Kong crypto ETF here: the ChinaAMC funds estimate 1.99%. What Harvest's 1.72% has that theirs does not is that it is an ACTUAL figure for a completed 12-month period rather than an estimate.",
       "index": "CME CF Bitcoin Reference Rate — APAC Variant",
       "custody": "BOCI-Prudential Trustee Limited; virtual asset sub-custody OSL Digital Securities Limited"
     },
@@ -115,15 +116,15 @@
       "exchange": "HKEX",
       "ccy": "HKD",
       "domicile": "HK",
-      "structure": "SFC-authorised Hong Kong listed ETF (open-ended fund company sub-fund)",
+      "structure": "Sub-fund of ChinaAMC Select OFC, a Hong Kong public umbrella open-ended fund company authorised under s.104 SFO",
       "isin": null,
-      "lot": null,
-      "cost": 0.99,
-      "cost_basis": "reported total expense ratio",
-      "ter_conf": "med",
-      "src": "NOT verified against a current Key Facts Statement — the issuer's KFS link was dead and its product pages redirected at the as-at date. 0.99% is the management fee reported at launch (April 2024) by multiple contemporaneous reports and repeated by aggregators as the TER. Treat as indicative and check the issuer KFS before relying on it.",
-      "index": "CME CF Bitcoin Reference Rate — Asia Pacific Variant",
-      "custody": "SFC-licensed virtual asset trading platform and sub-custodian"
+      "lot": 100,
+      "cost": 1.99,
+      "cost_basis": "ongoing charges (estimated)",
+      "ter_conf": "high",
+      "src": "Product Key Facts, October 2025 (HKEXnews 2025102200009): stock codes 3042 HKD / 83042 RMB / 9042 USD, trading lot 100 Shares on every counter, 'Ongoing charges over a year: 1.99%', estimated annual tracking difference -1.99%. The KFS states the figure is a best estimate because the sub-fund is newly set up, and states no cap on it. The 0.99% quoted across aggregators as this fund's TER is the MANAGEMENT FEE — confirmed at 'currently 0.99% per annum of the Net Asset Value' in the ChinaAMC Select OFC prospectus of 22 October 2025 (p.119). The all-in figure is twice that.",
+      "index": "CME CF Bitcoin Reference Rate (APAC Variant)",
+      "custody": "BOCI-Prudential Trustee Limited; virtual asset sub-custody OSL Digital Securities Limited via OSL Custody Services Limited"
     },
     {
       "ticker": "3046",
@@ -136,15 +137,36 @@
       "exchange": "HKEX",
       "ccy": "HKD",
       "domicile": "HK",
-      "structure": "SFC-authorised Hong Kong listed ETF (open-ended fund company sub-fund)",
+      "structure": "Sub-fund of ChinaAMC Select OFC, a Hong Kong public umbrella open-ended fund company authorised under s.104 SFO",
       "isin": null,
-      "lot": null,
-      "cost": null,
-      "cost_basis": null,
-      "ter_conf": null,
-      "src": "Stock codes confirmed across multiple sources (3046 HKD / 9046 USD / 83046 RMB counters). No fee figure is stated here because none could be verified against an issuer document at the as-at date. A blank is more useful than an aggregator's guess.",
-      "index": "CME CF Ether-Dollar Reference Rate — Asia Pacific Variant",
-      "custody": "SFC-licensed virtual asset trading platform and sub-custodian"
+      "lot": 100,
+      "cost": 1.99,
+      "cost_basis": "ongoing charges (estimated)",
+      "ter_conf": "high",
+      "src": "Product Key Facts, October 2025 (HKEXnews 2025102200011): stock codes 3046 HKD / 83046 RMB / 9046 USD, trading lot 100 Shares on every counter, 'Ongoing charges over a year: 1.99%', stated as a best estimate because the sub-fund is newly set up. Management fee 'currently 0.99% per annum of the Net Asset Value' per the ChinaAMC Select OFC prospectus of 22 October 2025 (p.146). This field was blank on the 2026-08-27 build because the issuer's own KFS link was dead; the filed copy on HKEXnews supplied it.",
+      "index": "CME CF Ether-Dollar Reference Rate (APAC Variant)",
+      "custody": "BOCI-Prudential Trustee Limited; virtual asset sub-custody OSL Digital Securities Limited via OSL Custody Services Limited"
+    },
+    {
+      "ticker": "3460",
+      "usd_counter": "9460",
+      "rmb_counter": "83460",
+      "name": "ChinaAMC Solana ETF",
+      "underlying": "Solana",
+      "issuer": "China Asset Management (Hong Kong) Limited",
+      "route": "hk",
+      "exchange": "HKEX",
+      "ccy": "HKD",
+      "domicile": "HK",
+      "structure": "Sub-fund of ChinaAMC Select OFC, a Hong Kong public umbrella open-ended fund company authorised under s.104 SFO",
+      "isin": null,
+      "lot": 100,
+      "cost": 1.99,
+      "cost_basis": "ongoing charges (estimated, capped)",
+      "ter_conf": "high",
+      "src": "Product Key Facts, 22 October 2025 (HKEXnews 2025102200013): stock codes 3460 HKD / 83460 RMB / 9460 USD, trading lot 100 Shares on every counter, 'Ongoing charges over a year: 1.99%'. Unlike the bitcoin and ether sub-funds, this KFS states the ongoing charges figure is CAPPED at the disclosed level, with any excess borne by the Manager. Management fee 'currently 0.99% per annum of the Net Asset Value' per the same prospectus (p.176). Listed October 2025 — Asia's first spot Solana ETF.",
+      "index": "Solana reference rate (APAC variant)",
+      "custody": "BOCI-Prudential Trustee Limited; virtual asset sub-custody OSL Digital Securities Limited via OSL Custody Services Limited"
     },
     {
       "ticker": "IBIT",
@@ -208,6 +230,6 @@
     }
   ],
   "also_listed": {
-    "note": "The Hong Kong crypto ETF market has widened beyond the original April 2024 bitcoin and ether launches. ChinaAMC listed a spot Solana ETF (3460 HKD / 9460 USD / 83460 RMB) in October 2025 — Asia's first. It is named here for completeness of the route, not researched or listed as a product above, and carries no verified fee figure on this page."
+    "note": "The Hong Kong crypto ETF market has widened beyond the original April 2024 bitcoin and ether launches — ChinaAMC's spot Solana ETF, Asia's first, listed in October 2025 and is included in the product list above. The products listed here are representative of each access route rather than an exhaustive screen of every listed crypto product, and the route is what this page is about."
   }
 }
