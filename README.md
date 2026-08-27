@@ -112,26 +112,56 @@ It had split roughly 10:1 in December 2024. **This is a property of the data sou
 not of the crypto funds** — `SCY` (CSOP Star & ChiNext 50, SGX) had been carrying the
 same defect on the live site.
 
-`sanitise_prices()` runs on **every** build, including cached ones, and separates two
-defects that look alike in a chart:
+`sanitise_prices()` runs on **every** build, including cached ones, and separates three
+cases:
 
-- **spike** — one bar off its neighbours, level returns afterwards. A bad tick; the
-  bar is dropped and the series kept.
-- **step** — the level shifts and stays. No bar can be dropped: the whole pre-step
-  segment is on a different scale. The series is flagged and the page **withholds the
-  chart, the 1Y/3Y/5Y returns and the resilience stats**, saying precisely why.
+- **spike** — one bar off its neighbours, level returns afterwards. A bad tick; the bar
+  is dropped and the series kept whole.
+- **unconfirmed trailing break** — a shift within the last couple of bars. A new *level*
+  needs more than one observation to be a level, so these bars are dropped rather than
+  treated as a shift. If it really was a split, next week's bars land at the new level,
+  the break becomes confirmed and the segment logic picks it up — the call corrects
+  itself. This is what saves `SCY`, whose break is on its final bar: truncating after it
+  would discard three years of good history to keep one point.
+- **confirmed step** — the level shifts and stays. The series is **charted from after
+  the last shift**, with the earlier segment excluded.
 
-Steps are withheld rather than repaired because there is nothing in the feed to repair
-them from — no split event, no adjusted close. Inventing an adjustment factor is the
-confident-wrong-answer this dashboard exists to avoid. A trailing return computed
-across a 10:1 step is not imprecise, it is meaningless: 3008 would report about -90%
-a year. Computed yields are suppressed too, since a yield divides by the last close and
-`SCY`'s break is on its final bar.
+**Truncation is a view, not a deletion.** The full raw series stays in `prices.json`
+under `usable_from`; the page slices at load. The discarded segment is the evidence the
+shift happened and is what a proper repair works from. Where too little survives
+(`< 20` bars) the series is withheld outright instead — `3009` steps again three weeks
+before its series ends, so nothing is left to draw.
 
-Flags persist into `prices.json`, so the repo artefact and the inlined copy in
-`docs/index.html` agree and the guards can read them. Currently withheld: **3008, 3009,
-3460, SCY**. Each is repairable against issuer or exchange data — none has been yet.
-Guards: `tests/test_price_integrity.py` (10 tests).
+Nothing is repaired, because there is nothing in the feed to repair from — no split
+event, no adjusted close. Inventing an adjustment factor is the confident-wrong-answer
+this dashboard exists to avoid.
+
+Every derived number is confined to the kept segment: trailing returns only where the
+window fits (3008 shows 1Y, blanks 3Y and 5Y), the resilience window label is derived
+rather than the old hardcoded "~6yr", and a computed yield is suppressed when the shift
+falls inside the trailing 12 months it sums over. A caveat sits **above** the chart, not
+under it — the reader forms "this fund launched here" from the left edge of the line, and
+a footnote arrives too late to undo that.
+
+Current state: **3008** charted from Dec 2024 (34 weeks excluded), **3460** from Dec 2025
+(3 excluded), **SCY** from Nov 2023 (48 excluded), **3009** withheld entirely.
+
+### Escalation
+
+Detection without escalation is not a guard. The weekly Action runs unattended and every
+log looks the same whether one fund is broken or ten, so a new break would cut a fund's
+history perfectly and silently. `scripts/check_withheld.py` compares the live flags
+against the baseline in `data/price_withheld.json` and **exits non-zero on anything not
+already known about**, turning the run red so GitHub notifies the owner.
+
+It runs *after* the commit on purpose: a newly affected fund means the page is behaving
+correctly and should ship. The failure is a message to a person, not a rollback —
+freezing everyone's charts over one fund's bad data would be worse than the defect. A
+*recovered* fund never fails the run, but `test_baseline_matches_the_live_set_exactly`
+requires the baseline to match both ways, so the next local test run forces the prune.
+
+Guards: `tests/test_price_integrity.py` (15 tests). Fire-drilled by removing a known
+ticker from the baseline and confirming exit 1.
 
 ## Known simplifications (the three ways this could mislead — read before trusting a number)
 
@@ -183,7 +213,8 @@ python scripts/verify_matches.py           # realised-return check + refusal flo
 python scripts/decompose_single_names.py   # variance decomposition
 python scripts/fetch_mortality.py          # SingStat death rates
 python scripts/pipeline.py                 # inline everything -> docs/index.html
-python -m pytest tests/ -q                 # 84 guards (57 swap + 17 crypto + 10 price integrity)
+python scripts/check_withheld.py           # escalate any NEW price-series break
+python -m pytest tests/ -q                 # 89 guards (57 swap + 17 crypto + 15 price integrity)
 ```
 
 The UCITS universe is near-static and deliberately **not** wired into the weekly

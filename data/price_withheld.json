@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "purpose": "The set of funds whose price history carries an unadjusted level shift. This is a BASELINE, not a suppression list: nothing here is hidden because it is inconvenient, and adding a ticker does not stop the detector flagging it. Its only job is to let an automated run tell a NEW break from the ones already known about.",
+    "outcomes": "truncated = the segment after the last shift is long enough to chart, so the page draws it and states above the chart that the history is cut and by how much. withheld = too little survives, so no chart, no trailing returns and no resilience stats. Both are breaks and both count for escalation; the difference is only how much honest data was left over.",
+    "why_it_exists": "Detection without escalation is not a guard. sanitise_prices() already refuses to draw a chart it cannot stand behind and prints a warning, but the weekly refresh Action runs unattended and nobody reads its log. Without a baseline every run looks identical whether three funds are broken or thirty, so a fifth fund developing a step would withhold itself correctly and silently, and the page would quietly lose a chart with no one told.",
+    "how_it_escalates": "scripts/check_withheld.py compares the live flags in prices.json against this file. A ticker withheld but absent here is a NEW break and exits non-zero, turning the scheduled workflow red so GitHub notifies the repository owner. It runs AFTER the commit step on purpose: a newly withheld fund means the page is behaving correctly and should still ship — the failure is a message to a human, not a reason to freeze everyone's charts.",
+    "recovery": "A ticker listed here that is no longer withheld means the source was fixed or the series was repaired. The Action does not fail on that (good news must never block the nightly), but tests/test_price_integrity.py requires this file to match the live set exactly, so the next local test run forces it to be pruned.",
+    "not_a_fix": "Every entry below is repairable against issuer or exchange data. None has been repaired. Withholding is the honest interim state, not the destination.",
+    "as_at": "2026-08-27"
+  },
+  "withheld": [
+    {
+      "ticker": "3008",
+      "name": "Bosera HashKey Bitcoin ETF",
+      "first_seen": "2026-08-27",
+      "shape": "Level steps from about HK$75.8 to HK$7.47 across a fortnight in December 2024, roughly 10:1, with one corrupted bar of 736.6 sitting on the boundary.",
+      "likely_cause": "Share split, unadjusted. Yahoo reports no split event and returns an adjclose identical to the raw close.",
+      "outcome": "truncated",
+      "disposition": "Charted from December 2024; 34 earlier weeks excluded, 88 kept. 1Y returns available, 3Y and 5Y left blank because the window does not fit inside the kept segment.",
+      "found_by": "A reader questioning the chart, which drew the step as a fall from HK$737 to HK$7 in a single week."
+    },
+    {
+      "ticker": "3009",
+      "name": "Bosera HashKey Ether ETF",
+      "first_seen": "2026-08-27",
+      "shape": "The same roughly 10:1 December 2024 step as its bitcoin sibling, plus a second step of about 10x in the opposite direction in August 2026.",
+      "likely_cause": "Two opposite corporate actions twenty months apart is unusual enough that a data-source problem is at least as likely. Not resolved either way.",
+      "outcome": "withheld",
+      "disposition": "The second shift lands three weeks before the end of the series, so only 4 bars survive it — below the 20-bar floor for drawing a chart at all. Nothing is charted and no trailing returns are shown. This is the one fund here where truncation cannot rescue anything.",
+      "found_by": "Scan of every series after the 3008 report."
+    },
+    {
+      "ticker": "3460",
+      "name": "ChinaAMC Solana ETF",
+      "first_seen": "2026-08-27",
+      "shape": "A single step of about 7.7x in December 2025, weeks after the fund listed. The early segment sits near HK$0.66-0.72, which is implausible for a newly listed HK ETF; the later segment near HK$3-5 is consistent with its peers.",
+      "likely_cause": "The opening segment appears to be on the wrong scale rather than the later one being wrong.",
+      "outcome": "truncated",
+      "disposition": "Charted from December 2025; 3 earlier weeks excluded, 39 kept. Under a year of history, so every trailing return column is blank.",
+      "found_by": "Scan of every series after the 3008 report."
+    },
+    {
+      "ticker": "SCY",
+      "name": "CSOP Star & ChiNext 50 (SGX)",
+      "first_seen": "2026-08-27",
+      "shape": "Steps about 5.3x up in November 2023, then its most recent bar steps about 5.2x back down.",
+      "likely_cause": "Unadjusted corporate action for the 2023 step. The recent bar is a separate defect and is the current week's, so it also fed the computed yield until affected series were excluded from that.",
+      "outcome": "truncated",
+      "disposition": "The final bar is dropped first as an unconfirmed trailing break — a new level needs more than one observation to be a level, and if it really was a split, next week's bars will confirm it and the segment logic will pick it up. The series is then charted from November 2023; 48 earlier weeks excluded, 142 kept. This is the case that justified handling a trailing break separately: truncating after it would have thrown away nearly three years of good history to keep a single point.",
+      "found_by": "Scan of every series after the 3008 report. Not a crypto fund — this one had been showing a wrong chart on the live site well before the crypto work, which is what establishes the defect as a property of the data source rather than of one issuer."
+    }
+  ]
+}

@@ -409,51 +409,112 @@ def detect_price_breaks(closes):
     return out
 
 
+# A level shift on the final bars cannot be told from a bad tick yet: a genuine
+# split shows a NEW LEVEL, and a level needs more than one observation. Below
+# this many bars after a break, treat it as unconfirmed and drop those bars. If
+# it really was a split, next week's bars land at the new level, the break
+# becomes confirmed, and the segment logic picks it up — the call corrects
+# itself rather than needing to be right first time.
+CONFIRM_BARS = 3
+# Shortest post-shift segment worth charting, matching the UI's own floor for
+# drawing a series at all. Below this the honest answer is no chart.
+MIN_SEGMENT = 20
+
+
 def sanitise_prices(prices, funds, warnings):
-    """Drop isolated bad ticks; flag any series left with a level shift.
+    """Drop bad ticks, then start each broken series after its last level shift.
 
-    Runs on every build, including builds that reuse a cached prices.json, so a
-    series that was fine when fetched and is broken now still gets caught.
+    Runs on every build, cached ones included, so a series that was fine when
+    fetched and is broken now is still caught without a re-fetch.
 
-    A flagged series keeps its data — the flag travels with it and the page
-    withholds the chart, the trailing returns and the resilience stats rather
-    than rendering them. Deleting the series would make the defect invisible to
-    the next person trying to fix it properly.
+    The full raw series is kept. Truncation is recorded as `usable_from`, an
+    index the page slices at, rather than by deleting bars: the discarded
+    segment is the evidence that the shift happened, and whoever repairs this
+    properly against issuer data will need it. It also makes the operation
+    reversible and idempotent — re-running finds no breaks in the kept segment.
+
+    Only when what survives is too short to chart does the series fall back to
+    being withheld outright.
     """
     by_ticker = {f["ticker"]: f for f in funds}
-    dropped = suspect = 0
+    dropped = trimmed = truncated = suspect = 0
     for tk, ser in prices.items():
         if tk == "asof" or not isinstance(ser, dict) or not ser.get("c"):
             continue
-        breaks = detect_price_breaks(ser["c"])
-        # Bad ticks first: removing one can also remove the pair of breaks it
+        # Clear this pass's own output before recomputing. Without it a series
+        # that has since been repaired keeps yesterday's flag for ever, and the
+        # page goes on apologising for a defect that is gone.
+        for k in ("suspect", "truncated", "usable_from"):
+            ser.pop(k, None)
+        closes = ser["c"]
+        breaks = detect_price_breaks(closes)
+        # Bad ticks first: removing one also removes the pair of breaks it
         # created (in and out of the spike), so re-detect afterwards.
         spikes = [b["at"] for b in breaks if b["kind"] == "spike"]
         if spikes:
             for i in spikes:
-                ser["c"][i] = None
+                closes[i] = None
             dropped += len(spikes)
             print(f"  PRICE TICK {tk:5} dropped {len(spikes)} isolated bad bar(s)")
-            breaks = detect_price_breaks(ser["c"])
+            breaks = detect_price_breaks(closes)
+
+        # Unconfirmed trailing break: not enough bars after it to establish that
+        # a new level exists. SCY's is on its very last bar, where truncating
+        # "after the shift" would throw away three years of good history to keep
+        # one point.
+        n_bars = len(closes)
+        tail = [b for b in breaks if n_bars - b["at"] < CONFIRM_BARS]
+        if tail:
+            cut = min(b["at"] for b in tail)
+            for i in range(cut, n_bars):
+                closes[i] = None
+            trimmed += n_bars - cut
+            print(f"  PRICE TAIL {tk:5} dropped {n_bars - cut} unconfirmed "
+                  f"trailing bar(s) — a new level needs more than one bar to be one")
+            breaks = detect_price_breaks(closes)
+
         steps = [b for b in breaks if b["kind"] == "step"]
         if not steps:
             continue
-        suspect += 1
+
+        last = steps[-1]
+        start = last["at"]
+        kept = sum(1 for c in closes[start:] if c is not None)
         worst = max(steps, key=lambda b: abs(math.log(b["ratio"])) if b["ratio"] > 0 else 0)
-        ser["suspect"] = {"reason": "unadjusted level shift", "n": len(steps),
-                          "ratio": worst["ratio"]}
-        f = by_ticker.get(tk)
-        if f is not None:
-            f["price_suspect"] = ser["suspect"]
+        info = {"reason": "unadjusted level shift", "n": len(steps),
+                "ratio": worst["ratio"], "at": start, "kept": kept,
+                "dropped": start}
+
+        if kept < MIN_SEGMENT:
+            # Nothing usable survives the shift. 3009 steps again three weeks
+            # before the end of its series; there is no segment to draw.
+            suspect += 1
+            ser["suspect"] = info
+            if by_ticker.get(tk) is not None:
+                by_ticker[tk]["price_suspect"] = info
+            warnings.append(
+                f"{tk}: {len(steps)} unexplained level shift(s) (largest "
+                f"{worst['ratio']}x) and only {kept} bar(s) after the last one — "
+                f"too short to chart, so the chart, trailing returns and "
+                f"resilience stats are withheld entirely.")
+            print(f"  PRICE STEP {tk:5} {len(steps)} shift(s); only {kept} bar(s) "
+                  f"survive — withheld entirely")
+            continue
+
+        truncated += 1
+        ser["usable_from"] = start
+        ser["truncated"] = info
+        if by_ticker.get(tk) is not None:
+            by_ticker[tk]["price_truncated"] = info
         warnings.append(
-            f"{tk}: price history has {len(steps)} unexplained level shift(s) "
-            f"(largest {worst['ratio']}x, {worst['from']} -> {worst['to']}). "
-            f"Chart, trailing returns and resilience stats are withheld for this "
-            f"fund. Yahoo reports no split and its adjclose equals its raw close, "
-            f"so the series cannot be repaired from the feed.")
-        print(f"  PRICE STEP {tk:5} {len(steps)} level shift(s), largest "
-              f"{worst['ratio']}x — chart and trailing returns withheld")
-    if dropped or suspect:
+            f"{tk}: {len(steps)} unexplained level shift(s) (largest "
+            f"{worst['ratio']}x). Chart starts after the last one; {start} earlier "
+            f"bar(s) excluded, {kept} kept. Trailing returns are limited to what "
+            f"fits inside the kept segment.")
+        print(f"  PRICE STEP {tk:5} {len(steps)} shift(s), largest {worst['ratio']}x "
+              f"— series starts after it ({start} bars dropped, {kept} kept)")
+
+    if dropped or trimmed or truncated or suspect:
         # Persist. Without this the cleaned series and the suspect flags exist
         # only in the inlined copy inside docs/index.html, so the repo's own
         # prices.json would disagree with the page built from it -- and the
@@ -462,8 +523,9 @@ def sanitise_prices(prices, funds, warnings):
         path = os.path.join(DATA, "prices.json")
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(prices, fh, separators=(",", ":"))
-        print(f"  price integrity: {dropped} bad bar(s) dropped, "
-              f"{suspect} series withheld — prices.json rewritten")
+        print(f"  price integrity: {dropped} bad bar(s) + {trimmed} unconfirmed "
+              f"trailing bar(s) dropped, {truncated} series started after a shift, "
+              f"{suspect} withheld — prices.json rewritten")
     return suspect
 
 
@@ -486,6 +548,13 @@ def apply_yahoo_yields(funds, prices):
         # different scales. SCY's break is on its final bar, which is exactly
         # the one this divides by.
         if p.get("suspect"):
+            continue
+        # Truncation alone is not disqualifying — the kept segment and its last
+        # close are on one scale. It disqualifies only when the shift falls
+        # INSIDE the trailing-12-month window the distributions are summed over,
+        # which would mix pre- and post-shift payout amounts in the numerator.
+        tr = p.get("truncated")
+        if tr and (len(p.get("c") or []) - tr.get("at", 0)) <= 52:
             continue
         dv = p.get("dv12")
         closes = p.get("c") or []

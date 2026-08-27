@@ -47,3 +47,20 @@ jobs:
             git commit -m "Auto: refresh weekly price history + trailing yields ($(date -u +%Y-%m-%d))"
             git push
           fi
+
+      # Escalation, deliberately AFTER the commit above.
+      #
+      # sanitise_prices() already refuses to chart a series across an unadjusted
+      # level shift, so the page is correct whether one fund is broken or ten.
+      # That is precisely the problem for a run nobody watches: every log looks
+      # the same, and a new break would cut a fund's history perfectly and
+      # silently. This compares the live flags against data/price_withheld.json
+      # and fails on anything not already known about, which turns the run red
+      # and sends GitHub's own workflow-failure notification to the owner.
+      #
+      # It does not revert or block the commit. A newly affected fund means the
+      # page is behaving correctly and should ship; the failure is a message to
+      # a person, not a rollback. Freezing everyone's charts over one fund's bad
+      # data would be a worse outcome than the defect.
+      - name: Escalate any NEW price-series break
+        run: python scripts/check_withheld.py

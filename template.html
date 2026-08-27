@@ -291,6 +291,13 @@ td.r{text-align:right;font-family:var(--mono)}
 .suspect-t{font-size:13px;font-weight:700;color:var(--a-text);margin-bottom:8px}
 .suspect-b{font-size:13px;color:var(--t2);line-height:1.55;margin:0 0 8px}
 .suspect-n{font-size:11.5px;color:var(--t2);line-height:1.45;border-top:1px solid rgba(180,83,9,0.2);padding-top:8px;margin-top:4px}
+/* Truncated history. Same amber family as the withheld notice — it is the same
+   defect — but it sits above a chart that IS being shown, so it reads as a
+   qualification rather than a refusal. */
+.trunc{background:var(--a-bg);border:1px solid rgba(180,83,9,0.25);border-radius:8px;padding:13px 15px;margin:0 0 12px}
+.trunc-t{font-size:13px;font-weight:700;color:var(--a-text);margin-bottom:7px}
+.trunc-b{font-size:12.5px;color:var(--t2);line-height:1.55;margin:0 0 7px}
+.trunc-n{font-size:11.5px;color:var(--t2);line-height:1.45;border-top:1px solid rgba(180,83,9,0.2);padding-top:7px;margin-top:3px}
 .alt-tbl .tk-link{cursor:pointer}
 .alt-note{font-size:10.5px;color:var(--t3-text);margin-top:8px;line-height:1.5}
 /* goal-plan per-fund chip + quick-look */
@@ -1250,7 +1257,12 @@ function calYearReturns(tk){
 function resilBlock(arr,tk){
   const rz=resilience(arr);
   const stat=(l,v,sub)=>{ const cls=v==null?'':(v>=0?'up':'down'); return '<div class="resil-i"><div class="resil-l">'+l+'</div><div class="resil-v '+cls+'">'+(v==null?'—':(v>=0?'+':'')+(v*100).toFixed(0)+'%')+'</div><div class="resil-sub">'+sub+'</div></div>'; };
-  const stats='<div class="resil-row">'+stat('Worst drop',rz.mdd,'peak → trough, ~6yr')+stat('Best 12 months',rz.best,'rolling')+stat('Worst 12 months',rz.worst,'rolling')+'</div>';
+  // The window label is derived, not fixed at "~6yr". On a truncated series the
+  // worst drop is measured over whatever survived the level shift — sometimes
+  // under two years — and a caption claiming six would overstate how much
+  // history the number has actually seen.
+  const yrs=arr.length/52, win=yrs>=1.5?('~'+Math.round(yrs)+'yr'):(Math.round(arr.length/4.33)+'mo');
+  const stats='<div class="resil-row">'+stat('Worst drop',rz.mdd,'peak → trough, '+win)+stat('Best 12 months',rz.best,'rolling')+stat('Worst 12 months',rz.worst,'rolling')+'</div>';
   const cy=calYearReturns(tk).filter(x=>x.weeks>=40||x.ytd);   // full years + current YTD; drop partial first year
   const bars=calBarsSVG(cy);
   return '<div class="resil"><div class="resil-t">How it has behaved (calendar-year price return)</div>'+stats+bars+(cy.some(x=>x.ytd)?'<div class="resil-sub" style="margin-top:6px">* current year is year-to-date. Price return only — dividends are on top.</div>':'')+'</div>';
@@ -1303,6 +1315,26 @@ function suspectPriceBlock(f,ser){
     'a step is withheld the same way. Checked against the issuer or the exchange, this can be repaired; it has not been yet.</div>'+
     '</div>';
 }
+// Shown above a chart that starts partway through the fund's life. The caveat has
+// to sit BEFORE the chart, not under it: the reader forms "this fund launched here"
+// from the left-hand edge of the line, and a footnote arrives too late to undo it.
+function truncNote(f,ser,startTs){
+  const t=ser.truncated||{};
+  const from=new Date(startTs*1000).toLocaleDateString('en-GB',{month:'short',year:'numeric'});
+  const factor=(t.n===1&&t.ratio)?(t.ratio>1?fmt(t.ratio,1):fmt(1/t.ratio,1))+'x':null;
+  return '<div class="trunc">'+
+    '<div class="trunc-t">This chart starts in '+from+', not at launch</div>'+
+    '<p class="trunc-b">'+(t.dropped||0)+' earlier weeks are excluded. The series carries an unexplained '+
+    '<strong>level shift</strong> before that point &mdash; the price steps '+
+    (factor?'by about <strong>'+factor+'</strong> ':'sharply ')+
+    'from one week to the next and stays there, which is the signature of a share split or consolidation the data source never adjusted for. '+
+    'Yahoo Finance reports <strong>no split</strong> for this fund and returns an adjusted close identical to its raw close, so the earlier segment cannot be put on the same scale as this one.</p>'+
+    '<p class="trunc-b"><strong>What this means for the numbers below.</strong> Everything shown &mdash; the chart, the return figures, the worst drop and the calendar-year bars &mdash; '+
+    'is computed <em>only</em> from '+from+' onwards. Any period needing more history than that is left blank rather than estimated across the shift. '+
+    'This is <strong>not the fund&rsquo;s full record</strong>, and it is not a like-for-like history against the funds above it in the table.</p>'+
+    '<div class="trunc-n">The excluded weeks are still in the data, not deleted &mdash; they are the evidence the shift happened. Checked against the issuer or the exchange this can be repaired properly; it has not been yet.</div>'+
+    '</div>';
+}
 function renderPriceChart(box, tk){
   const f=FUNDS.find(x=>x.ticker===tk);
   const ser=PRICES[tk];
@@ -1331,7 +1363,8 @@ function renderPriceChart(box, tk){
   const shown=opts.filter(o=>o[1]==null||n>o[1]);
   const ctrls=shown.length>1?'<div class="ph-ctrls">'+shown.map(o=>'<button class="ph-btn'+(o[1]==null?' on':'')+'" onclick="setHorizon(this,'+uid+','+(o[1]==null?'null':o[1])+')">'+o[0]+'</button>').join('')+'</div>':'';
   const asof=priceAsOf();
-  box.innerHTML='<div class="ph">'+ctrls+'<div class="ph-svg"></div><div class="chart-legend ph-legend"></div></div>'+
+  box.innerHTML=(ser.truncated?truncNote(f,ser,startTs):'')+
+    '<div class="ph">'+ctrls+'<div class="ph-svg"></div><div class="chart-legend ph-legend"></div></div>'+
     perf+
     '<div class="snap-head">'+expectLine(f)+'</div>'+
     '<div class="chart-cap">Weekly closes via Yahoo Finance'+(asof?' (latest bar: week of <b>'+asof+'</b>)':'')+' &middot; price return &mdash; dividends are on top &middot; the moving averages are context, not a timing signal.</div>'+
@@ -2935,6 +2968,19 @@ function switchTab(p){
 async function init(){
   DATA=await loadData();
   FUNDS=DATA.universe.funds; CMA=DATA.cma; MP=DATA.mp; PRICES=DATA.prices||{};
+  // Apply the price-integrity truncation ONCE, here, rather than at each of the
+  // four places that read a series. The shipped data keeps every bar — the
+  // discarded segment is the evidence that the shift happened, and whoever
+  // repairs this against issuer data will need it — so the slice is a view, not
+  // a deletion. Everything downstream (chart, trailing returns, calendar-year
+  // bars, resilience) then works on one consistent scale without knowing why.
+  Object.keys(PRICES).forEach(tk=>{
+    const s=PRICES[tk];
+    if(!s||typeof s!=='object'||!s.c||!s.usable_from) return;
+    const i=s.usable_from;
+    s.c_full=s.c; s.s_full=s.s;                  // kept for audit, unused by the UI
+    s.c=s.c.slice(i); s.s=s.s+i*604800;          // 604800s = 1 week
+  });
   SWAP=DATA.swap||null; MORT=DATA.mortality||null; swapHydrate();
   // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
   FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;

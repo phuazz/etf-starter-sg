@@ -505,10 +505,13 @@
       "ter_basis": "published",
       "starter_score": null,
       "score_parts": null,
-      "price_suspect": {
+      "price_truncated": {
         "reason": "unadjusted level shift",
         "n": 2,
-        "ratio": 0.0101
+        "ratio": 0.0101,
+        "at": 34,
+        "kept": 88,
+        "dropped": 34
       }
     },
     {
@@ -576,7 +579,10 @@
       "price_suspect": {
         "reason": "unadjusted level shift",
         "n": 3,
-        "ratio": 0.0103
+        "ratio": 0.0103,
+        "at": 118,
+        "kept": 4,
+        "dropped": 118
       }
     },
     {
@@ -830,10 +836,13 @@
       "ter_basis": "published",
       "starter_score": null,
       "score_parts": null,
-      "price_suspect": {
+      "price_truncated": {
         "reason": "unadjusted level shift",
         "n": 1,
-        "ratio": 7.7386
+        "ratio": 7.7386,
+        "at": 3,
+        "kept": 39,
+        "dropped": 3
       }
     },
     {
@@ -3940,10 +3949,13 @@
         "liquidity": 15,
         "breadth": 30
       },
-      "price_suspect": {
+      "price_truncated": {
         "reason": "unadjusted level shift",
-        "n": 2,
-        "ratio": 5.3316
+        "n": 1,
+        "ratio": 5.3316,
+        "at": 48,
+        "kept": 142,
+        "dropped": 48
       }
     },
     {
@@ -4296,9 +4308,9 @@
     }
   ],
   "warnings": [
-    "3008: price history has 2 unexplained level shift(s) (largest 0.0101x, 736.6 -> 7.465). Chart, trailing returns and resilience stats are withheld for this fund. Yahoo reports no split and its adjclose equals its raw close, so the series cannot be repaired from the feed.",
-    "3009: price history has 3 unexplained level shift(s) (largest 0.0103x, 256.0 -> 2.644). Chart, trailing returns and resilience stats are withheld for this fund. Yahoo reports no split and its adjclose equals its raw close, so the series cannot be repaired from the feed.",
-    "3460: price history has 1 unexplained level shift(s) (largest 7.7386x, 0.723 -> 5.595). Chart, trailing returns and resilience stats are withheld for this fund. Yahoo reports no split and its adjclose equals its raw close, so the series cannot be repaired from the feed.",
-    "SCY: price history has 2 unexplained level shift(s) (largest 5.3316x, 0.787 -> 4.196). Chart, trailing returns and resilience stats are withheld for this fund. Yahoo reports no split and its adjclose equals its raw close, so the series cannot be repaired from the feed."
+    "3008: 2 unexplained level shift(s) (largest 0.0101x). Chart starts after the last one; 34 earlier bar(s) excluded, 88 kept. Trailing returns are limited to what fits inside the kept segment.",
+    "3009: 3 unexplained level shift(s) (largest 0.0103x) and only 4 bar(s) after the last one — too short to chart, so the chart, trailing returns and resilience stats are withheld entirely.",
+    "3460: 1 unexplained level shift(s) (largest 7.7386x). Chart starts after the last one; 3 earlier bar(s) excluded, 39 kept. Trailing returns are limited to what fits inside the kept segment.",
+    "SCY: 1 unexplained level shift(s) (largest 5.3316x). Chart starts after the last one; 48 earlier bar(s) excluded, 142 kept. Trailing returns are limited to what fits inside the kept segment."
   ]
 }
