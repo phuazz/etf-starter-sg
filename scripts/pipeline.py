@@ -30,6 +30,15 @@ def load_json(name):
     with open(os.path.join(DATA, name), encoding="utf-8") as f:
         return json.load(f)
 
+
+def load_json_opt(name):
+    """Optional data file: a clone without it still builds, and the page says so."""
+    path = os.path.join(DATA, name)
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
 # ---- domicile from ISIN --------------------------------------------------
 ISIN_RE = re.compile(r"_en_([A-Z]{2}[A-Za-z0-9]{9}[0-9])_YES_")
 DOMICILE_FROM_PREFIX = {"SG": "SG", "LU": "LU", "IE": "IE", "US": "US", "FR": "FR", "HK": "HK"}
@@ -145,7 +154,158 @@ def starter_score(rec):
     total = sum(parts[k] * SCORE_WEIGHTS[k] for k in SCORE_WEIGHTS)
     return round(total), parts
 
+# ---- crypto access route -------------------------------------------------
+def build_crypto_records(crypto):
+    """Crypto ETF access products, as FUND ROWS but deliberately OUTSIDE the
+    scored universe.
+
+    These records never pass through enrich(). That is the whole point: enrich()
+    reads an asset class out of cma.json to attach a forward return, a
+    volatility and an Efficiency Score, and there is no defensible long-run
+    capital market assumption for bitcoin or ether. Routing crypto through it
+    would have forced a number into cma.json to stop the lookup failing, and
+    that invented number would then have propagated into the Build tab, the
+    correlation matrix and every score on the site. Keeping the path separate
+    makes the exclusion structural rather than a convention someone later
+    "fixes" by adding the missing class.
+
+    So every CMA-derived field is set to None explicitly rather than left
+    absent: a missing key and a deliberate blank look identical in the UI, and
+    only one of them survives a refactor.
+
+    The third situs state is the other reason this cannot reuse the normal
+    path. estate_tax_exposed is a boolean across the rest of the site, and its
+    negation is read as "safe". A US-listed spot bitcoin trust is neither: the
+    issuer's own 10-K says there is no guidance on whether the shares or the
+    bitcoin behind them are US-situs. situs_unresolved carries that, and every
+    place that claims "safe" has to require its absence.
+    """
+    if not crypto:
+        return []
+    routes = {r["key"]: r for r in crypto.get("routes", [])}
+    out = []
+    for p in crypto.get("products", []):
+        route = routes.get(p["route"], {})
+        unresolved = route.get("situs") == "unresolved"
+        cost = p.get("cost")
+        rec = {
+            "ticker": p["ticker"],
+            "name": p["name"],
+            "ccy": p["ccy"],
+            "exchange": p["exchange"],
+            "isin": p.get("isin"),
+            "domicile": p["domicile"],
+            "domicile_conf": "curated",
+            "asset_class": "crypto",
+            "segment": p["underlying"],
+            "benchmark": p.get("index"),
+            "geo": route.get("label", ""),
+            "fund_manager": p["issuer"],
+            "income": "Accumulating",          # none of these distribute
+            "mgmt_style": "PASSIVE",
+            "cpf": "No",
+            "ter": cost,
+            "ter_conf": p.get("ter_conf"),
+            "mgmt_fee": None,
+            "yield": None,
+            "val_m": None,
+            "liquidity_tier": "unknown",
+            "lot": p.get("lot"),
+            "tr_1m": None, "tr_3m": None, "tr_1y": None, "ann_3y": None,
+            "is_core": False,
+            "share_classes": [{"ticker": p["ticker"], "ccy": p["ccy"], "val_m": None}],
+            # --- crypto-specific -----------------------------------------
+            "is_crypto": True,
+            "crypto_route": p["route"],
+            "route_label": route.get("label"),
+            "wrapper": route.get("wrapper"),
+            "structure": p.get("structure"),
+            "custody": p.get("custody"),
+            "usd_counter": p.get("usd_counter"),
+            "rmb_counter": p.get("rmb_counter"),
+            "cost_basis": p.get("cost_basis"),
+            "src": p.get("src"),
+            "stale_source_warning": p.get("stale_source_warning"),
+            "yahoo": p.get("yahoo"),
+            # --- situs ----------------------------------------------------
+            # Never True here. "Exposed" is a positive claim this page cannot
+            # make: the US products are unresolved, not confirmed exposed, and
+            # the HK products are outside US situs. The UI must not print the
+            # red "US estate tax + 30% withholding" note against either, since
+            # none of them pays a dividend for withholding to bite on.
+            "estate_tax_exposed": False,
+            "situs_unresolved": unresolved,
+            "situs_note": route.get("verdict"),
+            # --- deliberately blank, not missing --------------------------
+            "no_forward_return": True,
+            "gross_expected_return_pct": None,
+            "net_expected_return_pct": None,
+            "cost_drag_total_pct": None,
+            "est_wht_drag_pct": None,
+            "us_div_wht_rate": None,
+            "exp_vol": None,
+            "return_basis": None,
+            "effective_ter": cost,
+            "ter_basis": None if cost is None else "published",
+            "starter_score": None,
+            "score_parts": None,
+        }
+        out.append(rec)
+    return out
+
+
+def check_crypto_exclusions(crypto_funds, cma, mp, warnings):
+    """Guard the boundary this feature depends on.
+
+    Cheap, and it fires at build time rather than in the browser. Every one of
+    these has a plausible way of being broken later by someone doing something
+    reasonable: adding a 'crypto' class to cma.json to make a chart work,
+    dropping crypto into a model portfolio, or reusing enrich() for tidiness.
+    """
+    if "crypto" in cma.get("asset_classes", {}):
+        warnings.append(
+            "cma.json now carries a 'crypto' asset class. The crypto rows are "
+            "meant to be unpriced; adding a CMA gives them a forward return and "
+            "an Efficiency Score built on a number nobody can defend.")
+    for k, prof in mp.get("profiles", {}).items():
+        if "crypto" in prof.get("weights", {}):
+            warnings.append(f"model_portfolios: profile '{k}' allocates to crypto — "
+                            "the Build tab is not meant to reach these products.")
+    for f in crypto_funds:
+        if f.get("starter_score") is not None:
+            warnings.append(f"{f['ticker']}: crypto row carries an Efficiency Score.")
+        if f.get("net_expected_return_pct") is not None:
+            warnings.append(f"{f['ticker']}: crypto row carries a forward return.")
+        if f.get("estate_tax_exposed"):
+            warnings.append(f"{f['ticker']}: crypto row claims estate-tax EXPOSED — "
+                            "this page only claims unresolved or outside-US.")
+        if f.get("ter") is not None and not f.get("cost_basis"):
+            warnings.append(f"{f['ticker']}: cost figure with no stated basis — a "
+                            "management fee and an ongoing charges figure are not "
+                            "comparable and must not be shown as though they were.")
+
+
 # ---- docs build ----------------------------------------------------------
+def yahoo_symbol(f):
+    """Yahoo ticker for a fund row.
+
+    An explicit `yahoo` on the record always wins — the crypto rows carry one
+    because their venues do not follow from any field already here (a US-listed
+    trust takes a bare symbol, and IB1T is cross-listed on six European
+    exchanges with no single obvious suffix). Before this existed the rule fell
+    through to '.SI' for anything that was neither core nor HKEX, which would
+    have quietly fetched a Singapore listing that does not exist and dropped the
+    fund with a 'no data' line rather than an error.
+    """
+    if f.get("yahoo"):
+        return f["yahoo"]
+    if f.get("is_core"):
+        return f["ticker"] + ".L"
+    if f.get("exchange") == "HKEX":
+        return f["ticker"].zfill(4) + ".HK"
+    return f["ticker"] + ".SI"
+
+
 def load_or_fetch_prices(funds):
     """Weekly ~6yr close history per fund from Yahoo, for the on-page price chart.
     Fetched only when --prices is passed or data/prices.json is missing (network + slow);
@@ -159,7 +319,7 @@ def load_or_fetch_prices(funds):
     out = {}
     last_ts = 0   # newest real bar timestamp seen (for an accurate, non-reconstructed "as of")
     for f in funds:
-        sym = (f["ticker"] + ".L") if f.get("is_core") else (f["ticker"].zfill(4) + ".HK" if f.get("exchange") == "HKEX" else f["ticker"] + ".SI")
+        sym = yahoo_symbol(f)
         url = ("https://query1.finance.yahoo.com/v8/finance/chart/" + sym
                + "?range=6y&interval=1wk&events=div")
         try:
@@ -536,7 +696,8 @@ def build_docs(universe, cma, mp, prices):
     # still builds -- the Swap tab then reports that the data is absent rather
     # than rendering an empty shell.
     payload = {"universe": universe, "cma": cma, "mp": mp, "prices": prices}
-    for key, fname in (("swap", "swap_map.json"), ("mortality", "mortality_sg.json")):
+    for key, fname in (("swap", "swap_map.json"), ("mortality", "mortality_sg.json"),
+                       ("crypto", "crypto_access.json")):
         p = os.path.join(DATA, fname)
         if os.path.exists(p):
             with open(p, encoding="utf-8") as fh:
@@ -564,6 +725,7 @@ def main():
     cma = load_json("cma.json")
     curated = load_json("curated.json")
     mp = load_json("model_portfolios.json")
+    crypto = load_json_opt("crypto_access.json")
     warnings = []
 
     # validate model-portfolio weights sum to 100
@@ -746,6 +908,27 @@ def main():
                 by_isin[iso] = f
     funds = deduped
 
+    # ---- crypto access rows (never enriched; see build_crypto_records) ----
+    # Appended AFTER the ISIN de-duplication pass on purpose. That pass merges
+    # two rows sharing an ISIN into one fund with several share classes, which
+    # is right for a currency share class and wrong here: the HK crypto ETFs
+    # publish ONE ISIN across their HKD, USD and RMB counters, so feeding them
+    # through it would silently collapse distinct products.
+    crypto_funds = build_crypto_records(crypto)
+    if crypto_funds:
+        check_crypto_exclusions(crypto_funds, cma, mp, warnings)
+        clash = {f["ticker"] for f in funds} & {f["ticker"] for f in crypto_funds}
+        if clash:
+            # A real near-miss while building this: a mis-read filing reported
+            # HK counters "3066/3067/3068", and 3067 is already the iShares Hang
+            # Seng TECH ETF in curated.json. Two funds under one ticker would
+            # have shown one fund's cost against the other's name.
+            raise SystemExit(f"ticker collision between crypto rows and the "
+                             f"existing universe: {sorted(clash)}")
+        funds.extend(crypto_funds)
+    elif crypto is None:
+        print("  ! crypto_access.json absent — crypto route will report missing data")
+
     funds.sort(key=lambda r: (r["asset_class"], -(r["val_m"] or 0)))
 
     out = {
@@ -755,6 +938,8 @@ def main():
             "n_funds": len(funds),
             "n_from_sgx": len(groups),
             "n_ucits_core": len(curated["ucits_core"]),
+            "n_crypto_access": len(crypto_funds),
+            "crypto_unpriced": True,   # crypto rows carry no CMA, by design
             "not_advice": True,
             "note": "Educational. Forward returns are synthesised house estimates, not forecasts. Domicile drives the tax verdict; where domicile_conf != 'isin'/'curated' treat with a verify flag.",
             "score_method": {
@@ -804,6 +989,15 @@ def main():
         print(f"  {ac:16} {n}")
     ter_missing = [f["ticker"] for f in funds if f["ter"] is None]
     print(f"\nTER coverage: {len(funds)-len(ter_missing)}/{len(funds)}  missing: {len(ter_missing)}")
+    if crypto_funds:
+        print("\ncrypto access rows (unpriced by design — no CMA, no score):")
+        for f in crypto_funds:
+            cost = "—" if f["ter"] is None else f"{f['ter']}% ({f['cost_basis']})"
+            print(f"  {f['ticker']:5} {f['name'][:34]:34} {f['route_label']:16} "
+                  f"situs={'unresolved' if f['situs_unresolved'] else 'outside US':11} {cost}")
+        n_unres = sum(1 for f in crypto_funds if f["situs_unresolved"])
+        print(f"  {n_unres}/{len(crypto_funds)} situs-unresolved; "
+              f"{sum(1 for f in crypto_funds if f['ter'] is None)} with no verified cost figure")
     print("\nshare-class merges (>1 listing):")
     for f in funds:
         if len(f["share_classes"]) > 1:

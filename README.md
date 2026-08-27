@@ -25,6 +25,10 @@ Helps a first-time investor answer four questions about exchange-traded funds ac
    schedule*, not tax advice — the graduated brackets plus the US$13,000 unified credit are
    implemented once and shared by both the rate table and the calculator, so they cannot drift.
 
+6. **Crypto access** — which wrapper to hold listed crypto in, and what each does to the
+   US-situs position. Route recommendation only; no expected return, no allocation view,
+   and deliberately absent from the Build tab. See "Crypto ETF access" below.
+
 **Navigation** — five top-level tabs (Start · Funds · Build · Swap · Learn). Costs & tax and
 Expected returns are views *inside* Funds, reached by the sub-nav at the top of that panel.
 The three panels remain separate `#p-` divs, so `switchTab('cost')` calls and `#tab=forward`
@@ -80,6 +84,7 @@ etf-starter-sg/
 │   ├── sgx_etf_screener.csv # raw SGX export (input)
 │   ├── curated.json         # TER / yield / domicile overlay + UCITS core (source-flagged)
 │   ├── cma.json             # asset-class forward returns, vols, correlations, tax model
+│   ├── crypto_access.json   # crypto ETF access routes — UNPRICED by design, no CMA
 │   ├── model_portfolios.json# risk-profile presets (buyable building blocks)
 │   ├── etf_universe.json    # BUILT — enriched, de-duplicated universe (pipeline output)
 │   └── prices.json          # BUILT — compact weekly close history per fund (for the on-page chart)
@@ -144,7 +149,7 @@ python scripts/verify_matches.py           # realised-return check + refusal flo
 python scripts/decompose_single_names.py   # variance decomposition
 python scripts/fetch_mortality.py          # SingStat death rates
 python scripts/pipeline.py                 # inline everything -> docs/index.html
-python -m pytest tests/ -q                 # 40 guards
+python -m pytest tests/ -q                 # 72 guards (57 swap + 15 crypto access)
 ```
 
 The UCITS universe is near-static and deliberately **not** wired into the weekly
@@ -171,6 +176,62 @@ Three errors found while building the domicile-swap feature, all now fixed:
    ran **against** the dashboard's own argument: it understated the cost of the
    US-domiciled route. CSPX-versus-S27 is +0.38%/yr net, not the +0.2% previously stated.
 
+## Crypto ETF access (2026-08-27)
+
+Which wrapper, in which jurisdiction, and what that does to the US-situs position.
+The page recommends a **route**, never an allocation — the same kind of call the site
+already makes in preferring an Irish UCITS over a US-domiciled tracker.
+
+**Two routes do not exist, and both absences are structural.** There is no SGX-listed
+spot crypto ETF (verified against this repo's own screener export: zero crypto rows;
+MAS has not authorised one for retail offer). There is no crypto UCITS fund either —
+crypto is not an eligible asset under the UCITS Directive and a single-asset fund fails
+diversification regardless, so the Irish answer that solves US situs everywhere else on
+this site is unavailable here.
+
+**The three real routes, and the verdict on each.** Hong Kong: a fund, SFC-authorised,
+outside US situs — the only route that is both. United States: a Delaware statutory
+trust treated as a *grantor* trust, so the law looks through to the coin and the
+question becomes "where is bitcoin?", which no authority answers. Europe: an ETP/ETN,
+a debt security rather than a fund — set aside for the same reason this site already
+declines to call gold ETCs situs-safe. The US and European wrappers are marked
+**unresolved**, never safe and never exposed.
+
+**A third situs state.** `estate_tax_exposed` was a boolean whose negation was read
+everywhere as "safe". That is sound for a fund and wrong for a look-through trust, so
+every safety claim now goes through `situsState()` / `situsSafe()` in the template —
+the KPI count, the route filter, the compare table, the domicile badge. Adding a caller
+that tests `!estate_tax_exposed` directly is how this breaks.
+
+**Deliberately unpriced.** No forward return, no volatility, no Efficiency Score, and
+nothing in `cma.json`, the Build tab or Expected returns. No defensible long-run CMA for
+bitcoin exists; inventing one to fill a column would lend it the authority of every
+other figure on the site. `build_crypto_records()` therefore bypasses `enrich()`
+entirely and sets each CMA field to `None` explicitly, so the exclusion is structural
+rather than a convention. `check_crypto_exclusions()` fails the build if a `crypto`
+class appears in `cma.json` or a model portfolio.
+
+**Costs are not on a common basis and are not presented as though they were.** An
+audited ongoing charges figure, an estimated one, a bare management fee and a unified
+sponsor fee measure different things; each figure prints with its basis and names the
+filing it came from. Where nothing could be verified (ChinaAMC Ether) the field is blank
+rather than filled with an aggregator's number.
+
+Two things this pass caught that the secondary sources have wrong:
+
+1. **Harvest Bitcoin Spot ETF is not the cheap one.** Its launch fee of 0.30% rose to
+   0.90% on 24 Feb 2025 and its ongoing-charges cap was removed on 30 Apr 2025; the
+   published OCF is **1.72%** (KFS, 30 Apr 2026). Much of the web still calls it the
+   cheapest of the three.
+2. **A ticker collision, caught before it shipped.** An automated read of the Harvest
+   filing reported counters "3066/3067/3068" — breaking the HK convention (3xxx HKD /
+   9xxx USD / 83xxx RMB) and colliding with 3067, already the iShares Hang Seng TECH
+   ETF in `curated.json`. The real codes, read from the filing, are 3439 and 9439.
+   `test_no_ticker_collides_with_the_rest_of_the_universe` now pins it.
+
+Data lives in `data/crypto_access.json`, deliberately outside `curated.json` so the
+boundary is visible. Guards: `tests/test_crypto_access.py` (15 tests).
+
 ## Status
 
 Feature-complete and **deployed** at https://phuazz.github.io/etf-starter-sg/. Latest additions
@@ -179,4 +240,4 @@ the trailing-return columns with the anti-performance-chasing banner. No new cur
 were introduced — the buy note uses the general SRS/CPF rule with a verify flag, and the trailing
 returns are computed client-side from the already-inlined `prices.json`.
 
-_Last updated: 2026-07-10._
+_Last updated: 2026-08-27._

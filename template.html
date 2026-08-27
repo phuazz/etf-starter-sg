@@ -282,6 +282,9 @@ td.r{text-align:right;font-family:var(--mono)}
 .alt-self{font-size:9px;color:var(--t3-text);text-transform:uppercase;letter-spacing:0.3px;margin-left:6px}
 .alt-best{font-size:9px;font-weight:700;color:var(--g-text);background:var(--g-bg);border:1px solid var(--g-bg2);border-radius:8px;padding:0 5px;margin-left:6px;text-transform:uppercase;letter-spacing:0.3px}
 .alt-trap{color:var(--r-text);cursor:help}
+.alt-unres{color:var(--a-text);cursor:help;font-weight:700}
+/* Cost basis / wrapper caption. Provenance rides with the number, not in a footnote. */
+.cb{font-size:11px;color:var(--t2);font-weight:400;line-height:1.3;margin-top:2px}
 .alt-tbl .tk-link{cursor:pointer}
 .alt-note{font-size:10.5px;color:var(--t3-text);margin-top:8px;line-height:1.5}
 /* goal-plan per-fund chip + quick-look */
@@ -330,10 +333,15 @@ td.r{text-align:right;font-family:var(--mono)}
 .bdg-lu,.bdg-fr{background:var(--c-bg);color:var(--c-text);border-color:rgba(8,145,178,0.2)}
 .bdg-hk{background:var(--g-bg);color:var(--g-text,var(--g));border-color:var(--g-bg2)}
 .bdg-us{background:var(--r-bg);color:var(--r-text);border-color:var(--r-bg2)}
+.bdg-ch{background:var(--bg3);color:var(--t2);border-color:var(--bd2)}
 .bdg-verify{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.25)}
 .bdg-core{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
 .bdg-estate{background:var(--r);color:#fff;border-color:var(--r)}
 .est-note{font-size:10.5px;color:var(--r-text);margin-top:3px;font-weight:500}
+/* Situs unresolved. Amber, never green and never red: the reader must not read it
+   as either a clean bill of health or a confirmed trap. Same amber as the existing
+   "verify" badge, which carries the same meaning — we do not know yet. */
+.unres-note{font-size:10.5px;color:var(--a-text);margin-top:3px;font-weight:500;cursor:help}
 .tip{cursor:help;border-bottom:1px dotted var(--t4)}
 #tipPop{display:none;position:absolute;z-index:200;background:var(--t1);color:#fff;font-size:12px;line-height:1.55;padding:9px 12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);max-width:300px;white-space:pre-line}
 .scorewrap{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end;cursor:help}
@@ -702,6 +710,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
           <button data-v="core">Irish UCITS core</button>
           <button data-v="sgx">SGX-listed</button>
           <button data-v="hk">HK-listed</button>
+          <button data-v="crypto">Crypto access</button>
         </div>
       </div>
       <div class="ctl"><label>View</label>
@@ -1005,7 +1014,75 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
       <li><b>Touch CPF-OA last, if at all</b> — above the S$20,000 buffer, only where you expect a diversified holding to beat the guaranteed 2.5&ndash;3.5% after fees. Leaving OA untouched is itself a respectable bond-like allocation.</li>
     </ol>
     <div class="footer">A common ordering, <strong>not personalised advice</strong> — your tax bracket, horizon and employer situation change the answer. Figures verified July 2026 against the MOF SRS page, CPF Board rate/limit pages and the official CPFIS product lists, and the MOM retirement-age page; schemes change — check the official pages before acting.</div>
-  </div>
+
+    <h2 class="sec" style="margin-top:34px">Crypto ETFs: which route, and what the wrapper costs you</h2>
+    <div class="lead">If you have decided you want listed crypto exposure, this section is about <em>how to hold it</em> — which wrapper, in which jurisdiction, and what that choice does to your US estate-tax position. It takes <strong>no view on whether you should hold any</strong>, and it gives no return estimate. That silence is deliberate and is explained at the bottom.</div>
+
+    <h3 style="margin-top:18px">Two routes that do not exist, and will not soon</h3>
+    <div class="grid2">
+    <div class="card">
+      <h3>There is no SGX-listed crypto ETF</h3>
+      <p style="font-size:14px;color:var(--t2);margin-bottom:10px">Not a gap in this tool&rsquo;s coverage — there is nothing to list. The SGX ETF Screener export behind this site contains zero crypto products. MAS has held consistently that cryptocurrencies are not suitable for retail investors and has not authorised a spot crypto ETF for retail offer in Singapore.</p>
+      <p class="footlet" style="margin:0">Consequence: every route below is an <strong>overseas</strong> listing, bought through a broker with access to that market. None is SRS- or CPFIS-eligible.</p>
+    </div>
+    <div class="card">
+      <h3>There is no crypto UCITS fund either</h3>
+      <p style="font-size:14px;color:var(--t2);margin-bottom:10px">This one is structural, not regulatory reluctance. Crypto is not an eligible asset under the UCITS Directive, and a fund holding one asset fails the diversification rules regardless — the same 5/10/40 constraint that makes a single-stock UCITS fund impossible. So the Irish-domiciled answer that solves the US-situs problem everywhere else on this site <em>does not exist here</em>.</p>
+      <p class="footlet" style="margin:0">ESMA&rsquo;s June 2025 technical advice would admit crypto only inside a capped bucket of otherwise-ineligible assets. It is advice to the European Commission, it is non-binding, and it is not law.</p>
+    </div>
+    </div>
+
+    <h3 style="margin-top:24px">The three routes that do exist</h3>
+    <div class="alt-scroll" style="margin-top:8px">
+    <table class="cmp">
+      <tr><th>Route</th><th>What you actually hold</th><th class="r">Annual cost</th><th class="r">US situs</th></tr>
+      <tr>
+        <td><strong>Hong Kong</strong><div class="cb">HKEX, SFC-authorised</div></td>
+        <td>A <strong>fund</strong> — a sub-fund of a Hong Kong open-ended fund company, holding the coin through a licensed custodian.</td>
+        <td class="r">0.85&ndash;1.72%<div class="cb">ongoing charges, where published; one issuer states only a 0.60% management fee, so its all-in is higher</div></td>
+        <td class="r"><span style="color:var(--g-text);font-weight:700">Outside</span></td>
+      </tr>
+      <tr>
+        <td><strong>United States</strong><div class="cb">NASDAQ / NYSE Arca</div></td>
+        <td>A <strong>Delaware statutory trust</strong>, treated as a grantor trust for US income tax — meaning the law looks through the trust to the coin behind it.</td>
+        <td class="r">0.25%<div class="cb">unified sponsor fee</div></td>
+        <td class="r"><span style="color:var(--a-text);font-weight:700">Unresolved</span></td>
+      </tr>
+      <tr>
+        <td><strong>Europe</strong><div class="cb">London, Xetra, Euronext, SIX</div></td>
+        <td>An <strong>ETP or ETN</strong> — a debt security issued by a company, collateralised with the coin. Not a fund, and so without a fund&rsquo;s segregation.</td>
+        <td class="r">0.15%<div class="cb">stated TER</div></td>
+        <td class="r"><span style="color:var(--a-text);font-weight:700">Unresolved</span></td>
+      </tr>
+    </table>
+    </div>
+    <p class="footlet">Costs are <strong>not on a common basis</strong> and cannot be put on one: an audited ongoing charges figure, an estimated one, a bare management fee and a unified sponsor fee measure different things. Each fund&rsquo;s own row in the <a onclick="switchTab('find')" style="color:var(--b-text);cursor:pointer;font-weight:600">Funds</a> tab states the basis beside the number and names the filing it came from. As at 27 Aug 2026.</p>
+
+    <div class="card" style="margin-top:20px">
+    <h3>The estate-tax question, in the issuer&rsquo;s own words</h3>
+    <p style="font-size:14px;color:var(--t2)">Everywhere else on this site, domicile settles the tax question: a US-domiciled fund is inside the US estate-tax net above US$60,000, an Irish one is not. For US spot crypto trusts that logic runs out, and the reason is the grantor-trust treatment. A grantor trust is looked <em>through</em> — so the question stops being &ldquo;where is the fund domiciled?&rdquo; and becomes &ldquo;where is bitcoin?&rdquo;, which no authority has answered.</p>
+    <p style="font-size:14px;color:var(--t2)">The largest of these funds says so itself. Its annual report states there is <strong>&ldquo;no specific guidance as to whether Shares or the bitcoin held by the Trust&rdquo;</strong> are treated as having US situs for US federal estate-tax purposes, and that if the shares are US-situs they would be included in a non-US holder&rsquo;s US gross estate unless a treaty says otherwise. Singapore has no US estate-tax treaty.</p>
+    <div class="notice" style="margin-top:12px">This site therefore marks those products <strong>unresolved</strong> — never &ldquo;safe&rdquo;, and never &ldquo;exposed&rdquo;. Unresolved is not a softer way of saying safe: it means an outcome that would cost up to 40% above US$60,000 has not been ruled out, and the issuer declines to rule it out. It is the same treatment this site already gives gold ETCs, for the same reason — a debt-like or look-through wrapper does not inherit a fund&rsquo;s situs answer.</div>
+    <p class="footlet">Source: iShares Bitcoin Trust ETF, Form 10-K for FY2025, filed with the SEC — the section headed <em>US Estate Tax Considerations for Non-U.S. Residents</em>. Read from the filing, not from a summary of it. Educational, not tax advice; anyone with a position large enough for this to matter should take cross-border tax advice.</p>
+    </div>
+
+    <div class="grid2" style="margin-top:20px">
+    <div class="card">
+      <h3 style="color:var(--g-text)">If the wrapper is what you are choosing on</h3>
+      <p style="font-size:14px;color:var(--t2);margin-bottom:10px">The Hong Kong funds are the only route here that is <strong>both a fund and outside US situs</strong>. That is the same reasoning this site uses to prefer an Irish UCITS over a US-domiciled tracker: you hold a share in a non-US fund, so the US estate-tax question does not arise for you.</p>
+      <p style="font-size:14px;color:var(--t2);margin:0">You pay for it. On published ongoing charges, <strong>0.85% to 1.72% a year</strong> against a 0.25% sponsor fee on the US route — roughly three to seven times the cost. Those are the closest to like-for-like figures available; one Hong Kong issuer publishes only a management fee, and its all-in will be higher than the 0.60% it states.</p>
+    </div>
+    <div class="card">
+      <h3>Two details that cost people money</h3>
+      <ul class="lst">
+        <li><b>Buy the right counter.</b> A Hong Kong crypto ETF lists the same fund several times over — 3xxx in HKD, 9xxx in USD, 83xxx in RMB. Same fund, same ISIN. If you already hold USD, the 9xxx counter saves you a conversion you would otherwise pay for twice.</li>
+        <li><b>Do not trust a fee you read on a comparison site.</b> One fund here launched on a 0.30% promotional fee, raised it to 0.90% in February 2025, and had its cost cap removed two months later; its published ongoing charges figure is now <strong>1.72%</strong>. Much of the web still calls it the cheapest of the three. Every cost on this site names the filing it came from and the date.</li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="notice" style="margin-top:18px"><strong>What this page deliberately does not tell you.</strong> There is no expected return for crypto anywhere on this site, and there is no crypto in the <a onclick="switchTab('build')" style="color:var(--b-text);cursor:pointer;font-weight:600">Build</a> tab or the Expected returns view. That is a refusal, not an omission: the rest of this tool rests on long-run capital market assumptions per asset class, no such estimate for bitcoin is defensible, and inventing one to fill a column would quietly undermine every other number here. The Efficiency Score is blank on these rows for the same reason. Whether crypto belongs in your portfolio at all is a question this tool does not answer — it answers only what each route costs and where it leaves you for US estate tax.</div>
+    </div>
 
   <div class="footer" id="globalFoot">
     <strong>Sources &amp; caveats.</strong> Universe: SGX ETF Screener export. Domicile derived from fund ISIN. Forward returns: synthesised house estimates informed by published long-run capital market assumptions (2025-26 vintage); not a forecast, not any single provider's proprietary table. Estate-tax schedule: Financial Horse, "Die holding US Stocks and pay 40% tax?" (3 Jul 2026), cross-checked to IRC §2001(c). <strong>Educational only — not financial, tax, or legal advice.</strong> Visitor counting uses privacy-light GoatCounter (no cookies, no personal data).
@@ -1029,7 +1106,31 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
 
 <script id="data-boot">window.__DATA__=null;</script>
 <script>
-const DOM_LABEL={SG:'Singapore',IE:'Ireland (UCITS)',LU:'Luxembourg',FR:'France',US:'United States',HK:'Hong Kong',verify:'Verify'};
+const DOM_LABEL={SG:'Singapore',IE:'Ireland (UCITS)',LU:'Luxembourg',FR:'France',US:'United States',HK:'Hong Kong',CH:'Switzerland',verify:'Verify'};
+// --- US-situs verdict: three states, not two ---------------------------------
+// Until the crypto rows arrived this site had a boolean — estate_tax_exposed, whose
+// NEGATION was read everywhere as "safe". That is sound for a fund, whose domicile
+// settles the question. It is wrong for a US-listed spot bitcoin trust: the iShares
+// 10-K states there is no specific guidance on whether the shares, or the bitcoin
+// behind them, are US-situs. Unknown is not safe, and it is not exposed either —
+// there is no dividend for withholding to bite on, so the red "40% + 30% withholding"
+// note would be wrong too.
+//
+// Every claim of safety on this page goes through situsState(). Adding a fourth
+// caller that tests !estate_tax_exposed directly is the way this breaks.
+function situsState(f){
+  if(f.estate_tax_exposed) return 'exposed';
+  if(f.situs_unresolved) return 'unresolved';
+  return 'safe';
+}
+function situsSafe(f){ return situsState(f)==='safe'; }
+const SITUS_LABEL={exposed:'Exposed',unresolved:'Unresolved',safe:'Safe'};
+const SITUS_COLOUR={exposed:'var(--r-text)',unresolved:'var(--a-text)',safe:'var(--g-text)'};
+const SITUS_TIP={
+  exposed:'US-domiciled: inside the US estate-tax net above US$60,000, and 30% withholding on distributions.',
+  unresolved:'Situs is not settled for this wrapper. Shown as unresolved rather than safe — this page does not label an instrument estate-tax safe on inference.',
+  safe:'Not US-situs: the security held is a share in a non-US fund.'
+};
 async function loadData(){
   if(window.__DATA__) return window.__DATA__;
   const [u,c,m,p]=await Promise.all([
@@ -1058,6 +1159,10 @@ const CORE_ISIN={CSPX:'IE00B5BMR087',VUAA:'IE00BFMXXD54',VWRA:'IE00BK5BQT80',IWD
 function infoUrl(f){
   if(f.is_core) return 'https://www.justetf.com/en/etf-profile.html?isin='+(CORE_ISIN[f.ticker]||'');
   if((f.domicile==='LU'||f.domicile==='FR')&&f.isin) return 'https://www.justetf.com/en/etf-profile.html?isin='+f.isin;
+  // Crypto rows carry their own Yahoo symbol: a US-listed trust takes a bare
+  // ticker and IB1T is cross-listed across Europe, neither of which the venue
+  // rules below would get right. Without this IBIT resolved to "IBIT.SI".
+  if(f.yahoo) return 'https://finance.yahoo.com/quote/'+f.yahoo;
   if(f.exchange==='HKEX') return 'https://finance.yahoo.com/quote/'+f.ticker.padStart(4,'0')+'.HK';
   return 'https://finance.yahoo.com/quote/'+f.ticker+'.SI';  // SGX-listed
 }
@@ -1107,7 +1212,11 @@ const ACEXPECT={
   asia_bonds:'Higher-yielding bonds that carry more credit and currency risk than developed-market bonds.',
   reits:'Property income in a listed wrapper — attractive yield, but it behaves more like equity than a bond when markets fall.',
   gold:'No income and no earnings — it simply sits there. Its job is to zig when shares zag: a diversifier, not a return driver.',
-  cash:'Capital stability and liquidity. Over the long run, returns roughly track inflation at best — a place to wait, not to grow.'
+  cash:'Capital stability and liquidity. Over the long run, returns roughly track inflation at best — a place to wait, not to grow.',
+  // Describes the wrapper and the uncertainty, and stops there. Every other line here
+  // rests on a long-run return estimate from cma.json; this asset has none, so a line
+  // in the same confident register would be borrowing an authority that does not exist.
+  crypto:'No income, no earnings and no forward return estimate on this site — the drop and the calendar-year bars below are history, not a projection. What this page can tell you is what each wrapper costs and where it sits for US estate tax; whether to hold any of it is not a question this tool answers.'
 };
 function expectLine(f){ const t=ACEXPECT[f.asset_class]; return t?'<div class="snap-expect">'+t+'</div>':''; }
 // Resilience from the weekly price series: worst peak-to-trough drop + best/worst rolling 12-month return.
@@ -1160,12 +1269,12 @@ let CHART_UID=0; const CHARTS={};
 function renderPriceChart(box, tk){
   const f=FUNDS.find(x=>x.ticker===tk);
   const ser=PRICES[tk];
-  if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+buyBlock(f)+altBlock(f);return;}
+  if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+(f.is_crypto?cryptoProvBlock(f):'')+buyBlock(f)+altBlock(f);return;}
   const raw=ser.c.slice();
   for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
   let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;
   const arr=raw.slice(i0), n=arr.length;
-  if(n<20){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+buyBlock(f)+altBlock(f);return;}
+  if(n<20){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+(f.is_crypto?cryptoProvBlock(f):'')+buyBlock(f)+altBlock(f);return;}
   const startTs=ser.s+i0*604800;   // 604800s = 1 week; year label only, no date arithmetic
   const perf='<div class="perf">'+perfStats(arr,startTs).map(s=>{
     const v=s[1], cls=v==null?'':(v>=0?'up':'down');
@@ -1181,7 +1290,7 @@ function renderPriceChart(box, tk){
     perf+
     '<div class="snap-head">'+expectLine(f)+'</div>'+
     '<div class="chart-cap">Weekly closes via Yahoo Finance'+(asof?' (latest bar: week of <b>'+asof+'</b>)':'')+' &middot; price return &mdash; dividends are on top &middot; the moving averages are context, not a timing signal.</div>'+
-    resilBlock(arr,tk)+buyBlock(f)+altBlock(f);
+    resilBlock(arr,tk)+(f.is_crypto?cryptoProvBlock(f):'')+buyBlock(f)+altBlock(f);
   drawPrice(box.querySelector('.ph'), uid, null);
 }
 function setHorizon(btn,uid,weeks){
@@ -1229,9 +1338,53 @@ function cpfLine(f){
   if(f.cpf==='No') return '<strong>CPF-OA</strong>: not on the CPFIS list &mdash; cash or SRS only.';
   return '<strong>CPF-OA</strong>: only funds on the CPFIS-included list qualify &mdash; <span class="buy-verify">verify current eligibility</span> before assuming.';
 }
+// Where each crypto figure came from, beside the figure rather than in a page footer.
+// These products are the least well covered by the aggregators the rest of this site
+// can lean on, and the gap is not academic: the Harvest fund's launch fee of 0.30% is
+// still being quoted across the web two years after it was replaced, which would rank
+// it cheapest here when its published ongoing charges figure is the most expensive.
+function cryptoProvBlock(f){
+  if(!f.src&&!f.stale_source_warning) return '';
+  const conf={high:'read from the issuer filing named below',med:'single or secondary source — not confirmed against a current Key Facts Statement'}[f.ter_conf];
+  return '<div class="prov">'+
+    '<div class="prov-t">Where these numbers came from</div>'+
+    (f.ter!=null?'<p class="prov-b"><strong>Annual cost '+fmt(f.ter,2)+'%</strong> is measured as <strong>'+(f.cost_basis||'unstated')+'</strong>'+(conf?' — '+conf:'')+'.</p>':'')+
+    (f.structure?'<p class="prov-b"><strong>Wrapper:</strong> '+f.structure+'</p>':'')+
+    (f.stale_source_warning?'<div class="prov-warn">'+f.stale_source_warning+'</div>':'')+
+    (f.src?'<p class="prov-src">'+f.src+'</p>':'')+
+    '</div>';
+}
+// Crypto access route note. Kept separate from buyBlock's venue rules because the
+// HKEX branch below tells the reader about China's ~10% dividend withholding sitting
+// inside the fund — true of a Hang Seng tracker, meaningless for a bitcoin ETF, which
+// distributes nothing at all. Reusing it would have printed a confident irrelevance.
+function cryptoBuyBlock(f){
+  const lot=f.lot?' Board lots of <strong>'+f.lot+' units</strong>, so check the minimum outlay before ordering.':'';
+  const counters=f.usd_counter
+    ? ' The same fund lists on several counters — <strong>'+f.ticker+'</strong> in HKD and <strong>'+f.usd_counter+'</strong> in USD'
+      +(f.rmb_counter?', <strong>'+f.rmb_counter+'</strong> in RMB':'')
+      +'. Same fund, same ISIN, different trading currency: if you already hold USD, the USD counter saves you a conversion.'
+    : '';
+  const body=f.crypto_route==='hk'
+    ? 'Listed in <strong>Hong Kong (HKEX)</strong>, and authorised by the SFC as a fund.'+counters+lot
+      +' Buy through a broker with HK access. Trading hours are <strong>Singapore hours</strong>. <strong>Cash only</strong> — not SRS or CPFIS eligible.'
+    : f.crypto_route==='us'
+    ? 'Listed in the <strong>United States</strong>. Buy through a broker with US market access; fractional shares are commonly available, so there is no board-lot minimum.'
+      +' Singapore brokers generally gate crypto products behind a <strong>knowledge assessment</strong> before a first trade — <span class="buy-verify">check your broker&rsquo;s current process</span>. <strong>Cash only</strong>.'
+    : 'Listed on <strong>European exchanges</strong> (London, Xetra, Euronext, SIX). Buy through a broker with European market access, choosing the listing whose trading currency costs you least to reach. <strong>Cash only</strong>.';
+  return '<div class="buy">'+
+    '<div class="buy-t">Where &amp; how to buy</div>'+
+    '<div class="buy-pos">We show every route; a broker shows only its own.</div>'+
+    '<p class="buy-body">'+body+'</p>'+
+    '<div class="buy-note">General information, not advice or a broker endorsement. No affiliate links. '+
+    'There is <strong>no SGX-listed spot crypto ETF</strong>: MAS has consistently held that cryptocurrencies are not suitable for retail investors and has not authorised one for retail offer here. '+
+    'Availability through any particular Singapore broker changes — <span class="buy-verify">verify before assuming</span>.</div>'+
+    '</div>';
+}
 // Independent "where & how to buy" note per fund — venue-derived, not broker-endorsing.
 function buyBlock(f){
   if(!f) return '';
+  if(f.is_crypto) return cryptoBuyBlock(f);
   const body=f.exchange==='HKEX'
     ? 'Listed in <strong>Hong Kong (HKEX)</strong>. Buy with cash through a broker with HK access (Interactive Brokers, moomoo, Saxo; Tiger also advertises HK &mdash; check its current schedule); convert to <strong>HKD</strong> inside the broker first, with the same care over conversion costs as the guide describes. Trading hours are <strong>Singapore hours</strong> (9:30am&ndash;4pm, lunch break 12&ndash;1pm). HK shares trade in <strong>board lots</strong>'+(f.lot?' &mdash; '+f.lot+' units minimum for this fund':'')+', so check the minimum outlay before ordering. <strong>No stamp duty</strong> on HK-listed ETFs, and distributions arrive with <strong>no HK withholding</strong> (China&rsquo;s ~10% dividend tax is already inside the fund). <strong>Cash only</strong> &mdash; not SRS or CPFIS eligible.'
     : f.is_core
@@ -1252,7 +1405,10 @@ function closestAlternatives(f){
 }
 function altRow(f,isSelf,bestTk){
   const s=f.starter_score, col=scoreColor(s);
-  const dom=(DOM_LABEL[f.domicile]||f.domicile)+(f.estate_tax_exposed?' <span class="alt-trap" title="US-domiciled: US estate tax + 30% withholding">⚠</span>':'');
+  const st=situsState(f);
+  const dom=(DOM_LABEL[f.domicile]||f.domicile)
+    +(st==='exposed'?' <span class="alt-trap" title="US-domiciled: US estate tax + 30% withholding">⚠</span>':'')
+    +(st==='unresolved'?' <span class="alt-unres" title="'+SITUS_TIP.unresolved+'">?</span>':'');
   const cost=f.effective_ter!=null?fmt(f.effective_ter,2)+'%':'—';
   const net=f.net_expected_return_pct!=null?fmt(f.net_expected_return_pct,1)+'%':'—';
   const rw=volWord(f)||'—';
@@ -1262,8 +1418,48 @@ function altRow(f,isSelf,bestTk){
   return '<tr'+(isSelf?' class="alt-selfrow"':'')+'><td>'+name+best+'</td><td>'+dom+'</td><td class="r">'+cost+'</td><td class="r">'+net+'</td><td class="r">'+rw+'</td>'+
     '<td class="r"><span style="color:'+col+';font-weight:700">'+(s!=null?s:'—')+'</span></td></tr>';
 }
+// "Same coin, different wrapper" — the comparison that actually decides the question.
+// Deliberately NOT ranked by cost. The cheapest row here is the US trust, and ranking
+// on cost alone would recommend it while the situs column says the issuer cannot tell
+// you whether it sits inside your US estate. Ordered by situs verdict instead, then
+// cost within that, so the axis the reader is being asked to weigh comes first.
+//
+// Every cost prints with its basis attached. They are not on one basis and cannot be
+// put on one: an actual ongoing charges figure, an estimated one, a bare management
+// fee and a unified sponsor fee are four different measurements. Showing "0.60" beside
+// "1.72" with no qualifier would read as a 3x cost difference that nobody has measured.
+function cryptoAltBlock(f){
+  const peers=FUNDS.filter(x=>x.is_crypto&&x.segment===f.segment);
+  if(peers.length<2) return '';
+  const rank={safe:0,unresolved:1,exposed:2};
+  peers.sort((a,b)=>(rank[situsState(a)]-rank[situsState(b)])||((a.ter??99)-(b.ter??99)));
+  // "Outside", not "Safe". The verdict is identical — a share in a non-US fund is not
+  // US-situs — but the word sits one column from a bitcoin fund's name, and "Safe"
+  // there reads as a verdict on the holding rather than on its estate-tax treatment.
+  // The Learn tab's route table uses the same word for the same reason.
+  const LBL=Object.assign({},SITUS_LABEL,{safe:'Outside'});
+  const rows=peers.map(x=>{
+    const st=situsState(x), self=x.ticker===f.ticker;
+    const cost=x.ter!=null
+      ? '<b>'+fmt(x.ter,2)+'%</b><div class="cb">'+(x.cost_basis||'')+'</div>'
+      : '<span class="dim">not verified</span>';
+    const nm=self?'<strong>'+x.ticker+'</strong><span class="alt-self">this one</span>'
+                 :'<a class="tk-link" onclick="openFund(\''+x.ticker+'\')">'+x.ticker+'</a>';
+    return '<tr'+(self?' class="alt-selfrow"':'')+'><td>'+nm+'</td>'+
+      '<td>'+(x.route_label||'')+'<div class="cb">'+(x.wrapper||'')+'</div></td>'+
+      '<td class="r">'+cost+'</td>'+
+      '<td class="r"><span style="color:'+SITUS_COLOUR[st]+';font-weight:700" title="'+SITUS_TIP[st].replace(/"/g,'&quot;')+'">'+LBL[st]+'</span></td></tr>';
+  }).join('');
+  return '<div class="altc"><div class="alt-t">The same '+f.segment.toLowerCase()+', in three different wrappers</div>'+
+    '<div class="alt-scroll"><table class="alt-tbl"><thead><tr><th>Fund</th><th>Route &amp; wrapper</th>'+
+    '<th class="r">Annual cost</th><th class="r">US situs</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<div class="alt-note"><strong>Read the last two columns together.</strong> The cheapest wrapper is the US trust, and it is the one whose '+
+    'estate-tax treatment its own issuer declines to state. The Hong Kong funds cost more and are the only route here that is both a fund and outside US situs. '+
+    'Costs are <em>not</em> on a common basis — each shows the basis it was measured on, because a management fee and an ongoing charges figure are different quantities.</div></div>';
+}
 function altBlock(f){
   if(!f) return '';
+  if(f.is_crypto) return cryptoAltBlock(f);
   const alts=closestAlternatives(f);
   let callout='';
   if(f.estate_tax_exposed){
@@ -1324,7 +1520,8 @@ function openCmp(){
   const row=(label,fn,tip)=>'<tr><th'+(tip?' title="'+tip.replace(/"/g,'&quot;')+'"':'')+'>'+label+'</th>'+fs.map(fn).join('')+'</tr>';
   const h='<table class="cmp-tbl"><thead><tr><th></th>'+fs.map(f=>'<th class="r"><a class="tk-link" onclick="closeCmp();openFund(\''+f.ticker+'\')">'+f.ticker+'</a><div class="cmp-nm">'+f.name+'</div><a class="cmp-ext" href="'+infoUrl(f)+'" target="_blank" rel="noopener">Fund page &#8599;</a></th>').join('')+'</tr></thead><tbody>'+
     row('Asset class',f=>cell(ACLABEL[f.asset_class]||f.asset_class))+
-    row('Domicile / tax',f=>cell(f.estate_tax_exposed?'<span class="alt-trap">⚠</span> '+(DOM_LABEL[f.domicile]||f.domicile):(DOM_LABEL[f.domicile]||f.domicile)),'Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.')+
+    row('Domicile / tax',f=>{const st=situsState(f), mk=st==='exposed'?'<span class="alt-trap">⚠</span> ':(st==='unresolved'?'<span class="alt-unres">?</span> ':'');
+      return cell(mk+(DOM_LABEL[f.domicile]||f.domicile));},'Where the fund is legally domiciled — this sets US estate-tax exposure and dividend withholding, and it follows the asset, not your broker.')+
     row('Efficiency Score',f=>cell(f.starter_score!=null?'<b style="color:'+scoreColor(f.starter_score)+'">'+f.starter_score+'</b>':'n/a', f.starter_score===bestScore&&fs.length>1),'0-100 composite: cost 25%, tax-safety 20%, risk-adjusted return 25%, liquidity 15%, diversification 15%. Efficiency, not a buy call. Highest shown is shaded.')+
     row('Annual cost %',f=>cell(f.effective_ter!=null?fmt(f.effective_ter,2)+(f.ter_basis==='est'?' <span class="est-tag">est</span>':''):'—', minCost!=null&&f.effective_ter===minCost&&fs.length>1),'The fund’s all-in yearly cost (TER). Lowest shown is shaded.')+
     row('Mgmt fee %',f=>cell(f.mgmt_fee!=null?fmt(f.mgmt_fee,2):'—'),'The manager’s cut — a component of, and usually lower than, the all-in annual cost.')+
@@ -1335,7 +1532,8 @@ function openCmp(){
     row('1Y price return',f=>cell(trailCell(f.trail_1y)),'Backward-looking price return, dividends extra. Last year’s winner is rarely next year’s.')+
     row('3Y p.a.',f=>cell(trailCell(f.trail_3y)))+
     row('5Y p.a.',f=>cell(trailCell(f.trail_5y)))+
-    row('US estate tax',f=>cell(f.estate_tax_exposed?'<span style="color:var(--r-text);font-weight:700">Exposed</span>':'<span style="color:var(--g-text);font-weight:700">Safe</span>'))+
+    row('US estate tax',f=>{const st=situsState(f);
+      return cell('<span style="color:'+SITUS_COLOUR[st]+';font-weight:700" title="'+SITUS_TIP[st].replace(/"/g,'&quot;')+'">'+SITUS_LABEL[st]+'</span>');})+
     '</tbody></table>';
   // quiet, optional "similar funds" strip: same-class alternatives to the selected funds, one tap to add
   const cand=CMP.size<4?cmpSuggestions(4):[];
@@ -1391,14 +1589,28 @@ function toggleChart(btn){
 function amtVal(id){return parseInt((document.getElementById(id).value||'').replace(/[^\d]/g,''),10)||0;}
 function reformatAmt(id){const el=document.getElementById(id);const n=amtVal(id);el.value=n?n.toLocaleString('en-US'):'';}
 function domBadge(f){
-  const d=f.domicile, cls='bdg-'+(['SG','IE','LU','FR','US','HK'].includes(d)?d.toLowerCase():'verify');
+  // CH included so Switzerland renders as a known domicile. Without it the ETP fell
+  // through to the amber "verify" styling, which on this site means "we have not
+  // confirmed this" — the opposite of the truth here: the domicile is confirmed, it
+  // is the SITUS of the wrapper that is unresolved, and that is a different badge.
+  const d=f.domicile, cls='bdg-'+(['SG','IE','LU','FR','US','HK','CH'].includes(d)?d.toLowerCase():'verify');
   let h='<span class="bdg '+cls+'">'+(DOM_LABEL[d]||d)+'</span>';
   if(f.domicile_conf==='inferred'||f.domicile_conf==='none') h+=' <span class="bdg bdg-verify" title="Domicile not confirmed from ISIN">verify</span>';
   if(f.is_core) h=' <span class="bdg bdg-core">Core</span> '+h;
   if(f.estate_tax_exposed) h+='<div class="est-note">⚠ US estate tax + 30% withholding</div>';
+  // Unresolved gets its own note, never the exposed one: these products pay no
+  // distribution, so the "30% withholding" half would be wrong even if the estate
+  // question resolved against the holder.
+  else if(f.situs_unresolved) h+='<div class="unres-note" title="'+SITUS_TIP.unresolved+'">? US situs unresolved</div>';
   return h;
 }
 function scoreCell(f){
+  // Two different blanks, and the difference is worth a sentence. A missing TER is a
+  // gap we intend to close. Crypto is unscored on purpose and permanently: the score
+  // is 25% risk-adjusted forward return, and there is no defensible long-run return
+  // estimate for bitcoin to put in it. Showing the same "n/a" for both would imply
+  // this one is waiting on data.
+  if(f.no_forward_return) return '<span class="bdg bdg-verify" title="Not scored, by design. The Efficiency Score is a quarter risk-adjusted forward return, and no defensible long-run return estimate exists for this asset. A blank here is a deliberate refusal, not missing data.">not scored</span>';
   if(f.starter_score==null) return '<span class="bdg bdg-verify" title="Needs a source-verified TER before it can be scored">n/a</span>';
   const s=f.starter_score, p=f.score_parts||{};
   const col=scoreColor(s);
@@ -1421,14 +1633,23 @@ function yieldCell(f){
 }
 
 function renderKPIs(){
-  const safe=FUNDS.filter(f=>!f.estate_tax_exposed).length;
+  // situsSafe, not !estate_tax_exposed. The difference is the whole point of the
+  // three-state verdict: counting an unresolved wrapper as "safe" here would have
+  // put a number on the front of the page asserting exactly what the issuer's own
+  // filing declines to assert.
+  const safe=FUNDS.filter(situsSafe).length;
   const core=FUNDS.filter(f=>f.is_core).length;
   const exposed=FUNDS.filter(f=>f.estate_tax_exposed);
+  const unres=FUNDS.filter(f=>f.situs_unresolved);
   const coreTers=FUNDS.filter(f=>f.is_core&&f.effective_ter!=null).map(f=>f.effective_ter);
   const cheap=coreTers.length?Math.min(...coreTers):null;
   const k=[
     ['Funds covered',FUNDS.length,'after merging currency share classes',''],
-    ['Estate-tax safe',safe+' / '+FUNDS.length,'non-US-domiciled','pos'],
+    // The unresolved count rides on the safe tile's sub-line rather than taking a
+    // tile of its own: it is a qualification OF that number, and the reader who
+    // needs it is the one reading "safe".
+    ['Estate-tax safe',safe+' / '+FUNDS.length,
+      'non-US-domiciled'+(unres.length?' · '+unres.length+' more unresolved, not counted safe':''),'pos'],
     ['US-domiciled (exposed)',exposed.length,exposed.map(f=>f.ticker).join(', '),'neg'],
     ['Cheapest core TER',cheap!=null?cheap.toFixed(2)+'%':'—','Irish UCITS building block','']
   ];
@@ -1468,10 +1689,11 @@ function renderCore(){
 }
 
 function passRoute(f){
-  if(routeFilter==='safe') return !f.estate_tax_exposed;
+  if(routeFilter==='safe') return situsSafe(f);   // excludes unresolved, deliberately
   if(routeFilter==='core') return f.is_core;
   if(routeFilter==='sgx') return f.exchange==='SGX';
-  if(routeFilter==='hk') return f.exchange==='HKEX';
+  if(routeFilter==='hk') return f.exchange==='HKEX'&&!f.is_crypto;
+  if(routeFilter==='crypto') return !!f.is_crypto;
   return true;
 }
 function renderTable(){
@@ -1506,8 +1728,20 @@ function renderTable(){
     '<td class="r" data-label="Div. yield">'+yieldCell(f)+'</td>'+
     '<td class="r col-detail" data-label="Liquidity">'+liqLabel(f)+'</td>'+
     '</tr>').join('');
-  document.getElementById('findFoot').innerHTML='Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
-    'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available. '+
+  // The crypto rows carry four blank columns, and a reader who is not told why will
+  // assume the data is simply missing. Shown against the crypto filter and whenever a
+  // crypto row is on screen, so the explanation travels with the blanks.
+  const cryptoShown=rows.some(f=>f.is_crypto);
+  const cryptoNote=cryptoShown
+    ? '<div class="notice" style="margin:10px 0"><strong>Why the crypto rows are mostly blank.</strong> '+
+      'No Efficiency Score, no net expected return and no expected volatility — deliberately. Those columns are built on a long-run '+
+      'capital market assumption per asset class, and no defensible one exists for bitcoin or ether, so the columns are left empty rather than filled with a number nobody can stand behind. '+
+      'Crypto is also absent from the Build tab and the Expected returns view for the same reason. '+
+      'What the rows do carry is the wrapper, the domicile, the annual cost <em>with the basis it was measured on</em>, and the US-situs verdict — the things that actually differ between routes. '+
+      '<a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">The full explanation is on the Learn tab</a>.</div>'
+    : '';
+  document.getElementById('findFoot').innerHTML=cryptoNote+'Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
+    'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available, and on the crypto rows, where it is withheld on purpose. '+
     '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. <strong>1Y / 3Y / 5Y</strong> (Detailed view) are trailing <em>price</em> returns — dividends extra; 3Y and 5Y are annualised. They are backward-looking: past return is not a prediction, which is why the table defaults to the forward-looking Efficiency Score. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
@@ -1559,7 +1793,7 @@ function tentativeEstateTax(usd){
 // US estate tax owed by a Singapore-resident non-resident alien on US-situs assets, floored at 0.
 function estateTax(usd){ return Math.max(0, tentativeEstateTax(usd)-ESTATE_CREDIT_USD); }
 function bestCleanForClass(ac){
-  const c=FUNDS.filter(f=>f.asset_class===ac && !f.estate_tax_exposed && f.net_expected_return_pct!=null);
+  const c=FUNDS.filter(f=>f.asset_class===ac && situsSafe(f) && f.net_expected_return_pct!=null);
   c.sort((a,b)=>a.cost_drag_total_pct-b.cost_drag_total_pct);
   return c[0]||null;
 }
@@ -2664,6 +2898,12 @@ async function init(){
     const acc=(f.income||'').toLowerCase().indexOf('acc')===0, y=(!acc&&f.yield>0)?f.yield:0;
     f.tr1_tot=f.trail_1y!=null?f.trail_1y+y:null; f.tr3_tot=f.trail_3y!=null?f.trail_3y+y:null;});
   ACLABEL={}; for(const k in CMA.asset_classes) ACLABEL[k]=CMA.asset_classes[k].label;
+  // Crypto gets a LABEL only. It is deliberately absent from cma.json, so it has no
+  // forward return, no volatility and no correlation — which is exactly why the Build
+  // tab and the Expected-returns tab cannot reach it, both being driven by
+  // CMA.asset_classes rather than by this map. Naming it here lets the Funds table
+  // print a class name without that absence turning into an invented number.
+  ACLABEL.crypto='Crypto (access only)';
   // build symmetric correlation matrix (default 0.30 for any unspecified pair)
   CORR={}; const _cs=Object.keys(CMA.asset_classes);
   _cs.forEach(a=>{CORR[a]={}; _cs.forEach(b=>CORR[a][b]=(a===b)?1:0.30);});
