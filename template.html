@@ -285,6 +285,12 @@ td.r{text-align:right;font-family:var(--mono)}
 .alt-unres{color:var(--a-text);cursor:help;font-weight:700}
 /* Cost basis / wrapper caption. Provenance rides with the number, not in a footnote. */
 .cb{font-size:11px;color:var(--t2);font-weight:400;line-height:1.3;margin-top:2px}
+/* Withheld price history. Amber like the other "we do not know" states, never red:
+   nothing is wrong with the FUND, only with the data we can get about it. */
+.suspect{background:var(--a-bg);border:1px solid rgba(180,83,9,0.25);border-radius:8px;padding:14px 16px;margin:10px 0}
+.suspect-t{font-size:13px;font-weight:700;color:var(--a-text);margin-bottom:8px}
+.suspect-b{font-size:13px;color:var(--t2);line-height:1.55;margin:0 0 8px}
+.suspect-n{font-size:11.5px;color:var(--t2);line-height:1.45;border-top:1px solid rgba(180,83,9,0.2);padding-top:8px;margin-top:4px}
 .alt-tbl .tk-link{cursor:pointer}
 .alt-note{font-size:10.5px;color:var(--t3-text);margin-top:8px;line-height:1.5}
 /* goal-plan per-fund chip + quick-look */
@@ -1181,6 +1187,11 @@ function perfStats(arr, startTs){
 function trailReturns(tk){
   const ser=PRICES[tk];
   if(!ser||!ser.c) return {y1:null,y3:null,y5:null};
+  // A level shift the data source never adjusted for puts the two ends of every
+  // lookback on different scales, so a 3Y or 5Y number computed across it is not
+  // merely imprecise, it is meaningless — 3008 would report roughly -90% a year
+  // from a 10:1 split. Withheld at source so no column can pick them up.
+  if(ser.suspect) return {y1:null,y3:null,y5:null};
   const raw=ser.c.slice();
   for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
   let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;
@@ -1266,10 +1277,44 @@ function calBarsSVG(cy){
 // (viewBox ≈ px, so axis text stays crisp on mobile). Horizon buttons re-window the view; SMAs are computed on
 // the full series then sliced, so the moving averages stay continuous from the start of the chosen window.
 let CHART_UID=0; const CHARTS={};
+// Shown in place of a chart the data cannot support. Names the defect precisely,
+// because "data unavailable" would suggest a gap in coverage rather than a source
+// that is confidently wrong.
+function suspectPriceBlock(f,ser){
+  const s=ser.suspect||{}, r=s.ratio, n=s.n||1;
+  // Quote a factor only for a single clean step. Where breaks compound — a bad tick
+  // landing on top of a split, as in 3008 — the largest ratio is the exit from the
+  // bad bar (~99x), not the ~10x shift that actually happened, and printing it would
+  // put a wrong number inside the notice explaining that the numbers are wrong.
+  const how=(n===1&&r)
+    ? 'the price steps by about <strong>'+(r>1?fmt(r,1):fmt(1/r,1))+'x</strong> from one week to the next and stays there'
+    : 'the price steps sharply from one week to the next and stays at the new level, across <strong>'+n+' separate breaks</strong>';
+  return '<div class="suspect">'+
+    '<div class="suspect-t">Price history withheld for this fund</div>'+
+    '<p class="suspect-b">The weekly series for '+f.ticker+' contains an unexplained <strong>level shift</strong> &mdash; '+
+    how+'. '+
+    'That is the signature of a share split or consolidation that the data source never adjusted for. '+
+    'Yahoo Finance reports <strong>no split</strong> for this fund and returns an adjusted close identical to its raw close, '+
+    'so there is nothing in the feed to reconstruct the true series from.</p>'+
+    '<p class="suspect-b">Rather than draw a chart with a cliff in it that never happened, and report a worst drop and '+
+    'trailing returns computed across two different scales, the <strong>chart, the 1Y / 3Y / 5Y returns and the resilience '+
+    'stats are withheld</strong> for this fund. Its cost, domicile and tax treatment are unaffected and are shown as normal.</p>'+
+    '<div class="suspect-n">Detected automatically on every build, not curated by hand &mdash; any fund whose series develops '+
+    'a step is withheld the same way. Checked against the issuer or the exchange, this can be repaired; it has not been yet.</div>'+
+    '</div>';
+}
 function renderPriceChart(box, tk){
   const f=FUNDS.find(x=>x.ticker===tk);
   const ser=PRICES[tk];
   if(!ser||!ser.c){box.innerHTML='<div class="chart-loading">Price history not available for this fund.</div>'+(f.is_crypto?cryptoProvBlock(f):'')+buyBlock(f)+altBlock(f);return;}
+  // A series whose scale shifts partway through cannot be drawn honestly. Plotting
+  // it produces a cliff that reads as a crash, and the resilience panel underneath
+  // would report a worst drop of -99% that never happened. Say what is wrong with
+  // it instead — an empty space with a reason beats a confident wrong picture.
+  if(ser.suspect){
+    box.innerHTML=suspectPriceBlock(f,ser)+(f.is_crypto?cryptoProvBlock(f):'')+buyBlock(f)+altBlock(f);
+    return;
+  }
   const raw=ser.c.slice();
   for(let i=0;i<raw.length;i++){ if(raw[i]==null) raw[i]=i>0?raw[i-1]:null; }   // forward-fill gaps
   let i0=0; while(i0<raw.length&&raw[i0]==null)i0++;

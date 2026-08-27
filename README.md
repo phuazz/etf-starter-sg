@@ -99,6 +99,40 @@ Refresh chart prices: `python scripts/pipeline.py --prices` — re-fetches ~6yr 
 
 Automated refresh: `.github/workflows/refresh-prices.yml` re-runs `--prices` on weekdays (22:10 UTC, after the SGX/LSE/US closes), rebuilds `docs/index.html`, and commits the result — so the charts and the `asof` date stay current without manual runs. Yahoo's current-week weekly bar already carries the latest daily close, so the series stays uniform-weekly (no distortion to the 1M/3M/YTD/1Y/3Y stats) while the last point stays a day fresh. Switch to a weekly cadence by changing the cron to `0 2 * * 6`. The job aborts (does not commit) if fewer than 50 funds return data, so a transient fetch failure cannot wipe the charts.
 
+## Price-series integrity (2026-08-27)
+
+Yahoo's weekly closes are **not split-adjusted**, and worse, they do not say so:
+for every affected fund Yahoo reports **zero split events** and returns an `adjclose`
+identical to the raw close. A share split therefore lands in the series as a step —
+the level drops ~10x and stays there — which the chart drew as a cliff and the
+resilience panel reported as a near-total loss.
+
+Found when the Bosera bitcoin ETF chart showed HK$737 falling to HK$7 in one week.
+It had split roughly 10:1 in December 2024. **This is a property of the data source,
+not of the crypto funds** — `SCY` (CSOP Star & ChiNext 50, SGX) had been carrying the
+same defect on the live site.
+
+`sanitise_prices()` runs on **every** build, including cached ones, and separates two
+defects that look alike in a chart:
+
+- **spike** — one bar off its neighbours, level returns afterwards. A bad tick; the
+  bar is dropped and the series kept.
+- **step** — the level shifts and stays. No bar can be dropped: the whole pre-step
+  segment is on a different scale. The series is flagged and the page **withholds the
+  chart, the 1Y/3Y/5Y returns and the resilience stats**, saying precisely why.
+
+Steps are withheld rather than repaired because there is nothing in the feed to repair
+them from — no split event, no adjusted close. Inventing an adjustment factor is the
+confident-wrong-answer this dashboard exists to avoid. A trailing return computed
+across a 10:1 step is not imprecise, it is meaningless: 3008 would report about -90%
+a year. Computed yields are suppressed too, since a yield divides by the last close and
+`SCY`'s break is on its final bar.
+
+Flags persist into `prices.json`, so the repo artefact and the inlined copy in
+`docs/index.html` agree and the guards can read them. Currently withheld: **3008, 3009,
+3460, SCY**. Each is repairable against issuer or exchange data — none has been yet.
+Guards: `tests/test_price_integrity.py` (10 tests).
+
 ## Known simplifications (the three ways this could mislead — read before trusting a number)
 
 1. **Domicile** drives the tax verdict; ISIN-derived where possible, curated otherwise, ISIN shown
@@ -149,7 +183,7 @@ python scripts/verify_matches.py           # realised-return check + refusal flo
 python scripts/decompose_single_names.py   # variance decomposition
 python scripts/fetch_mortality.py          # SingStat death rates
 python scripts/pipeline.py                 # inline everything -> docs/index.html
-python -m pytest tests/ -q                 # 74 guards (57 swap + 17 crypto access)
+python -m pytest tests/ -q                 # 84 guards (57 swap + 17 crypto + 10 price integrity)
 ```
 
 The UCITS universe is near-static and deliberately **not** wired into the weekly

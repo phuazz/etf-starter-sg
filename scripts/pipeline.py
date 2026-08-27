@@ -17,7 +17,7 @@ No date arithmetic is performed; BUILD_DATE is stamped as a constant (session da
 ISO yyyy-mm-dd) to keep the build deterministic. If you re-download the SGX export,
 update SOURCE_DOWNLOADED below.
 """
-import csv, json, re, sys, os, urllib.request, time, datetime
+import csv, json, re, sys, os, urllib.request, time, datetime, math
 from collections import defaultdict
 
 BUILD_DATE = "2026-07-09"          # session date; not computed
@@ -360,6 +360,113 @@ def load_or_fetch_prices(funds):
     return out
 
 
+# ---- price-series integrity ---------------------------------------------
+# A weekly move beyond these bounds is not a market move. 2x in a week is far
+# outside anything a diversified fund does, and comfortably outside even a
+# single-asset crypto fund: bitcoin's worst week in this dataset is under 30%.
+BREAK_HI, BREAK_LO = 2.0, 0.5
+
+
+def detect_price_breaks(closes):
+    """Find discontinuities in a weekly close series, classified by shape.
+
+    Two defects that look similar in a chart and need opposite handling:
+
+      spike - one bar far off its neighbours, level returns afterwards. A bad
+              tick. Dropping the bar restores a usable series.
+      step  - the level shifts and STAYS shifted. A corporate action the data
+              source did not adjust for. There is no bar to drop; the entire
+              pre-step segment is denominated on a different scale, and every
+              return computed across it is wrong.
+
+    Yahoo reports these ETFs as having no splits at all and returns adjclose
+    identical to the raw close, so there is nothing in the feed to reconstruct
+    a step from. That is why steps are withheld rather than repaired: inventing
+    an adjustment factor is exactly the confident-wrong-answer this dashboard
+    exists to avoid.
+    """
+    vals = [(i, c) for i, c in enumerate(closes) if c is not None]
+    out = []
+    for k in range(1, len(vals)):
+        (i0, c0), (i1, c1) = vals[k - 1], vals[k]
+        if not c0 or c0 <= 0:
+            continue
+        ratio = c1 / c0
+        if BREAK_LO < ratio < BREAK_HI:
+            continue
+        before = [c for _, c in vals[max(0, k - 4):k]]
+        after = [c for _, c in vals[k + 1:k + 5]]
+        kind = "step"
+        if before and after:
+            lvl_b = sorted(before)[len(before) // 2]
+            lvl_a = sorted(after)[len(after) // 2]
+            # Level came back to within ~30% of where it was -> the bar itself
+            # was the anomaly, not the scale of everything after it.
+            if lvl_b > 0 and 0.7 < (lvl_a / lvl_b) < 1.4:
+                kind = "spike"
+        out.append({"kind": kind, "at": i1, "from": c0, "to": c1,
+                    "ratio": round(ratio, 4)})
+    return out
+
+
+def sanitise_prices(prices, funds, warnings):
+    """Drop isolated bad ticks; flag any series left with a level shift.
+
+    Runs on every build, including builds that reuse a cached prices.json, so a
+    series that was fine when fetched and is broken now still gets caught.
+
+    A flagged series keeps its data — the flag travels with it and the page
+    withholds the chart, the trailing returns and the resilience stats rather
+    than rendering them. Deleting the series would make the defect invisible to
+    the next person trying to fix it properly.
+    """
+    by_ticker = {f["ticker"]: f for f in funds}
+    dropped = suspect = 0
+    for tk, ser in prices.items():
+        if tk == "asof" or not isinstance(ser, dict) or not ser.get("c"):
+            continue
+        breaks = detect_price_breaks(ser["c"])
+        # Bad ticks first: removing one can also remove the pair of breaks it
+        # created (in and out of the spike), so re-detect afterwards.
+        spikes = [b["at"] for b in breaks if b["kind"] == "spike"]
+        if spikes:
+            for i in spikes:
+                ser["c"][i] = None
+            dropped += len(spikes)
+            print(f"  PRICE TICK {tk:5} dropped {len(spikes)} isolated bad bar(s)")
+            breaks = detect_price_breaks(ser["c"])
+        steps = [b for b in breaks if b["kind"] == "step"]
+        if not steps:
+            continue
+        suspect += 1
+        worst = max(steps, key=lambda b: abs(math.log(b["ratio"])) if b["ratio"] > 0 else 0)
+        ser["suspect"] = {"reason": "unadjusted level shift", "n": len(steps),
+                          "ratio": worst["ratio"]}
+        f = by_ticker.get(tk)
+        if f is not None:
+            f["price_suspect"] = ser["suspect"]
+        warnings.append(
+            f"{tk}: price history has {len(steps)} unexplained level shift(s) "
+            f"(largest {worst['ratio']}x, {worst['from']} -> {worst['to']}). "
+            f"Chart, trailing returns and resilience stats are withheld for this "
+            f"fund. Yahoo reports no split and its adjclose equals its raw close, "
+            f"so the series cannot be repaired from the feed.")
+        print(f"  PRICE STEP {tk:5} {len(steps)} level shift(s), largest "
+              f"{worst['ratio']}x — chart and trailing returns withheld")
+    if dropped or suspect:
+        # Persist. Without this the cleaned series and the suspect flags exist
+        # only in the inlined copy inside docs/index.html, so the repo's own
+        # prices.json would disagree with the page built from it -- and the
+        # guards, which read the repo file, would see an unflagged break and
+        # could not tell a missing flag from a missing sanitiser run.
+        path = os.path.join(DATA, "prices.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(prices, fh, separators=(",", ":"))
+        print(f"  price integrity: {dropped} bad bar(s) dropped, "
+              f"{suspect} series withheld — prices.json rewritten")
+    return suspect
+
+
 def apply_yahoo_yields(funds, prices):
     """Fill / refresh trailing dividend yields from Yahoo distribution events.
 
@@ -374,6 +481,12 @@ def apply_yahoo_yields(funds, prices):
     filled = replaced = 0
     for f in funds:
         p = prices.get(f["ticker"]) or {}
+        # A yield is distributions over the LAST close, so a series whose scale
+        # shifts partway through can put the numerator and denominator on
+        # different scales. SCY's break is on its final bar, which is exactly
+        # the one this divides by.
+        if p.get("suspect"):
+            continue
         dv = p.get("dv12")
         closes = p.get("c") or []
         last = next((c for c in reversed(closes) if c is not None), None)
@@ -964,6 +1077,10 @@ def main():
     # can fill the gaps the SGX export leaves empty (curated figures audited
     # against them; large disagreements keep curated and are flagged).
     prices = load_or_fetch_prices(funds)
+    # Integrity pass BEFORE yields: a broken series must not seed a yield, and
+    # this runs on cached builds too, so a series that has since gone bad is
+    # still caught without a re-fetch.
+    sanitise_prices(prices, funds, warnings)
     apply_yahoo_yields(funds, prices)
 
     with open(os.path.join(DATA, "etf_universe.json"), "w", encoding="utf-8") as f:
