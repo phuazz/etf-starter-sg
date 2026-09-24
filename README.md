@@ -57,6 +57,12 @@ Two smaller transparency features sit alongside these:
   locally domiciled, no US-situs issue.
 - The tool flags where the mainstream SGX route is *tax-inefficient*: the SGX-listed S&P 500 (S27),
   DJIA (D07) and gold (GSD/O87) are **US-domiciled** — full US estate-tax exposure and 30% withholding.
+- **From 13 October 2026** four Irish-domiciled Xtrackers index ETFs (S&P 500 4C IE000Z9SJA06,
+  Nasdaq-100, MSCI World, S&P 500 Equal Weight) are due to list on SGX in SGD, which puts the
+  Irish route inside SRS for those indices. The Learn-tab text was updated on 24 Sep 2026 (future
+  tense). **Listing-day follow-up:** confirm the SGX codes (only XND is in the MAS document), add
+  the four rows to `curated.json` once the SGX screener carries them, map S27 to the SGX line in
+  the swap tab, and switch the text to present tense.
 
 ## Data sources
 
@@ -328,4 +334,4 @@ the trailing-return columns with the anti-performance-chasing banner. No new cur
 were introduced — the buy note uses the general SRS/CPF rule with a verify flag, and the trailing
 returns are computed client-side from the already-inlined `prices.json`.
 
-_Last updated: 2026-08-27._
+_Last updated: 2026-09-24._
