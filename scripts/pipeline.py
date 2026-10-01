@@ -1070,6 +1070,29 @@ def main():
         }
         funds.append(enrich(rec))
 
+    # ---- add SGX listings newer than the frozen screener CSV -------------
+    # The CSV is a 2026-07-09 snapshot; funds listed since are curated here
+    # until the CSV is re-downloaded. A code that later appears in the CSV
+    # must be removed from this block, or the fund would appear twice.
+    csv_codes = {m["Trading Code"].strip() for ms in groups.values() for m in ms}
+    for c in curated.get("sgx_additions", []):
+        if c["ticker"] in csv_codes:
+            raise SystemExit(f"sgx_additions: {c['ticker']} is now in the screener CSV; "
+                             f"move its fields to sgx_overrides")
+        rec = {
+            "ticker": c["ticker"], "name": c["name"], "ccy": c["ccy"], "exchange": "SGX",
+            "isin": c.get("isin"), "domicile": c["domicile"], "domicile_conf": "curated",
+            "asset_class": c["asset_class"], "segment": c["segment"], "benchmark": c.get("benchmark"),
+            "geo": c.get("geo", c["segment"]), "fund_manager": c["fund_manager"], "income": c["income"],
+            "mgmt_style": c.get("mgmt_style", "PASSIVE"), "cpf": c.get("cpf", "No"),
+            "ter": c.get("ter"), "ter_conf": c.get("ter_conf"),
+            "mgmt_fee": c.get("mgmt_fee"), "yield": c.get("yield"), "val_m": None,
+            "liquidity_tier": c.get("liquidity_tier", "unknown"),
+            "tr_1m": None, "tr_3m": None, "tr_1y": None, "ann_3y": None,
+            "is_core": False, "share_classes": [{"ticker": c["ticker"], "ccy": c["ccy"], "val_m": None}],
+        }
+        funds.append(enrich(rec))
+
     # second-pass merge: two primaries sharing a derived ISIN are the same fund that the
     # name-normaliser split (e.g. CFA "Asia REIT" vs COI "A_REIT", ISIN SG1DE9000003). Keep the
     # more liquid one as primary and absorb the other's share classes.

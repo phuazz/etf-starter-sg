@@ -122,7 +122,7 @@
       "yield": 3.2,
       "asset_class": "sg_equity",
       "segment": "Singapore (STI)",
-      "ter_note": "Audited realised TER (SSGA); 0.30% is the mgmt-fee cap."
+      "ter_note": "Audited TER FY Jun-2026 (SSGA factsheet 31 Aug 2026); 0.30% is the mgmt-fee cap."
     },
     "G3B": {
       "ter": 0.24,
@@ -163,10 +163,11 @@
       "ter": 0.45,
       "ter_conf": "high",
       "mgmt_fee": 0.4,
-      "yield": 3.0,
+      "yield": 5.0,
       "asset_class": "sg_equity",
       "segment": "SG Low-Carbon",
-      "ter_note": "Audited FYE Dec-2025; cap lapsed Apr-2026, may drift up."
+      "ter_note": "Audited FYE Dec-2025 (Lion Global, rechecked Oct 2026); cap reportedly lapsed Apr-2026 (unverified), FY2026 TER may be higher.",
+      "yield_note": "Trailing 12m distributions 0.0719 on ~1.43 (stockanalysis; issuer shows no history), ~5% for two years; may include capital. Quarterly review 2026-10-01."
     },
     "CLR": {
       "ter": 0.6,
@@ -252,10 +253,11 @@
       "ter": 0.25,
       "ter_conf": "high",
       "mgmt_fee": 0.1,
-      "yield": 3.0,
+      "yield": 1.3,
       "asset_class": "cash",
       "segment": "SGD Money Market",
-      "ter_note": "Published TER (Phillip); mgmt fee 0.10% (cap 0.30%)."
+      "ter_note": "Published TER (Phillip); mgmt fee 0.10% (cap 0.30%).",
+      "yield_note": "Trailing 12m distributions / NAV 1.27%; Phillip 7-day annualised 1.23% (25 Sep 2026). Moves with SORA. Quarterly review 2026-10-01."
     },
     "S27": {
       "ter": 0.0945,
@@ -412,10 +414,11 @@
       "ter": 1.09,
       "ter_conf": "high",
       "mgmt_fee": 0.45,
-      "yield": 0.0,
+      "yield": 2.4,
       "asset_class": "em_asia_equity",
       "segment": "China A50",
-      "ter_note": "Audited FY Jun-2025 (UOBAM); mgmt fee 0.45%."
+      "ter_note": "Audited FY Jun-2025 (UOBAM); mgmt fee 0.45%.",
+      "yield_note": "One annual distribution (0.0558, ex 18/19 Dec 2025; POEMS, stockanalysis). Fund renamed UOBAM FTSE China A50 Index ETF. Quarterly review 2026-10-01."
     },
     "SHD": {
       "ter": 1.53,
@@ -571,6 +574,29 @@
       "ter_note": "No audited TER (feeder, listed Jan-2026); est from 0.89% mgmt fee vs peer CSOP feeders (1.53-2.70%)."
     }
   },
+  "sgx_additions": [
+    {
+      "ticker": "Q50",
+      "name": "CGS Fullgoal Singapore Next 50 Active ETF",
+      "isin": null,
+      "domicile": "SG",
+      "ccy": "SGD",
+      "fund_manager": "CGS International Securities Singapore",
+      "mgmt_style": "ACTIVE",
+      "ter": null,
+      "ter_conf": null,
+      "mgmt_fee": 0.65,
+      "yield": null,
+      "asset_class": "sg_equity",
+      "segment": "Singapore (Next 50, active)",
+      "geo": "Singapore",
+      "benchmark": "iEdge Singapore Next 50 Index (reference only; actively managed)",
+      "income": "Distributing",
+      "cpf": "No",
+      "ter_note": "No TER published yet (listed 3 Sep 2026). Mgmt fee 0.65% (max 1.50%); custodian, registrar and administration fees may each reach 0.10%+; TER capped at 1.50% (PHS). Left unscored until the first audited TER.",
+      "src": "MAS OPERA PHS 30 Jul 2026 and prospectus (Singapore VCC sub-fund; semi-annual discretionary distributions, may be from capital; board lot 1; SRS yes, not CPFIS); SGX sub-fund summary; Growbeansprout. ISIN SGXC39868275 single-source (TradingView), not entered. Added 2026-10-01 on owner instruction; CGS International product."
+    }
+  ],
   "hk_listings": [
     {
       "ticker": "2800",
