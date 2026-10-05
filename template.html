@@ -716,6 +716,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
     <div class="controls">
       <div class="ctl"><label>Search</label><input id="fSearch" type="text" placeholder="ticker, name, index…"></div>
       <div class="ctl"><label>Asset class</label><select id="fClass"><option value="">All classes</option></select></div>
+      <div class="ctl"><label>Launched</label><select id="fAge" title="By the fund's own inception date, not a later cross-listing."><option value="">Any time</option><option value="1">In the last year</option><option value="3">In the last 3 years</option><option value="5">In the last 5 years</option></select></div>
       <div class="ctl"><label>Route</label>
         <div class="seg" id="fRoute">
           <button data-v="" class="on">All</button>
@@ -750,6 +751,7 @@ h2.sec{font-family:var(--serif);font-size:26px;font-weight:400;margin:6px 0 10px
         <th class="r sortable col-detail" data-k="trail_1y" title="Trailing 1-year PRICE return (dividends extra), from the weekly series. Backward-looking — the tool defaults to forward-looking value, not this.">1Y <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_3y" title="Trailing 3-year annualised PRICE return (geometric, dividends extra). Backward-looking.">3Y p.a. <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="trail_5y" title="Trailing 5-year annualised PRICE return (geometric, dividends extra). Backward-looking.">5Y p.a. <span class="arw"></span></th>
+        <th class="r sortable col-detail" data-k="incep_sort" title="When the fund itself was launched (its inception), not when it was cross-listed on SGX or another exchange. A year with &lsquo;or earlier&rsquo; means the exact date is not sourced; the fund first traded by then, so it is at least that old.">Launched <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="exp_vol" title="Expected annual volatility (asset-class level) — how bumpy the ride is. Higher = larger swings.">Exp. vol % <span class="arw"></span></th>
         <th class="r sortable" data-k="yield" title="Trailing 12-month dividend / distribution yield (the cash paid out, as a % of price) — from issuer/curated data where verified, otherwise computed from the last 12 months of distributions (Yahoo Finance), refreshed weekly. Accumulating funds reinvest income instead of paying it (shown 'Reinvested'); '—' means no payout or not available.">Dividend yield % <span class="arw"></span></th>
         <th class="r sortable col-detail" data-k="val_m" title="How easily traded — average daily value traded on SGX. Irish UCITS core trade on the LSE (shown as High).">Liquidity <span class="arw"></span></th>
@@ -1167,6 +1169,25 @@ const ACOL={dev_equity:'#0C4A6E',sg_equity:'#2563eb',em_asia_equity:'#0e7490',th
 
 function fmt(v,d=2,suf=''){return v==null||isNaN(v)?'—':(v.toFixed(d)+suf);}
 // Trailing-return cell: signed %, green up / red down; em-dash where history is too short.
+// Fund inception. f.incep is the sourced inception (ISO date); f.incep_by is Yahoo's first-trade
+// date, an upper bound only (a fund cannot trade before it exists). See apply_inception() in pipeline.py.
+function yearsBeforeISO(n){   // today's local date, n calendar years earlier; mirrors years_before() in pipeline.py
+  const t=new Date(), m=t.getMonth()+1;   // JS getMonth() is 0-indexed, hence +1
+  const d=(m===2&&t.getDate()===29)?28:t.getDate();
+  return (t.getFullYear()-n)+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+}
+function launchedSince(f,cut){   // true / false, or null where the data cannot place the fund
+  if(f.incep) return f.incep>=cut;
+  if(f.incep_by&&f.incep_by<cut) return false;
+  return null;
+}
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function incepCell(f){
+  if(f.incep){ const p=f.incep.split('-');   // ISO month is 1-indexed; MON3 is 0-indexed
+    return '<span title="Fund inception '+f.incep+(f.incep_src?' · source: '+String(f.incep_src).replace(/"/g,'&quot;'):'')+'">'+MON3[+p[1]-1]+' '+p[0]+'</span>'; }
+  if(f.incep_by) return '<span class="tr-na" title="Exact inception not sourced. First traded on or before '+f.incep_by+' (Yahoo Finance), so the fund is at least this old.">'+f.incep_by.slice(0,4)+' or earlier</span>';
+  return '<span class="tr-na">—</span>';
+}
 function trailCell(v){ if(v==null||isNaN(v)) return '<span class="tr-na">—</span>'; const cls=v>=0?'up':'down'; return '<span class="tr '+cls+'">'+(v>=0?'+':'')+(v*100).toFixed(1)+'%</span>'; }
 const CORE_ISIN={CSPX:'IE00B5BMR087',VUAA:'IE00BFMXXD54',VWRA:'IE00BK5BQT80',IWDA:'IE00B4L5Y983',EIMI:'IE00BKM4GZ66',AGGU:'IE00BDBRDM35',SGLN:'IE00B4ND3602'};
 function infoUrl(f){
@@ -1777,10 +1798,13 @@ function passRoute(f){
 function renderTable(){
   const q=document.getElementById('fSearch').value.trim().toLowerCase();
   const cl=document.getElementById('fClass').value;
+  const age=document.getElementById('fAge').value, cut=age?yearsBeforeISO(+age):null;
+  let unplaced=0;
   let rows=FUNDS.filter(f=>{
     if(cl && f.asset_class!==cl) return false;
     if(!passRoute(f)) return false;
     if(q){const hay=(f.ticker+' '+f.name+' '+(f.benchmark||'')+' '+(f.segment||'')).toLowerCase(); if(!hay.includes(q)) return false;}
+    if(cut){ const s=launchedSince(f,cut); if(s===null){unplaced++; return false;} if(!s) return false; }
     return true;
   });
   rows.sort((a,b)=>{
@@ -1802,6 +1826,7 @@ function renderTable(){
     '<td class="r col-detail" data-label="1Y return">'+trailCell(f.trail_1y)+'</td>'+
     '<td class="r col-detail" data-label="3Y p.a.">'+trailCell(f.trail_3y)+'</td>'+
     '<td class="r col-detail" data-label="5Y p.a.">'+trailCell(f.trail_5y)+'</td>'+
+    '<td class="r col-detail" data-label="Launched">'+incepCell(f)+'</td>'+
     '<td class="r col-detail" data-label="Exp. vol">'+(f.exp_vol!=null?fmt(f.exp_vol,0):'—')+'</td>'+
     '<td class="r" data-label="Div. yield">'+yieldCell(f)+'</td>'+
     '<td class="r col-detail" data-label="Liquidity">'+liqLabel(f)+'</td>'+
@@ -1818,9 +1843,16 @@ function renderTable(){
       'What the rows do carry is the wrapper, the domicile, the annual cost <em>with the basis it was measured on</em>, and the US-situs verdict — the things that actually differ between routes. '+
       '<a onclick="switchTab(\'learn\')" style="color:var(--b-text);cursor:pointer;font-weight:600">The full explanation is on the Learn tab</a>.</div>'
     : '';
-  document.getElementById('findFoot').innerHTML=cryptoNote+'Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
+  // A launch-date filter invites buying the new thing; the note travels with the filtered list.
+  const ageNote=cut
+    ? '<div class="notice" style="margin:10px 0"><strong>Launched on or after '+cut+'.</strong> '+
+      'Dated by the fund&rsquo;s own inception, not a later cross-listing, so an older overseas fund newly listed on SGX does not count as new. '+
+      'A young fund has a short record to judge, often thin trading and wide spreads, and a higher chance of being closed or merged if it does not gather assets. Check its liquidity and size before buying.'+
+      (unplaced?' '+unplaced+' fund'+(unplaced>1?'s':'')+' without a sourced launch date '+(unplaced>1?'are':'is')+' left out.':'')+'</div>'
+    : '';
+  document.getElementById('findFoot').innerHTML=cryptoNote+ageNote+'Showing <strong>'+rows.length+'</strong> of '+FUNDS.length+' funds. '+
     'The Efficiency Score (explained above) is blank only where neither a TER nor a management fee is available, and on the crypto rows, where it is withheld on purpose. '+
-    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. <strong>1Y / 3Y / 5Y</strong> (Detailed view) are trailing <em>price</em> returns — dividends extra; 3Y and 5Y are annualised. They are backward-looking: past return is not a prediction, which is why the table defaults to the forward-looking Efficiency Score. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
+    '<strong>Mgmt fee</strong> is the manager’s cut; <strong>Annual cost</strong> (the Total Expense Ratio, or TER) is the all-in yearly cost and is what the score uses (the management fee is a component of it, so it is not counted twice); a few new funds with no audited figure carry a peer-informed estimate, marked <span class="est-tag">est</span>. “Net exp. return” = TER-and-withholding-netted asset-class estimate. <strong>Dividend yield</strong> is the trailing 12-month payout; accumulating funds reinvest income (“Reinvested”), gold and unknown-payout funds show “—”. <strong>1Y / 3Y / 5Y</strong> (Detailed view) are trailing <em>price</em> returns — dividends extra; 3Y and 5Y are annualised. They are backward-looking: past return is not a prediction, which is why the table defaults to the forward-looking Efficiency Score. “Exp. vol” is asset-class-level. Liquidity = average daily value traded on SGX (Irish UCITS core shown as High, traded on LSE). <strong>Launched</strong> (Detailed view) is the fund&rsquo;s own inception, not a later cross-listing; &ldquo;or earlier&rdquo; marks an older fund whose exact date is not sourced. Tap a ticker (↗) for its fund page, or “Price chart” to expand a chart.';
   document.querySelectorAll('#fundTbl th.sortable .arw').forEach(a=>a.textContent='');
   const th=document.querySelector('#fundTbl th[data-k="'+sortKey+'"] .arw'); if(th) th.textContent=sortDir<0?'▼':'▲';
   const bn=document.getElementById('trailBanner'); if(bn) bn.style.display=(TRAIL_KEYS.includes(sortKey)&&!trailBannerDismissed)?'flex':'none';
@@ -2984,6 +3016,7 @@ async function init(){
   SWAP=DATA.swap||null; MORT=DATA.mortality||null; swapHydrate();
   // Attach trailing price returns once (client-side, from the inlined weekly series) so the columns are sortable.
   FUNDS.forEach(f=>{const t=trailReturns(f.ticker); f.trail_1y=t.y1; f.trail_3y=t.y3; f.trail_5y=t.y5;
+    const ic=f.incep||f.incep_by; f.incep_sort=ic?+ic.replace(/-/g,''):null;   // yyyymmdd, sortable
     // ≈ total return for the Expected-returns tab: price return + trailing yield for distributing funds
     // (accumulating funds reinvest income inside the fund, so their price return already IS total return)
     const acc=(f.income||'').toLowerCase().indexOf('acc')===0, y=(!acc&&f.yield>0)?f.yield:0;
@@ -3017,6 +3050,7 @@ async function init(){
   // events
   document.getElementById('fSearch').addEventListener('input',renderTable);
   document.getElementById('fClass').addEventListener('change',renderTable);
+  document.getElementById('fAge').addEventListener('change',renderTable);
   document.querySelectorAll('#fRoute button').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('#fRoute button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
     routeFilter=b.dataset.v; renderTable();

@@ -332,6 +332,15 @@ def load_or_fetch_prices(funds):
             if sum(1 for c in closes if c is not None) < 20:
                 continue
             entry = {"s": ts[0], "c": closes}
+            # Yahoo's first-trade date for the line (epoch seconds). An upper bound on
+            # fund inception, never the inception itself: see apply_inception().
+            # Stored shifted by the exchange's UTC offset, so that read as UTC it gives the
+            # exchange-local date: SGX's first trade is stamped at local midnight, which in
+            # plain UTC lands on the previous calendar day.
+            meta = r.get("meta") or {}
+            ft = meta.get("firstTradeDate")
+            if isinstance(ft, (int, float)):
+                entry["ft"] = int(ft) + int(meta.get("gmtoffset") or 0)
             # timestamp of the last bar that actually has a close, for the as-of date
             fund_last = 0
             for i in range(len(closes) - 1, -1, -1):
@@ -575,6 +584,66 @@ def apply_yahoo_yields(funds, prices):
             print(f"  YIELD FLAG {f['ticker']:5} curated {cur}% vs computed {computed}% "
                   f"(>1.5pp apart) - keeping curated; review at next quarterly pass")
     print(f"  yields: {filled} filled + {replaced} refreshed from Yahoo trailing-12m distributions")
+
+
+INCEPTION_WINDOW_YEARS = 5   # longest "launched in the last N years" option on the page
+INCEPTION_FT_SLACK_DAYS = 7  # a curated inception this far past first trade is impossible
+
+
+def years_before(d, n):
+    """The same calendar day n years earlier (Python months are 1-indexed).
+    29 February falls back to 28 February when the target year has none.
+    Mirrored by yearsBeforeISO() in template.html."""
+    try:
+        return d.replace(year=d.year - n)
+    except ValueError:
+        return d.replace(year=d.year - n, day=28)
+
+
+def apply_inception(funds, prices, curated, warnings):
+    """Fund inception dates for the "launched in the last N years" filter.
+
+    Two sources, deliberately unequal:
+      - curated["inception"][ticker]: the fund's own inception (not a secondary
+        cross-listing), sourced from the issuer. Sets `incep` (exact).
+      - Yahoo firstTradeDate for the line we price: an UPPER BOUND on inception,
+        since a fund cannot trade before it exists. Sets `incep_by`. Yahoo's
+        coverage floor (2008-01-02 on several old funds) is a bound, not a date.
+
+    A bound older than the window proves the fund is older than every filter
+    option, so those funds need no lookup. Any fund whose bound falls inside the
+    window must carry a curated date, or the page cannot place it; that is
+    warned, as is a curated date later than first trade (wrong fund or class).
+    """
+    cur = curated.get("inception", {})
+    asof = prices.get("asof")
+    cutoff = years_before(datetime.date.fromisoformat(asof), INCEPTION_WINDOW_YEARS) if asof else None
+    exact = bound = 0
+    for f in funds:
+        tk = f["ticker"]
+        p = prices.get(tk) if isinstance(prices.get(tk), dict) else {}
+        ft = p.get("ft")
+        ft_date = datetime.datetime.fromtimestamp(ft, datetime.timezone.utc).date() if ft is not None else None
+        c = cur.get(tk)
+        if c:
+            d = datetime.date.fromisoformat(c["date"])
+            f["incep"] = c["date"]
+            f["incep_src"] = c.get("source")
+            exact += 1
+            if ft_date and (d - ft_date).days > INCEPTION_FT_SLACK_DAYS:
+                warnings.append(f"{tk}: curated inception {c['date']} is after Yahoo first trade "
+                                f"{ft_date.isoformat()} - wrong fund or share class; recheck the source.")
+                print(f"  INCEPTION FLAG {tk:5} curated {c['date']} after first trade {ft_date}")
+        elif ft_date:
+            f["incep_by"] = ft_date.isoformat()
+            bound += 1
+        if cutoff and not c and (ft_date is None or ft_date >= cutoff):
+            warnings.append(f"{tk}: no sourced inception date and first trade "
+                            f"{ft_date.isoformat() if ft_date else 'unknown'} is inside the "
+                            f"{INCEPTION_WINDOW_YEARS}-year window - add it to curated.json "
+                            f"'inception', or the launch-date filter leaves the fund out.")
+    print(f"  inception: {exact} sourced, {bound} bounded by first trade "
+          f"(window cutoff {cutoff.isoformat() if cutoff else '?'})")
 
 
 def _decomp_sentence(tpl, rep_share, idio_vol_pp, years):
@@ -1174,6 +1243,7 @@ def main():
     # still caught without a re-fetch.
     sanitise_prices(prices, funds, warnings)
     apply_yahoo_yields(funds, prices)
+    apply_inception(funds, prices, curated, warnings)
 
     with open(os.path.join(DATA, "etf_universe.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)

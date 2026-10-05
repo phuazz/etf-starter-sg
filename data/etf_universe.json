@@ -49,7 +49,7 @@
       "ter": 0.5,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 7.52,
+      "yield": 7.5,
       "val_m": 0.1166,
       "liquidity_tier": "low",
       "tr_1m": 0.44,
@@ -87,7 +87,8 @@
         "liquidity": 40,
         "breadth": 62
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2011-12-05"
     },
     {
       "ticker": "QL2",
@@ -108,7 +109,7 @@
       "ter": 0.2,
       "ter_conf": "high",
       "mgmt_fee": 0.2,
-      "yield": 4.97,
+      "yield": 5.1,
       "val_m": 0.0021,
       "liquidity_tier": "thin",
       "tr_1m": null,
@@ -146,7 +147,8 @@
         "liquidity": 15,
         "breadth": 62
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2012-06-26"
     },
     {
       "ticker": "ZHS",
@@ -167,7 +169,7 @@
       "ter": 0.29,
       "ter_conf": "high",
       "mgmt_fee": 0.15,
-      "yield": 3.02,
+      "yield": 3.01,
       "val_m": 0.0,
       "liquidity_tier": "thin",
       "tr_1m": 2.39,
@@ -210,7 +212,8 @@
         "liquidity": 15,
         "breadth": 62
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2020-11-23"
     },
     {
       "ticker": "CYC",
@@ -231,7 +234,7 @@
       "ter": 0.25,
       "ter_conf": "med",
       "mgmt_fee": 0.25,
-      "yield": 2.94,
+      "yield": 2.93,
       "val_m": 0.0,
       "liquidity_tier": "thin",
       "tr_1m": 2.33,
@@ -274,7 +277,8 @@
         "liquidity": 15,
         "breadth": 62
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2020-09-18"
     },
     {
       "ticker": "KSB",
@@ -327,7 +331,9 @@
         "return": 68,
         "liquidity": 15,
         "breadth": 62
-      }
+      },
+      "incep": "2024-12-11",
+      "incep_src": "State Street / justETF (IE000QRDCYW2)"
     },
     {
       "ticker": "3199",
@@ -348,7 +354,7 @@
       "ter": 0.28,
       "ter_conf": null,
       "mgmt_fee": 0.28,
-      "yield": 3.34,
+      "yield": 3.33,
       "val_m": null,
       "liquidity_tier": "low",
       "lot": 20,
@@ -383,7 +389,8 @@
         "liquidity": 40,
         "breadth": 62
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2014-02-19"
     },
     {
       "ticker": "MMS",
@@ -442,7 +449,8 @@
         "liquidity": 15,
         "breadth": 60
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2020-10-05"
     },
     {
       "ticker": "3008",
@@ -513,7 +521,9 @@
         "at": 34,
         "kept": 93,
         "dropped": 34
-      }
+      },
+      "incep": "2024-04-30",
+      "incep_src": "Bosera Asset Management (HK)"
     },
     {
       "ticker": "3009",
@@ -584,7 +594,9 @@
         "at": 118,
         "kept": 9,
         "dropped": 118
-      }
+      },
+      "incep": "2024-04-30",
+      "incep_src": "Bosera Asset Management (HK)"
     },
     {
       "ticker": "3439",
@@ -647,7 +659,9 @@
       "effective_ter": 1.72,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2024-04-29",
+      "incep_src": "CNBC report of the HKEX launch"
     },
     {
       "ticker": "3042",
@@ -710,7 +724,9 @@
       "effective_ter": 1.99,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2024-04-30",
+      "incep_src": "ChinaAMC (HK)"
     },
     {
       "ticker": "3046",
@@ -773,7 +789,9 @@
       "effective_ter": 1.99,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2024-04-30",
+      "incep_src": "ChinaAMC (HK)"
     },
     {
       "ticker": "3460",
@@ -844,7 +862,9 @@
         "at": 3,
         "kept": 44,
         "dropped": 3
-      }
+      },
+      "incep": "2025-10-27",
+      "incep_src": "GN Crypto News report"
     },
     {
       "ticker": "IBIT",
@@ -907,7 +927,9 @@
       "effective_ter": 0.25,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2024-01-05",
+      "incep_src": "BlackRock prospectus (SEC 424B3)"
     },
     {
       "ticker": "FBTC",
@@ -970,7 +992,9 @@
       "effective_ter": 0.25,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2024-01-10",
+      "incep_src": "Fidelity Investments"
     },
     {
       "ticker": "IB1T",
@@ -1033,7 +1057,9 @@
       "effective_ter": 0.15,
       "ter_basis": "published",
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2025-03-18",
+      "incep_src": "BlackRock"
     },
     {
       "ticker": "AGGU",
@@ -1086,7 +1112,8 @@
         "return": 44,
         "liquidity": 100,
         "breadth": 82
-      }
+      },
+      "incep_by": "2017-11-21"
     },
     {
       "ticker": "S27",
@@ -1140,7 +1167,8 @@
         "liquidity": 40,
         "breadth": 95
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2008-08-29"
     },
     {
       "ticker": "JJJ",
@@ -1198,7 +1226,9 @@
         "return": 62,
         "liquidity": 40,
         "breadth": 95
-      }
+      },
+      "incep": "2024-01-31",
+      "incep_src": "Lion Global Investors (PR Newswire launch release)"
     },
     {
       "ticker": "D07",
@@ -1219,7 +1249,7 @@
       "ter": 0.16,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 1.41,
+      "yield": 1.42,
       "val_m": 0.0053,
       "liquidity_tier": "thin",
       "tr_1m": 2.77,
@@ -1252,7 +1282,8 @@
         "liquidity": 15,
         "breadth": 95
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2010-04-01"
     },
     {
       "ticker": "CSPX",
@@ -1305,7 +1336,8 @@
         "return": 82,
         "liquidity": 100,
         "breadth": 95
-      }
+      },
+      "incep_by": "2010-09-15"
     },
     {
       "ticker": "VUAA",
@@ -1358,7 +1390,8 @@
         "return": 82,
         "liquidity": 100,
         "breadth": 95
-      }
+      },
+      "incep_by": "2019-05-14"
     },
     {
       "ticker": "VWRA",
@@ -1411,7 +1444,8 @@
         "return": 79,
         "liquidity": 100,
         "breadth": 95
-      }
+      },
+      "incep_by": "2019-07-23"
     },
     {
       "ticker": "IWDA",
@@ -1464,7 +1498,8 @@
         "return": 77,
         "liquidity": 100,
         "breadth": 95
-      }
+      },
+      "incep_by": "2009-09-25"
     },
     {
       "ticker": "A93",
@@ -1527,7 +1562,9 @@
         "return": 77,
         "liquidity": 70,
         "breadth": 65
-      }
+      },
+      "incep": "2025-04-02",
+      "incep_src": "Amova Asset Management"
     },
     {
       "ticker": "UPD",
@@ -1586,7 +1623,9 @@
         "liquidity": 40,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2026-01-29",
+      "incep_src": "UOB Asset Management"
     },
     {
       "ticker": "TID",
@@ -1644,7 +1683,8 @@
         "return": 75,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep_by": "2010-06-24"
     },
     {
       "ticker": "QK9",
@@ -1702,7 +1742,8 @@
         "return": 75,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep_by": "2012-06-25"
     },
     {
       "ticker": "YLD",
@@ -1723,7 +1764,7 @@
       "ter": 1.02,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 5.78,
+      "yield": 4.94,
       "val_m": 0.0652,
       "liquidity_tier": "thin",
       "tr_1m": -2.04,
@@ -1761,7 +1802,9 @@
         "liquidity": 15,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2024-05-13",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "MCN",
@@ -1819,7 +1862,9 @@
         "return": 77,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep": "2024-03-20",
+      "incep_src": "Phillip Capital Management"
     },
     {
       "ticker": "YYY",
@@ -1878,7 +1923,8 @@
         "liquidity": 15,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2021-07-30"
     },
     {
       "ticker": "JK8",
@@ -1937,7 +1983,8 @@
         "liquidity": 15,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2009-11-12"
     },
     {
       "ticker": "H1N",
@@ -1990,7 +2037,8 @@
         "return": 78,
         "liquidity": 15,
         "breadth": 78
-      }
+      },
+      "incep_by": "2009-11-23"
     },
     {
       "ticker": "VNM",
@@ -2042,7 +2090,9 @@
       "net_expected_return_pct": null,
       "cost_drag_total_pct": null,
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2023-08-25",
+      "incep_src": "CGS International (agent search)"
     },
     {
       "ticker": "ICM",
@@ -2100,7 +2150,9 @@
         "return": 91,
         "liquidity": 15,
         "breadth": 65
-      }
+      },
+      "incep": "2023-09-11",
+      "incep_src": "BlackRock"
     },
     {
       "ticker": "SUN",
@@ -2153,7 +2205,9 @@
         "return": 47,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep": "2026-01-20",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "INC",
@@ -2174,7 +2228,7 @@
       "ter": 1.12,
       "ter_conf": "high",
       "mgmt_fee": null,
-      "yield": 3.99,
+      "yield": 3.98,
       "val_m": 0.0001,
       "liquidity_tier": "thin",
       "tr_1m": 0.76,
@@ -2212,7 +2266,9 @@
         "liquidity": 15,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2025-03-28",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "G1N",
@@ -2265,7 +2321,8 @@
         "return": 68,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep_by": "2009-11-20"
     },
     {
       "ticker": "GRO",
@@ -2323,7 +2380,9 @@
         "return": 22,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep": "2023-11-09",
+      "incep_src": "SGX listing announcement"
     },
     {
       "ticker": "LCS",
@@ -2381,7 +2440,9 @@
         "return": 68,
         "liquidity": 15,
         "breadth": 65
-      }
+      },
+      "incep": "2022-09-28",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "SHD",
@@ -2434,7 +2495,9 @@
         "return": 46,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep": "2023-11-30",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "EAA",
@@ -2492,7 +2555,9 @@
         "return": 58,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep": "2024-12-11",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "KJ7",
@@ -2545,7 +2610,8 @@
         "return": 75,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep_by": "2010-03-02"
     },
     {
       "ticker": "HD9",
@@ -2598,7 +2664,8 @@
         "return": 68,
         "liquidity": 15,
         "breadth": 52
-      }
+      },
+      "incep_by": "2009-04-03"
     },
     {
       "ticker": "EIMI",
@@ -2651,7 +2718,8 @@
         "return": 91,
         "liquidity": 100,
         "breadth": 78
-      }
+      },
+      "incep_by": "2014-05-30"
     },
     {
       "ticker": "2800",
@@ -2707,7 +2775,8 @@
         "liquidity": 100,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2008-01-02"
     },
     {
       "ticker": "2828",
@@ -2763,7 +2832,9 @@
         "liquidity": 100,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2003-11-19",
+      "incep_src": "Hang Seng Investment Management, via cbonds / fund factsheet"
     },
     {
       "ticker": "3188",
@@ -2818,7 +2889,8 @@
         "return": 69,
         "liquidity": 70,
         "breadth": 52
-      }
+      },
+      "incep_by": "2012-07-19"
     },
     {
       "ticker": "3110",
@@ -2839,7 +2911,7 @@
       "ter": 0.68,
       "ter_conf": null,
       "mgmt_fee": 0.68,
-      "yield": 6.83,
+      "yield": 6.84,
       "val_m": null,
       "liquidity_tier": "medium",
       "lot": 50,
@@ -2874,7 +2946,8 @@
         "liquidity": 70,
         "breadth": 52
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2013-06-10"
     },
     {
       "ticker": "GSD",
@@ -2932,7 +3005,8 @@
         "return": 17,
         "liquidity": 70,
         "breadth": 60
-      }
+      },
+      "incep_by": "2010-01-04"
     },
     {
       "ticker": "GLS",
@@ -2990,7 +3064,9 @@
         "return": 17,
         "liquidity": 15,
         "breadth": 60
-      }
+      },
+      "incep": "2025-12-01",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "SGLN",
@@ -3043,7 +3119,8 @@
         "return": 26,
         "liquidity": 100,
         "breadth": 60
-      }
+      },
+      "incep_by": "2011-04-08"
     },
     {
       "ticker": "CLR",
@@ -3064,7 +3141,7 @@
       "ter": 0.6,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 5.93,
+      "yield": 5.92,
       "val_m": 0.5806,
       "liquidity_tier": "medium",
       "tr_1m": -0.97,
@@ -3097,7 +3174,8 @@
         "liquidity": 70,
         "breadth": 65
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2017-10-30"
     },
     {
       "ticker": "CFA",
@@ -3156,7 +3234,8 @@
         "liquidity": 40,
         "breadth": 65
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2017-03-28"
     },
     {
       "ticker": "SRT",
@@ -3177,7 +3256,7 @@
       "ter": 0.6,
       "ter_conf": "high",
       "mgmt_fee": 0.5,
-      "yield": 6.32,
+      "yield": 6.3,
       "val_m": 0.171,
       "liquidity_tier": "low",
       "tr_1m": -1.53,
@@ -3215,7 +3294,9 @@
         "liquidity": 40,
         "breadth": 65
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2021-11-18",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "GRN",
@@ -3236,7 +3317,7 @@
       "ter": 0.94,
       "ter_conf": "high",
       "mgmt_fee": 0.45,
-      "yield": 4.33,
+      "yield": 4.37,
       "val_m": 0.0025,
       "liquidity_tier": "thin",
       "tr_1m": -3.15,
@@ -3274,7 +3355,9 @@
         "liquidity": 15,
         "breadth": 65
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2021-11-23",
+      "incep_src": "UOB Asset Management"
     },
     {
       "ticker": "BYI",
@@ -3295,7 +3378,7 @@
       "ter": 1.7,
       "ter_conf": "med",
       "mgmt_fee": 0.3,
-      "yield": 3.95,
+      "yield": 3.96,
       "val_m": 0.0001,
       "liquidity_tier": "thin",
       "tr_1m": null,
@@ -3333,7 +3416,8 @@
         "liquidity": 15,
         "breadth": 65
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2016-10-20"
     },
     {
       "ticker": "ES3",
@@ -3354,7 +3438,7 @@
       "ter": 0.28,
       "ter_conf": "high",
       "mgmt_fee": 0.3,
-      "yield": 3.11,
+      "yield": 3.1,
       "val_m": 9.8502,
       "liquidity_tier": "high",
       "tr_1m": 1.2,
@@ -3387,7 +3471,8 @@
         "liquidity": 100,
         "breadth": 72
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2008-01-02"
     },
     {
       "ticker": "ESG",
@@ -3408,7 +3493,7 @@
       "ter": 0.45,
       "ter_conf": "high",
       "mgmt_fee": 0.4,
-      "yield": 5.1,
+      "yield": 5.07,
       "val_m": 1.3817,
       "liquidity_tier": "medium",
       "tr_1m": 0.14,
@@ -3446,7 +3531,9 @@
         "liquidity": 70,
         "breadth": 72
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "2022-04-28",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "G3B",
@@ -3467,7 +3554,7 @@
       "ter": 0.24,
       "ter_conf": "high",
       "mgmt_fee": 0.09,
-      "yield": 3.26,
+      "yield": 3.25,
       "val_m": 0.9551,
       "liquidity_tier": "medium",
       "tr_1m": 1.19,
@@ -3505,7 +3592,8 @@
         "liquidity": 70,
         "breadth": 72
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2009-02-24"
     },
     {
       "ticker": "OVQ",
@@ -3564,7 +3652,8 @@
         "liquidity": 15,
         "breadth": 72
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2018-10-29"
     },
     {
       "ticker": "O9A",
@@ -3622,7 +3711,8 @@
         "return": 67,
         "liquidity": 15,
         "breadth": 72
-      }
+      },
+      "incep_by": "2011-09-19"
     },
     {
       "ticker": "Q50",
@@ -3669,7 +3759,9 @@
       "net_expected_return_pct": null,
       "cost_drag_total_pct": null,
       "starter_score": null,
-      "score_parts": null
+      "score_parts": null,
+      "incep": "2026-09-03",
+      "incep_src": "CGS International (Yahoo Finance news)"
     },
     {
       "ticker": "SBO",
@@ -3728,7 +3820,9 @@
         "liquidity": 70,
         "breadth": 80
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep": "1991-03-22",
+      "incep_src": "Lion Global Investors"
     },
     {
       "ticker": "MBH",
@@ -3782,7 +3876,8 @@
         "liquidity": 40,
         "breadth": 80
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2018-08-24"
     },
     {
       "ticker": "A35",
@@ -3836,7 +3931,8 @@
         "liquidity": 40,
         "breadth": 80
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2008-01-02"
     },
     {
       "ticker": "KV4",
@@ -3889,7 +3985,8 @@
         "return": 0,
         "liquidity": 15,
         "breadth": 80
-      }
+      },
+      "incep_by": "2010-05-11"
     },
     {
       "ticker": "HST",
@@ -3947,7 +4044,8 @@
         "return": 31,
         "liquidity": 100,
         "breadth": 30
-      }
+      },
+      "incep_by": "2020-12-09"
     },
     {
       "ticker": "SCY",
@@ -4008,7 +4106,9 @@
         "at": 48,
         "kept": 147,
         "dropped": 48
-      }
+      },
+      "incep": "2022-12-30",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "EVS",
@@ -4066,7 +4166,9 @@
         "return": 26,
         "liquidity": 15,
         "breadth": 30
-      }
+      },
+      "incep": "2022-01-20",
+      "incep_src": "Amova Asset Management"
     },
     {
       "ticker": "CXT",
@@ -4129,7 +4231,9 @@
         "return": 29,
         "liquidity": 15,
         "breadth": 30
-      }
+      },
+      "incep": "2025-07-22",
+      "incep_src": "Amova Asset Management"
     },
     {
       "ticker": "CXS",
@@ -4187,7 +4291,9 @@
         "return": 0,
         "liquidity": 15,
         "breadth": 30
-      }
+      },
+      "incep": "2022-11-14",
+      "incep_src": "UOB Asset Management"
     },
     {
       "ticker": "SQQ",
@@ -4245,7 +4351,9 @@
         "return": 2,
         "liquidity": 15,
         "breadth": 30
-      }
+      },
+      "incep": "2023-06-20",
+      "incep_src": "CSOP Asset Management"
     },
     {
       "ticker": "3033",
@@ -4300,7 +4408,8 @@
         "return": 19,
         "liquidity": 100,
         "breadth": 30
-      }
+      },
+      "incep_by": "2020-08-27"
     },
     {
       "ticker": "3067",
@@ -4321,7 +4430,7 @@
       "ter": 0.25,
       "ter_conf": null,
       "mgmt_fee": 0.25,
-      "yield": 0.69,
+      "yield": 0.68,
       "val_m": null,
       "liquidity_tier": "high",
       "lot": 100,
@@ -4356,7 +4465,8 @@
         "liquidity": 100,
         "breadth": 30
       },
-      "yield_src": "yahoo_ttm"
+      "yield_src": "yahoo_ttm",
+      "incep_by": "2020-09-14"
     }
   ],
   "warnings": [
