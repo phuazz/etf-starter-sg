@@ -48,6 +48,19 @@ Two smaller transparency features sit alongside these:
   Score; sorting by any trailing column raises a dismissible "last year's winner is rarely next
   year's" banner with a one-click reset. Transparency matched to StashAway, incentive inverted.
 
+- **Launch-date filter** (added 2026-10-05) — the Find tab's "Launched" control keeps funds
+  incepted in the last 1 / 3 / 5 years, and Detailed view carries a "Launched" column. Dated by
+  the **fund's own inception, not a later cross-listing**: KSB (Irish UCITS, fund Dec 2024, SGX
+  line 2025) and SBO (ETF class added in 2025 to a unit trust incepted in 1991) are dated by the
+  fund. Two sources, deliberately unequal: Yahoo's `firstTradeDate` (captured as `ft` in
+  `prices.json` by the nightly fetch) is an upper bound on inception, which is enough to place
+  every fund that first traded before the 5-year cutoff; every fund inside the window carries a
+  sourced date in `curated.json` → `inception` (35 entries, sourced 2026-10-05; entries with a
+  `check` key are single-source). `apply_inception()` warns on a fund inside the window with no
+  sourced date, and on a sourced date later than first trade (wrong fund or class);
+  `tests/test_inception.py` enforces both. **Maintenance:** when a new fund joins the universe,
+  add its inception to `curated.json`, or the filter leaves it out and the page says so.
+
 ## The central idea: core-satellite, domicile-aware
 
 - **Core (global / US developed equity, aggregate bonds, gold):** buy **Irish-domiciled UCITS**

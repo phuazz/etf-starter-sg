@@ -718,5 +718,228 @@
       "ccy": "HKD",
       "src": "KFS 2024-04-24; OCF contractually capped 0.28% since 2021-09-24"
     }
-  ]
+  ],
+  "inception": {
+    "_note": "Fund inception (the fund itself, not a later cross-listing) for funds whose Yahoo first trade falls inside the 5-year launch-date window. Older funds need no entry: first trade bounds inception. Sourced 2026-10-05; 'check' marks single-source entries. See apply_inception() in pipeline.py.",
+    "SRT": {
+      "date": "2021-11-18",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-reit/etf.php"
+    },
+    "GRN": {
+      "date": "2021-11-23",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "UOB Asset Management",
+      "url": "https://www.uobam.com.sg/our-funds/highlights/uob-apac-green-reit-etf/index.page"
+    },
+    "EVS": {
+      "date": "2022-01-20",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Amova Asset Management",
+      "url": "https://sg.amova-am.com/institutional/funds/detail/amova-straitstrading-msci-china-electric-vehicles-and-future-mobility-index-etf-sgd-class"
+    },
+    "ESG": {
+      "date": "2022-04-28",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/fund-lion-ospl-low-carbon-etf.html"
+    },
+    "LCS": {
+      "date": "2022-09-28",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-carbon/etf.php"
+    },
+    "CXS": {
+      "date": "2022-11-14",
+      "basis": "fund inception",
+      "source": "UOB Asset Management",
+      "url": "https://www.uobam.com.sg/our-funds/highlights/uobam-ping-an-chinext-etf/index.page"
+    },
+    "SCY": {
+      "date": "2022-12-30",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-csi50/etf.php"
+    },
+    "SQQ": {
+      "date": "2023-06-20",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-atech/etf.php",
+      "check": "some sources give 2023-06-19"
+    },
+    "ICM": {
+      "date": "2023-09-11",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "BlackRock",
+      "url": "https://www.blackrock.com/sg/en/products/332845/ishares-msci-asia-ex-japan-climate-action-etf"
+    },
+    "SHD": {
+      "date": "2023-11-30",
+      "basis": "fund inception (SGX listing 2023-12-01)",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-div/etf.php"
+    },
+    "IBIT": {
+      "date": "2024-01-05",
+      "basis": "fund inception (first trade 2024-01-11)",
+      "source": "BlackRock prospectus (SEC 424B3)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1980994/000143774924006443/bit20240304_424b3.htm"
+    },
+    "FBTC": {
+      "date": "2024-01-10",
+      "basis": "registration effective (first trade 2024-01-11)",
+      "source": "Fidelity Investments",
+      "url": "https://alumni.fidelity.com/news/787679",
+      "check": "single source, not cross-checked"
+    },
+    "JJJ": {
+      "date": "2024-01-31",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Lion Global Investors (PR Newswire launch release)",
+      "url": "https://www.prnewswire.com/apac/news-releases/lion-global-investors-launches-singapores-first-actively-managed-etf-in-collaboration-with-nomura-asset-management-302033386.html",
+      "check": "Yahoo history starts 2024-04-15; coverage lag"
+    },
+    "2828": {
+      "date": "2003-11-19",
+      "basis": "fund launch (HKEX listing 2003-12-10)",
+      "source": "Hang Seng Investment Management, via cbonds / fund factsheet",
+      "url": "https://cbonds.com/etf/13635/",
+      "check": "Yahoo first trade 2024-04-24 is a coverage gap, not a launch"
+    },
+    "3042": {
+      "date": "2024-04-30",
+      "basis": "HKEX listing; HK-domiciled fund",
+      "source": "ChinaAMC (HK)",
+      "url": "https://www.chinaamc.com.hk/product/chinaamc-bitcoin-etf/"
+    },
+    "3046": {
+      "date": "2024-04-30",
+      "basis": "HKEX listing; HK-domiciled fund",
+      "source": "ChinaAMC (HK)",
+      "url": "https://www.chinaamc.com.hk/product/chinaamc-ether-etf/"
+    },
+    "3008": {
+      "date": "2024-04-30",
+      "basis": "HKEX listing; HK-domiciled fund",
+      "source": "Bosera Asset Management (HK)",
+      "url": "https://www.bosera.com.hk/en-US/products/fund/news/detail/11639"
+    },
+    "3009": {
+      "date": "2024-04-30",
+      "basis": "HKEX listing; HK-domiciled fund",
+      "source": "Bosera Asset Management (HK)",
+      "url": "https://www.bosera.com.hk/en-US/infos/news/detail/11639"
+    },
+    "MCN": {
+      "date": "2024-03-20",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Phillip Capital Management",
+      "url": "https://phillipfunds.com/phillip-china-universal-msci-china-a50-connect-etf/"
+    },
+    "YLD": {
+      "date": "2024-05-13",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/fund-lion-ocbc-securities-apac-financials-dividend-plus-etf.html"
+    },
+    "3439": {
+      "date": "2024-04-29",
+      "basis": "fund inception (HKEX listing 2024-04-30)",
+      "source": "CNBC report of the HKEX launch",
+      "url": "https://www.cnbc.com/2024/04/30/asias-first-spot-bitcoin-and-ether-etfs-debut-in-hong-kong.html",
+      "check": "single source, not cross-checked"
+    },
+    "VNM": {
+      "date": "2023-08-25",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CGS International (agent search)",
+      "url": "https://www.cgsi.com/en/csi1000/",
+      "check": "single source, not cross-checked; url is the issuer's CSI 1000 page, not the Vietnam fund's"
+    },
+    "GRO": {
+      "date": "2023-11-09",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "SGX listing announcement",
+      "url": "https://links.sgx.com/FileOpen/20231109%20SGX%20Securities%20welcomes%20the%20listing%20of%20CGS%20Fullgoal%20CSI%201000%20ETF.ashx",
+      "check": "Yahoo history starts 2024-12-02; coverage lag"
+    },
+    "EAA": {
+      "date": "2024-12-11",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/fund-lion-china-merchants-emerging-asia-select-index-etf.html"
+    },
+    "INC": {
+      "date": "2025-03-28",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/press/Lion-China%20Merchants%20CSI%20Dividend%20Index%20ETF.html"
+    },
+    "A93": {
+      "date": "2025-04-02",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Amova Asset Management",
+      "url": "https://sg.amova-am.com/general/funds/detail/amova-msci-ac-asia-ex-japan-ex-china-index-etf-sgd-class"
+    },
+    "CXT": {
+      "date": "2025-07-22",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "Amova Asset Management",
+      "url": "https://sg.amova-am.com/general/funds/detail/amova-e-fund-chinext-index-etf-rmb-class"
+    },
+    "KSB": {
+      "date": "2024-12-11",
+      "basis": "fund inception, Irish UCITS USD Acc class (SGX cross-listing 2025)",
+      "source": "State Street / justETF (IE000QRDCYW2)",
+      "url": "https://www.justetf.com/en/etf-profile.html?isin=IE000QRDCYW2"
+    },
+    "SBO": {
+      "date": "1991-03-22",
+      "basis": "inception of the underlying unit trust; the Active ETF SGD class listed on SGX 2025-09-29",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/fund-lionglobal-short-duration-bond-fund-active-etf-sgd-class.html"
+    },
+    "IB1T": {
+      "date": "2025-03-18",
+      "basis": "fund inception, Swiss ETP (later listed on LSE / Xetra / Euronext / SIX)",
+      "source": "BlackRock",
+      "url": "https://www.blackrock.com/ch/individual/en/products/337088/ishares-bitcoin-etp",
+      "check": "single source, not cross-checked"
+    },
+    "3460": {
+      "date": "2025-10-27",
+      "basis": "HKEX listing; HK-domiciled fund",
+      "source": "GN Crypto News report",
+      "url": "https://www.gncrypto.news/news/chinaamc-spot-solana-etf-launches-on-hkex/",
+      "check": "single source, not cross-checked"
+    },
+    "UPD": {
+      "date": "2026-01-29",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "UOB Asset Management",
+      "url": "https://www.uobam.com.sg/about-us/news-release/uobam-pingan-ftse-asean.page"
+    },
+    "SUN": {
+      "date": "2026-01-20",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CSOP Asset Management",
+      "url": "https://www.csopasset.com/sg/en/products/sg-c3cc/etf.php"
+    },
+    "GLS": {
+      "date": "2025-12-01",
+      "basis": "inception of the underlying fund; the ETF class listed on SGX 2026-03-26",
+      "source": "Lion Global Investors",
+      "url": "https://www.lionglobalinvestors.com/en/fund-lionglobal-singapore-physical-gold-etf.html",
+      "check": "single source, not cross-checked"
+    },
+    "Q50": {
+      "date": "2026-09-03",
+      "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
+      "source": "CGS International (Yahoo Finance news)",
+      "url": "https://sg.finance.yahoo.com/news/cgsi-launches-cgs-fullgoal-singapore-170000480.html"
+    }
+  }
 }
