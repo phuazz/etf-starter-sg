@@ -64,11 +64,16 @@ def load(n):
 # in this map also tracks. Mapped explicitly by ticker rather than by matching
 # benchmark strings, so a mis-mapping is visible in review.
 #
-# The list is short by nature. SGX offers no S&P 500, no Nasdaq-100, no US total
-# market and no US sector funds that are not themselves US-domiciled -- the SGX
-# US-equity lines (S27, D07, GSD/O87) are the PROBLEM this tool exists to flag,
-# not the solution. Where SGX does help is gold, and it helps a lot: a
-# Singapore-domiciled FUND holding allocated bullion is a cleaner situs answer
+# The list was short by nature until 13 October 2026. Before that date SGX
+# offered no S&P 500, no Nasdaq-100 and no US total market fund that was not
+# itself US-domiciled -- the SGX US-equity lines (S27, D07, GSD/O87) are the
+# PROBLEM this tool exists to flag, not the solution. Since 13 October 2026 DWS
+# has listed Irish-domiciled Xtrackers share classes on SGX in SGD (XUS S&P 500,
+# XND Nasdaq-100, XWR MSCI World, EUS S&P 500 Equal Weight), so the first three
+# are mapped below as same-index SGX alternatives; the equal-weight line has no
+# index key in index_map.json and is not mapped. These lines are new and traded
+# thinly on day one, which the venue note says. Where SGX also helps is gold:
+# a Singapore-domiciled FUND holding allocated bullion is a cleaner situs answer
 # than either a US grantor trust or an Irish ETC, because it is neither a US
 # vehicle nor a debt security.
 #
@@ -81,6 +86,15 @@ SGX_ALTERNATIVES = {
             "srs": True},
     "H1N": {"index_key": "msci_em",
             "why": "Tracks the same MSCI Emerging Markets index, listed on SGX.",
+            "srs": True},
+    "XUS": {"index_key": "sp500",
+            "why": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+            "srs": True},
+    "XND": {"index_key": "nasdaq100",
+            "why": "Irish-domiciled Xtrackers Nasdaq 100 UCITS ETF 1C (0.20%), listed on SGX in Singapore dollars since 13 October 2026. New line: check the quoted spread.",
+            "srs": True},
+    "XWR": {"index_key": "msci_world",
+            "why": "Irish-domiciled Xtrackers MSCI World UCITS ETF 1C (0.12%), listed on SGX in Singapore dollars since 13 October 2026. New line: the quoted spread was about 0.7% in the first hours of trading.",
             "srs": True},
 }
 

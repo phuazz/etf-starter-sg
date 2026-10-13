@@ -12,7 +12,7 @@
    "tier2_related_index": 23,
    "tier3_no_equivalent": 2,
    "single_names": 50,
-   "safe_universe": 92,
+   "safe_universe": 95,
    "unresolved_universe": 4
   },
   "return_verification": {
@@ -31,14 +31,15 @@
     "C": "<= 3.0",
     "fail": "> 3.0"
    },
-   "pairs_graded": 116,
+   "pairs_graded": 103,
    "grade_distribution": {
-    "A": 57,
-    "B": 25,
+    "A": 37,
+    "B": 38,
     "not_comparable": 1,
-    "insufficient": 7,
-    "C": 15,
-    "fail": 11,
+    "insufficient": 2,
+    "C": 12,
+    "no_data": 13,
+    "fail": 13,
     "break": 1
    },
    "tier1_contradictions": 0,
@@ -51,9 +52,9 @@
       "alt": "SEMI",
       "date": "2024-01-08",
       "shift_pct": -20.79,
-      "sigma": 15.4,
-      "before": 1.0086,
-      "after": 0.799
+      "sigma": 14.8,
+      "before": 1.0414,
+      "after": 0.8249
      }
     ],
     "ticks_dropped": [
@@ -138,16 +139,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.239,
-      "monthly_corr": 0.976,
+      "months": 61,
+      "gap_pp": 0.456,
+      "monthly_corr": 0.9758,
       "years": 2.86,
-      "us_ann_gross_pp": 20.74,
+      "us_ann_gross_pp": 22.048,
       "us_holder_wht_drag_pp": 0.429,
-      "us_ann_after_wht_pp": 20.311,
-      "alt_ann_pp": 20.55,
-      "gap_5y_pp": 0.451,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.43pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.45pp."
+      "us_ann_after_wht_pp": 21.619,
+      "alt_ann_pp": 22.075,
+      "gap_5y_pp": 0.482,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.43pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.48pp."
      },
      "recommended": true
     },
@@ -187,15 +188,15 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.298,
-      "monthly_corr": 0.9685,
+      "months": 61,
+      "gap_pp": 0.417,
+      "monthly_corr": 0.9674,
       "years": 2.86,
-      "us_ann_gross_pp": 20.74,
+      "us_ann_gross_pp": 22.048,
       "us_holder_wht_drag_pp": 0.429,
-      "us_ann_after_wht_pp": 20.311,
-      "alt_ann_pp": 20.609,
-      "gap_5y_pp": 0.449,
+      "us_ann_after_wht_pp": 21.619,
+      "alt_ann_pp": 22.035,
+      "gap_5y_pp": 0.445,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.43pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.45pp."
      },
      "recommended": true
@@ -253,16 +254,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.948,
-      "monthly_corr": 0.9716,
+      "months": 61,
+      "gap_pp": 0.943,
+      "monthly_corr": 0.972,
       "years": 2.86,
-      "us_ann_gross_pp": 4.819,
+      "us_ann_gross_pp": 4.211,
       "us_holder_wht_drag_pp": 1.191,
-      "us_ann_after_wht_pp": 3.628,
-      "alt_ann_pp": 4.576,
-      "gap_5y_pp": 0.991,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.99pp."
+      "us_ann_after_wht_pp": 3.02,
+      "alt_ann_pp": 3.964,
+      "gap_5y_pp": 0.982,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.98pp."
      },
      "recommended": true
     },
@@ -302,16 +303,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.917,
-      "monthly_corr": 0.9244,
+      "months": 61,
+      "gap_pp": 0.967,
+      "monthly_corr": 0.9289,
       "years": 2.86,
-      "us_ann_gross_pp": 4.819,
+      "us_ann_gross_pp": 4.211,
       "us_holder_wht_drag_pp": 1.191,
-      "us_ann_after_wht_pp": 3.628,
-      "alt_ann_pp": 4.545,
-      "gap_5y_pp": 0.974,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.97pp."
+      "us_ann_after_wht_pp": 3.02,
+      "alt_ann_pp": 3.987,
+      "gap_5y_pp": 0.984,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.98pp."
      },
      "recommended": true
     }
@@ -368,16 +369,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.964,
-      "monthly_corr": 0.9725,
+      "months": 61,
+      "gap_pp": 0.931,
+      "monthly_corr": 0.9729,
       "years": 2.86,
-      "us_ann_gross_pp": 4.797,
+      "us_ann_gross_pp": 4.218,
       "us_holder_wht_drag_pp": 1.185,
-      "us_ann_after_wht_pp": 3.612,
-      "alt_ann_pp": 4.576,
-      "gap_5y_pp": 1.008,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.01pp."
+      "us_ann_after_wht_pp": 3.033,
+      "alt_ann_pp": 3.964,
+      "gap_5y_pp": 0.988,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.99pp."
      },
      "recommended": true
     },
@@ -417,15 +418,15 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.933,
-      "monthly_corr": 0.9245,
+      "months": 61,
+      "gap_pp": 0.955,
+      "monthly_corr": 0.9288,
       "years": 2.86,
-      "us_ann_gross_pp": 4.797,
+      "us_ann_gross_pp": 4.218,
       "us_holder_wht_drag_pp": 1.185,
-      "us_ann_after_wht_pp": 3.612,
-      "alt_ann_pp": 4.545,
-      "gap_5y_pp": 0.991,
+      "us_ann_after_wht_pp": 3.033,
+      "alt_ann_pp": 3.987,
+      "gap_5y_pp": 0.99,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.19pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.99pp."
      },
      "recommended": true
@@ -525,16 +526,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.632,
-      "monthly_corr": 0.863,
+      "months": 61,
+      "gap_pp": 0.923,
+      "monthly_corr": 0.8536,
       "years": 2.86,
-      "us_ann_gross_pp": 4.639,
+      "us_ann_gross_pp": 3.915,
       "us_holder_wht_drag_pp": 1.257,
-      "us_ann_after_wht_pp": 3.382,
-      "alt_ann_pp": 4.014,
-      "gap_5y_pp": -0.594,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.59pp."
+      "us_ann_after_wht_pp": 2.658,
+      "alt_ann_pp": 3.581,
+      "gap_5y_pp": -0.216,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.22pp."
      },
      "recommended": true
     },
@@ -574,16 +575,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.35,
-      "monthly_corr": 0.9664,
+      "months": 61,
+      "gap_pp": 1.489,
+      "monthly_corr": 0.9666,
       "years": 2.86,
-      "us_ann_gross_pp": 4.639,
+      "us_ann_gross_pp": 3.915,
       "us_holder_wht_drag_pp": 1.257,
-      "us_ann_after_wht_pp": 3.382,
-      "alt_ann_pp": 4.732,
-      "gap_5y_pp": 1.646,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.65pp."
+      "us_ann_after_wht_pp": 2.658,
+      "alt_ann_pp": 4.147,
+      "gap_5y_pp": 1.718,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.72pp."
      },
      "recommended": true
     },
@@ -623,16 +624,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.318,
-      "monthly_corr": 0.9765,
+      "months": 61,
+      "gap_pp": 1.328,
+      "monthly_corr": 0.976,
       "years": 2.86,
-      "us_ann_gross_pp": 4.639,
+      "us_ann_gross_pp": 3.915,
       "us_holder_wht_drag_pp": 1.257,
-      "us_ann_after_wht_pp": 3.382,
-      "alt_ann_pp": 4.701,
-      "gap_5y_pp": 1.296,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.30pp."
+      "us_ann_after_wht_pp": 2.658,
+      "alt_ann_pp": 3.986,
+      "gap_5y_pp": 1.317,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.32pp."
      },
      "recommended": true
     }
@@ -707,12 +708,12 @@
      },
      "verification": {
       "grade": "insufficient",
-      "months": 5,
+      "months": 8,
       "gap_pp": null,
-      "basis": "only 5 overlapping months, need 36"
+      "basis": "only 8 overlapping months, need 36"
      },
      "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 5 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "verification_pending": "Too new to check against a meaningful record \u2014 only 8 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
     }
    ],
    "unresolved_alternatives": [
@@ -799,17 +800,17 @@
       "basis": "US line's trailing gross distribution 5.90%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 0% US-source slice"
      },
      "verification": {
-      "grade": "B",
-      "months": 60,
-      "gap_pp": 1.482,
-      "monthly_corr": 0.9503,
+      "grade": "C",
+      "months": 61,
+      "gap_pp": 1.565,
+      "monthly_corr": 0.9614,
       "years": 2.86,
-      "us_ann_gross_pp": 8.597,
+      "us_ann_gross_pp": 7.807,
       "us_holder_wht_drag_pp": 1.77,
-      "us_ann_after_wht_pp": 6.827,
-      "alt_ann_pp": 8.309,
-      "gap_5y_pp": 1.908,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.77pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.91pp."
+      "us_ann_after_wht_pp": 6.037,
+      "alt_ann_pp": 7.602,
+      "gap_5y_pp": 1.895,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.77pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.90pp."
      },
      "recommended": true
     },
@@ -849,15 +850,15 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.577,
-      "monthly_corr": 0.8559,
+      "months": 61,
+      "gap_pp": 1.555,
+      "monthly_corr": 0.8722,
       "years": 2.86,
-      "us_ann_gross_pp": 8.597,
+      "us_ann_gross_pp": 7.807,
       "us_holder_wht_drag_pp": 1.77,
-      "us_ann_after_wht_pp": 6.827,
-      "alt_ann_pp": 8.404,
-      "gap_5y_pp": 1.921,
+      "us_ann_after_wht_pp": 6.037,
+      "alt_ann_pp": 7.592,
+      "gap_5y_pp": 1.916,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.77pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.92pp."
      },
      "recommended": true
@@ -915,12 +916,12 @@
      },
      "verification": {
       "grade": "insufficient",
-      "months": 5,
+      "months": 8,
       "gap_pp": null,
-      "basis": "only 5 overlapping months, need 36"
+      "basis": "only 8 overlapping months, need 36"
      },
      "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 5 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "verification_pending": "Too new to check against a meaningful record \u2014 only 8 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
     }
    ],
    "unresolved_alternatives": [
@@ -1008,16 +1009,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.303,
-      "monthly_corr": 0.9413,
+      "months": 61,
+      "gap_pp": 1.355,
+      "monthly_corr": 0.9437,
       "years": 2.86,
-      "us_ann_gross_pp": 3.844,
+      "us_ann_gross_pp": 3.142,
       "us_holder_wht_drag_pp": 1.164,
-      "us_ann_after_wht_pp": 2.68,
-      "alt_ann_pp": 3.983,
-      "gap_5y_pp": 1.302,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.30pp."
+      "us_ann_after_wht_pp": 1.978,
+      "alt_ann_pp": 3.333,
+      "gap_5y_pp": 1.329,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.33pp."
      },
      "recommended": true
     },
@@ -1057,16 +1058,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.28,
-      "monthly_corr": 0.985,
+      "months": 61,
+      "gap_pp": 1.311,
+      "monthly_corr": 0.9853,
       "years": 2.86,
-      "us_ann_gross_pp": 3.844,
+      "us_ann_gross_pp": 3.142,
       "us_holder_wht_drag_pp": 1.164,
-      "us_ann_after_wht_pp": 2.68,
-      "alt_ann_pp": 3.961,
-      "gap_5y_pp": 1.314,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.31pp."
+      "us_ann_after_wht_pp": 1.978,
+      "alt_ann_pp": 3.289,
+      "gap_5y_pp": 1.316,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.32pp."
      },
      "recommended": true
     }
@@ -1123,16 +1124,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.151,
-      "monthly_corr": 0.9835,
+      "months": 61,
+      "gap_pp": 0.765,
+      "monthly_corr": 0.9842,
       "years": 2.86,
-      "us_ann_gross_pp": 22.828,
+      "us_ann_gross_pp": 23.866,
       "us_holder_wht_drag_pp": 0.651,
-      "us_ann_after_wht_pp": 22.177,
-      "alt_ann_pp": 23.328,
-      "gap_5y_pp": 1.143,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.65pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.14pp."
+      "us_ann_after_wht_pp": 23.215,
+      "alt_ann_pp": 23.979,
+      "gap_5y_pp": 0.834,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.65pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.83pp."
      },
      "recommended": true
     },
@@ -1172,16 +1173,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.162,
-      "monthly_corr": 0.9788,
+      "months": 61,
+      "gap_pp": 0.754,
+      "monthly_corr": 0.9796,
       "years": 2.86,
-      "us_ann_gross_pp": 22.828,
+      "us_ann_gross_pp": 23.866,
       "us_holder_wht_drag_pp": 0.651,
-      "us_ann_after_wht_pp": 22.177,
-      "alt_ann_pp": 23.339,
-      "gap_5y_pp": 1.084,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.65pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.08pp."
+      "us_ann_after_wht_pp": 23.215,
+      "alt_ann_pp": 23.968,
+      "gap_5y_pp": 0.826,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.65pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.83pp."
      },
      "recommended": true
     }
@@ -1238,16 +1239,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": -0.164,
-      "monthly_corr": 0.9879,
+      "months": 61,
+      "gap_pp": -0.182,
+      "monthly_corr": 0.9881,
       "years": 2.86,
-      "us_ann_gross_pp": 16.554,
+      "us_ann_gross_pp": 15.953,
       "us_holder_wht_drag_pp": 0.333,
-      "us_ann_after_wht_pp": 16.221,
-      "alt_ann_pp": 16.057,
-      "gap_5y_pp": -0.271,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.27pp."
+      "us_ann_after_wht_pp": 15.62,
+      "alt_ann_pp": 15.437,
+      "gap_5y_pp": -0.19,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.19pp."
      },
      "recommended": true
     }
@@ -1303,19 +1304,60 @@
       "basis": "US line's trailing gross distribution 1.00%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.318,
-      "monthly_corr": 0.9746,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.544,
+      "monthly_corr": 0.9735,
       "years": 2.86,
-      "us_ann_gross_pp": 21.13,
+      "us_ann_gross_pp": 22.517,
       "us_holder_wht_drag_pp": 0.3,
-      "us_ann_after_wht_pp": 20.83,
-      "alt_ann_pp": 21.149,
-      "gap_5y_pp": 0.543,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.54pp."
+      "us_ann_after_wht_pp": 22.217,
+      "alt_ann_pp": 22.762,
+      "gap_5y_pp": 0.634,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.63pp."
      },
      "recommended": true
+    },
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 2,
+     "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
+     "cost": {
+      "ter_us": 0.03,
+      "ter_alt": 0.03,
+      "ter_delta_pp": 0.0,
+      "wht_us_pp": 0.3,
+      "wht_alt_pp": 0.15,
+      "wht_saving_pp": 0.15,
+      "net_annual_delta_pp": 0.15,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.00%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "SPXP",
@@ -1352,17 +1394,17 @@
       "basis": "US line's trailing gross distribution 1.00%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.413,
-      "monthly_corr": 0.9645,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.62,
+      "monthly_corr": 0.9623,
       "years": 2.86,
-      "us_ann_gross_pp": 21.13,
+      "us_ann_gross_pp": 22.517,
       "us_holder_wht_drag_pp": 0.3,
-      "us_ann_after_wht_pp": 20.83,
-      "alt_ann_pp": 21.243,
-      "gap_5y_pp": 1.251,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.25pp."
+      "us_ann_after_wht_pp": 22.217,
+      "alt_ann_pp": 22.838,
+      "gap_5y_pp": 1.278,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.28pp."
      },
      "recommended": true
     },
@@ -1401,17 +1443,17 @@
       "basis": "US line's trailing gross distribution 1.00%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.41,
-      "monthly_corr": 0.9728,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.631,
+      "monthly_corr": 0.9714,
       "years": 2.86,
-      "us_ann_gross_pp": 21.13,
+      "us_ann_gross_pp": 22.517,
       "us_holder_wht_drag_pp": 0.3,
-      "us_ann_after_wht_pp": 20.83,
-      "alt_ann_pp": 21.24,
-      "gap_5y_pp": 1.278,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.28pp."
+      "us_ann_after_wht_pp": 22.217,
+      "alt_ann_pp": 22.849,
+      "gap_5y_pp": 1.254,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.25pp."
      },
      "recommended": true
     },
@@ -1451,65 +1493,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.197,
-      "monthly_corr": 0.9734,
+      "months": 61,
+      "gap_pp": 0.448,
+      "monthly_corr": 0.9721,
       "years": 2.86,
-      "us_ann_gross_pp": 21.13,
+      "us_ann_gross_pp": 22.517,
       "us_holder_wht_drag_pp": 0.3,
-      "us_ann_after_wht_pp": 20.83,
-      "alt_ann_pp": 21.028,
-      "gap_5y_pp": 1.074,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.07pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "VUAG",
-     "yahoo": "VUAG.L",
-     "name": "Vanguard S&P 500 UCITS ETF USD Accumulation",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00BFMXXD54",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Accumulating",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 2,
-     "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
-     "cost": {
-      "ter_us": 0.03,
-      "ter_alt": 0.07,
-      "ter_delta_pp": 0.04,
-      "wht_us_pp": 0.3,
-      "wht_alt_pp": 0.15,
-      "wht_saving_pp": 0.15,
-      "net_annual_delta_pp": 0.11,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.00%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.236,
-      "monthly_corr": 0.9647,
-      "years": 2.86,
-      "us_ann_gross_pp": 21.13,
-      "us_holder_wht_drag_pp": 0.3,
-      "us_ann_after_wht_pp": 20.83,
-      "alt_ann_pp": 21.066,
-      "gap_5y_pp": 1.06,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.06pp."
+      "us_ann_after_wht_pp": 22.217,
+      "alt_ann_pp": 22.666,
+      "gap_5y_pp": 1.05,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.05pp."
      },
      "recommended": true
     }
@@ -1530,6 +1523,47 @@
    "caveat": null,
    "caveat_note": null,
    "alternatives": [
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.03,
+      "ter_alt": 0.03,
+      "ter_delta_pp": 0.0,
+      "wht_us_pp": 0.327,
+      "wht_alt_pp": 0.1635,
+      "wht_saving_pp": 0.1635,
+      "net_annual_delta_pp": 0.1635,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.09%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
+    },
     {
      "ticker": "SPXP",
      "yahoo": "SPXP.L",
@@ -1566,16 +1600,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.181,
-      "monthly_corr": 0.9645,
+      "months": 61,
+      "gap_pp": 0.477,
+      "monthly_corr": 0.9625,
       "years": 2.86,
-      "us_ann_gross_pp": 21.39,
+      "us_ann_gross_pp": 22.688,
       "us_holder_wht_drag_pp": 0.327,
-      "us_ann_after_wht_pp": 21.063,
-      "alt_ann_pp": 21.243,
-      "gap_5y_pp": 0.252,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.25pp."
+      "us_ann_after_wht_pp": 22.361,
+      "alt_ann_pp": 22.838,
+      "gap_5y_pp": 0.303,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.30pp."
      },
      "recommended": true
     },
@@ -1615,15 +1649,15 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.177,
-      "monthly_corr": 0.973,
+      "months": 61,
+      "gap_pp": 0.487,
+      "monthly_corr": 0.9722,
       "years": 2.86,
-      "us_ann_gross_pp": 21.39,
+      "us_ann_gross_pp": 22.688,
       "us_holder_wht_drag_pp": 0.327,
-      "us_ann_after_wht_pp": 21.063,
-      "alt_ann_pp": 21.24,
-      "gap_5y_pp": 0.278,
+      "us_ann_after_wht_pp": 22.361,
+      "alt_ann_pp": 22.849,
+      "gap_5y_pp": 0.279,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.28pp."
      },
      "recommended": true
@@ -1664,14 +1698,14 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": -0.035,
-      "monthly_corr": 0.9736,
+      "months": 61,
+      "gap_pp": 0.304,
+      "monthly_corr": 0.9728,
       "years": 2.86,
-      "us_ann_gross_pp": 21.39,
+      "us_ann_gross_pp": 22.688,
       "us_holder_wht_drag_pp": 0.327,
-      "us_ann_after_wht_pp": 21.063,
-      "alt_ann_pp": 21.028,
+      "us_ann_after_wht_pp": 22.361,
+      "alt_ann_pp": 22.666,
       "gap_5y_pp": 0.075,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.07pp."
      },
@@ -1713,65 +1747,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.003,
-      "monthly_corr": 0.9651,
+      "months": 61,
+      "gap_pp": 0.286,
+      "monthly_corr": 0.9632,
       "years": 2.86,
-      "us_ann_gross_pp": 21.39,
+      "us_ann_gross_pp": 22.688,
       "us_holder_wht_drag_pp": 0.327,
-      "us_ann_after_wht_pp": 21.063,
-      "alt_ann_pp": 21.066,
-      "gap_5y_pp": 0.061,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.06pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "VUSA",
-     "yahoo": "VUSA.L",
-     "name": "Vanguard S&P 500 UCITS ETF",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00B3XXRP09",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Distributing",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.03,
-      "ter_alt": 0.07,
-      "ter_delta_pp": 0.04,
-      "wht_us_pp": 0.327,
-      "wht_alt_pp": 0.1635,
-      "wht_saving_pp": 0.1635,
-      "net_annual_delta_pp": 0.1235,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.09%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": -0.004,
-      "monthly_corr": 0.9666,
-      "years": 2.86,
-      "us_ann_gross_pp": 21.39,
-      "us_holder_wht_drag_pp": 0.327,
-      "us_ann_after_wht_pp": 21.063,
-      "alt_ann_pp": 21.058,
-      "gap_5y_pp": 0.048,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.05pp."
+      "us_ann_after_wht_pp": 22.361,
+      "alt_ann_pp": 22.647,
+      "gap_5y_pp": 0.1,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.10pp."
      },
      "recommended": true
     }
@@ -1828,20 +1813,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -3.024,
-      "monthly_corr": 0.9593,
+      "months": 61,
+      "gap_pp": -3.693,
+      "monthly_corr": 0.9566,
       "years": 2.86,
-      "us_ann_gross_pp": 19.346,
+      "us_ann_gross_pp": 19.394,
       "us_holder_wht_drag_pp": 0.264,
-      "us_ann_after_wht_pp": 19.082,
-      "alt_ann_pp": 16.057,
-      "gap_5y_pp": -0.132,
-      "drift_pp": -2.892,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.13pp."
+      "us_ann_after_wht_pp": 19.13,
+      "alt_ann_pp": 15.437,
+      "gap_5y_pp": -0.223,
+      "drift_pp": -3.469,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.22pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -3.02pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -3.69pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -1898,16 +1883,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.247,
-      "monthly_corr": 0.984,
+      "months": 61,
+      "gap_pp": 1.349,
+      "monthly_corr": 0.9844,
       "years": 2.86,
-      "us_ann_gross_pp": 5.715,
+      "us_ann_gross_pp": 4.721,
       "us_holder_wht_drag_pp": 1.365,
-      "us_ann_after_wht_pp": 4.35,
-      "alt_ann_pp": 5.596,
-      "gap_5y_pp": 1.304,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.30pp."
+      "us_ann_after_wht_pp": 3.356,
+      "alt_ann_pp": 4.705,
+      "gap_5y_pp": 1.312,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.31pp."
      },
      "recommended": true
     },
@@ -1947,16 +1932,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.274,
-      "monthly_corr": 0.9844,
+      "months": 61,
+      "gap_pp": 1.382,
+      "monthly_corr": 0.9846,
       "years": 2.86,
-      "us_ann_gross_pp": 5.715,
+      "us_ann_gross_pp": 4.721,
       "us_holder_wht_drag_pp": 1.365,
-      "us_ann_after_wht_pp": 4.35,
-      "alt_ann_pp": 5.624,
-      "gap_5y_pp": 1.318,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.32pp."
+      "us_ann_after_wht_pp": 3.356,
+      "alt_ann_pp": 4.739,
+      "gap_5y_pp": 1.327,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.33pp."
      },
      "recommended": true
     }
@@ -2012,26 +1997,23 @@
       "basis": "US line's trailing gross distribution 0.54%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 70% US-source slice"
      },
      "verification": {
-      "grade": "fail",
-      "months": 60,
-      "gap_pp": -3.52,
-      "monthly_corr": 0.9673,
+      "grade": "C",
+      "months": 61,
+      "gap_pp": -2.844,
+      "monthly_corr": 0.9651,
       "years": 2.86,
-      "us_ann_gross_pp": 33.279,
+      "us_ann_gross_pp": 30.819,
       "us_holder_wht_drag_pp": 0.162,
-      "us_ann_after_wht_pp": 33.117,
-      "alt_ann_pp": 29.596,
-      "gap_5y_pp": -0.706,
-      "drift_pp": -2.814,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.71pp."
+      "us_ann_after_wht_pp": 30.657,
+      "alt_ann_pp": 27.814,
+      "gap_5y_pp": -0.481,
+      "drift_pp": -2.363,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.16pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.48pp."
      },
-     "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -3.52pp a year, beyond the 3.0pp floor"
+     "recommended": true
     }
    ],
-   "unresolved_alternatives": [],
-   "verdict": "no_verified_equivalent",
-   "verdict_note": "Candidate funds tracking MSCI USA Momentum were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
+   "unresolved_alternatives": []
   },
   {
    "ticker": "NOBL",
@@ -2083,16 +2065,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 2.432,
-      "monthly_corr": 0.954,
+      "months": 61,
+      "gap_pp": 2.022,
+      "monthly_corr": 0.9584,
       "years": 2.86,
-      "us_ann_gross_pp": 9.638,
+      "us_ann_gross_pp": 10.492,
       "us_holder_wht_drag_pp": 0.621,
-      "us_ann_after_wht_pp": 9.017,
-      "alt_ann_pp": 11.449,
-      "gap_5y_pp": 1.252,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.62pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.25pp."
+      "us_ann_after_wht_pp": 9.871,
+      "alt_ann_pp": 11.893,
+      "gap_5y_pp": 1.499,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.62pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.50pp."
      },
      "recommended": true
     },
@@ -2132,16 +2114,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 2.412,
-      "monthly_corr": 0.9468,
+      "months": 61,
+      "gap_pp": 1.982,
+      "monthly_corr": 0.9501,
       "years": 2.86,
-      "us_ann_gross_pp": 9.638,
+      "us_ann_gross_pp": 10.492,
       "us_holder_wht_drag_pp": 0.621,
-      "us_ann_after_wht_pp": 9.017,
-      "alt_ann_pp": 11.428,
-      "gap_5y_pp": 1.227,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.62pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.23pp."
+      "us_ann_after_wht_pp": 9.871,
+      "alt_ann_pp": 11.854,
+      "gap_5y_pp": 1.518,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.62pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.52pp."
      },
      "recommended": true
     }
@@ -2198,18 +2180,59 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.458,
-      "monthly_corr": 0.9789,
+      "months": 61,
+      "gap_pp": 0.241,
+      "monthly_corr": 0.9788,
       "years": 2.86,
-      "us_ann_gross_pp": 26.552,
+      "us_ann_gross_pp": 26.334,
       "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 26.429,
-      "alt_ann_pp": 26.887,
+      "us_ann_after_wht_pp": 26.211,
+      "alt_ann_pp": 26.452,
       "long_history_unusable": "Graded on 3 years. The longer record is not usable: it steps +21.6% on 2023-01-23 and holds the new level, which is a break in the price series rather than anything the fund did.",
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead."
      },
      "recommended": true
+    },
+    {
+     "ticker": "XND",
+     "yahoo": null,
+     "name": "Xtrackers NASDAQ 100 UCITS ETF 1C (SGD line)",
+     "official_name": "Xtrackers NASDAQ 100 UCITS ETF 1C (SGD line)",
+     "isin": "IE00BMFKG444",
+     "domicile": "IE",
+     "index_key": "nasdaq100",
+     "index_label": "Nasdaq-100",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.2,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "Irish-domiciled Xtrackers Nasdaq 100 UCITS ETF 1C (0.20%), listed on SGX in Singapore dollars since 13 October 2026. New line: check the quoted spread.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.18,
+      "ter_alt": 0.2,
+      "ter_delta_pp": 0.02,
+      "wht_us_pp": 0.123,
+      "wht_alt_pp": 0.0615,
+      "wht_saving_pp": 0.0615,
+      "net_annual_delta_pp": 0.0415,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 0.41%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "CNDX",
@@ -2247,16 +2270,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.343,
-      "monthly_corr": 0.9802,
+      "months": 61,
+      "gap_pp": 0.112,
+      "monthly_corr": 0.98,
       "years": 2.86,
-      "us_ann_gross_pp": 26.552,
+      "us_ann_gross_pp": 26.334,
       "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 26.429,
-      "alt_ann_pp": 26.772,
-      "gap_5y_pp": 0.21,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.21pp."
+      "us_ann_after_wht_pp": 26.211,
+      "alt_ann_pp": 26.323,
+      "gap_5y_pp": -0.167,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.17pp."
      },
      "recommended": true
     },
@@ -2296,16 +2319,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.359,
-      "monthly_corr": 0.9752,
+      "months": 61,
+      "gap_pp": -0.013,
+      "monthly_corr": 0.9749,
       "years": 2.86,
-      "us_ann_gross_pp": 26.552,
+      "us_ann_gross_pp": 26.334,
       "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 26.429,
-      "alt_ann_pp": 26.788,
-      "gap_5y_pp": 0.178,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.18pp."
+      "us_ann_after_wht_pp": 26.211,
+      "alt_ann_pp": 26.198,
+      "gap_5y_pp": -0.194,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.19pp."
      },
      "recommended": true
     },
@@ -2345,65 +2368,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": -0.073,
-      "monthly_corr": 0.9756,
+      "months": 61,
+      "gap_pp": -0.449,
+      "monthly_corr": 0.9751,
       "years": 2.86,
-      "us_ann_gross_pp": 26.552,
+      "us_ann_gross_pp": 26.334,
       "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 26.429,
-      "alt_ann_pp": 26.356,
-      "gap_5y_pp": -0.234,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.23pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "EQQU",
-     "yahoo": "EQQU.L",
-     "name": "Invesco EQQQ NASDAQ-100 UCITS ETF",
-     "official_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF",
-     "isin": "IE0032077012",
-     "domicile": "IE",
-     "index_key": "nasdaq100",
-     "index_label": "Nasdaq-100",
-     "ccy": "USD",
-     "ccy_is_pence": false,
-     "income": "Accumulating",
-     "ter": 0.3,
-     "ter_src": "yahoo",
-     "hedge_ccy": null,
-     "aum_usd": null,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.18,
-      "ter_alt": 0.3,
-      "ter_delta_pp": 0.12,
-      "wht_us_pp": 0.123,
-      "wht_alt_pp": 0.0615,
-      "wht_saving_pp": 0.0615,
-      "net_annual_delta_pp": -0.0585,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 0.41%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.342,
-      "monthly_corr": 0.9804,
-      "years": 2.86,
-      "us_ann_gross_pp": 26.552,
-      "us_holder_wht_drag_pp": 0.123,
-      "us_ann_after_wht_pp": 26.429,
-      "alt_ann_pp": 26.772,
-      "gap_5y_pp": 0.214,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.21pp."
+      "us_ann_after_wht_pp": 26.211,
+      "alt_ann_pp": 25.762,
+      "gap_5y_pp": -0.617,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.12pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.62pp."
      },
      "recommended": true
     }
@@ -2460,18 +2434,59 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.362,
+      "months": 61,
+      "gap_pp": 0.174,
       "monthly_corr": 0.9785,
       "years": 2.86,
-      "us_ann_gross_pp": 26.654,
+      "us_ann_gross_pp": 26.407,
       "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 26.525,
-      "alt_ann_pp": 26.887,
+      "us_ann_after_wht_pp": 26.278,
+      "alt_ann_pp": 26.452,
       "long_history_unusable": "Graded on 3 years. The longer record is not usable: it steps +21.6% on 2023-01-23 and holds the new level, which is a break in the price series rather than anything the fund did.",
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead."
      },
      "recommended": true
+    },
+    {
+     "ticker": "XND",
+     "yahoo": null,
+     "name": "Xtrackers NASDAQ 100 UCITS ETF 1C (SGD line)",
+     "official_name": "Xtrackers NASDAQ 100 UCITS ETF 1C (SGD line)",
+     "isin": "IE00BMFKG444",
+     "domicile": "IE",
+     "index_key": "nasdaq100",
+     "index_label": "Nasdaq-100",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.2,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "Irish-domiciled Xtrackers Nasdaq 100 UCITS ETF 1C (0.20%), listed on SGX in Singapore dollars since 13 October 2026. New line: check the quoted spread.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.15,
+      "ter_alt": 0.2,
+      "ter_delta_pp": 0.05,
+      "wht_us_pp": 0.129,
+      "wht_alt_pp": 0.0645,
+      "wht_saving_pp": 0.0645,
+      "net_annual_delta_pp": 0.0145,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 0.43%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "CNDX",
@@ -2509,16 +2524,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.247,
-      "monthly_corr": 0.9797,
+      "months": 61,
+      "gap_pp": 0.045,
+      "monthly_corr": 0.9796,
       "years": 2.86,
-      "us_ann_gross_pp": 26.654,
+      "us_ann_gross_pp": 26.407,
       "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 26.525,
-      "alt_ann_pp": 26.772,
-      "gap_5y_pp": 0.134,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.13pp."
+      "us_ann_after_wht_pp": 26.278,
+      "alt_ann_pp": 26.323,
+      "gap_5y_pp": -0.236,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.24pp."
      },
      "recommended": true
     },
@@ -2558,16 +2573,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.263,
-      "monthly_corr": 0.9749,
+      "months": 61,
+      "gap_pp": -0.08,
+      "monthly_corr": 0.9746,
       "years": 2.86,
-      "us_ann_gross_pp": 26.654,
+      "us_ann_gross_pp": 26.407,
       "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 26.525,
-      "alt_ann_pp": 26.788,
-      "gap_5y_pp": 0.102,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.10pp."
+      "us_ann_after_wht_pp": 26.278,
+      "alt_ann_pp": 26.198,
+      "gap_5y_pp": -0.263,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.26pp."
      },
      "recommended": true
     },
@@ -2606,66 +2621,17 @@
       "basis": "US line's trailing gross distribution 0.43%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": -0.169,
-      "monthly_corr": 0.9753,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": -0.516,
+      "monthly_corr": 0.9748,
       "years": 2.86,
-      "us_ann_gross_pp": 26.654,
+      "us_ann_gross_pp": 26.407,
       "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 26.525,
-      "alt_ann_pp": 26.356,
-      "gap_5y_pp": -0.31,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.31pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "EQQU",
-     "yahoo": "EQQU.L",
-     "name": "Invesco EQQQ NASDAQ-100 UCITS ETF",
-     "official_name": "INVESCO EQQQ NASDAQ 100 UCITS ETF",
-     "isin": "IE0032077012",
-     "domicile": "IE",
-     "index_key": "nasdaq100",
-     "index_label": "Nasdaq-100",
-     "ccy": "USD",
-     "ccy_is_pence": false,
-     "income": "Accumulating",
-     "ter": 0.3,
-     "ter_src": "yahoo",
-     "hedge_ccy": null,
-     "aum_usd": null,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.15,
-      "ter_alt": 0.3,
-      "ter_delta_pp": 0.15,
-      "wht_us_pp": 0.129,
-      "wht_alt_pp": 0.0645,
-      "wht_saving_pp": 0.0645,
-      "net_annual_delta_pp": -0.0855,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 0.43%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.246,
-      "monthly_corr": 0.9799,
-      "years": 2.86,
-      "us_ann_gross_pp": 26.654,
-      "us_holder_wht_drag_pp": 0.129,
-      "us_ann_after_wht_pp": 26.525,
-      "alt_ann_pp": 26.772,
-      "gap_5y_pp": 0.137,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.14pp."
+      "us_ann_after_wht_pp": 26.278,
+      "alt_ann_pp": 25.762,
+      "gap_5y_pp": -0.686,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.69pp."
      },
      "recommended": true
     }
@@ -2721,17 +2687,17 @@
       "basis": "US line's trailing gross distribution 0.86%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 70% US-source slice"
      },
      "verification": {
-      "grade": "B",
-      "months": 60,
-      "gap_pp": -0.728,
-      "monthly_corr": 0.9682,
+      "grade": "A",
+      "months": 61,
+      "gap_pp": -0.405,
+      "monthly_corr": 0.9649,
       "years": 2.86,
-      "us_ann_gross_pp": 19.121,
+      "us_ann_gross_pp": 19.368,
       "us_holder_wht_drag_pp": 0.258,
-      "us_ann_after_wht_pp": 18.863,
-      "alt_ann_pp": 18.135,
-      "gap_5y_pp": -1.127,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.13pp."
+      "us_ann_after_wht_pp": 19.11,
+      "alt_ann_pp": 18.704,
+      "gap_5y_pp": -0.972,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.26pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.97pp."
      },
      "recommended": true
     }
@@ -2787,19 +2753,21 @@
       "basis": "US line's trailing gross distribution 3.30%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "C",
-      "months": 60,
-      "gap_pp": -2.212,
-      "monthly_corr": 0.8851,
+      "grade": "fail",
+      "months": 61,
+      "gap_pp": -4.446,
+      "monthly_corr": 0.8899,
       "years": 2.86,
-      "us_ann_gross_pp": 14.651,
+      "us_ann_gross_pp": 17.33,
       "us_holder_wht_drag_pp": 0.99,
-      "us_ann_after_wht_pp": 13.661,
-      "alt_ann_pp": 11.449,
-      "gap_5y_pp": -0.924,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.99pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.92pp."
+      "us_ann_after_wht_pp": 16.34,
+      "alt_ann_pp": 11.893,
+      "gap_5y_pp": -1.809,
+      "drift_pp": -2.638,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.99pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.81pp."
      },
-     "recommended": true
+     "recommended": false,
+     "not_recommended_because": "compounded outcome differs by -4.45pp a year, beyond the 3.0pp floor"
     },
     {
      "ticker": "USDV",
@@ -2836,19 +2804,21 @@
       "basis": "US line's trailing gross distribution 3.30%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "C",
-      "months": 60,
-      "gap_pp": -2.232,
-      "monthly_corr": 0.853,
+      "grade": "fail",
+      "months": 61,
+      "gap_pp": -4.486,
+      "monthly_corr": 0.8589,
       "years": 2.86,
-      "us_ann_gross_pp": 14.651,
+      "us_ann_gross_pp": 17.33,
       "us_holder_wht_drag_pp": 0.99,
-      "us_ann_after_wht_pp": 13.661,
-      "alt_ann_pp": 11.428,
-      "gap_5y_pp": -0.949,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.99pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.95pp."
+      "us_ann_after_wht_pp": 16.34,
+      "alt_ann_pp": 11.854,
+      "gap_5y_pp": -1.79,
+      "drift_pp": -2.696,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.99pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.79pp."
      },
-     "recommended": true
+     "recommended": false,
+     "not_recommended_because": "compounded outcome differs by -4.49pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -2905,16 +2875,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.309,
-      "monthly_corr": 0.588,
+      "months": 61,
+      "gap_pp": 1.329,
+      "monthly_corr": 0.6128,
       "years": 2.86,
-      "us_ann_gross_pp": 4.256,
+      "us_ann_gross_pp": 3.884,
       "us_holder_wht_drag_pp": 1.104,
-      "us_ann_after_wht_pp": 3.152,
-      "alt_ann_pp": 4.461,
-      "gap_5y_pp": 1.224,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.10pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.22pp."
+      "us_ann_after_wht_pp": 2.78,
+      "alt_ann_pp": 4.109,
+      "gap_5y_pp": 1.257,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.10pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.26pp."
      },
      "recommended": true
     }
@@ -2971,24 +2941,21 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.278,
-      "monthly_corr": 0.9711,
+      "months": 61,
+      "gap_pp": -0.988,
+      "monthly_corr": 0.9713,
       "years": 2.86,
-      "us_ann_gross_pp": 64.213,
+      "us_ann_gross_pp": 58.199,
       "us_holder_wht_drag_pp": 0.051,
-      "us_ann_after_wht_pp": 64.162,
-      "alt_ann_pp": 65.44,
-      "gap_5y_pp": -0.671,
-      "drift_pp": 1.949,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.05pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.67pp."
+      "us_ann_after_wht_pp": 58.148,
+      "alt_ann_pp": 57.16,
+      "gap_5y_pp": -1.562,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.05pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.56pp."
      },
      "recommended": true
     }
    ],
-   "unresolved_alternatives": [],
-   "verdict": "no_verified_equivalent",
-   "verdict_note": "Candidate funds tracking MVIS US Listed Semiconductor 25 were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
+   "unresolved_alternatives": []
   },
   {
    "ticker": "SOXX",
@@ -3040,16 +3007,16 @@
      },
      "verification": {
       "grade": "break",
-      "months": 60,
+      "months": 61,
       "gap_pp": null,
       "price_break": {
        "date": "2024-01-08",
        "shift_pct": -20.79,
-       "sigma": 15.4,
-       "before": 1.0086,
-       "after": 0.799
+       "sigma": 14.8,
+       "before": 1.0414,
+       "after": 0.8249
       },
-      "basis": "price history steps -20.8% on 2024-01-08 (15.4 sigma) within the 3-year window and holds the new level, so the record cannot be read as one continuous series. Not a statement about how the fund tracks."
+      "basis": "price history steps -20.8% on 2024-01-08 (14.8 sigma) within the 3-year window and holds the new level, so the record cannot be read as one continuous series. Not a statement about how the fund tracks."
      },
      "recommended": false,
      "not_recommended_because": "not verifiable: the price history steps -20.8% on 2024-01-08 and stays there, so the record before and after that date cannot be compared as one series. This says nothing about how the fund tracks its index."
@@ -3090,20 +3057,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": 8.719,
-      "monthly_corr": 0.9752,
+      "months": 61,
+      "gap_pp": 6.032,
+      "monthly_corr": 0.9754,
       "years": 2.86,
-      "us_ann_gross_pp": 56.791,
+      "us_ann_gross_pp": 51.197,
       "us_holder_wht_drag_pp": 0.069,
-      "us_ann_after_wht_pp": 56.722,
-      "alt_ann_pp": 65.44,
-      "gap_5y_pp": 4.286,
-      "drift_pp": 4.433,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.07pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +4.29pp."
+      "us_ann_after_wht_pp": 51.128,
+      "alt_ann_pp": 57.16,
+      "gap_5y_pp": 4.229,
+      "drift_pp": 1.803,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.07pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +4.23pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by +8.72pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by +6.03pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -3124,6 +3091,47 @@
    "caveat": null,
    "caveat_note": null,
    "alternatives": [
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.02,
+      "ter_alt": 0.03,
+      "ter_delta_pp": 0.01,
+      "wht_us_pp": 0.339,
+      "wht_alt_pp": 0.1695,
+      "wht_saving_pp": 0.1695,
+      "net_annual_delta_pp": 0.1595,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
+    },
     {
      "ticker": "SPXP",
      "yahoo": "SPXP.L",
@@ -3159,13 +3167,11 @@
       "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "insufficient",
-      "months": 1,
-      "gap_pp": null,
-      "basis": "only 1 overlapping months, need 36"
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
      },
-     "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 1 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "SPXS",
@@ -3202,13 +3208,11 @@
       "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "insufficient",
-      "months": 1,
-      "gap_pp": null,
-      "basis": "only 1 overlapping months, need 36"
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
      },
-     "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 1 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "VUAA",
@@ -3245,13 +3249,11 @@
       "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "insufficient",
-      "months": 1,
-      "gap_pp": null,
-      "basis": "only 1 overlapping months, need 36"
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
      },
-     "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 1 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "VUAG",
@@ -3288,59 +3290,16 @@
       "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "insufficient",
-      "months": 1,
-      "gap_pp": null,
-      "basis": "only 1 overlapping months, need 36"
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
      },
-     "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 1 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
-    },
-    {
-     "ticker": "VUSA",
-     "yahoo": "VUSA.L",
-     "name": "Vanguard S&P 500 UCITS ETF",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00B3XXRP09",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Distributing",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.02,
-      "ter_alt": 0.07,
-      "ter_delta_pp": 0.05,
-      "wht_us_pp": 0.339,
-      "wht_alt_pp": 0.1695,
-      "wht_saving_pp": 0.1695,
-      "net_annual_delta_pp": 0.1195,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.13%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "insufficient",
-      "months": 1,
-      "gap_pp": null,
-      "basis": "only 1 overlapping months, need 36"
-     },
-     "recommended": true,
-     "verification_pending": "Too new to check against a meaningful record \u2014 only 1 overlapping months, need 36. The domicile and cost figures stand; how closely it tracks is simply not yet knowable, and a young fund also carries the usual small-size and closure risks."
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     }
    ],
-   "unresolved_alternatives": []
+   "unresolved_alternatives": [],
+   "verdict": "no_verified_equivalent",
+   "verdict_note": "Candidate funds tracking S&P 500 were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
   },
   {
    "ticker": "SPY",
@@ -3356,6 +3315,47 @@
    "caveat": null,
    "caveat_note": null,
    "alternatives": [
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.0945,
+      "ter_alt": 0.03,
+      "ter_delta_pp": -0.0645,
+      "wht_us_pp": 0.303,
+      "wht_alt_pp": 0.1515,
+      "wht_saving_pp": 0.1515,
+      "net_annual_delta_pp": 0.216,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.01%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
+    },
     {
      "ticker": "SPXP",
      "yahoo": "SPXP.L",
@@ -3391,17 +3391,17 @@
       "basis": "US line's trailing gross distribution 1.01%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.272,
-      "monthly_corr": 0.9643,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.55,
+      "monthly_corr": 0.9623,
       "years": 2.86,
-      "us_ann_gross_pp": 21.274,
+      "us_ann_gross_pp": 22.591,
       "us_holder_wht_drag_pp": 0.303,
-      "us_ann_after_wht_pp": 20.971,
-      "alt_ann_pp": 21.243,
-      "gap_5y_pp": 0.294,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.29pp."
+      "us_ann_after_wht_pp": 22.288,
+      "alt_ann_pp": 22.838,
+      "gap_5y_pp": 0.353,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.35pp."
      },
      "recommended": true
     },
@@ -3440,17 +3440,17 @@
       "basis": "US line's trailing gross distribution 1.01%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.269,
-      "monthly_corr": 0.9727,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.561,
+      "monthly_corr": 0.9717,
       "years": 2.86,
-      "us_ann_gross_pp": 21.274,
+      "us_ann_gross_pp": 22.591,
       "us_holder_wht_drag_pp": 0.303,
-      "us_ann_after_wht_pp": 20.971,
-      "alt_ann_pp": 21.24,
-      "gap_5y_pp": 0.321,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.32pp."
+      "us_ann_after_wht_pp": 22.288,
+      "alt_ann_pp": 22.849,
+      "gap_5y_pp": 0.329,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.33pp."
      },
      "recommended": true
     },
@@ -3490,15 +3490,15 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.057,
-      "monthly_corr": 0.9733,
+      "months": 61,
+      "gap_pp": 0.377,
+      "monthly_corr": 0.9724,
       "years": 2.86,
-      "us_ann_gross_pp": 21.274,
+      "us_ann_gross_pp": 22.591,
       "us_holder_wht_drag_pp": 0.303,
-      "us_ann_after_wht_pp": 20.971,
-      "alt_ann_pp": 21.028,
-      "gap_5y_pp": 0.117,
+      "us_ann_after_wht_pp": 22.288,
+      "alt_ann_pp": 22.666,
+      "gap_5y_pp": 0.125,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.12pp."
      },
      "recommended": true
@@ -3539,65 +3539,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.095,
-      "monthly_corr": 0.9649,
+      "months": 61,
+      "gap_pp": 0.359,
+      "monthly_corr": 0.9629,
       "years": 2.86,
-      "us_ann_gross_pp": 21.274,
+      "us_ann_gross_pp": 22.591,
       "us_holder_wht_drag_pp": 0.303,
-      "us_ann_after_wht_pp": 20.971,
-      "alt_ann_pp": 21.066,
-      "gap_5y_pp": 0.103,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.10pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "VUSA",
-     "yahoo": "VUSA.L",
-     "name": "Vanguard S&P 500 UCITS ETF",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00B3XXRP09",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Distributing",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.0945,
-      "ter_alt": 0.07,
-      "ter_delta_pp": -0.0245,
-      "wht_us_pp": 0.303,
-      "wht_alt_pp": 0.1515,
-      "wht_saving_pp": 0.1515,
-      "net_annual_delta_pp": 0.176,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.01%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.087,
-      "monthly_corr": 0.9664,
-      "years": 2.86,
-      "us_ann_gross_pp": 21.274,
-      "us_holder_wht_drag_pp": 0.303,
-      "us_ann_after_wht_pp": 20.971,
-      "alt_ann_pp": 21.058,
-      "gap_5y_pp": 0.09,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.09pp."
+      "us_ann_after_wht_pp": 22.288,
+      "alt_ann_pp": 22.647,
+      "gap_5y_pp": 0.15,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.30pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.15pp."
      },
      "recommended": true
     }
@@ -3654,16 +3605,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.154,
-      "monthly_corr": 0.953,
+      "months": 61,
+      "gap_pp": 1.277,
+      "monthly_corr": 0.9583,
       "years": 2.86,
-      "us_ann_gross_pp": 4.433,
+      "us_ann_gross_pp": 3.642,
       "us_holder_wht_drag_pp": 1.131,
-      "us_ann_after_wht_pp": 3.302,
-      "alt_ann_pp": 4.455,
-      "gap_5y_pp": 1.059,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.06pp."
+      "us_ann_after_wht_pp": 2.511,
+      "alt_ann_pp": 3.788,
+      "gap_5y_pp": 1.105,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.10pp."
      },
      "recommended": true
     },
@@ -3703,16 +3654,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.203,
-      "monthly_corr": 0.8679,
+      "months": 61,
+      "gap_pp": 1.259,
+      "monthly_corr": 0.8843,
       "years": 2.86,
-      "us_ann_gross_pp": 4.433,
+      "us_ann_gross_pp": 3.642,
       "us_holder_wht_drag_pp": 1.131,
-      "us_ann_after_wht_pp": 3.302,
-      "alt_ann_pp": 4.505,
-      "gap_5y_pp": 1.045,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.04pp."
+      "us_ann_after_wht_pp": 2.511,
+      "alt_ann_pp": 3.77,
+      "gap_5y_pp": 1.076,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.08pp."
      },
      "recommended": true
     }
@@ -3769,16 +3720,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.537,
-      "monthly_corr": 0.9785,
+      "months": 61,
+      "gap_pp": 1.552,
+      "monthly_corr": 0.9781,
       "years": 2.86,
-      "us_ann_gross_pp": 0.419,
+      "us_ann_gross_pp": 0.569,
       "us_holder_wht_drag_pp": 1.359,
-      "us_ann_after_wht_pp": -0.94,
-      "alt_ann_pp": 0.597,
-      "gap_5y_pp": 1.485,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.49pp."
+      "us_ann_after_wht_pp": -0.79,
+      "alt_ann_pp": 0.762,
+      "gap_5y_pp": 1.52,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.52pp."
      },
      "recommended": true
     },
@@ -3818,16 +3769,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.522,
-      "monthly_corr": 0.9751,
+      "months": 61,
+      "gap_pp": 1.535,
+      "monthly_corr": 0.9745,
       "years": 2.86,
-      "us_ann_gross_pp": 0.419,
+      "us_ann_gross_pp": 0.569,
       "us_holder_wht_drag_pp": 1.359,
-      "us_ann_after_wht_pp": -0.94,
-      "alt_ann_pp": 0.582,
-      "gap_5y_pp": 1.483,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.48pp."
+      "us_ann_after_wht_pp": -0.79,
+      "alt_ann_pp": 0.745,
+      "gap_5y_pp": 1.503,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.36pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.50pp."
      },
      "recommended": true
     }
@@ -3884,18 +3835,59 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.258,
-      "monthly_corr": 0.9777,
+      "months": 61,
+      "gap_pp": 0.475,
+      "monthly_corr": 0.978,
       "years": 2.86,
-      "us_ann_gross_pp": 20.474,
+      "us_ann_gross_pp": 21.759,
       "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 20.054,
-      "alt_ann_pp": 20.313,
-      "gap_5y_pp": 0.364,
+      "us_ann_after_wht_pp": 21.339,
+      "alt_ann_pp": 21.814,
+      "gap_5y_pp": 0.365,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.36pp."
      },
      "recommended": true
+    },
+    {
+     "ticker": "XWR",
+     "yahoo": null,
+     "name": "Xtrackers MSCI World UCITS ETF 1C (SGD line)",
+     "official_name": "Xtrackers MSCI World UCITS ETF 1C (SGD line)",
+     "isin": "IE00BJ0KDQ92",
+     "domicile": "IE",
+     "index_key": "msci_world",
+     "index_label": "MSCI World",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.12,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "Irish-domiciled Xtrackers MSCI World UCITS ETF 1C (0.12%), listed on SGX in Singapore dollars since 13 October 2026. New line: the quoted spread was about 0.7% in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.24,
+      "ter_alt": 0.12,
+      "ter_delta_pp": -0.12,
+      "wht_us_pp": 0.42,
+      "wht_alt_pp": 0.147,
+      "wht_saving_pp": 0.273,
+      "net_annual_delta_pp": 0.393,
+      "us_content": 0.7,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.40%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 70% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "HMWO",
@@ -3933,16 +3925,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": -1.367,
-      "monthly_corr": 0.9666,
+      "months": 61,
+      "gap_pp": -1.205,
+      "monthly_corr": 0.9659,
       "years": 2.86,
-      "us_ann_gross_pp": 20.474,
+      "us_ann_gross_pp": 21.759,
       "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 20.054,
-      "alt_ann_pp": 18.688,
-      "gap_5y_pp": -1.269,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.27pp. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
+      "us_ann_after_wht_pp": 21.339,
+      "alt_ann_pp": 20.134,
+      "gap_5y_pp": -1.252,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.25pp. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
       "outliers_dropped": [
        "2025-10-20"
       ]
@@ -3985,16 +3977,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.236,
+      "months": 61,
+      "gap_pp": 0.405,
       "monthly_corr": 0.9785,
       "years": 2.86,
-      "us_ann_gross_pp": 20.474,
+      "us_ann_gross_pp": 21.759,
       "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 20.054,
-      "alt_ann_pp": 20.29,
-      "gap_5y_pp": 0.351,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.35pp."
+      "us_ann_after_wht_pp": 21.339,
+      "alt_ann_pp": 21.744,
+      "gap_5y_pp": 0.374,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.37pp."
      },
      "recommended": true
     },
@@ -4034,68 +4026,19 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.278,
-      "monthly_corr": 0.9715,
+      "months": 61,
+      "gap_pp": 0.408,
+      "monthly_corr": 0.9704,
       "years": 2.86,
-      "us_ann_gross_pp": 20.474,
+      "us_ann_gross_pp": 21.759,
       "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 20.054,
-      "alt_ann_pp": 20.333,
-      "gap_5y_pp": 0.349,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.35pp. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
+      "us_ann_after_wht_pp": 21.339,
+      "alt_ann_pp": 21.747,
+      "gap_5y_pp": 0.368,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.37pp. 1 reverting price spike(s) removed (2025-10-20); each moved the pair ratio past 8 sigma and came back, so it is a bad print rather than a move either fund made.",
       "outliers_dropped": [
        "2025-10-20"
       ]
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "IWRD",
-     "yahoo": "IWRD.L",
-     "name": "iShares MSCI World UCITS ETF USD (Dist)",
-     "official_name": "ISHARES MSCI WORLD UCITS ETF USD (DIST)",
-     "isin": "IE00B0M62Q58",
-     "domicile": "IE",
-     "index_key": "msci_world",
-     "index_label": "MSCI World",
-     "ccy": "GBp",
-     "ccy_is_pence": true,
-     "income": "Distributing",
-     "ter": 0.5,
-     "ter_src": "yahoo",
-     "hedge_ccy": null,
-     "aum_usd": 9265920000,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.24,
-      "ter_alt": 0.5,
-      "ter_delta_pp": 0.26,
-      "wht_us_pp": 0.42,
-      "wht_alt_pp": 0.147,
-      "wht_saving_pp": 0.273,
-      "net_annual_delta_pp": 0.013,
-      "us_content": 0.7,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.40%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 70% US-source slice"
-     },
-     "verification": {
-      "grade": "B",
-      "months": 60,
-      "gap_pp": -1.38,
-      "monthly_corr": 0.972,
-      "years": 2.86,
-      "us_ann_gross_pp": 20.474,
-      "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 20.054,
-      "alt_ann_pp": 18.674,
-      "gap_5y_pp": -1.321,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.32pp."
      },
      "recommended": true
     }
@@ -4169,17 +4112,17 @@
       "basis": "US line's trailing gross distribution 0.36%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "C",
-      "months": 60,
-      "gap_pp": 1.836,
-      "monthly_corr": 0.9815,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.935,
+      "monthly_corr": 0.981,
       "years": 2.86,
-      "us_ann_gross_pp": 31.351,
+      "us_ann_gross_pp": 32.611,
       "us_holder_wht_drag_pp": 0.108,
-      "us_ann_after_wht_pp": 31.243,
-      "alt_ann_pp": 33.079,
-      "gap_5y_pp": 2.708,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.11pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +2.71pp."
+      "us_ann_after_wht_pp": 32.503,
+      "alt_ann_pp": 33.438,
+      "gap_5y_pp": 2.327,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.11pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +2.33pp."
      },
      "recommended": true
     },
@@ -4218,25 +4161,24 @@
       "basis": "US line's trailing gross distribution 0.36%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "C",
-      "months": 60,
-      "gap_pp": -2.858,
-      "monthly_corr": 0.9817,
+      "grade": "fail",
+      "months": 61,
+      "gap_pp": -3.599,
+      "monthly_corr": 0.9815,
       "years": 2.86,
-      "us_ann_gross_pp": 31.351,
+      "us_ann_gross_pp": 32.611,
       "us_holder_wht_drag_pp": 0.108,
-      "us_ann_after_wht_pp": 31.243,
-      "alt_ann_pp": 28.385,
-      "gap_5y_pp": -0.245,
-      "drift_pp": -2.612,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.11pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.24pp."
+      "us_ann_after_wht_pp": 32.503,
+      "alt_ann_pp": 28.905,
+      "gap_5y_pp": -0.615,
+      "drift_pp": -2.984,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.11pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.61pp."
      },
-     "recommended": true
+     "recommended": false,
+     "not_recommended_because": "compounded outcome differs by -3.60pp a year, beyond the 3.0pp floor"
     }
    ],
-   "unresolved_alternatives": [],
-   "verdict": "no_verified_equivalent",
-   "verdict_note": "Candidate funds tracking MSCI US IMI Information Technology 25/50 were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
+   "unresolved_alternatives": []
   },
   {
    "ticker": "VIG",
@@ -4288,20 +4230,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -4.873,
-      "monthly_corr": 0.7553,
+      "months": 61,
+      "gap_pp": -4.678,
+      "monthly_corr": 0.7472,
       "years": 2.86,
-      "us_ann_gross_pp": 16.775,
+      "us_ann_gross_pp": 17.024,
       "us_holder_wht_drag_pp": 0.453,
-      "us_ann_after_wht_pp": 16.322,
-      "alt_ann_pp": 11.449,
-      "gap_5y_pp": -2.92,
-      "drift_pp": -1.953,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -2.92pp."
+      "us_ann_after_wht_pp": 16.571,
+      "alt_ann_pp": 11.893,
+      "gap_5y_pp": -3.058,
+      "drift_pp": -1.62,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -3.06pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -4.87pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -4.68pp a year, beyond the 3.0pp floor"
     },
     {
      "ticker": "USDV",
@@ -4339,20 +4281,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -4.893,
-      "monthly_corr": 0.7652,
+      "months": 61,
+      "gap_pp": -4.718,
+      "monthly_corr": 0.7564,
       "years": 2.86,
-      "us_ann_gross_pp": 16.775,
+      "us_ann_gross_pp": 17.024,
       "us_holder_wht_drag_pp": 0.453,
-      "us_ann_after_wht_pp": 16.322,
-      "alt_ann_pp": 11.428,
-      "gap_5y_pp": -2.945,
-      "drift_pp": -1.948,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -2.94pp."
+      "us_ann_after_wht_pp": 16.571,
+      "alt_ann_pp": 11.854,
+      "gap_5y_pp": -3.039,
+      "drift_pp": -1.679,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -3.04pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -4.89pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -4.72pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -4409,20 +4351,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -3.194,
-      "monthly_corr": 0.9434,
+      "months": 61,
+      "gap_pp": -3.228,
+      "monthly_corr": 0.9453,
       "years": 2.86,
-      "us_ann_gross_pp": 32.457,
+      "us_ann_gross_pp": 34.45,
       "us_holder_wht_drag_pp": 0.42,
-      "us_ann_after_wht_pp": 32.037,
-      "alt_ann_pp": 28.843,
-      "gap_5y_pp": 0.44,
-      "drift_pp": -3.634,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.44pp."
+      "us_ann_after_wht_pp": 34.03,
+      "alt_ann_pp": 30.802,
+      "gap_5y_pp": 0.904,
+      "drift_pp": -4.132,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.42pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.90pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -3.19pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -3.23pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -4478,24 +4420,22 @@
       "basis": "US line's trailing gross distribution 3.60%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "C",
-      "months": 60,
-      "gap_pp": -1.584,
-      "monthly_corr": 0.9341,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": -1.404,
+      "monthly_corr": 0.937,
       "years": 2.86,
-      "us_ann_gross_pp": 11.245,
+      "us_ann_gross_pp": 10.126,
       "us_holder_wht_drag_pp": 1.08,
-      "us_ann_after_wht_pp": 10.165,
-      "alt_ann_pp": 8.581,
-      "gap_5y_pp": -0.919,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.08pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.92pp."
+      "us_ann_after_wht_pp": 9.046,
+      "alt_ann_pp": 7.642,
+      "gap_5y_pp": -1.43,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 1.08pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.43pp."
      },
      "recommended": true
     }
    ],
-   "unresolved_alternatives": [],
-   "verdict": "no_verified_equivalent",
-   "verdict_note": "Candidate funds tracking MSCI US IMI Real Estate 25/50 were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
+   "unresolved_alternatives": []
   },
   {
    "ticker": "VOO",
@@ -4511,6 +4451,47 @@
    "caveat": null,
    "caveat_note": null,
    "alternatives": [
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 1,
+     "caveat": null,
+     "cost": {
+      "ter_us": 0.03,
+      "ter_alt": 0.03,
+      "ter_delta_pp": 0.0,
+      "wht_us_pp": 0.321,
+      "wht_alt_pp": 0.1605,
+      "wht_saving_pp": 0.1605,
+      "net_annual_delta_pp": 0.1605,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.07%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
+    },
     {
      "ticker": "SPXP",
      "yahoo": "SPXP.L",
@@ -4547,16 +4528,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.181,
-      "monthly_corr": 0.9653,
+      "months": 61,
+      "gap_pp": 0.478,
+      "monthly_corr": 0.9635,
       "years": 2.86,
-      "us_ann_gross_pp": 21.383,
+      "us_ann_gross_pp": 22.681,
       "us_holder_wht_drag_pp": 0.321,
-      "us_ann_after_wht_pp": 21.062,
-      "alt_ann_pp": 21.243,
-      "gap_5y_pp": 0.24,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.24pp."
+      "us_ann_after_wht_pp": 22.36,
+      "alt_ann_pp": 22.838,
+      "gap_5y_pp": 0.296,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.30pp."
      },
      "recommended": true
     },
@@ -4596,15 +4577,15 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.178,
-      "monthly_corr": 0.9737,
+      "months": 61,
+      "gap_pp": 0.489,
+      "monthly_corr": 0.973,
       "years": 2.86,
-      "us_ann_gross_pp": 21.383,
+      "us_ann_gross_pp": 22.681,
       "us_holder_wht_drag_pp": 0.321,
-      "us_ann_after_wht_pp": 21.062,
-      "alt_ann_pp": 21.24,
-      "gap_5y_pp": 0.267,
+      "us_ann_after_wht_pp": 22.36,
+      "alt_ann_pp": 22.849,
+      "gap_5y_pp": 0.271,
       "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.27pp."
      },
      "recommended": true
@@ -4645,16 +4626,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": -0.035,
-      "monthly_corr": 0.9743,
+      "months": 61,
+      "gap_pp": 0.305,
+      "monthly_corr": 0.9736,
       "years": 2.86,
-      "us_ann_gross_pp": 21.383,
+      "us_ann_gross_pp": 22.681,
       "us_holder_wht_drag_pp": 0.321,
-      "us_ann_after_wht_pp": 21.062,
-      "alt_ann_pp": 21.028,
-      "gap_5y_pp": 0.063,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.06pp."
+      "us_ann_after_wht_pp": 22.36,
+      "alt_ann_pp": 22.666,
+      "gap_5y_pp": 0.067,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.07pp."
      },
      "recommended": true
     },
@@ -4694,65 +4675,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.004,
-      "monthly_corr": 0.9659,
+      "months": 61,
+      "gap_pp": 0.287,
+      "monthly_corr": 0.9642,
       "years": 2.86,
-      "us_ann_gross_pp": 21.383,
+      "us_ann_gross_pp": 22.681,
       "us_holder_wht_drag_pp": 0.321,
-      "us_ann_after_wht_pp": 21.062,
-      "alt_ann_pp": 21.066,
-      "gap_5y_pp": 0.049,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.05pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "VUSA",
-     "yahoo": "VUSA.L",
-     "name": "Vanguard S&P 500 UCITS ETF",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00B3XXRP09",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Distributing",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-distributing",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 1,
-     "caveat": null,
-     "cost": {
-      "ter_us": 0.03,
-      "ter_alt": 0.07,
-      "ter_delta_pp": 0.04,
-      "wht_us_pp": 0.321,
-      "wht_alt_pp": 0.1605,
-      "wht_saving_pp": 0.1605,
-      "net_annual_delta_pp": 0.1205,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.07%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": -0.004,
-      "monthly_corr": 0.9673,
-      "years": 2.86,
-      "us_ann_gross_pp": 21.383,
-      "us_holder_wht_drag_pp": 0.321,
-      "us_ann_after_wht_pp": 21.062,
-      "alt_ann_pp": 21.058,
-      "gap_5y_pp": 0.037,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.04pp."
+      "us_ann_after_wht_pp": 22.36,
+      "alt_ann_pp": 22.647,
+      "gap_5y_pp": 0.093,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.09pp."
      },
      "recommended": true
     }
@@ -4808,17 +4740,17 @@
       "basis": "US line's trailing gross distribution 1.58%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 62% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.405,
-      "monthly_corr": 0.9784,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.655,
+      "monthly_corr": 0.9783,
       "years": 2.86,
-      "us_ann_gross_pp": 20.561,
+      "us_ann_gross_pp": 21.828,
       "us_holder_wht_drag_pp": 0.474,
-      "us_ann_after_wht_pp": 20.087,
-      "alt_ann_pp": 20.491,
-      "gap_5y_pp": 0.586,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.59pp."
+      "us_ann_after_wht_pp": 21.354,
+      "alt_ann_pp": 22.009,
+      "gap_5y_pp": 0.685,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.69pp."
      },
      "recommended": true
     },
@@ -4857,17 +4789,17 @@
       "basis": "US line's trailing gross distribution 1.58%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 62% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.438,
-      "monthly_corr": 0.9679,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.628,
+      "monthly_corr": 0.967,
       "years": 2.86,
-      "us_ann_gross_pp": 20.561,
+      "us_ann_gross_pp": 21.828,
       "us_holder_wht_drag_pp": 0.474,
-      "us_ann_after_wht_pp": 20.087,
-      "alt_ann_pp": 20.525,
-      "gap_5y_pp": 0.589,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.59pp."
+      "us_ann_after_wht_pp": 21.354,
+      "alt_ann_pp": 21.981,
+      "gap_5y_pp": 0.672,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.67pp."
      },
      "recommended": true
     },
@@ -4906,17 +4838,17 @@
       "basis": "US line's trailing gross distribution 1.58%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 62% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.432,
-      "monthly_corr": 0.9682,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.622,
+      "monthly_corr": 0.9674,
       "years": 2.86,
-      "us_ann_gross_pp": 20.561,
+      "us_ann_gross_pp": 21.828,
       "us_holder_wht_drag_pp": 0.474,
-      "us_ann_after_wht_pp": 20.087,
-      "alt_ann_pp": 20.519,
-      "gap_5y_pp": 0.58,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.58pp."
+      "us_ann_after_wht_pp": 21.354,
+      "alt_ann_pp": 21.976,
+      "gap_5y_pp": 0.662,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.66pp."
      },
      "recommended": true
     },
@@ -4955,17 +4887,17 @@
       "basis": "US line's trailing gross distribution 1.58%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 63% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.463,
-      "monthly_corr": 0.9757,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.721,
+      "monthly_corr": 0.9758,
       "years": 2.86,
-      "us_ann_gross_pp": 20.561,
+      "us_ann_gross_pp": 21.828,
       "us_holder_wht_drag_pp": 0.474,
-      "us_ann_after_wht_pp": 20.087,
-      "alt_ann_pp": 20.55,
-      "gap_5y_pp": 0.684,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.68pp."
+      "us_ann_after_wht_pp": 21.354,
+      "alt_ann_pp": 22.075,
+      "gap_5y_pp": 0.746,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.75pp."
      },
      "recommended": true
     },
@@ -5005,16 +4937,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.522,
-      "monthly_corr": 0.9674,
+      "months": 61,
+      "gap_pp": 0.682,
+      "monthly_corr": 0.9668,
       "years": 2.86,
-      "us_ann_gross_pp": 20.561,
+      "us_ann_gross_pp": 21.828,
       "us_holder_wht_drag_pp": 0.474,
-      "us_ann_after_wht_pp": 20.087,
-      "alt_ann_pp": 20.609,
-      "gap_5y_pp": 0.682,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.68pp."
+      "us_ann_after_wht_pp": 21.354,
+      "alt_ann_pp": 22.035,
+      "gap_5y_pp": 0.709,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.47pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.71pp."
      },
      "recommended": true
     }
@@ -5070,19 +5002,60 @@
       "basis": "US line's trailing gross distribution 1.05%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.34,
-      "monthly_corr": 0.9751,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.564,
+      "monthly_corr": 0.9742,
       "years": 2.86,
-      "us_ann_gross_pp": 21.124,
+      "us_ann_gross_pp": 22.513,
       "us_holder_wht_drag_pp": 0.315,
-      "us_ann_after_wht_pp": 20.809,
-      "alt_ann_pp": 21.149,
-      "gap_5y_pp": 0.575,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.57pp."
+      "us_ann_after_wht_pp": 22.198,
+      "alt_ann_pp": 22.762,
+      "gap_5y_pp": 0.666,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.67pp."
      },
      "recommended": true
+    },
+    {
+     "ticker": "XUS",
+     "yahoo": null,
+     "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "official_name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+     "isin": "IE000Z9SJA06",
+     "domicile": "IE",
+     "index_key": "sp500",
+     "index_label": "S&P 500",
+     "ccy": "SGD",
+     "ccy_is_pence": false,
+     "income": "Accumulating",
+     "ter": 0.03,
+     "ter_src": "published",
+     "hedge_ccy": null,
+     "aum_usd": null,
+     "estate_tax_exposed": false,
+     "venue": "SGX",
+     "venue_note": "The same Irish-domiciled Xtrackers S&P 500 share class (4C, 0.03%) that trades in London, listed on SGX in Singapore dollars since 13 October 2026. Same index as S27 on the same exchange, without the US domicile. New line: check the quoted spread, which was wide in the first hours of trading.",
+     "srs_eligible": true,
+     "tier": 2,
+     "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
+     "cost": {
+      "ter_us": 0.03,
+      "ter_alt": 0.03,
+      "ter_delta_pp": 0.0,
+      "wht_us_pp": 0.315,
+      "wht_alt_pp": 0.1575,
+      "wht_saving_pp": 0.1575,
+      "net_annual_delta_pp": 0.1575,
+      "us_content": 1.0,
+      "alt_wht_rate": 0.15,
+      "basis": "US line's trailing gross distribution 1.05%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
+     },
+     "verification": {
+      "grade": "no_data",
+      "basis": "price history unavailable for one side"
+     },
+     "recommended": false,
+     "not_recommended_because": "not verifiable: price history unavailable for one side"
     },
     {
      "ticker": "SPXP",
@@ -5119,17 +5092,17 @@
       "basis": "US line's trailing gross distribution 1.05%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.434,
-      "monthly_corr": 0.9653,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.64,
+      "monthly_corr": 0.9632,
       "years": 2.86,
-      "us_ann_gross_pp": 21.124,
+      "us_ann_gross_pp": 22.513,
       "us_holder_wht_drag_pp": 0.315,
-      "us_ann_after_wht_pp": 20.809,
-      "alt_ann_pp": 21.243,
-      "gap_5y_pp": 1.283,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.28pp."
+      "us_ann_after_wht_pp": 22.198,
+      "alt_ann_pp": 22.838,
+      "gap_5y_pp": 1.31,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.31pp."
      },
      "recommended": true
     },
@@ -5168,17 +5141,17 @@
       "basis": "US line's trailing gross distribution 1.05%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.431,
-      "monthly_corr": 0.9735,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.651,
+      "monthly_corr": 0.9722,
       "years": 2.86,
-      "us_ann_gross_pp": 21.124,
+      "us_ann_gross_pp": 22.513,
       "us_holder_wht_drag_pp": 0.315,
-      "us_ann_after_wht_pp": 20.809,
-      "alt_ann_pp": 21.24,
-      "gap_5y_pp": 1.309,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.31pp."
+      "us_ann_after_wht_pp": 22.198,
+      "alt_ann_pp": 22.849,
+      "gap_5y_pp": 1.286,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.29pp."
      },
      "recommended": true
     },
@@ -5218,65 +5191,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.219,
-      "monthly_corr": 0.9741,
+      "months": 61,
+      "gap_pp": 0.468,
+      "monthly_corr": 0.9729,
       "years": 2.86,
-      "us_ann_gross_pp": 21.124,
+      "us_ann_gross_pp": 22.513,
       "us_holder_wht_drag_pp": 0.315,
-      "us_ann_after_wht_pp": 20.809,
-      "alt_ann_pp": 21.028,
-      "gap_5y_pp": 1.106,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.11pp."
-     },
-     "recommended": true
-    },
-    {
-     "ticker": "VUAG",
-     "yahoo": "VUAG.L",
-     "name": "Vanguard S&P 500 UCITS ETF USD Accumulation",
-     "official_name": "VANGUARD S&P 500 UCITS ETF",
-     "isin": "IE00BFMXXD54",
-     "domicile": "IE",
-     "index_key": "sp500",
-     "index_label": "S&P 500",
-     "ccy": "GBP",
-     "ccy_is_pence": false,
-     "income": "Accumulating",
-     "ter": 0.07,
-     "ter_src": "Vanguard UK product API, vanguard-s-and-p-500-ucits-etf-usd-accumulating",
-     "hedge_ccy": null,
-     "aum_usd": 85348843520,
-     "estate_tax_exposed": false,
-     "venue": "LSE",
-     "venue_note": null,
-     "srs_eligible": false,
-     "tier": 2,
-     "caveat": "No UCITS fund tracks a US total-market index. The nearest available exposure is US large-cap, which holds roughly 500 to 600 companies against the total market's 3,500. You keep about 85 per cent of the market capitalisation and lose the small-cap tail entirely.",
-     "cost": {
-      "ter_us": 0.03,
-      "ter_alt": 0.07,
-      "ter_delta_pp": 0.04,
-      "wht_us_pp": 0.315,
-      "wht_alt_pp": 0.1575,
-      "wht_saving_pp": 0.1575,
-      "net_annual_delta_pp": 0.1175,
-      "us_content": 1.0,
-      "alt_wht_rate": 0.15,
-      "basis": "US line's trailing gross distribution 1.05%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
-     },
-     "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": 0.257,
-      "monthly_corr": 0.9655,
-      "years": 2.86,
-      "us_ann_gross_pp": 21.124,
-      "us_holder_wht_drag_pp": 0.315,
-      "us_ann_after_wht_pp": 20.809,
-      "alt_ann_pp": 21.066,
-      "gap_5y_pp": 1.092,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.09pp."
+      "us_ann_after_wht_pp": 22.198,
+      "alt_ann_pp": 22.666,
+      "gap_5y_pp": 1.082,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.32pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.08pp."
      },
      "recommended": true
     }
@@ -5333,16 +5257,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.254,
-      "monthly_corr": 0.9755,
+      "months": 61,
+      "gap_pp": 1.17,
+      "monthly_corr": 0.9757,
       "years": 2.86,
-      "us_ann_gross_pp": 17.81,
+      "us_ann_gross_pp": 18.924,
       "us_holder_wht_drag_pp": 0.696,
-      "us_ann_after_wht_pp": 17.114,
-      "alt_ann_pp": 18.368,
-      "gap_5y_pp": 0.811,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.81pp."
+      "us_ann_after_wht_pp": 18.228,
+      "alt_ann_pp": 19.398,
+      "gap_5y_pp": 0.722,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.72pp."
      },
      "recommended": true
     },
@@ -5382,16 +5306,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 1.205,
+      "months": 61,
+      "gap_pp": 1.268,
       "monthly_corr": 0.9785,
       "years": 2.86,
-      "us_ann_gross_pp": 17.81,
+      "us_ann_gross_pp": 18.924,
       "us_holder_wht_drag_pp": 0.696,
-      "us_ann_after_wht_pp": 17.114,
-      "alt_ann_pp": 18.319,
-      "gap_5y_pp": 0.804,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.80pp."
+      "us_ann_after_wht_pp": 18.228,
+      "alt_ann_pp": 19.496,
+      "gap_5y_pp": 0.745,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.74pp."
      },
      "recommended": true
     },
@@ -5431,20 +5355,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": 6.214,
-      "monthly_corr": 0.9289,
+      "months": 61,
+      "gap_pp": 5.752,
+      "monthly_corr": 0.9186,
       "years": 2.86,
-      "us_ann_gross_pp": 17.81,
+      "us_ann_gross_pp": 18.924,
       "us_holder_wht_drag_pp": 0.696,
-      "us_ann_after_wht_pp": 17.114,
-      "alt_ann_pp": 23.328,
-      "gap_5y_pp": 3.335,
-      "drift_pp": 2.88,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.33pp."
+      "us_ann_after_wht_pp": 18.228,
+      "alt_ann_pp": 23.979,
+      "gap_5y_pp": 3.135,
+      "drift_pp": 2.617,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.13pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by +6.21pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by +5.75pp a year, beyond the 3.0pp floor"
     },
     {
      "ticker": "EMIM",
@@ -5482,20 +5406,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": 6.225,
-      "monthly_corr": 0.9289,
+      "months": 61,
+      "gap_pp": 5.741,
+      "monthly_corr": 0.9199,
       "years": 2.86,
-      "us_ann_gross_pp": 17.81,
+      "us_ann_gross_pp": 18.924,
       "us_holder_wht_drag_pp": 0.696,
-      "us_ann_after_wht_pp": 17.114,
-      "alt_ann_pp": 23.339,
-      "gap_5y_pp": 3.276,
-      "drift_pp": 2.95,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.28pp."
+      "us_ann_after_wht_pp": 18.228,
+      "alt_ann_pp": 23.968,
+      "gap_5y_pp": 3.127,
+      "drift_pp": 2.614,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.13pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by +6.22pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by +5.74pp a year, beyond the 3.0pp floor"
     },
     {
      "ticker": "XMME",
@@ -5533,20 +5457,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": 7.492,
-      "monthly_corr": 0.9325,
+      "months": 61,
+      "gap_pp": 7.028,
+      "monthly_corr": 0.9228,
       "years": 2.86,
-      "us_ann_gross_pp": 17.81,
+      "us_ann_gross_pp": 18.924,
       "us_holder_wht_drag_pp": 0.696,
-      "us_ann_after_wht_pp": 17.114,
-      "alt_ann_pp": 24.606,
-      "gap_5y_pp": 3.259,
-      "drift_pp": 4.233,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.26pp."
+      "us_ann_after_wht_pp": 18.228,
+      "alt_ann_pp": 25.256,
+      "gap_5y_pp": 3.118,
+      "drift_pp": 3.91,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.70pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +3.12pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by +7.49pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by +7.03pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": []
@@ -5601,20 +5525,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -6.227,
-      "monthly_corr": 0.8289,
+      "months": 61,
+      "gap_pp": -6.661,
+      "monthly_corr": 0.83,
       "years": 2.86,
-      "us_ann_gross_pp": 18.366,
+      "us_ann_gross_pp": 19.245,
       "us_holder_wht_drag_pp": 0.69,
-      "us_ann_after_wht_pp": 17.676,
-      "alt_ann_pp": 11.449,
-      "gap_5y_pp": -4.256,
-      "drift_pp": -1.971,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.69pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -4.26pp."
+      "us_ann_after_wht_pp": 18.555,
+      "alt_ann_pp": 11.893,
+      "gap_5y_pp": -4.368,
+      "drift_pp": -2.294,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.69pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -4.37pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -6.23pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -6.66pp a year, beyond the 3.0pp floor"
     },
     {
      "ticker": "USDV",
@@ -5652,20 +5576,20 @@
      },
      "verification": {
       "grade": "fail",
-      "months": 60,
-      "gap_pp": -6.247,
-      "monthly_corr": 0.8207,
+      "months": 61,
+      "gap_pp": -6.701,
+      "monthly_corr": 0.8211,
       "years": 2.86,
-      "us_ann_gross_pp": 18.366,
+      "us_ann_gross_pp": 19.245,
       "us_holder_wht_drag_pp": 0.69,
-      "us_ann_after_wht_pp": 17.676,
-      "alt_ann_pp": 11.428,
-      "gap_5y_pp": -4.281,
-      "drift_pp": -1.966,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.69pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -4.28pp."
+      "us_ann_after_wht_pp": 18.555,
+      "alt_ann_pp": 11.854,
+      "gap_5y_pp": -4.349,
+      "drift_pp": -2.352,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.69pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -4.35pp."
      },
      "recommended": false,
-     "not_recommended_because": "compounded outcome differs by -6.25pp a year, beyond the 3.0pp floor"
+     "not_recommended_because": "compounded outcome differs by -6.70pp a year, beyond the 3.0pp floor"
     }
    ],
    "unresolved_alternatives": [],
@@ -5722,16 +5646,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": -0.469,
-      "monthly_corr": 0.9832,
+      "months": 61,
+      "gap_pp": 0.467,
+      "monthly_corr": 0.9824,
       "years": 2.86,
-      "us_ann_gross_pp": 10.584,
+      "us_ann_gross_pp": 10.382,
       "us_holder_wht_drag_pp": 0.501,
-      "us_ann_after_wht_pp": 10.083,
-      "alt_ann_pp": 9.615,
-      "gap_5y_pp": -0.126,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.50pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.13pp."
+      "us_ann_after_wht_pp": 9.881,
+      "alt_ann_pp": 10.348,
+      "gap_5y_pp": 0.378,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.50pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.38pp."
      },
      "recommended": true
     },
@@ -5770,17 +5694,17 @@
       "basis": "US line's trailing gross distribution 1.67%; US-domiciled taxed at 30% of the whole distribution, alternative at 15% of the 100% US-source slice"
      },
      "verification": {
-      "grade": "A",
-      "months": 60,
-      "gap_pp": -0.38,
-      "monthly_corr": 0.9836,
+      "grade": "B",
+      "months": 61,
+      "gap_pp": 0.521,
+      "monthly_corr": 0.9829,
       "years": 2.86,
-      "us_ann_gross_pp": 10.584,
+      "us_ann_gross_pp": 10.382,
       "us_holder_wht_drag_pp": 0.501,
-      "us_ann_after_wht_pp": 10.083,
-      "alt_ann_pp": 9.703,
-      "gap_5y_pp": -0.065,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.50pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.07pp."
+      "us_ann_after_wht_pp": 9.881,
+      "alt_ann_pp": 10.403,
+      "gap_5y_pp": 0.434,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.50pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.43pp."
      },
      "recommended": true
     }
@@ -5837,16 +5761,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.085,
-      "monthly_corr": 0.9692,
+      "months": 61,
+      "gap_pp": 0.244,
+      "monthly_corr": 0.9707,
       "years": 2.86,
-      "us_ann_gross_pp": 11.758,
+      "us_ann_gross_pp": 19.271,
       "us_holder_wht_drag_pp": 0.855,
-      "us_ann_after_wht_pp": 10.903,
-      "alt_ann_pp": 10.988,
-      "gap_5y_pp": 0.187,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.85pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.19pp."
+      "us_ann_after_wht_pp": 18.416,
+      "alt_ann_pp": 18.66,
+      "gap_5y_pp": 0.557,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.85pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.56pp."
      },
      "recommended": true
     },
@@ -5886,16 +5810,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.262,
-      "monthly_corr": 0.9702,
+      "months": 61,
+      "gap_pp": 0.445,
+      "monthly_corr": 0.9717,
       "years": 2.86,
-      "us_ann_gross_pp": 11.758,
+      "us_ann_gross_pp": 19.271,
       "us_holder_wht_drag_pp": 0.855,
-      "us_ann_after_wht_pp": 10.903,
-      "alt_ann_pp": 11.165,
-      "gap_5y_pp": 0.255,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.85pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.26pp."
+      "us_ann_after_wht_pp": 18.416,
+      "alt_ann_pp": 18.862,
+      "gap_5y_pp": 0.634,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.85pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.63pp."
      },
      "recommended": true
     }
@@ -5952,16 +5876,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.059,
-      "monthly_corr": 0.9837,
+      "months": 61,
+      "gap_pp": 0.252,
+      "monthly_corr": 0.9857,
       "years": 2.86,
-      "us_ann_gross_pp": 20.224,
+      "us_ann_gross_pp": 19.994,
       "us_holder_wht_drag_pp": 0.453,
-      "us_ann_after_wht_pp": 19.771,
-      "alt_ann_pp": 19.831,
-      "gap_5y_pp": 0.046,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.05pp."
+      "us_ann_after_wht_pp": 19.541,
+      "alt_ann_pp": 19.793,
+      "gap_5y_pp": 0.11,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.11pp."
      },
      "recommended": true
     },
@@ -6001,16 +5925,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.049,
-      "monthly_corr": 0.9829,
+      "months": 61,
+      "gap_pp": 0.171,
+      "monthly_corr": 0.9848,
       "years": 2.86,
-      "us_ann_gross_pp": 20.224,
+      "us_ann_gross_pp": 19.994,
       "us_holder_wht_drag_pp": 0.453,
-      "us_ann_after_wht_pp": 19.771,
-      "alt_ann_pp": 19.82,
-      "gap_5y_pp": 0.07,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.07pp."
+      "us_ann_after_wht_pp": 19.541,
+      "alt_ann_pp": 19.712,
+      "gap_5y_pp": 0.107,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.45pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.11pp."
      },
      "recommended": true
     }
@@ -6067,16 +5991,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.165,
-      "monthly_corr": 0.9846,
+      "months": 61,
+      "gap_pp": 0.136,
+      "monthly_corr": 0.9849,
       "years": 2.86,
-      "us_ann_gross_pp": 22.25,
+      "us_ann_gross_pp": 20.545,
       "us_holder_wht_drag_pp": 0.333,
-      "us_ann_after_wht_pp": 21.917,
-      "alt_ann_pp": 22.081,
-      "gap_5y_pp": 0.065,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.07pp."
+      "us_ann_after_wht_pp": 20.212,
+      "alt_ann_pp": 20.348,
+      "gap_5y_pp": -0.012,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.01pp."
      },
      "recommended": true
     },
@@ -6116,16 +6040,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.162,
-      "monthly_corr": 0.9832,
+      "months": 61,
+      "gap_pp": 0.097,
+      "monthly_corr": 0.9836,
       "years": 2.86,
-      "us_ann_gross_pp": 22.25,
+      "us_ann_gross_pp": 20.545,
       "us_holder_wht_drag_pp": 0.333,
-      "us_ann_after_wht_pp": 21.917,
-      "alt_ann_pp": 22.079,
-      "gap_5y_pp": 0.084,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.08pp."
+      "us_ann_after_wht_pp": 20.212,
+      "alt_ann_pp": 20.309,
+      "gap_5y_pp": -0.03,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.33pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -0.03pp."
      },
      "recommended": true
     }
@@ -6182,16 +6106,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.708,
-      "monthly_corr": 0.981,
+      "months": 61,
+      "gap_pp": 2.412,
+      "monthly_corr": 0.9805,
       "years": 2.86,
-      "us_ann_gross_pp": 31.497,
+      "us_ann_gross_pp": 31.152,
       "us_holder_wht_drag_pp": 0.126,
-      "us_ann_after_wht_pp": 31.371,
-      "alt_ann_pp": 33.079,
-      "gap_5y_pp": 1.1,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.10pp."
+      "us_ann_after_wht_pp": 31.026,
+      "alt_ann_pp": 33.438,
+      "gap_5y_pp": 1.315,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.31pp."
      },
      "recommended": true
     },
@@ -6231,23 +6155,21 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": -2.986,
-      "monthly_corr": 0.9843,
+      "months": 61,
+      "gap_pp": -2.121,
+      "monthly_corr": 0.9836,
       "years": 2.86,
-      "us_ann_gross_pp": 31.497,
+      "us_ann_gross_pp": 31.152,
       "us_holder_wht_drag_pp": 0.126,
-      "us_ann_after_wht_pp": 31.371,
-      "alt_ann_pp": 28.385,
-      "gap_5y_pp": -1.854,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.85pp."
+      "us_ann_after_wht_pp": 31.026,
+      "alt_ann_pp": 28.905,
+      "gap_5y_pp": -1.627,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.13pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was -1.63pp."
      },
      "recommended": true
     }
    ],
-   "unresolved_alternatives": [],
-   "verdict": "no_verified_equivalent",
-   "verdict_note": "Candidate funds tracking US information technology sector were found, but none survived verification against realised returns. Presenting one anyway would be offering a match the evidence does not support."
+   "unresolved_alternatives": []
   },
   {
    "ticker": "XLP",
@@ -6299,16 +6221,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.898,
-      "monthly_corr": 0.9621,
+      "months": 61,
+      "gap_pp": 1.907,
+      "monthly_corr": 0.9594,
       "years": 2.86,
-      "us_ann_gross_pp": 8.838,
+      "us_ann_gross_pp": 9.7,
       "us_holder_wht_drag_pp": 0.792,
-      "us_ann_after_wht_pp": 8.046,
-      "alt_ann_pp": 9.943,
-      "gap_5y_pp": 1.604,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.60pp."
+      "us_ann_after_wht_pp": 8.908,
+      "alt_ann_pp": 10.816,
+      "gap_5y_pp": 1.461,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.46pp."
      },
      "recommended": true
     },
@@ -6348,16 +6270,16 @@
      },
      "verification": {
       "grade": "B",
-      "months": 60,
-      "gap_pp": 0.936,
-      "monthly_corr": 0.9613,
+      "months": 61,
+      "gap_pp": 1.114,
+      "monthly_corr": 0.9593,
       "years": 2.86,
-      "us_ann_gross_pp": 8.838,
+      "us_ann_gross_pp": 9.7,
       "us_holder_wht_drag_pp": 0.792,
-      "us_ann_after_wht_pp": 8.046,
-      "alt_ann_pp": 8.982,
-      "gap_5y_pp": 0.739,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.74pp."
+      "us_ann_after_wht_pp": 8.908,
+      "alt_ann_pp": 10.022,
+      "gap_5y_pp": 0.713,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.71pp."
      },
      "recommended": true
     }
@@ -6414,16 +6336,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.196,
-      "monthly_corr": 0.9689,
+      "months": 61,
+      "gap_pp": 0.116,
+      "monthly_corr": 0.9707,
       "years": 2.86,
-      "us_ann_gross_pp": 16.741,
+      "us_ann_gross_pp": 14.251,
       "us_holder_wht_drag_pp": 0.792,
-      "us_ann_after_wht_pp": 15.949,
-      "alt_ann_pp": 16.144,
-      "gap_5y_pp": 0.267,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.27pp."
+      "us_ann_after_wht_pp": 13.459,
+      "alt_ann_pp": 13.575,
+      "gap_5y_pp": 0.297,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.30pp."
      },
      "recommended": true
     },
@@ -6463,16 +6385,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.199,
-      "monthly_corr": 0.9682,
+      "months": 61,
+      "gap_pp": 0.07,
+      "monthly_corr": 0.97,
       "years": 2.86,
-      "us_ann_gross_pp": 16.741,
+      "us_ann_gross_pp": 14.251,
       "us_holder_wht_drag_pp": 0.792,
-      "us_ann_after_wht_pp": 15.949,
-      "alt_ann_pp": 16.148,
-      "gap_5y_pp": 0.269,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.27pp."
+      "us_ann_after_wht_pp": 13.459,
+      "alt_ann_pp": 13.529,
+      "gap_5y_pp": 0.29,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.79pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.29pp."
      },
      "recommended": true
     }
@@ -6529,16 +6451,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.184,
-      "monthly_corr": 0.9672,
+      "months": 61,
+      "gap_pp": -0.108,
+      "monthly_corr": 0.9681,
       "years": 2.86,
-      "us_ann_gross_pp": 8.837,
+      "us_ann_gross_pp": 12.49,
       "us_holder_wht_drag_pp": 0.48,
-      "us_ann_after_wht_pp": 8.357,
-      "alt_ann_pp": 8.541,
-      "gap_5y_pp": 0.219,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.48pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.22pp."
+      "us_ann_after_wht_pp": 12.01,
+      "alt_ann_pp": 11.902,
+      "gap_5y_pp": 0.09,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.48pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.09pp."
      },
      "recommended": true
     },
@@ -6578,16 +6500,16 @@
      },
      "verification": {
       "grade": "A",
-      "months": 60,
-      "gap_pp": 0.184,
-      "monthly_corr": 0.9688,
+      "months": 61,
+      "gap_pp": -0.069,
+      "monthly_corr": 0.9694,
       "years": 2.86,
-      "us_ann_gross_pp": 8.837,
+      "us_ann_gross_pp": 12.49,
       "us_holder_wht_drag_pp": 0.48,
-      "us_ann_after_wht_pp": 8.357,
-      "alt_ann_pp": 8.541,
-      "gap_5y_pp": 0.209,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.48pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.21pp."
+      "us_ann_after_wht_pp": 12.01,
+      "alt_ann_pp": 11.941,
+      "gap_5y_pp": 0.066,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.48pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.07pp."
      },
      "recommended": true
     }
@@ -6644,16 +6566,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 1.942,
-      "monthly_corr": 0.9605,
+      "months": 61,
+      "gap_pp": 2.311,
+      "monthly_corr": 0.961,
       "years": 2.86,
-      "us_ann_gross_pp": 12.724,
+      "us_ann_gross_pp": 12.62,
       "us_holder_wht_drag_pp": 0.231,
-      "us_ann_after_wht_pp": 12.493,
-      "alt_ann_pp": 14.436,
-      "gap_5y_pp": 0.96,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.23pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +0.96pp."
+      "us_ann_after_wht_pp": 12.389,
+      "alt_ann_pp": 14.7,
+      "gap_5y_pp": 1.391,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.23pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +1.39pp."
      },
      "recommended": true
     },
@@ -6693,16 +6615,16 @@
      },
      "verification": {
       "grade": "C",
-      "months": 60,
-      "gap_pp": 2.068,
-      "monthly_corr": 0.9708,
+      "months": 61,
+      "gap_pp": 2.85,
+      "monthly_corr": 0.9707,
       "years": 2.86,
-      "us_ann_gross_pp": 12.724,
+      "us_ann_gross_pp": 12.62,
       "us_holder_wht_drag_pp": 0.231,
-      "us_ann_after_wht_pp": 12.493,
-      "alt_ann_pp": 14.562,
-      "gap_5y_pp": 2.06,
-      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.23pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +2.06pp."
+      "us_ann_after_wht_pp": 12.389,
+      "alt_ann_pp": 15.239,
+      "gap_5y_pp": 2.414,
+      "basis": "annualised total return over the most recent 2.9y, USD, with each end taken as the median of 8 weeks; US line reduced by 0.23pp for the 30% a Singapore holder suffers on distributions. Positive gap = alternative ahead. Over 5 years the gap was +2.41pp."
      },
      "recommended": true
     }

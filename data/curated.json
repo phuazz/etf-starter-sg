@@ -595,6 +595,94 @@
       "cpf": "No",
       "ter_note": "No TER published yet (listed 3 Sep 2026). Mgmt fee 0.65% (max 1.50%); custodian, registrar and administration fees may each reach 0.10%+; TER capped at 1.50% (PHS). Left unscored until the first audited TER.",
       "src": "MAS OPERA PHS 30 Jul 2026 and prospectus (Singapore VCC sub-fund; semi-annual discretionary distributions, may be from capital; board lot 1; SRS yes, not CPFIS); SGX sub-fund summary; Growbeansprout. ISIN SGXC39868275 single-source (TradingView), not entered. Added 2026-10-01 on owner instruction; CGS International product."
+    },
+    {
+      "ticker": "XUS",
+      "name": "Xtrackers S&P 500 UCITS ETF 4C (SGD line)",
+      "isin": "IE000Z9SJA06",
+      "domicile": "IE",
+      "ccy": "SGD",
+      "fund_manager": "DWS (Xtrackers)",
+      "mgmt_style": "PASSIVE",
+      "ter": 0.03,
+      "ter_conf": "high",
+      "mgmt_fee": null,
+      "yield": null,
+      "asset_class": "dev_equity",
+      "segment": "US Large Cap",
+      "geo": "USA",
+      "benchmark": "S&P 500",
+      "income": "Accumulating",
+      "cpf": "No",
+      "liquidity_tier": "unknown",
+      "ter_note": "DWS all-in fee 0.03% (factsheet 30 Sep 2026). SGX line of the existing Irish 4C share class (same ISIN as the London and Xetra listings), listed 13 Oct 2026 in SGD; accumulating, unhedged. New line: traded thinly on day one; liquidity tier left unknown until a record exists.",
+      "src": "Singapore prospectus registered by MAS 14 Sep 2026 and product highlights sheet (Irish domicile, UCITS, SGD counter, SRS yes, not CPFIS); DWS factsheet 30 Sep 2026; first quotes on SGX 13 Oct 2026 (Yahoo delayed, XUS.SI). Added 2026-10-13 at listing."
+    },
+    {
+      "ticker": "XND",
+      "name": "Xtrackers NASDAQ 100 UCITS ETF 1C (SGD line)",
+      "isin": "IE00BMFKG444",
+      "domicile": "IE",
+      "ccy": "SGD",
+      "fund_manager": "DWS (Xtrackers)",
+      "mgmt_style": "PASSIVE",
+      "ter": 0.20,
+      "ter_conf": "high",
+      "mgmt_fee": null,
+      "yield": null,
+      "asset_class": "dev_equity",
+      "segment": "US Large Cap (Nasdaq-100)",
+      "geo": "USA",
+      "benchmark": "Nasdaq-100",
+      "income": "Accumulating",
+      "cpf": "No",
+      "liquidity_tier": "unknown",
+      "ter_note": "DWS all-in fee 0.20% (factsheet 30 Sep 2026). SGX line of the existing Irish 1C share class, listed 13 Oct 2026 in SGD; accumulating, unhedged. New line: traded thinly on day one.",
+      "src": "Singapore prospectus registered by MAS 14 Sep 2026 and product highlights sheet (the only one of the four whose SGX code XND is printed in the MAS document); DWS factsheet 30 Sep 2026; first quotes on SGX 13 Oct 2026 (Yahoo delayed, XND.SI). Added 2026-10-13 at listing."
+    },
+    {
+      "ticker": "XWR",
+      "name": "Xtrackers MSCI World UCITS ETF 1C (SGD line)",
+      "isin": "IE00BJ0KDQ92",
+      "domicile": "IE",
+      "ccy": "SGD",
+      "fund_manager": "DWS (Xtrackers)",
+      "mgmt_style": "PASSIVE",
+      "ter": 0.12,
+      "ter_conf": "high",
+      "mgmt_fee": null,
+      "yield": null,
+      "asset_class": "dev_equity",
+      "segment": "Global Developed",
+      "geo": "Global Developed",
+      "benchmark": "MSCI World",
+      "income": "Accumulating",
+      "cpf": "No",
+      "liquidity_tier": "unknown",
+      "ter_note": "DWS all-in fee 0.12% (factsheet 30 Sep 2026). SGX line of the existing Irish 1C share class, listed 13 Oct 2026 in SGD; accumulating, unhedged; optimised physical replication. New line: quoted spread about 0.7% in the first hours of trading.",
+      "src": "Singapore prospectus registered by MAS 14 Sep 2026 and product highlights sheet; DWS factsheet 30 Sep 2026; first quotes on SGX 13 Oct 2026 (Yahoo delayed, XWR.SI). Added 2026-10-13 at listing."
+    },
+    {
+      "ticker": "EUS",
+      "name": "Xtrackers S&P 500 Equal Weight UCITS ETF 1C (SGD line)",
+      "isin": "IE00BLNMYC90",
+      "domicile": "IE",
+      "ccy": "SGD",
+      "fund_manager": "DWS (Xtrackers)",
+      "mgmt_style": "PASSIVE",
+      "ter": 0.15,
+      "ter_conf": "high",
+      "mgmt_fee": null,
+      "yield": null,
+      "asset_class": "dev_equity",
+      "segment": "US Large Cap (equal weight)",
+      "geo": "USA",
+      "benchmark": "S&P 500 Equal Weight",
+      "income": "Accumulating",
+      "cpf": "No",
+      "liquidity_tier": "unknown",
+      "ter_note": "DWS all-in fee 0.15% (factsheet 30 Sep 2026). SGX line of the existing Irish 1C share class, listed 13 Oct 2026 in SGD; accumulating, unhedged. New line: quoted spread about 1.5% in the first hours of trading on 612 shares.",
+      "src": "Singapore prospectus registered by MAS 14 Sep 2026 and product highlights sheet; DWS factsheet 30 Sep 2026; first quotes on SGX 13 Oct 2026 (Yahoo delayed, EUS.SI). Added 2026-10-13 at listing."
     }
   ],
   "hk_listings": [
@@ -940,6 +1028,30 @@
       "basis": "SGX listing; SG-domiciled fund, so inception and listing coincide within days",
       "source": "CGS International (Yahoo Finance news)",
       "url": "https://sg.finance.yahoo.com/news/cgsi-launches-cgs-fullgoal-singapore-170000480.html"
+    },
+    "XUS": {
+      "date": "2015-02-27",
+      "basis": "inception of the Irish fund (the 4C share class launched 2022-06-08); the SGD line listed on SGX 2026-10-13, a cross-listing, not inception",
+      "source": "DWS factsheet, Xtrackers S&P 500 UCITS ETF 4C",
+      "url": "https://etf.dws.com/download/asset/5b5c4dfb-d37a-4ab8-b9d2-50fa5cc61d9c"
+    },
+    "XND": {
+      "date": "2021-01-21",
+      "basis": "inception of the Irish fund and its 1C share class; the SGD line listed on SGX 2026-10-13, a cross-listing, not inception",
+      "source": "DWS factsheet, Xtrackers NASDAQ 100 UCITS ETF 1C",
+      "url": "https://etf.dws.com/download/asset/778d6508-45e0-4068-900a-6342df6e5131"
+    },
+    "XWR": {
+      "date": "2014-07-22",
+      "basis": "inception of the Irish fund and its 1C share class; the SGD line listed on SGX 2026-10-13, a cross-listing, not inception",
+      "source": "DWS factsheet, Xtrackers MSCI World UCITS ETF 1C",
+      "url": "https://etf.dws.com/download/asset/7479ae20-a6b8-4a30-82e5-639d29ab8ea4"
+    },
+    "EUS": {
+      "date": "2014-06-10",
+      "basis": "inception of the Irish fund and its 1C share class; the SGD line listed on SGX 2026-10-13, a cross-listing, not inception",
+      "source": "DWS factsheet, Xtrackers S&P 500 Equal Weight UCITS ETF 1C",
+      "url": "https://etf.dws.com/download/asset/11deac23-e08a-4a4d-9a51-329abdf37d51"
     }
   }
 }

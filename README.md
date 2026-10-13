@@ -70,12 +70,16 @@ Two smaller transparency features sit alongside these:
   locally domiciled, no US-situs issue.
 - The tool flags where the mainstream SGX route is *tax-inefficient*: the SGX-listed S&P 500 (S27),
   DJIA (D07) and gold (GSD/O87) are **US-domiciled** — full US estate-tax exposure and 30% withholding.
-- **From 13 October 2026** four Irish-domiciled Xtrackers index ETFs (S&P 500 4C IE000Z9SJA06,
-  Nasdaq-100, MSCI World, S&P 500 Equal Weight) are due to list on SGX in SGD, which puts the
-  Irish route inside SRS for those indices. The Learn-tab text was updated on 24 Sep 2026 (future
-  tense). **Listing-day follow-up:** confirm the SGX codes (only XND is in the MAS document), add
-  the four rows to `curated.json` once the SGX screener carries them, map S27 to the SGX line in
-  the swap tab, and switch the text to present tense.
+- **Since 13 October 2026** four Irish-domiciled Xtrackers index ETFs trade on SGX in SGD:
+  **XUS** (S&P 500 4C, IE000Z9SJA06, 0.03%), **XND** (Nasdaq-100 1C, 0.20%), **XWR** (MSCI World
+  1C, 0.12%) and **EUS** (S&P 500 Equal Weight 1C, 0.15%), which puts the Irish route inside SRS
+  for those indices. Listing-day update done 13 Oct 2026: codes confirmed on the first morning's
+  quotes, the four rows added to `curated.json` under `sgx_additions` (the frozen 2026-07-09
+  screener CSV predates them; fund inception dates recorded under `inception`), XUS / XND / XWR
+  added as SGX alternatives in the swap map (there is no equal-weight index key, so EUS is not
+  mapped), and the Learn-tab text switched to the present tense. Their charts and trailing
+  figures appear once the weekly price refresh has 20 bars (early 2027); until then the
+  liquidity tier is `unknown` and the new lines traded thinly on day one.
 
 ## Data sources
 
