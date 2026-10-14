@@ -519,7 +519,7 @@
         "n": 2,
         "ratio": 0.0101,
         "at": 34,
-        "kept": 94,
+        "kept": 95,
         "dropped": 34
       },
       "incep": "2024-04-30",
@@ -592,7 +592,7 @@
         "n": 3,
         "ratio": 0.0103,
         "at": 118,
-        "kept": 10,
+        "kept": 11,
         "dropped": 118
       },
       "incep": "2024-04-30",
@@ -860,7 +860,7 @@
         "n": 1,
         "ratio": 7.7386,
         "at": 3,
-        "kept": 45,
+        "kept": 46,
         "dropped": 3
       },
       "incep": "2025-10-27",
@@ -3416,7 +3416,7 @@
       "ter": 0.55,
       "ter_conf": "med",
       "mgmt_fee": 0.5,
-      "yield": 5.78,
+      "yield": 5.75,
       "val_m": 0.4796,
       "liquidity_tier": "low",
       "tr_1m": -3.09,
@@ -3774,7 +3774,7 @@
       "ter": 0.24,
       "ter_conf": "high",
       "mgmt_fee": 0.09,
-      "yield": 3.38,
+      "yield": 3.39,
       "val_m": 0.9551,
       "liquidity_tier": "medium",
       "tr_1m": 1.19,
@@ -3834,7 +3834,7 @@
       "ter": 0.72,
       "ter_conf": "high",
       "mgmt_fee": 0.4,
-      "yield": 4.82,
+      "yield": 4.81,
       "val_m": 0.0068,
       "liquidity_tier": "thin",
       "tr_1m": 0.87,
@@ -4324,7 +4324,7 @@
         "n": 1,
         "ratio": 5.3316,
         "at": 48,
-        "kept": 148,
+        "kept": 149,
         "dropped": 48
       },
       "incep": "2022-12-30",
@@ -4690,9 +4690,9 @@
     }
   ],
   "warnings": [
-    "3008: 2 unexplained level shift(s) (largest 0.0101x). Chart starts after the last one; 34 earlier bar(s) excluded, 94 kept. Trailing returns are limited to what fits inside the kept segment.",
-    "3009: 3 unexplained level shift(s) (largest 0.0103x) and only 10 bar(s) after the last one — too short to chart, so the chart, trailing returns and resilience stats are withheld entirely.",
-    "3460: 1 unexplained level shift(s) (largest 7.7386x). Chart starts after the last one; 3 earlier bar(s) excluded, 45 kept. Trailing returns are limited to what fits inside the kept segment.",
-    "SCY: 1 unexplained level shift(s) (largest 5.3316x). Chart starts after the last one; 48 earlier bar(s) excluded, 148 kept. Trailing returns are limited to what fits inside the kept segment."
+    "3008: 2 unexplained level shift(s) (largest 0.0101x). Chart starts after the last one; 34 earlier bar(s) excluded, 95 kept. Trailing returns are limited to what fits inside the kept segment.",
+    "3009: 3 unexplained level shift(s) (largest 0.0103x) and only 11 bar(s) after the last one — too short to chart, so the chart, trailing returns and resilience stats are withheld entirely.",
+    "3460: 1 unexplained level shift(s) (largest 7.7386x). Chart starts after the last one; 3 earlier bar(s) excluded, 46 kept. Trailing returns are limited to what fits inside the kept segment.",
+    "SCY: 1 unexplained level shift(s) (largest 5.3316x). Chart starts after the last one; 48 earlier bar(s) excluded, 149 kept. Trailing returns are limited to what fits inside the kept segment."
   ]
 }
